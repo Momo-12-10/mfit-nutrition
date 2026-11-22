@@ -108,7 +108,7 @@ async function lookupBarcode(){
 }
 async function startBarcode(){
  if(!navigator.mediaDevices?.getUserMedia){$('barcodeStatus').textContent='Dieser Browser bietet keinen Kamerazugriff. Bitte Barcode manuell eingeben.';return}
- let overlay=null, scanner=null, started=false, finished=false;
+ let overlay=null, scanner=null, started=false, finished=false, torchOn=false;
  const closeScanner=async()=>{
   if(finished)return;finished=true;
   if(scanner&&started){try{await scanner.stop()}catch(e){}}
@@ -117,13 +117,22 @@ async function startBarcode(){
  };
  try{
   overlay=document.createElement('div');
-  overlay.style='position:fixed;inset:0;background:#07100bf2;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px';
+  overlay.style='position:fixed;inset:0;background:#07100bf2;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:18px;overflow:auto';
   const title=document.createElement('p');title.textContent='Barcode in den Rahmen halten';title.style='color:white;font-weight:700;text-align:center;margin:0';
   const reader=document.createElement('div');reader.id='mfit-barcode-reader';reader.style='width:min(92vw,500px);overflow:hidden;border-radius:16px';
-  const hint=document.createElement('p');hint.textContent='Die Rückkamera wird geöffnet. Bitte Kamerazugriff erlauben.';hint.style='color:#c8d5cc;text-align:center;margin:0;font-size:14px';
+  const hint=document.createElement('p');hint.textContent='Halte den Barcode ruhig und waagrecht in den Rahmen.';hint.style='color:#c8d5cc;text-align:center;margin:0;font-size:14px';
+  const controls=document.createElement('div');controls.style='display:flex;gap:10px;flex-wrap:wrap;justify-content:center';
+  const torch=document.createElement('button');torch.textContent='🔦 Licht einschalten';torch.className='secondary';
   const close=document.createElement('button');close.textContent='Scanner schließen';close.className='secondary';
   close.onclick=()=>closeScanner();
-  overlay.append(title,reader,hint,close);document.body.append(overlay);
+  torch.onclick=async()=>{
+   if(!scanner||!started)return;
+   try{
+    await scanner.applyVideoConstraints({advanced:[{torch:!torchOn}]});
+    torchOn=!torchOn;torch.textContent=torchOn?'🔦 Licht ausschalten':'🔦 Licht einschalten';
+   }catch(e){hint.textContent='Die Taschenlampe wird von dieser Kamera oder diesem Browser leider nicht unterstützt.'}
+  };
+  controls.append(torch,close);overlay.append(title,reader,hint,controls);document.body.append(overlay);
   if(!window.Html5Qrcode){
    await new Promise((resolve,reject)=>{
     const script=document.createElement('script');script.src='https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js';
@@ -133,16 +142,16 @@ async function startBarcode(){
   }
   if(finished)return;
   if(!window.Html5Qrcode)throw new Error('Scanner-Bibliothek nicht verfügbar');
-  scanner=new Html5Qrcode('mfit-barcode-reader',{formatsToSupport:[Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.UPC_E],verbose:false});
-  await scanner.start({facingMode:'environment'},{fps:10,qrbox:{width:280,height:140},aspectRatio:1.6},
+  scanner=new Html5Qrcode('mfit-barcode-reader',{formatsToSupport:[Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.UPC_E,Html5QrcodeSupportedFormats.CODE_128],verbose:false});
+  await scanner.start({facingMode:'environment'},{fps:15,qrbox:{width:Math.min(320,Math.floor(window.innerWidth*.82)),height:130},aspectRatio:1.8},
    async decodedText=>{
     if(finished)return;
-    const code=String(decodedText).replace(/\\D/g,'');
-    if(!/^\\d{8,14}$/.test(code))return;
+    const code=String(decodedText).replace(/\D/g,'');
+    if(!/^\d{8,14}$/.test(code))return;
     $('barcode').value=code;
     hint.textContent='Barcode erkannt – Produktdaten werden gesucht …';
     await closeScanner();
-    lookupBarcode();
+    await lookupBarcode();
    },()=>{});
   started=true;
  }catch(e){
@@ -150,7 +159,6 @@ async function startBarcode(){
   $('barcodeStatus').textContent='Kamera konnte nicht gestartet werden. Bitte Safari-Kamerazugriff erlauben oder den Barcode manuell eingeben.';
  }
 }
-
 function save(){localStorage.setItem('mfit_entries',JSON.stringify(data));localStorage.setItem('mfit_water',water);render()}
 function showTab(t){['home','track','recipes','shop','profile'].forEach(x=>$(x).classList.toggle('hidden',x!==t));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));if(t==='recipes')renderRecipes()}
 function addFood(){let n=$('foodName').value.trim(),a=Number($('amount').value)||0;if(!n||a<=0)return alert('Bitte Lebensmittel und Menge eintragen.');let factor=$('unit').value==='g'||$('unit').value==='ml'?a/100:a;let entry={name:n,amount:a,unit:$('unit').value,meal:$('meal').value,kcal:Number($('kcal').value)*factor,protein:Number($('protein').value)*factor,carbs:Number($('carbs').value)*factor,fat:Number($('fat').value)*factor,fiber:Number($('fiber').value)*factor,drink:Number($('drink').value),vitc:Number($('vitc')?.value||0),vitd:Number($('vitd')?.value||0),calcium:Number($('calcium')?.value||0),iron:Number($('iron')?.value||0),magnesium:Number($('magnesium')?.value||0),potassium:Number($('potassium')?.value||0),zinc:Number($('zinc')?.value||0),b12:Number($('b12')?.value||0)};data.push(entry);water+=entry.drink;['foodName'].forEach(x=>$(x).value='');save();showTab('home')}
