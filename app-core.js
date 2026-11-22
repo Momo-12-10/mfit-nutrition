@@ -191,44 +191,34 @@ function loadProfile(){let p=null;try{p=JSON.parse(storage.get('mfit_profile')||
 let productSearchResults=[];
 let productSearchTimer=null;
 let productSearchController=null;
-const productSearchCache=new Map();
-async function searchProductSuggestions(query){
- const box=$('productSuggestions');if(!box)return;
- const normalized=query.trim().toLowerCase();
- if(normalized.length<2){box.hidden=true;return;}
- if(productSearchController)productSearchController.abort();
- if(productSearchCache.has(normalized)){renderProductSuggestions(productSearchCache.get(normalized));return;}
- productSearchController=new AbortController();
- box.hidden=false;box.innerHTML='<div class="suggestion-status">🇦🇹 Suche österreichische Produkte …</div>';
- try{
-  const fields=['code','product_name','product_name_de','generic_name','brands','quantity','nutriments','categories','stores','countries_tags'];
-  const params=new URLSearchParams({q:query+' countries_tags:"en:austria"',page:'1',page_size:'20',langs:'de,en',fields:fields.join(',')});
-  const response=await fetch('https://search.openfoodfacts.org/search?'+params.toString(),{signal:productSearchController.signal,headers:{Accept:'application/json'}});
-  if(!response.ok)throw new Error('Suchdienst antwortet mit HTTP '+response.status);
-  const payload=await response.json(),hits=Array.isArray(payload.hits)?payload.hits:[];
-  const seen=new Set();
-  productSearchResults=hits.map(hit=>hit._source||hit.document||hit).filter(p=>{
-   const name=p.product_name_de||p.product_name||p.generic_name||'';
-   const key=(String(p.brands||'')+' '+name).toLowerCase().trim();
-   if(!name||seen.has(key))return false;seen.add(key);return true;
-  }).slice(0,20);
-  productSearchCache.set(normalized,productSearchResults);renderProductSuggestions(productSearchResults);
- }catch(error){
-  if(error.name==='AbortError')return;
-  box.hidden=false;box.innerHTML='<div class="suggestion-status">Produktsuche fehlgeschlagen ('+esc(error.message||'Netzwerkfehler')+'). Bitte erneut versuchen. Manuelle Eingabe bleibt möglich.</div>';
- }
+const mfitFoodCatalog=[
+'Skyr natur','Skyr Vanille','Skyr Erdbeere','Skyr Heidelbeere','Skyr Mango','Magerquark','Topfen','Griechisches Joghurt','Naturjoghurt','Fruchtjoghurt','Protein Pudding','Protein Joghurt','Hüttenkäse','Cottage Cheese','Milch','Hafermilch','Kakao','Eier','Eiklar','Hähnchenbrust','Putenbrust','Rindfleisch','Lachs','Thunfisch','Schinken','Salami','Käse','Mozzarella','Gouda','Emmentaler','Butter','Frischkäse','Tofu','Linsen','Kichererbsen','Bohnen','Reis','Basmatireis','Vollkornreis','Nudeln','Vollkornnudeln','Haferflocken','Müsli','Cornflakes','Kelloggs Frosties','Kelloggs Corn Flakes','Kelloggs Choco Krispies','Granola','Brot','Vollkornbrot','Toast','Semmel','Wrap','Tortilla','Banane','Apfel','Erdbeeren','Heidelbeeren','Himbeeren','Orange','Kiwi','Avocado','Gurke','Tomaten','Paprika','Brokkoli','Karotten','Kartoffeln','Süßkartoffeln','Salat','Spinat','Mais','Erbsen','Nüsse','Mandeln','Erdnussbutter','Honig','Marmelade','Schokolade','Proteinriegel','Müsliriegel','Chips','Reiswaffeln','Popcorn','Pizza','Pommes','Sushi','Cola Zero','Coca-Cola','Pepsi Max','Red Bull Sugarfree','Monster Ultra','Wasser','Mineralwasser','Eistee Zero','Orangensaft','Apfelsaft','Kaffee','Cappuccino','Energy Drink','Iso Drink','Butterkäse','Parmesan','Feta','Skyr Drink','Proteindrink','Milchreis','Grießbrei','Pudding','Porridge','Sauerteigbrot','Knäckebrot','Kürbiskerne','Chiasamen','Leinsamen','Olivenöl','Rapsöl','Ketchup','Senf','Hummus','Guacamole'
+];
+function getLocalProductSuggestions(query){
+ const q=String(query||'').trim().toLocaleLowerCase('de');
+ const seen=new Set(),items=[];
+ const add=(name,source='Katalog')=>{
+  const clean=String(name||'').trim();if(!clean)return;
+  const key=clean.toLocaleLowerCase('de');if(seen.has(key))return;seen.add(key);
+  items.push({product_name:clean,product_name_de:clean,brands:source==='Zuletzt verwendet'?'Deine Einträge':'',nutriments:{},categories:'Lebensmittel',stores:source,local:true});
+ };
+ const recent=[];
+ data.slice().reverse().forEach(e=>{if(e.name&&!recent.some(x=>x.toLowerCase()===String(e.name).toLowerCase()))recent.push(String(e.name));});
+ recent.forEach(n=>{if(!q||n.toLocaleLowerCase('de').includes(q))add(n,'Zuletzt verwendet');});
+ const matches=mfitFoodCatalog.filter(n=>!q||n.toLocaleLowerCase('de').startsWith(q)||n.toLocaleLowerCase('de').split(/[\s-]+/).some(w=>w.startsWith(q)));
+ const secondary=mfitFoodCatalog.filter(n=>q&&!matches.includes(n)&&n.toLocaleLowerCase('de').includes(q));
+ [...matches,...secondary].forEach(n=>add(n,'Häufige Lebensmittel'));
+ return items.slice(0,30);
 }
+function searchProductSuggestions(query){productSearchResults=getLocalProductSuggestions(query);renderProductSuggestions(productSearchResults);}
 function renderProductSuggestions(products){
  const box=$('productSuggestions');if(!box)return;
- if(!products.length){box.hidden=false;box.innerHTML='<div class="suggestion-status">Keine passenden österreichischen Einträge gefunden. Du kannst das Produkt trotzdem manuell eintragen.</div>';return;}
+ if(!products.length){box.hidden=false;box.innerHTML='<div class="suggestion-status">Noch keine passenden Vorschläge. Du kannst den Produktnamen trotzdem selbst eintragen.</div>';return;}
  box.hidden=false;
  box.innerHTML=products.map((p,i)=>{
-  const name=p.product_name_de||p.product_name||p.generic_name||'Produkt',brand=p.brands||'Marke nicht angegeben';
-  const categories=String(p.categories||'').split(',').map(x=>x.trim()).filter(Boolean).slice(0,2).join(' · ');
-  const stores=String(p.stores||'').split(',').map(x=>x.trim()).filter(Boolean).slice(0,2).join(', ');
-  const n=p.nutriments||{},kcal=Number(n['energy-kcal_100g']??(n['energy-kj_100g']?n['energy-kj_100g']/4.184:0)),protein=Number(n.proteins_100g||0);
-  const nutrition=(kcal||protein)?Math.round(kcal)+' kcal · '+protein.toLocaleString('de-AT',{maximumFractionDigits:1})+' g Protein / 100 g':'Nährwerte nicht hinterlegt';
-  return '<button type="button" class="product-suggestion" role="option" onclick="selectProductSuggestion('+i+')"><span class="suggestion-main"><b>'+esc(name)+'</b><span class="suggestion-brand">'+esc(brand)+'</span><span class="suggestion-meta">'+esc(stores||categories||'Österreichischer Datenbankeintrag')+'</span></span><span class="suggestion-nutrition">'+esc(nutrition)+'</span></button>';
+  const name=p.product_name_de||p.product_name||p.generic_name||'Produkt',brand=p.brands||'';
+  const meta=p.stores==='Zuletzt verwendet'?'🕘 Zuletzt verwendet':'🥗 Häufig gesucht';
+  return '<button type="button" class="product-suggestion" role="option" onclick="selectProductSuggestion('+i+')"><span class="suggestion-main"><b>'+esc(name)+'</b><span class="suggestion-brand">'+esc(brand||meta)+'</span></span><span class="suggestion-nutrition">'+(brand?'Marke':'Lebensmittel')+'</span></button>';
  }).join('');
 }
 function selectProductSuggestion(index){
@@ -237,25 +227,25 @@ function selectProductSuggestion(index){
  $('foodName').value=(p.brands?p.brands+' – ':'')+name;
  if($('barcode'))$('barcode').value=p.code||'';
  const cats=String(p.categories||'').toLowerCase(),tags=Array.isArray(p.categories_tags)?p.categories_tags.join(' '):'';
- const isDrink=/beverage|drink|getränk|wasser|soft-drink|juice|soda/.test(cats+' '+tags);
+ const isDrink=/beverage|drink|getränk|wasser|soft-drink|juice|soda/.test(cats+' '+tags)||/wasser|cola|saft|drink|energy|eistee|milch$|kakao/.test(name.toLowerCase());
  $('unit').value=isDrink?'ml':'g';$('amount').value=100;$('packSize').value='';$('portionMode').value='custom';
- setNutritionFromProduct(p.nutriments||{});
+ if(p.nutriments&&Object.keys(p.nutriments).length)setNutritionFromProduct(p.nutriments);
+ else{
+  const preset=presets.find(x=>x.name.toLowerCase()===name.toLowerCase());
+  if(preset){nutritionBase={kcal:preset.kcal,protein:preset.protein,carbs:preset.carbs,fat:preset.fat,fiber:preset.fiber,vitc:0,vitd:0,calcium:0,iron:0,magnesium:0,potassium:0,zinc:0,b12:0};recalculateNutrition();}
+ }
  $('drink').value=isDrink?100:0;
  if(isDrink)$('meal').value='Getränk';else if($('meal').value==='Getränk')$('meal').value='Snack';
  const pack=getPackAmount(p);
  if(pack){$('packSize').value=pack.amount;$('unit').value=pack.unit;$('portionMode').value='whole';applyPortionMode();if(isDrink)$('drink').value=Number($('amount').value)||pack.amount;}
- $('barcodeStatus').textContent='Ausgewählt: '+(p.brands?p.brands+' – ':'')+name+'. Nährwerte aus Open Food Facts übernommen, soweit vorhanden. Bitte mit der Verpackung vergleichen.';
+ $('barcodeStatus').textContent=p.local?'Produkt ausgewählt. Bitte Menge und Nährwerte prüfen bzw. ergänzen.':'Produkt ausgewählt. Bitte Nährwerte mit der Verpackung vergleichen.';
  $('productSuggestions').hidden=true;$('productSuggestions').innerHTML='';$('amount').focus();
 }
 function initProductAutocomplete(){
  const input=$('foodName');if(!input)return;
- input.addEventListener('input',()=>{
-  const q=input.value.trim();if(productSearchTimer)clearTimeout(productSearchTimer);
-  if(productSearchController)productSearchController.abort();
-  const box=$('productSuggestions');
-  if(q.length<2){if(box){box.hidden=true;box.innerHTML='';}return;}
-  productSearchTimer=setTimeout(()=>searchProductSuggestions(q),500);
- });
+ const show=()=>searchProductSuggestions(input.value);
+ input.addEventListener('input',show);
+ input.addEventListener('focus',show);
  document.addEventListener('click',event=>{const box=$('productSuggestions');if(box&&!box.contains(event.target)&&event.target!==input)box.hidden=true;});
 }
 initProductAutocomplete();
