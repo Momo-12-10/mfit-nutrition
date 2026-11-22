@@ -3,9 +3,9 @@
   "short_name": "MFit",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0d1410",
-  "theme_color": "#101713",
-  "description": "Dein persönlicher Ernährungs- und Fitness-Tracker",
+  "background_color": "#090c11",
+  "theme_color": "#090c11",
+  "description": "MFit Performance – Eat smart. Train hard. Become more.",
   "icons": [
     {
       "src": "icon.svg",
