@@ -107,17 +107,48 @@ async function lookupBarcode(){
  }catch(e){$('barcodeStatus').textContent='Keine passenden Produktdaten gefunden. Bitte Werte vom Etikett manuell eintragen.'}
 }
 async function startBarcode(){
- if(!('BarcodeDetector'in window)||!navigator.mediaDevices?.getUserMedia){$('barcodeStatus').textContent='Live-Scanner wird auf diesem Gerät/Browser nicht unterstützt. Gib den Barcode bitte manuell ein.';return}
+ if(!navigator.mediaDevices?.getUserMedia){$('barcodeStatus').textContent='Dieser Browser bietet keinen Kamerazugriff. Bitte Barcode manuell eingeben.';return}
+ let overlay=null, scanner=null, started=false, finished=false;
+ const closeScanner=async()=>{
+  if(finished)return;finished=true;
+  if(scanner&&started){try{await scanner.stop()}catch(e){}}
+  if(scanner){try{scanner.clear()}catch(e){}}
+  if(overlay)overlay.remove();
+ };
  try{
-  const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
-  const video=document.createElement('video');video.srcObject=stream;video.setAttribute('playsinline','');await video.play();
-  const overlay=document.createElement('div');overlay.style='position:fixed;inset:0;background:#000e;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px';
-  const close=document.createElement('button');close.textContent='Scanner schließen';const msg=document.createElement('p');msg.textContent='Barcode vor die Kamera halten';msg.style.color='white';
-  video.style='width:min(90vw,500px);border-radius:16px';overlay.append(video,msg,close);document.body.append(overlay);
-  const detector=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e']});let stopped=false;
-  const stop=()=>{stopped=true;stream.getTracks().forEach(t=>t.stop());overlay.remove()};close.onclick=stop;
-  const scan=async()=>{if(stopped)return;try{const codes=await detector.detect(video);if(codes.length){$('barcode').value=codes[0].rawValue;stop();lookupBarcode();return}}catch(e){}requestAnimationFrame(scan)};scan();
- }catch(e){$('barcodeStatus').textContent='Kamerazugriff nicht möglich. Bitte Berechtigung erlauben oder Barcode manuell eingeben.'}
+  overlay=document.createElement('div');
+  overlay.style='position:fixed;inset:0;background:#07100bf2;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px';
+  const title=document.createElement('p');title.textContent='Barcode in den Rahmen halten';title.style='color:white;font-weight:700;text-align:center;margin:0';
+  const reader=document.createElement('div');reader.id='mfit-barcode-reader';reader.style='width:min(92vw,500px);overflow:hidden;border-radius:16px';
+  const hint=document.createElement('p');hint.textContent='Die Rückkamera wird geöffnet. Bitte Kamerazugriff erlauben.';hint.style='color:#c8d5cc;text-align:center;margin:0;font-size:14px';
+  const close=document.createElement('button');close.textContent='Scanner schließen';close.className='secondary';
+  close.onclick=()=>closeScanner();
+  overlay.append(title,reader,hint,close);document.body.append(overlay);
+  if(!window.Html5Qrcode){
+   await new Promise((resolve,reject)=>{
+    const script=document.createElement('script');script.src='https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js';
+    script.onload=resolve;script.onerror=()=>reject(new Error('Scanner-Bibliothek konnte nicht geladen werden'));
+    document.head.append(script);
+   });
+  }
+  if(finished)return;
+  if(!window.Html5Qrcode)throw new Error('Scanner-Bibliothek nicht verfügbar');
+  scanner=new Html5Qrcode('mfit-barcode-reader',{formatsToSupport:[Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.UPC_E],verbose:false});
+  await scanner.start({facingMode:'environment'},{fps:10,qrbox:{width:280,height:140},aspectRatio:1.6},
+   async decodedText=>{
+    if(finished)return;
+    const code=String(decodedText).replace(/\\D/g,'');
+    if(!/^\\d{8,14}$/.test(code))return;
+    $('barcode').value=code;
+    hint.textContent='Barcode erkannt – Produktdaten werden gesucht …';
+    await closeScanner();
+    lookupBarcode();
+   },()=>{});
+  started=true;
+ }catch(e){
+  await closeScanner();
+  $('barcodeStatus').textContent='Kamera konnte nicht gestartet werden. Bitte Safari-Kamerazugriff erlauben oder den Barcode manuell eingeben.';
+ }
 }
 
 function save(){localStorage.setItem('mfit_entries',JSON.stringify(data));localStorage.setItem('mfit_water',water);render()}
