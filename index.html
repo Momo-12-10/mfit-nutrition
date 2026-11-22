@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=53">
 <link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=53">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=53">
+<link rel="stylesheet" href="./styles.css?v=54">
 </head>
 <body>
 <header class="brand-header"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR FITNESS COMPANION</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Eat smart. Train hard. Become more.</p></div><span class="pill brand-pill">YOUR JOURNEY</span></div></header>
@@ -28,7 +28,7 @@
 </section>
 <section id="track" class="hidden">
 <div class="card"><h2>Lebensmittel & Getränke erfassen</h2>
-<label>Was hast du konsumiert?</label><input id="foodName" placeholder="z. B. Skyr, Cola Zero, Apfel">
+<label>Was hast du konsumiert?</label><input id="foodName" placeholder="z. B. Skyr, Kellogg’s, Cola Zero …" autocomplete="off" aria-autocomplete="list"><div id="productSuggestions" class="product-suggestions" role="listbox" aria-label="Produktvorschläge" hidden></div>
 <div class="grid" style="margin-top:8px"><button class="secondary" onclick="startBarcode()">▦ Barcode scannen</button><button class="secondary" onclick="lookupBarcode()">Barcode manuell suchen</button></div>
 <label>Barcode (EAN)</label><input id="barcode" inputmode="numeric" placeholder="EAN-13 / EAN-8">
 <div id="barcodeStatus" class="muted"></div>
