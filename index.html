@@ -168,6 +168,50 @@ body nav button:focus-visible{outline:none!important;box-shadow:none!important}
 .water-history .item button{flex:none;width:auto;min-width:108px;min-height:38px;padding:8px 12px;font-size:12px;letter-spacing:0;white-space:nowrap}
 @media(max-width:360px){.water-custom-row{grid-template-columns:1fr}.water-custom-row button{width:100%}.water-history .item button{min-width:94px;padding:8px 9px}}
 
+
+/* v30 — konsistentes, sauberes Layout in allen Bereichen */
+:root{--surface-elevated:#182330;--border-soft:rgba(174,194,218,.13);--text-main:#edf2f8}
+body{color:var(--text-main);letter-spacing:.01em}
+main{width:100%;max-width:760px;padding:16px 14px 28px}
+.card{width:100%;min-width:0;margin:13px 0;padding:18px;border:1px solid var(--border-soft);border-radius:20px;background:linear-gradient(150deg,rgba(25,36,50,.98),rgba(16,24,34,.98));box-shadow:0 12px 30px rgba(0,0,0,.20)}
+.card h2{font-size:17px;line-height:1.35;font-weight:760;margin:0 0 13px;letter-spacing:-.25px}
+.card h3{line-height:1.4;margin:0 0 9px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;min-width:0}
+.row>div{min-width:0}
+.grid{align-items:stretch;gap:11px;min-width:0}
+.grid>*{min-width:0}
+button{display:inline-flex;align-items:center;justify-content:center;text-align:center;vertical-align:middle;min-height:44px;height:auto;padding:11px 14px;border-radius:13px;font-family:inherit;font-size:13px;line-height:1.3;font-weight:720;letter-spacing:0;white-space:normal;overflow-wrap:anywhere}
+.row>button{flex:1 1 125px;min-width:0}
+.grid>button,.grid>div>button{width:100%;min-width:0}
+.item.row{flex-wrap:nowrap;gap:12px}
+.item.row>div{flex:1 1 auto;min-width:0;line-height:1.45;padding:2px 0}
+.item.row>button{flex:0 0 auto;width:auto;min-width:42px;max-width:48%;padding:9px 12px;font-size:12px;white-space:normal}
+button.secondary{background:linear-gradient(145deg,#263444,#202b38);border:1px solid rgba(190,205,222,.16);color:#e9eef5}
+button.danger{background:linear-gradient(145deg,#542f37,#40252c);border:1px solid rgba(255,190,198,.12);color:#ffe3e6}
+button:not(.secondary):not(.danger):not(.theme-swatch){background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 90%,white),var(--accent));color:#08120d}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+input,select,textarea{display:block;width:100%;min-width:0;min-height:46px;padding:12px 14px;border-radius:13px;font:inherit;font-size:14px;line-height:1.4}
+label{display:block;line-height:1.45;margin:14px 0 7px;font-size:11px;letter-spacing:.55px}
+.muted{line-height:1.5}
+.progress{height:9px;margin-top:8px;border-radius:999px;background:#263341;overflow:hidden}
+.progress span{border-radius:999px;transition:width .25s ease}
+.pill{display:inline-flex;align-items:center;line-height:1.25}
+nav{gap:5px;padding-left:7px;padding-right:7px}
+nav button{flex:1 1 0;min-width:0;min-height:50px;padding:7px 3px;font-size:10px;line-height:1.25;white-space:normal;overflow-wrap:normal}
+.water-controls button{flex:1 1 auto}
+.water-custom-row button{flex:0 0 auto}
+.water-history .item button{flex:0 0 auto}
+@media(max-width:380px){
+ main{padding-left:11px;padding-right:11px}
+ .card{padding:15px;border-radius:18px}
+ .row{gap:8px}
+ .row>button{flex:1 1 112px;padding:10px 8px;font-size:12px}
+ .item.row>button{flex:0 0 auto;min-width:40px;padding:8px 9px;font-size:11px}
+ nav{gap:3px}
+ nav button{font-size:9px;padding-left:1px;padding-right:1px}
+}
+@media(min-width:600px){main{padding:22px 20px 32px}.card{padding:20px}}
+
 </style>
 </head>
 <body>
