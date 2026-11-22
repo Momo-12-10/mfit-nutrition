@@ -430,11 +430,32 @@ body nav.mfit-nav button.active .nav-icon{transform:translateY(-1px);color:var(-
 .exercise-row button{flex:0 0 auto}
 #addWeekShopBtn:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:390px){.shop-catalog{gap:6px}.shop-product{padding:9px 8px;font-size:11px}.shop-price-fields{grid-template-columns:minmax(0,1fr) minmax(62px,.7fr) 34px}}
-/* v44 — Auswahlfelder für persönliche Essensplan-Filter */
-.meal-preferences{margin-top:18px;padding:15px;border:1px solid rgba(180,205,230,.13);border-radius:17px;background:rgba(7,14,23,.25)}
-.meal-preferences>b{font-size:14px}
-.meal-pref-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;margin:12px 0}
-.meal-pref-grid label,.meal-pref-check{display:flex;align-items:center;gap:8px;margin:0;padding:8px 9px;border:1px solid rgba(180,205,230,.10);border-radius:11px;background:rgba(255,255,255,.025);font-size:11px;line-height:1.35;letter-spacing:0;text-transform:none;font-weight:600;color:#dce5ef}
-.meal-pref-grid input,.meal-pref-check input{width:17px;height:17px;min-height:17px;flex:0 0 17px;margin:0;accent-color:var(--accent)}
-.meal-medical-note{margin-top:12px;padding:12px;border-radius:12px;background:rgba(181,128,48,.12);border:1px solid rgba(220,170,90,.25);color:#f0d9b4;font-size:11px;line-height:1.55}
-@media(max-width:390px){.meal-preferences{padding:12px}.meal-pref-grid{gap:7px}.meal-pref-grid label{padding:8px 6px;font-size:10px}}
+
+/* v45 — Ernährungsplan kompakter, ruhiger und leichter zu überblicken */
+#shop .card:has(#mealWeek){padding:16px}
+#shop .card:has(#mealWeek)>h2{font-size:15px;margin-bottom:8px}
+#shop .card:has(#mealWeek)>p.muted{font-size:11px;line-height:1.4;margin:0 0 10px;color:#9eacbc}
+#shop .card:has(#mealWeek)>label{font-size:9px;letter-spacing:.45px;margin:10px 0 5px}
+#shop .card:has(#mealWeek)>select{min-height:42px;height:42px;font-size:12px;margin-bottom:3px}
+#shop .meal-preferences{margin-top:12px;padding:12px;border-radius:14px}
+#shop .meal-preferences>b{font-size:12px;letter-spacing:.1px}
+#shop .meal-preferences>p.muted{font-size:10px;line-height:1.35;margin:4px 0 8px}
+#shop .meal-pref-grid{gap:6px 8px;margin:8px 0}
+#shop .meal-pref-grid label,#shop .meal-pref-check{font-size:10px;line-height:1.25;padding:6px 7px;border-radius:9px;letter-spacing:0}
+#shop .meal-pref-grid input,#shop .meal-pref-check input{width:15px;height:15px;min-height:15px;flex-basis:15px}
+#shop .meal-preferences>label:not(.meal-pref-check){font-size:9px;margin:9px 0 4px}
+#shop .meal-preferences>input{height:40px;min-height:40px;font-size:12px;margin:0}
+#shop .meal-medical-note{font-size:9px;line-height:1.4;padding:9px;margin-top:8px}
+#shop #mealWeek .notice{font-size:10px;line-height:1.4;padding:10px;margin-top:10px}
+#shop #mealWeek .meal-day{margin-top:9px;padding:10px;border-radius:13px}
+#shop #mealWeek .meal-day>b{font-size:12px}
+#shop #mealWeek .meal-plan-item{gap:3px;padding:8px 0}
+#shop #mealWeek .meal-plan-item strong{font-size:12px;line-height:1.3}
+#shop #mealWeek .meal-plan-item small{font-size:9px;line-height:1.35;color:#9eacbc}
+#shop #mealWeek .pill{font-size:9px;padding:3px 7px}
+#shop #addWeekShopBtn{font-size:11px;min-height:42px;padding:10px}
+@media(max-width:390px){
+ #shop .card:has(#mealWeek){padding:13px}
+ #shop .meal-pref-grid{gap:5px}
+ #shop .meal-pref-grid label{font-size:9px;padding:6px 5px}
+}
