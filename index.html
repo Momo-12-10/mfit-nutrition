@@ -149,6 +149,25 @@ body nav button.active{color:#c4ccd6!important;background:#202a36!important;bord
 body nav button.active{background:#2b3745!important;border-color:rgba(210,222,238,.20)!important}
 body nav button:focus,
 body nav button:focus-visible{outline:none!important;box-shadow:none!important}
+
+/* v29 — aufgeräumtes Wasser-Tracking */
+.water-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+.water-controls button{width:100%;min-width:0;min-height:46px;flex:none;padding:12px 10px;font-size:13px;line-height:1.25;letter-spacing:0;text-align:center;border-radius:13px;color:#edf2f8;background:#263444;border:1px solid rgba(190,205,222,.15);box-shadow:none}
+.water-controls button:first-child{background:color-mix(in srgb,var(--accent) 18%,#202c39);border-color:color-mix(in srgb,var(--accent) 35%,#334252);color:#f3f7fb}
+.water-controls button:active{transform:scale(.98)}
+.water-custom{margin-top:20px;padding-top:16px;border-top:1px solid rgba(174,194,218,.12)}
+.water-custom label{display:block;margin:0 0 10px;font-size:12px;letter-spacing:.3px}
+.water-custom-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:stretch}
+.water-custom-row input{min-width:0;min-height:46px}
+.water-custom-row button{flex:none;min-width:112px;min-height:46px;padding:10px 16px;font-size:13px;letter-spacing:0;white-space:nowrap}
+.water-history-heading{margin-top:22px;margin-bottom:10px;line-height:1.55}
+.water-history-heading b{display:block;font-size:14px;margin-bottom:3px}
+.water-history{margin-top:8px}
+.water-history .item{display:flex;align-items:center;gap:14px;padding:13px 2px}
+.water-history .item>div{min-width:0;flex:1;line-height:1.45;padding:2px 0}
+.water-history .item button{flex:none;width:auto;min-width:108px;min-height:38px;padding:8px 12px;font-size:12px;letter-spacing:0;white-space:nowrap}
+@media(max-width:360px){.water-custom-row{grid-template-columns:1fr}.water-custom-row button{width:100%}.water-history .item button{min-width:94px;padding:8px 9px}}
+
 </style>
 </head>
 <body>
@@ -165,7 +184,7 @@ body nav button:focus-visible{outline:none!important;box-shadow:none!important}
 <div class="card"><h2>Makros heute</h2><div class="row"><span>Protein</span><b id="macroProtein">0 / 0 g</b></div><div class="progress"><span id="proteinBar" style="width:0%"></span></div><div class="row" style="margin-top:10px"><span>Kohlenhydrate</span><b id="macroCarbs">0 / 0 g</b></div><div class="progress"><span id="carbsBar" style="width:0%"></span></div><div class="row" style="margin-top:10px"><span>Fett</span><b id="macroFat">0 / 0 g</b></div><div class="progress"><span id="fatBar" style="width:0%"></span></div></div>
 <div class="card"><h2>Dein nächster Ernährungstipp</h2><div id="tip" class="notice">Vor dem Training: 1–3 Stunden vorher eine gut verträgliche Mahlzeit mit Kohlenhydraten und etwas Protein wählen.</div></div>
 <div class="card"><div class="row"><h2>Heute gegessen</h2><button onclick="showTab('track')">+ Hinzufügen</button></div><div id="todayList" class="muted">Noch keine Einträge.</div></div>
-<div class="card"><h2>Mikronährstoffe heute</h2><div class="grid"><div class="muted">Vitamin C: <b id="sumVitC">0 mg</b></div><div class="muted">Vitamin D: <b id="sumVitD">0 µg</b></div><div class="muted">Kalzium: <b id="sumCalcium">0 mg</b></div><div class="muted">Eisen: <b id="sumIron">0 mg</b></div><div class="muted">Magnesium: <b id="sumMagnesium">0 mg</b></div><div class="muted">Kalium: <b id="sumPotassium">0 mg</b></div><div class="muted">Zink: <b id="sumZinc">0 mg</b></div><div class="muted">B12: <b id="sumB12">0 µg</b></div></div><p class="muted">Nur eingetragene bzw. verfügbare Daten werden summiert.</p></div><div class="card"><h2>Trinken</h2><div class="row" style="flex-wrap:wrap;justify-content:flex-start"><button onclick="addWater(250)">+ 250 ml</button><button class="secondary" onclick="addWater(500)">+ 500 ml</button><button class="secondary" onclick="removeWater(250)">− 250 ml</button><button class="secondary" onclick="removeWater(500)">− 500 ml</button></div><label style="margin-top:14px">Eigene Wassermenge eintragen</label><div class="row" style="align-items:stretch"><input id="customWaterAmount" type="number" min="1" max="5000" step="1" placeholder="z. B. 350 ml"><button onclick="addCustomWater()">Hinzufügen</button></div><div class="muted" style="margin-top:16px">Deine einzelnen Wassereinträge – jeden kannst du separat löschen:</div><div id="waterQuickHistory" style="margin-top:5px">Noch keine Wassereinträge.</div></div>
+<div class="card"><h2>Mikronährstoffe heute</h2><div class="grid"><div class="muted">Vitamin C: <b id="sumVitC">0 mg</b></div><div class="muted">Vitamin D: <b id="sumVitD">0 µg</b></div><div class="muted">Kalzium: <b id="sumCalcium">0 mg</b></div><div class="muted">Eisen: <b id="sumIron">0 mg</b></div><div class="muted">Magnesium: <b id="sumMagnesium">0 mg</b></div><div class="muted">Kalium: <b id="sumPotassium">0 mg</b></div><div class="muted">Zink: <b id="sumZinc">0 mg</b></div><div class="muted">B12: <b id="sumB12">0 µg</b></div></div><p class="muted">Nur eingetragene bzw. verfügbare Daten werden summiert.</p></div><div class="card"><h2>Trinken</h2><div class="water-controls"><button onclick="addWater(250)">+ 250 ml</button><button class="secondary" onclick="addWater(500)">+ 500 ml</button><button class="secondary" onclick="removeWater(250)">− 250 ml</button><button class="secondary" onclick="removeWater(500)">− 500 ml</button></div><div class="water-custom"><label for="customWaterAmount">Eigene Wassermenge</label><div class="water-custom-row"><input id="customWaterAmount" type="number" min="1" max="5000" step="1" placeholder="z. B. 350 ml"><button onclick="addCustomWater()">Hinzufügen</button></div></div><div class="water-history-heading"><b>Deine Wassereinträge</b><div class="muted">Jeden Eintrag kannst du einzeln löschen.</div></div><div id="waterQuickHistory" class="water-history">Noch keine Wassereinträge.</div></div>
 </section>
 <section id="track" class="hidden">
 <div class="card"><h2>Lebensmittel & Getränke erfassen</h2>
