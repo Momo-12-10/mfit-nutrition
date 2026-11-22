@@ -191,31 +191,65 @@ function loadProfile(){let p=null;try{p=JSON.parse(storage.get('mfit_profile')||
 let productSearchResults=[];
 let productSearchTimer=null;
 let productSearchController=null;
+const productSearchCache=new Map();
+const productSearchRequestTimes=[];
 async function searchProductSuggestions(query){
  const box=$('productSuggestions');if(!box)return;
+ const normalized=query.trim().toLowerCase();
+ if(normalized.length<2){box.hidden=true;return;}
  if(productSearchController)productSearchController.abort();
+ if(productSearchCache.has(normalized)){renderProductSuggestions(productSearchCache.get(normalized));return;}
+ const now=Date.now();
+ while(productSearchRequestTimes.length&&now-productSearchRequestTimes[0]>60000)productSearchRequestTimes.shift();
+ if(productSearchRequestTimes.length>=8){
+  box.hidden=false;box.innerHTML='<div class="suggestion-status">Kurz warten: Die Produktsuche ist zum Schutz der Datenbank begrenzt. Du kannst den Namen auch manuell eingeben.</div>';return;
+ }
+ productSearchRequestTimes.push(now);
  productSearchController=new AbortController();
- box.hidden=false;box.innerHTML='<div class="suggestion-status">🔎 Suche passende Produkte …</div>';
+ box.hidden=false;box.innerHTML='<div class="suggestion-status">🇦🇹 Suche österreichische Produkte …</div>';
  try{
-  const fields='code,product_name,product_name_de,generic_name,brands,quantity,product_quantity,product_quantity_unit,nutriments,categories';
-  const url='https://world.openfoodfacts.org/api/v2/search?search_terms='+encodeURIComponent(query)+'&page_size=10&fields='+fields;
-  const response=await fetch(url,{signal:productSearchController.signal,headers:{Accept:'application/json'}});
-  if(!response.ok)throw new Error('Suche gerade nicht verfügbar');
+  const fields='code,product_name,product_name_de,generic_name,brands,quantity,product_quantity,product_quantity_unit,nutriments,categories,stores,countries';
+  const params=new URLSearchParams({
+   search_terms:query,
+   search_simple:'1',
+   action:'process',
+   json:'1',
+   page_size:'24',
+   fields,
+   tagtype_0:'countries',
+   tag_contains_0:'contains',
+   tag_0:'Austria'
+  });
+  const response=await fetch('https://world.openfoodfacts.org/cgi/search.pl?'+params.toString(),{
+   signal:productSearchController.signal,
+   headers:{Accept:'application/json'}
+  });
+  if(!response.ok)throw new Error('Produktsuche nicht verfügbar');
   const payload=await response.json(),seen=new Set();
   productSearchResults=(payload.products||[]).filter(p=>{
    const name=p.product_name_de||p.product_name||p.generic_name||'';
    const key=(String(p.brands||'')+' '+name).toLowerCase().trim();
    if(!name||seen.has(key))return false;seen.add(key);return true;
-  }).slice(0,10);
-  if(!productSearchResults.length){box.innerHTML='<div class="suggestion-status">Keine passenden Produkte gefunden. Du kannst den Namen trotzdem manuell eintragen.</div>';return;}
-  box.innerHTML=productSearchResults.map((p,i)=>{
-   const name=p.product_name_de||p.product_name||p.generic_name||'Produkt',brand=p.brands||'Marke nicht angegeben';
-   const categories=String(p.categories||'').split(',').map(x=>x.trim()).filter(Boolean).slice(0,2).join(' · ');
-   const n=p.nutriments||{},kcal=Number(n['energy-kcal_100g']??(n['energy-kj_100g']?n['energy-kj_100g']/4.184:0)),protein=Number(n.proteins_100g||0);
-   const nutrition=(kcal||protein)?Math.round(kcal)+' kcal · '+protein.toLocaleString('de-AT',{maximumFractionDigits:1})+' g Protein / 100 g':'Nährwerte nicht hinterlegt';
-   return '<button type="button" class="product-suggestion" role="option" onclick="selectProductSuggestion('+i+')"><span class="suggestion-main"><b>'+esc(name)+'</b><span class="suggestion-brand">'+esc(brand)+'</span><span class="suggestion-meta">'+esc(categories||'Lebensmittel / Getränk')+'</span></span><span class="suggestion-nutrition">'+esc(nutrition)+'</span></button>';
-  }).join('');
- }catch(error){if(error.name==='AbortError')return;box.innerHTML='<div class="suggestion-status">Produktsuche gerade nicht erreichbar. Prüfe deine Internetverbindung oder gib das Produkt manuell ein.</div>';}
+  }).slice(0,20);
+  productSearchCache.set(normalized,productSearchResults);
+  renderProductSuggestions(productSearchResults);
+ }catch(error){
+  if(error.name==='AbortError')return;
+  box.innerHTML='<div class="suggestion-status">Die österreichische Produktsuche ist gerade nicht erreichbar. Bitte erneut versuchen oder das Produkt manuell eintragen.</div>';
+ }
+}
+function renderProductSuggestions(products){
+ const box=$('productSuggestions');if(!box)return;
+ if(!products.length){box.hidden=false;box.innerHTML='<div class="suggestion-status">Keine passenden österreichischen Einträge gefunden. Du kannst das Produkt trotzdem manuell eintragen.</div>';return;}
+ box.hidden=false;
+ box.innerHTML=products.map((p,i)=>{
+  const name=p.product_name_de||p.product_name||p.generic_name||'Produkt',brand=p.brands||'Marke nicht angegeben';
+  const categories=String(p.categories||'').split(',').map(x=>x.trim()).filter(Boolean).slice(0,2).join(' · ');
+  const stores=String(p.stores||'').split(',').map(x=>x.trim()).filter(Boolean).slice(0,2).join(', ');
+  const n=p.nutriments||{},kcal=Number(n['energy-kcal_100g']??(n['energy-kj_100g']?n['energy-kj_100g']/4.184:0)),protein=Number(n.proteins_100g||0);
+  const nutrition=(kcal||protein)?Math.round(kcal)+' kcal · '+protein.toLocaleString('de-AT',{maximumFractionDigits:1})+' g Protein / 100 g':'Nährwerte nicht hinterlegt';
+  return '<button type="button" class="product-suggestion" role="option" onclick="selectProductSuggestion('+i+')"><span class="suggestion-main"><b>'+esc(name)+'</b><span class="suggestion-brand">'+esc(brand)+'</span><span class="suggestion-meta">'+esc(stores||categories||'Österreichischer Datenbankeintrag')+'</span></span><span class="suggestion-nutrition">'+esc(nutrition)+'</span></button>';
+ }).join('');
 }
 function selectProductSuggestion(index){
  const p=productSearchResults[index];if(!p)return;
@@ -239,8 +273,8 @@ function initProductAutocomplete(){
   const q=input.value.trim();if(productSearchTimer)clearTimeout(productSearchTimer);
   if(productSearchController)productSearchController.abort();
   const box=$('productSuggestions');
-  if(q.length<1){if(box){box.hidden=true;box.innerHTML='';}return;}
-  productSearchTimer=setTimeout(()=>searchProductSuggestions(q),350);
+  if(q.length<2){if(box){box.hidden=true;box.innerHTML='';}return;}
+  productSearchTimer=setTimeout(()=>searchProductSuggestions(q),900);
  });
  document.addEventListener('click',event=>{const box=$('productSuggestions');if(box&&!box.contains(event.target)&&event.target!==input)box.hidden=true;});
 }
