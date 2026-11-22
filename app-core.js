@@ -352,6 +352,17 @@ const mfitNutritionTemplates={
  'hummus':{kcal:240,protein:8,carbs:14,fat:17,fiber:6},
  'guacamole':{kcal:150,protein:2,carbs:8,fat:13,fiber:6}
 };
+const mfitSugarOverrides={
+ 'banane':{sugar:12.2,addedSugar:0},'apfel':{sugar:10.4,addedSugar:0},'erdbeeren':{sugar:4.9,addedSugar:0},'heidelbeeren':{sugar:10,addedSugar:0},
+ 'orange':{sugar:9.4,addedSugar:0},'kiwi':{sugar:9,addedSugar:0},'birne':{sugar:9.8,addedSugar:0},'trauben':{sugar:15.5,addedSugar:0},'mango':{sugar:13.7,addedSugar:0},
+ 'skyr natur':{sugar:4,addedSugar:0},'skyr vanille':{sugar:9,addedSugar:4},'naturjoghurt':{sugar:5,addedSugar:0},'milch':{sugar:4.8,addedSugar:0},
+ 'fruchtjoghurt':{sugar:12,addedSugar:7},'protein pudding':{sugar:5,addedSugar:1},'haferflocken':{sugar:1,addedSugar:0},
+ 'cornflakes':{sugar:8,addedSugar:7},'kelloggs frosties':{sugar:37,addedSugar:35},'müsli':{sugar:15,addedSugar:8},'granola':{sugar:20,addedSugar:12},
+ 'coca-cola':{sugar:10.6,addedSugar:10.6},'orangensaft':{sugar:8.4,addedSugar:0},'apfelsaft':{sugar:9.6,addedSugar:0},
+ 'honig':{sugar:82,addedSugar:0},'ahornsirup':{sugar:60,addedSugar:0},'nutella':{sugar:56,addedSugar:52},'marmelade':{sugar:55,addedSugar:50},
+ 'schokolade':{sugar:52,addedSugar:48},'proteinriegel':{sugar:20,addedSugar:12},'müsliriegel':{sugar:25,addedSugar:18}
+};
+Object.keys(mfitSugarOverrides).forEach(k=>{if(mfitNutritionTemplates[k])Object.assign(mfitNutritionTemplates[k],mfitSugarOverrides[k]);else mfitNutritionTemplates[k]=mfitSugarOverrides[k]});
 const mfitDefaultPortions={
  'skyr':200,'magerquark':250,'topfen':150,'joghurt':150,'protein pudding':200,'hüttenkäse':150,
  'milch':250,'hafermilch':250,'ei':100,'eier':100,'hähnchenbrust':150,'putenbrust':150,'rindfleisch':150,'lachs':150,'thunfisch':100,
