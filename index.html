@@ -46,6 +46,32 @@ nav button{border-radius:12px;min-width:48px}
 .recipe-source{font-size:10px;color:#8fa296;margin-top:9px}
 @media(min-width:600px){.recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.recipe-photo{height:190px}}
 
+
+/* Personalizable MFit theme + refined interface */
+:root{--accent:var(--green);--accent-soft:color-mix(in srgb,var(--accent) 16%,transparent);--accent-border:color-mix(in srgb,var(--accent) 42%,#26352b)}
+body{background:radial-gradient(ellipse at 50% -18%,color-mix(in srgb,var(--accent) 18%,#142018) 0%,#0b110e 52%);background-attachment:fixed}
+header{background:linear-gradient(130deg,color-mix(in srgb,var(--accent) 22%,#111b14),#0d1410 78%);border-bottom:1px solid color-mix(in srgb,var(--accent) 24%,transparent)}
+.card{border-color:color-mix(in srgb,var(--accent) 15%,#26352b);box-shadow:0 12px 30px rgba(0,0,0,.22)}
+.big{color:var(--accent);text-shadow:0 0 24px color-mix(in srgb,var(--accent) 24%,transparent)}
+button:not(.secondary):not(.danger){background:var(--accent);color:#09130d}
+.pill{color:var(--accent);border-color:var(--accent-border);background:var(--accent-soft)}
+.progress span{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 78%,white),var(--accent))}
+nav button.active{color:var(--accent);background:var(--accent-soft)}
+.recipe-chip{border-color:var(--accent-border);background:var(--accent-soft);color:color-mix(in srgb,var(--accent) 72%,white)}
+.theme-card{border-color:color-mix(in srgb,var(--accent) 35%,#26352b)}
+.theme-picker-row{display:flex;align-items:center;gap:14px;padding:10px 0}
+.theme-picker-row input[type=color]{width:58px;height:52px;padding:4px;border-radius:14px;cursor:pointer;flex:0 0 58px}
+.theme-swatches{display:flex;flex-wrap:wrap;gap:12px;padding:8px 0 15px}
+button.theme-swatch{width:37px;height:37px;min-width:37px;padding:0;border-radius:50%;background:var(--swatch)!important;border:3px solid rgba(255,255,255,.2);box-shadow:0 0 0 1px rgba(255,255,255,.12);cursor:pointer}
+button.theme-swatch.selected{outline:2px solid white;outline-offset:3px}
+.theme-preview{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid var(--accent-border);border-radius:15px;background:var(--accent-soft)}
+.theme-preview>div{flex:1}.theme-preview-dot{width:24px;height:24px;border-radius:50%;background:var(--accent);box-shadow:0 0 18px color-mix(in srgb,var(--accent) 42%,transparent)}
+.theme-preview button{white-space:nowrap}
+h2{letter-spacing:-.35px}
+label{font-weight:600}
+input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in srgb,var(--accent) 55%,transparent);border-color:var(--accent)}
+@media(min-width:600px){.theme-swatches{gap:15px}}
+
 </style>
 </head>
 <body>
@@ -101,6 +127,7 @@ nav button{border-radius:12px;min-width:48px}
 </section>
 <section id="profile" class="hidden">
 <div class="card"><h2>Dein Profil & Ziele</h2><div class="grid"><div><label>Alter</label><input id="age" type="number" min="13" max="100" placeholder="z. B. 17"></div><div><label>Geschlecht für die Schätzung</label><select id="sex"><option value="male">Männlich</option><option value="female">Weiblich</option></select></div><div><label>Größe (cm)</label><input id="height" type="number" placeholder="z. B. 185"></div><div><label>Gewicht (kg)</label><input id="weight" type="number" step="0.1" placeholder="z. B. 78"></div></div><label>Dein Ziel</label><select id="fitnessGoal"><option value="lean">Lean Bulk – langsam Muskeln aufbauen</option><option value="muscle">Muskelaufbau</option><option value="maintain">Gewicht halten / Recomposition</option><option value="fatloss">Fett verlieren</option><option value="mass">Masse aufbauen / zunehmen</option></select><label>Alltagsaktivität</label><select id="activity"><option value="1.2">Wenig Bewegung, viel sitzen</option><option value="1.375">Leicht aktiv</option><option value="1.55" selected>Moderat aktiv</option><option value="1.725">Sehr aktiv</option><option value="1.9">Extrem aktiv</option></select><div class="grid"><div><label>Vereinstraining pro Woche</label><input id="sportSessions" type="number" min="0" max="20" value="0"></div><div><label>Sportart(en)</label><input id="sports" placeholder="z. B. Fußball, Gym"></div></div><label>Krafttrainingstage pro Woche</label><input id="gymDays" type="number" min="0" max="14" value="0"><label>Aktuelle Schritte pro Tag (optional)</label><input id="currentSteps" type="number" min="0" max="50000" placeholder="z. B. 8000"><div class="notice" id="fitnessResult">Trage deine Daten ein und berechne deinen ungefähren Bedarf.</div><button style="width:100%;margin-top:12px" onclick="calculateFitness()">Bedarf berechnen</button><button class="secondary" style="width:100%;margin-top:8px" onclick="saveFitnessProfile()">Profil & Ziele speichern</button><div class="muted" id="fitnessAdvice" style="margin-top:10px"></div><hr style="border-color:var(--line);margin:18px 0"><h3>Manuelle Ziele</h3><label>Kalorienziel pro Tag</label><input id="goalKcal" type="number" value="2800"><label>Proteinziel (g)</label><input id="goalProtein" type="number" value="150"><label>Ernährungsform</label><select id="profileDiet"><option>Alles</option><option>Vegetarisch</option><option>Pescetarisch</option><option>Vegan</option></select><button class="secondary" style="width:100%;margin-top:12px" onclick="saveGoals()">Manuelle Ziele speichern</button></div>
+<div class="card theme-card"><div class="row"><div><h2>🎨 Dein App-Design</h2><p class="muted">Wähle deine persönliche Akzentfarbe. Sie wird auf diesem Gerät gespeichert.</p></div><span class="pill">INDIVIDUELL</span></div><label>Farbe auswählen</label><div class="theme-picker-row"><input id="themeColorPicker" type="color" value="#65d58b" aria-label="Eigene Akzentfarbe auswählen"><div><b id="themeColorName">Performance Green</b><div class="muted">Du kannst jede Farbe einstellen.</div></div></div><label>Oder direkt ein Design wählen</label><div class="theme-swatches"><button type="button" class="theme-swatch" data-color="#65d58b" style="--swatch:#65d58b" aria-label="Grün" title="Performance Green"></button><button type="button" class="theme-swatch" data-color="#42c7e8" style="--swatch:#42c7e8" aria-label="Blau" title="Electric Blue"></button><button type="button" class="theme-swatch" data-color="#a78bfa" style="--swatch:#a78bfa" aria-label="Violett" title="Violet"></button><button type="button" class="theme-swatch" data-color="#ff7b9c" style="--swatch:#ff7b9c" aria-label="Pink" title="Pink"></button><button type="button" class="theme-swatch" data-color="#ffad5c" style="--swatch:#ffad5c" aria-label="Orange" title="Orange"></button><button type="button" class="theme-swatch" data-color="#f0cf63" style="--swatch:#f0cf63" aria-label="Gold" title="Gold"></button><button type="button" class="theme-swatch" data-color="#e7edf4" style="--swatch:#e7edf4" aria-label="Weiß" title="Ice"></button></div><div class="theme-preview"><span class="theme-preview-dot"></span><div><b>Dein MFit-Look</b><div class="muted">Vorschau deiner Akzentfarbe</div></div><button type="button" class="smallbtn" onclick="resetThemeColor()">Zurücksetzen</button></div></div>
 <div class="card"><h2>Erinnerungen</h2><p class="muted">Erlaube Mitteilungen und stelle Erinnerungen ein. Browser-Erinnerungen funktionieren nur eingeschränkt; zuverlässige Push-Erinnerungen bei geschlossener App benötigen später einen Push-Dienst.</p><label>Erinnerungszeit</label><input id="reminderTime" type="time" value="12:00"><label>Erinnerungstyp</label><select id="reminderKind"><option>Wasser trinken</option><option>Mahlzeit einplanen</option><option>Pre-Workout Snack</option><option>Post-Workout Mahlzeit</option></select><button style="width:100%;margin-top:10px" onclick="enableReminder()">Mitteilungen aktivieren</button><div id="reminderStatus" class="muted" style="margin-top:8px"></div></div>
 <div class="card"><h2>Körpergewicht-Verlauf</h2><p class="muted">Trage dein Gewicht gelegentlich ein und verfolge den Verlauf.</p><label>Aktuelles Gewicht (kg)</label><input id="weightLogInput" type="number" step="0.1" placeholder="z. B. 78,0"><button style="width:100%;margin-top:8px" onclick="saveWeightLog()">Gewicht speichern</button><div id="weightHistory" class="muted" style="margin-top:10px"></div></div>
 <div class="card"><h2>Trainingsernährung</h2><p class="muted">Vor dem Training (ca. 1–3 Stunden): leicht verdauliche Kohlenhydrate plus etwas Protein. Danach: eine normale Mahlzeit mit Protein und Kohlenhydraten. Timing und Menge an Hunger, Trainingsdauer und Verträglichkeit anpassen.</p><button class="secondary" onclick="alert('Pre-Workout: Banane + Skyr oder Brot + Topfen. Post-Workout: Reis mit Ei/Huhn/Tofu oder Skyr-Bowl. Passe Portionen an deinen Hunger und Tagesbedarf an.')">Ideen anzeigen</button></div>
@@ -109,6 +136,19 @@ nav button{border-radius:12px;min-width:48px}
 <nav><button class="active" data-tab="home" onclick="showTab('home')">⌂<br>Home</button><button data-tab="track" onclick="showTab('track')">＋<br>Track</button><button data-tab="recipes" onclick="showTab('recipes')">♨<br>Rezepte</button><button data-tab="shop" onclick="showTab('shop')">▣<br>Shop</button><button data-tab="fitness" onclick="showTab('fitness')">🏋️<br>Fitness</button><button data-tab="profile" onclick="showTab('profile')">◉<br>Profil</button></nav>
 <script>
 const $=id=>document.getElementById(id);
+const defaultThemeColor='#65d58b';
+function applyThemeColor(color,save=true){
+ const valid=/^#[0-9a-fA-F]{6}$/.test(String(color))?String(color):defaultThemeColor;
+ document.documentElement.style.setProperty('--green',valid);
+ document.documentElement.style.setProperty('--accent',valid);
+ if($('themeColorPicker'))$('themeColorPicker').value=valid;
+ const names={'#65d58b':'Performance Green','#42c7e8':'Electric Blue','#a78bfa':'Violet','#ff7b9c':'Pink','#ffad5c':'Orange','#f0cf63':'Gold','#e7edf4':'Ice'};
+ if($('themeColorName'))$('themeColorName').textContent=names[valid.toLowerCase()]||'Custom Color';
+ document.querySelectorAll('.theme-swatch').forEach(b=>b.classList.toggle('selected',b.dataset.color.toLowerCase()===valid.toLowerCase()));
+ if(save)storage.set('mfit_theme_color',valid);
+}
+function resetThemeColor(){applyThemeColor(defaultThemeColor);}
+
 const storage={get:key=>{try{return localStorage.getItem(key)}catch(e){return null}},set:(key,value)=>{try{localStorage.setItem(key,value)}catch(e){}}};
 let data=(()=>{try{const v=JSON.parse(storage.get('mfit_entries')||'[]');return Array.isArray(v)?v.filter(x=>x&&typeof x==='object'):[]}catch(e){return []}})();
 let nutritionBase={kcal:0,protein:0,carbs:0,fat:0,fiber:0,vitc:0,vitd:0,calcium:0,iron:0,magnesium:0,potassium:0,zinc:0,b12:0};
@@ -289,6 +329,9 @@ function renderRecovery(){
  if($('recoveryHistory'))$('recoveryHistory').innerHTML=recoveryLogs.slice(-7).reverse().map(x=>'<div class="item row"><span>'+esc(x.date)+' · '+x.sleep+' Std. Schlaf</span><span>Muskelkater '+x.soreness+'/10 · Energie '+x.energy+'/10</span></div>').join('');
 }
 
+if($('themeColorPicker'))$('themeColorPicker').addEventListener('input',e=>applyThemeColor(e.target.value));
+document.querySelectorAll('.theme-swatch').forEach(b=>b.addEventListener('click',()=>applyThemeColor(b.dataset.color)));
+applyThemeColor(storage.get('mfit_theme_color')||defaultThemeColor,false);
 $('diet').addEventListener('change',renderRecipes);$('focus').addEventListener('change',renderRecipes);$('unit').addEventListener('change',recalculateNutrition);
 $('shoppingItems').innerHTML=['Skyr','Eier','Haferflocken','Reis','Linsen','Tofu','Hähnchenbrust','Brokkoli','Beeren','Bananen'].map(x=>`<label><input type="checkbox" value="${x}" style="width:auto;margin-right:8px">${x}</label>`).join('');
 renderPresets();render();renderSteps();renderWeightHistory();loadProfile();if($('workoutDate'))$('workoutDate').value=localDate();if(!storage.get('mfit_setup_done')&&!storage.get('mfit_profile'))$('setupOverlay').style.display='block';if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
