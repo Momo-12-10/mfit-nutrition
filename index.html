@@ -18,7 +18,7 @@ nav button{background:transparent;color:var(--muted);padding:9px 7px;font-size:1
 .progress{height:9px;background:#2b3b30;border-radius:10px;overflow:hidden}.progress span{display:block;height:100%;background:var(--green)}
 .item{padding:10px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}.hidden{display:none}.pill{font-size:11px;color:var(--green);border:1px solid #376849;padding:4px 8px;border-radius:20px}
 h2{font-size:18px;margin:0 0 8px}h3{font-size:15px;margin:0 0 6px}
-.smallbtn{padding:7px 10px;font-size:12px}.notice{background:#1d3023;border:1px solid #31563b;padding:11px;border-radius:12px;font-size:13px;color:#d6f0dd}
+ .smallbtn{padding:7px 10px;font-size:12px}.savebar{position:sticky;bottom:78px;padding:10px 0;background:linear-gradient(transparent,var(--panel) 22%);z-index:4}.notice{background:#1d3023;border:1px solid #31563b;padding:11px;border-radius:12px;font-size:13px;color:#d6f0dd}
 @media(min-width:600px){main{padding:20px}.grid.three{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
@@ -48,7 +48,7 @@ h2{font-size:18px;margin:0 0 8px}h3{font-size:15px;margin:0 0 6px}
 <details style="margin-top:10px"><summary>Vitamine & Mineralstoffe (optional)</summary>
 <div class="grid"><div><label>Vitamin C für deine Menge (mg)</label><input id="vitc" type="number" min="0" value="0" onchange="updateNutritionBase('vitc')"></div><div><label>Vitamin D für deine Menge (µg)</label><input id="vitd" type="number" min="0" value="0" onchange="updateNutritionBase('vitd')"></div><div><label>Kalzium für deine Menge (mg)</label><input id="calcium" type="number" min="0" value="0" onchange="updateNutritionBase('calcium')"></div><div><label>Eisen für deine Menge (mg)</label><input id="iron" type="number" min="0" value="0" onchange="updateNutritionBase('iron')"></div><div><label>Magnesium für deine Menge (mg)</label><input id="magnesium" type="number" min="0" value="0" onchange="updateNutritionBase('magnesium')"></div><div><label>Kalium für deine Menge (mg)</label><input id="potassium" type="number" min="0" value="0" onchange="updateNutritionBase('potassium')"></div><div><label>Zink für deine Menge (mg)</label><input id="zinc" type="number" min="0" value="0" onchange="updateNutritionBase('zinc')"></div><div><label>Vitamin B12 für deine Menge (µg)</label><input id="b12" type="number" min="0" value="0" onchange="updateNutritionBase('b12')"></div></div></details>
 <label>Mahlzeit</label><select id="meal"><option>Frühstück</option><option>Mittagessen</option><option>Abendessen</option><option>Snack</option><option>Getränk</option></select>
-<button style="width:100%;margin-top:12px" onclick="addFood()">Eintrag speichern</button>
+<div class="savebar"><button style="width:100%" onclick="addFood()">Eintrag speichern</button></div>
 <p class="muted">Beispiel: Cola Zero hat je nach Produkt praktisch keine Kalorien. Bitte Etikettwerte und tatsächliche Menge eintragen. Getränke werden zusätzlich als Trinkmenge gezählt, wenn du ml angibst.</p></div>
 <div class="card"><h2>Lebensmittel-Vorlagen</h2><div id="presets"></div></div>
 </section>
