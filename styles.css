@@ -496,3 +496,9 @@ button:not(.secondary):not(.danger):not(.theme-swatch){background:linear-gradien
 .suggestion-meta,.suggestion-nutrition,.suggestion-status{font-size:11px;color:var(--muted)}
 .suggestion-nutrition{text-align:right;max-width:42%;line-height:1.4}
 .suggestion-status{padding:13px}
+
+/* v57 instant offline food suggestions */
+.product-suggestions{background:#111923;border-color:var(--line);max-height:340px}
+.product-suggestion{min-height:54px}
+.product-suggestion .suggestion-brand{color:var(--muted)}
+.product-suggestion .suggestion-nutrition{color:var(--green);font-weight:700}
