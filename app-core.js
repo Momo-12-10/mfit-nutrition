@@ -193,6 +193,12 @@ let productSearchTimer=null;
 let productSearchController=null;
 
 const mfitNutritionTemplates={
+ 'semmel':{kcal:290,protein:9,carbs:56,fat:2.5,fiber:2.5},
+ 'kaisersemmel':{kcal:290,protein:9,carbs:56,fat:2.5,fiber:2.5},
+ 'kornspitz':{kcal:270,protein:10,carbs:48,fat:3.5,fiber:7},
+ 'mohnflesserl':{kcal:310,protein:10,carbs:48,fat:8,fiber:4},
+ 'vollkornsemmel':{kcal:265,protein:10,carbs:44,fat:4,fiber:7},
+ 'weckerl':{kcal:280,protein:9,carbs:53,fat:3,fiber:3},
  'skyr natur':{kcal:63,protein:11,carbs:4,fat:.2,fiber:0,calcium:120,potassium:150},
  'skyr vanille':{kcal:85,protein:10,carbs:9,fat:.2,fiber:0,calcium:110},
  'skyr erdbeere':{kcal:78,protein:10,carbs:7,fat:.2,fiber:.5,calcium:110},
@@ -255,7 +261,7 @@ const mfitNutritionTemplates={
 const mfitDefaultPortions={
  'skyr':200,'magerquark':250,'topfen':150,'joghurt':150,'protein pudding':200,'hüttenkäse':150,
  'milch':250,'hafermilch':250,'ei':100,'eier':100,'hähnchenbrust':150,'putenbrust':150,'rindfleisch':150,'lachs':150,'thunfisch':100,
- 'reis':150,'nudeln':180,'haferflocken':50,'müsli':50,'cornflakes':40,'kelloggs':40,'brot':60,'toast':30,
+ 'reis':150,'nudeln':180,'haferflocken':50,'müsli':50,'cornflakes':40,'kelloggs':40,'brot':60,'toast':30,'semmel':60,'kaisersemmel':60,'kornspitz':75,'mohnflesserl':70,'vollkornsemmel':70,'weckerl':70,
  'banane':120,'apfel':150,'erdbeeren':150,'heidelbeeren':100,'avocado':70,'gurke':100,'tomaten':100,'paprika':100,'brokkoli':100,'karotten':100,'kartoffeln':200,'mandeln':25,'erdnussbutter':15,'schokolade':25,'chips':30,
  'cola':330,'pepsi':330,'red bull':250,'monster':500,'wasser':500,'eistee':500
 };
@@ -276,7 +282,7 @@ function setNutritionFromTemplate(t){
 }
 
 const mfitFoodCatalog=[
-'Skyr natur','Skyr Vanille','Skyr Erdbeere','Skyr Heidelbeere','Skyr Mango','Magerquark','Topfen','Griechisches Joghurt','Naturjoghurt','Fruchtjoghurt','Protein Pudding','Protein Joghurt','Hüttenkäse','Cottage Cheese','Milch','Hafermilch','Kakao','Eier','Eiklar','Hähnchenbrust','Putenbrust','Rindfleisch','Lachs','Thunfisch','Schinken','Salami','Käse','Mozzarella','Gouda','Emmentaler','Butter','Frischkäse','Tofu','Linsen','Kichererbsen','Bohnen','Reis','Basmatireis','Vollkornreis','Nudeln','Vollkornnudeln','Haferflocken','Müsli','Cornflakes','Kelloggs Frosties','Kelloggs Corn Flakes','Kelloggs Choco Krispies','Granola','Brot','Vollkornbrot','Toast','Semmel','Wrap','Tortilla','Banane','Apfel','Erdbeeren','Heidelbeeren','Himbeeren','Orange','Kiwi','Avocado','Gurke','Tomaten','Paprika','Brokkoli','Karotten','Kartoffeln','Süßkartoffeln','Salat','Spinat','Mais','Erbsen','Nüsse','Mandeln','Erdnussbutter','Honig','Marmelade','Schokolade','Proteinriegel','Müsliriegel','Chips','Reiswaffeln','Popcorn','Pizza','Pommes','Sushi','Cola Zero','Coca-Cola','Pepsi Max','Red Bull Sugarfree','Monster Ultra','Wasser','Mineralwasser','Eistee Zero','Orangensaft','Apfelsaft','Kaffee','Cappuccino','Energy Drink','Iso Drink','Butterkäse','Parmesan','Feta','Skyr Drink','Proteindrink','Milchreis','Grießbrei','Pudding','Porridge','Sauerteigbrot','Knäckebrot','Kürbiskerne','Chiasamen','Leinsamen','Olivenöl','Rapsöl','Ketchup','Senf','Hummus','Guacamole'
+'Skyr natur','Skyr Vanille','Skyr Erdbeere','Skyr Heidelbeere','Skyr Mango','Magerquark','Topfen','Griechisches Joghurt','Naturjoghurt','Fruchtjoghurt','Protein Pudding','Protein Joghurt','Hüttenkäse','Cottage Cheese','Milch','Hafermilch','Kakao','Eier','Eiklar','Hähnchenbrust','Putenbrust','Rindfleisch','Lachs','Thunfisch','Schinken','Salami','Käse','Mozzarella','Gouda','Emmentaler','Butter','Frischkäse','Tofu','Linsen','Kichererbsen','Bohnen','Reis','Basmatireis','Vollkornreis','Nudeln','Vollkornnudeln','Haferflocken','Müsli','Cornflakes','Kelloggs Frosties','Kelloggs Corn Flakes','Kelloggs Choco Krispies','Granola','Brot','Vollkornbrot','Toast','Semmel','Kaisersemmel','Kornspitz','Mohnflesserl','Vollkornsemmel','Weckerl','Mohnweckerl','Vollkornweckerl','Laugenstange','Breze','Wrap','Tortilla','Banane','Apfel','Erdbeeren','Heidelbeeren','Himbeeren','Orange','Kiwi','Avocado','Gurke','Tomaten','Paprika','Brokkoli','Karotten','Kartoffeln','Süßkartoffeln','Salat','Spinat','Mais','Erbsen','Nüsse','Mandeln','Erdnussbutter','Honig','Marmelade','Schokolade','Proteinriegel','Müsliriegel','Chips','Reiswaffeln','Popcorn','Pizza','Pommes','Sushi','Cola Zero','Coca-Cola','Pepsi Max','Red Bull Sugarfree','Monster Ultra','Wasser','Mineralwasser','Eistee Zero','Orangensaft','Apfelsaft','Kaffee','Cappuccino','Energy Drink','Iso Drink','Butterkäse','Parmesan','Feta','Skyr Drink','Proteindrink','Milchreis','Grießbrei','Pudding','Porridge','Sauerteigbrot','Knäckebrot','Kürbiskerne','Chiasamen','Leinsamen','Olivenöl','Rapsöl','Ketchup','Senf','Hummus','Guacamole'
 ];
 function getLocalProductSuggestions(query){
  const q=String(query||'').trim().toLocaleLowerCase('de');
@@ -286,12 +292,15 @@ function getLocalProductSuggestions(query){
   const key=clean.toLocaleLowerCase('de');if(seen.has(key))return;seen.add(key);
   items.push({product_name:clean,product_name_de:clean,brands:source==='Zuletzt verwendet'?'Deine Einträge':'',nutriments:{},categories:'Lebensmittel',stores:source,local:true});
  };
+ const norm=s=>String(s||'').toLocaleLowerCase('de').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/ß/g,'ss').trim();
+ const aliases={'semmel':['Semmel','Kaisersemmel','Kornspitz','Mohnflesserl','Vollkornsemmel'],'kaisersemmel':['Kaisersemmel','Semmel'],'weckerl':['Weckerl','Kornspitz','Mohnweckerl','Vollkornweckerl'],'brot':['Brot','Mischbrot','Roggenbrot','Vollkornbrot','Sauerteigbrot'],'apfel':['Apfel','Äpfel'],'ei':['Ei','Eier']};
+ const aliasMatches=Object.entries(aliases).filter(([k])=>norm(k).startsWith(norm(q))||norm(q).startsWith(norm(k))).flatMap(([,v])=>v);
+ const matches=mfitFoodCatalog.filter(n=>!q||norm(n).startsWith(norm(q))||norm(n).split(/[\\s-]+/).some(w=>norm(w).startsWith(norm(q))));
+ const secondary=mfitFoodCatalog.filter(n=>q&&!matches.includes(n)&&norm(n).includes(norm(q)));
+ [...aliasMatches,...matches,...secondary].forEach(n=>add(n,'Häufige Lebensmittel'));
  const recent=[];
- data.slice().reverse().forEach(e=>{if(e.name&&!recent.some(x=>x.toLowerCase()===String(e.name).toLowerCase()))recent.push(String(e.name));});
- recent.forEach(n=>{if(!q||n.toLocaleLowerCase('de').includes(q))add(n,'Zuletzt verwendet');});
- const matches=mfitFoodCatalog.filter(n=>!q||n.toLocaleLowerCase('de').startsWith(q)||n.toLocaleLowerCase('de').split(/[\s-]+/).some(w=>w.startsWith(q)));
- const secondary=mfitFoodCatalog.filter(n=>q&&!matches.includes(n)&&n.toLocaleLowerCase('de').includes(q));
- [...matches,...secondary].forEach(n=>add(n,'Häufige Lebensmittel'));
+ data.slice().reverse().forEach(e=>{if(e.name&&!recent.some(x=>norm(x)===norm(e.name)))recent.push(String(e.name));});
+ recent.filter(n=>!q||norm(n).includes(norm(q))).slice(0,8).forEach(n=>add(n,'Zuletzt verwendet'));
  return items.slice(0,30);
 }
 function searchProductSuggestions(query){productSearchResults=getLocalProductSuggestions(query);renderProductSuggestions(productSearchResults);}
