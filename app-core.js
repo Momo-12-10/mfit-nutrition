@@ -265,7 +265,7 @@ const mfitNutritionTemplates={
  'hühnerbrust aufschnitt':{kcal:105,protein:21,carbs:1,fat:1.8,fiber:0},
  'hühnerfarmerschinken':{kcal:105,protein:20,carbs:1.5,fat:2.2,fiber:0},
  'farmerschinken':{kcal:115,protein:19,carbs:1,fat:3.5,fiber:0},
- 'schwarzwälder schinken':{kcal:220,protein:ig,carbs:0.5,fat:10,fiber:0},
+ 'schwarzwälder schinken':{kcal:220,protein:26,carbs:0.5,fat:10,fiber:0},
  'kochschinken':{kcal:115,protein:20,carbs:1,fat:3,fiber:0},
  'beinschinken':{kcal:115,protein:20,carbs:1,fat:3,fiber:0},
  'toastschinken':{kcal:110,protein:19,carbs:1,fat:3,fiber:0},
