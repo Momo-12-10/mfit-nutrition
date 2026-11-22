@@ -212,6 +212,76 @@ nav button{flex:1 1 0;min-width:0;min-height:50px;padding:7px 3px;font-size:10px
 }
 @media(min-width:600px){main{padding:22px 20px 32px}.card{padding:20px}}
 
+
+
+/* v31 — mehr Erlebnis, klare Bereiche und weniger Formular-Wand */
+section:not(.hidden){animation:mfitSectionIn .28s ease both}
+@keyframes mfitSectionIn{from{opacity:.0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+section:not(#home)::before{display:block;margin:5px 4px 17px;color:var(--accent);font-size:10px;font-weight:850;letter-spacing:1.8px;text-transform:uppercase}
+#track::before{content:"DEIN FOOD JOURNAL  /  ERFASSEN"}
+#recipes::before{content:"INSPIRATION  /  REZEPTE"}
+#shop::before{content:"DEIN ALLTAG  /  EINKAUFEN"}
+#fitness::before{content:"PERFORMANCE  /  TRAINING"}
+#profile::before{content:"PERSÖNLICH  /  EINSTELLUNGEN"}
+.card{margin:16px 0;padding:20px;overflow:hidden}
+.card h2{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.card h2:before{content:"";width:4px;height:18px;flex:0 0 4px;border-radius:8px;background:var(--accent);box-shadow:0 0 14px var(--accent-soft)}
+#home>.card:first-child{padding:22px;background:linear-gradient(125deg,color-mix(in srgb,var(--accent) 19%,#1b2b3b),#111b27 75%);border-color:color-mix(in srgb,var(--accent) 38%,#293542)}
+#home>.grid.three{gap:10px;margin:12px 0}
+#home>.grid.three>.card{min-height:122px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:15px 13px}
+#home>.grid.three .muted:first-child{font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:800}
+#home>.grid.three .big{font-size:clamp(22px,6vw,29px)}
+#home>.card{margin:14px 0}
+#home .notice{line-height:1.6}
+#track .card:first-child{background:linear-gradient(155deg,color-mix(in srgb,var(--accent) 9%,#1b2938),#111923 65%);border-color:color-mix(in srgb,var(--accent) 25%,#293542)}
+#track label{margin-top:17px}
+#track input,#track select{margin-bottom:2px}
+#track .grid{margin-top:12px}
+#track .notice{margin-top:15px;line-height:1.55}
+#track details{margin-top:18px!important;padding:14px;border:1px solid var(--border-soft);border-radius:15px;background:rgba(255,255,255,.025)}
+#track summary{font-weight:750;color:#dce6f1;cursor:pointer}
+#track details .grid{margin-top:12px}
+.recipe-grid{grid-template-columns:1fr;gap:16px}
+.recipe-card{min-width:0;transition:transform .2s ease,border-color .2s ease}
+.recipe-card:active{transform:scale(.99)}
+.recipe-photo{height:190px}
+.recipe-content{display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.recipe-desc{line-height:1.55}
+.recipe-meta{margin-top:11px}
+#fitness .card,#profile .card,#shop .card{margin:17px 0}
+#fitness .card h2,#profile .card h2,#shop .card h2{margin-bottom:17px}
+#fitness .grid,#profile .grid,#shop .grid{gap:12px}
+#fitness .item,#profile .item,#shop .item{padding:14px 2px}
+#fitness input,#fitness select,#profile input,#profile select,#shop input,#shop select{margin-bottom:3px}
+#fitness .notice,#profile .notice,#shop .notice{line-height:1.6}
+button{min-height:46px}
+button.secondary{background:linear-gradient(145deg,#263647,#1b2734)}
+input,select,textarea{box-shadow:inset 0 1px 2px rgba(0,0,0,.15)}
+input::placeholder{opacity:.8}
+.progress{margin:10px 0 5px}
+@media(max-width:390px){
+ .card{padding:16px;margin:14px 0}
+ #home>.grid.three>.card{padding:13px 10px;min-height:112px}
+ .recipe-card{display:grid;grid-template-columns:112px minmax(0,1fr);align-items:stretch}
+ .recipe-photo{height:100%;min-height:190px;max-height:240px}
+ .recipe-content{padding:12px 11px}
+ .recipe-title{font-size:14px;line-height:1.35}
+ .recipe-desc{font-size:11px;line-height:1.4}
+ .recipe-meta{gap:5px;margin-top:8px}
+ .recipe-chip{font-size:10px;padding:4px 7px}
+ .recipe-source{display:none}
+}
+@media(min-width:391px) and (max-width:599px){
+ .recipe-card{display:grid;grid-template-columns:125px minmax(0,1fr);align-items:stretch}
+ .recipe-photo{height:100%;min-height:190px}
+ .recipe-content{padding:13px}
+}
+@media(min-width:600px){
+ .recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .recipe-card{display:flex;flex-direction:column}
+ .recipe-photo{height:180px;min-height:0}
+}
+
 </style>
 </head>
 <body>
