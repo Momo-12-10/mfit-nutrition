@@ -20,6 +20,32 @@ nav button{background:transparent;color:var(--muted);padding:9px 7px;font-size:1
 h2{font-size:18px;margin:0 0 8px}h3{font-size:15px;margin:0 0 6px}
  .smallbtn{padding:7px 10px;font-size:12px}.savebar{position:sticky;bottom:78px;padding:10px 0;background:linear-gradient(transparent,var(--panel) 22%);z-index:4}.notice{background:#1d3023;border:1px solid #31563b;padding:11px;border-radius:12px;font-size:13px;color:#d6f0dd}
 @media(min-width:600px){main{padding:20px}.grid.three{grid-template-columns:repeat(3,1fr)}}
+
+/* MFit visual refresh */
+body{background:radial-gradient(ellipse at 50% -15%,#203b2a 0%,#0d1410 48%);background-attachment:fixed}
+header{background:linear-gradient(135deg,rgba(31,65,43,.96),rgba(13,20,16,.96));border-bottom:1px solid rgba(101,213,139,.16);padding-top:28px}
+header h1{letter-spacing:-.7px;font-size:28px}
+.card{background:linear-gradient(145deg,rgba(29,43,33,.98),rgba(19,29,22,.98));border:1px solid rgba(128,171,139,.16);box-shadow:0 10px 28px rgba(0,0,0,.18);border-radius:20px;padding:17px;transition:transform .18s ease,border-color .18s ease}
+.card h2{letter-spacing:-.25px}
+.big{letter-spacing:-1px;text-shadow:0 0 22px rgba(101,213,139,.12)}
+button{box-shadow:0 5px 14px rgba(42,145,78,.12);transition:transform .15s ease,filter .15s ease}
+button:active{transform:scale(.97)}
+button.secondary{box-shadow:none}
+input,select,textarea{background:#0d1711;border-color:#34483a}
+nav{backdrop-filter:blur(16px);background:rgba(15,25,19,.94);border-top:1px solid rgba(128,171,139,.18)}
+nav button{border-radius:12px;min-width:48px}
+.recipe-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px}
+.recipe-card{overflow:hidden;border:1px solid rgba(128,171,139,.18);border-radius:18px;background:linear-gradient(145deg,#1d2b21,#121d16);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.recipe-photo{width:100%;height:178px;object-fit:cover;display:block;background:#25352a}
+.recipe-content{padding:13px 14px 15px}
+.recipe-title{font-size:16px;font-weight:800;margin:0 0 7px}
+.recipe-meta{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.recipe-chip{font-size:11px;border:1px solid #3b5b43;background:#1c3323;color:#bfe9c9;border-radius:20px;padding:5px 9px}
+.recipe-desc{font-size:13px;color:var(--muted);line-height:1.45}
+.recipe-nutrition{display:flex;gap:14px;font-size:13px;font-weight:700}
+.recipe-source{font-size:10px;color:#8fa296;margin-top:9px}
+@media(min-width:600px){.recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.recipe-photo{height:190px}}
+
 </style>
 </head>
 <body>
@@ -102,11 +128,12 @@ const presets=[
 {name:'Hähnchenbrust',kcal:110,protein:23,carbs:0,fat:1.5,fiber:0,drink:0}
 ];
 const recipes=[
-{name:'Skyr-Beeren-Bowl',diet:'Vegetarisch',kcal:320,p:38,desc:'Skyr, Beeren, Haferflocken, Chiasamen'},
-{name:'Hähnchen-Reis-Bowl',diet:'Omnivor',kcal:480,p:52,desc:'Hähnchen, Reis, Brokkoli und Paprika'},
-{name:'Linsen-Tofu-Pfanne',diet:'Vegan',kcal:420,p:32,desc:'Tofu, Linsen, Spinat und Gemüse'},
-{name:'Thunfisch-Wrap',diet:'Pescetarisch',kcal:360,p:39,desc:'Thunfisch, Vollkornwrap und Skyr-Dip'},
-{name:'Gemüse-Omelett',diet:'Vegetarisch',kcal:280,p:25,desc:'Eier, Spinat und Tomaten'}
+{name:'Skyr-Beeren-Bowl',diet:'Vegetarisch',kcal:320,p:38,desc:'Skyr, Beeren, Haferflocken und Chiasamen',image:'https://skyrrup.com/cdn/shop/articles/berry-protein-skyr-bowl.png?v=1765952368',source:'Food-Foto: Skyrrup'},
+{name:'Hähnchen-Reis-Bowl',diet:'Omnivor',kcal:480,p:52,desc:'Hähnchen, Reis, Brokkoli und Paprika',image:'https://snapcalorie-webflow-website.s3.us-east-2.amazonaws.com/media/food_pics_v2/medium/one_cup_grilled_chicken.jpg',source:'Food-Foto: SnapCalorie'},
+{name:'Linsen-Tofu-Pfanne',diet:'Vegan',kcal:420,p:32,desc:'Tofu, Linsen, Spinat und Gemüse',image:'https://res.cloudinary.com/solin-fitness/image/upload/c_scale%2Cw_800%2Cq_auto%2Cf_auto/single-meal-images/inimkmbcpkmcm8ijnjeb',source:'Food-Foto: Solin'},
+{name:'Hähnchen-Avocado-Wrap',diet:'Omnivor',kcal:430,p:40,desc:'Vollkornwrap mit Hähnchen, Avocado und Salat',image:'https://snapcalorie-webflow-website.s3.us-east-2.amazonaws.com/media/recipe_pics_v2/medium/chicken_and_avocado_wrap.jpg',source:'Food-Foto: SnapCalorie'},
+{name:'Protein-Pancakes',diet:'Vegetarisch',kcal:390,p:29,desc:'Lockere Pancakes mit Beeren',image:'https://www.infobae.com/resizer/v2/PD6XXYEP6FDCPBAD5CKHZ5J7FU.jpeg?auth=d20eb1eaa7cd64dd4a8cc5fd8c190b4f32ca170ff529bed27c58cafc3b84d585',source:'Food-Foto: Infobae'},
+{name:'Lachs-Reis-Teller',diet:'Pescetarisch',kcal:510,p:36,desc:'Lachs mit Reis und mediterranem Gemüse',image:'https://fiuel.es/cdn/shop/files/Gemini_Generated_Image_hihltbhihltbhihl.png?v=1775033409&width=1946',source:'Food-Foto: Fiuel'}
 ];
 
 function getPackAmount(product){
@@ -206,7 +233,7 @@ function removeEntry(i){water=Math.max(0,water-(data[i].drink||0));data.splice(i
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function renderPresets(){$('presets').innerHTML=presets.map((x,i)=>`<div class="item row"><div><b>${x.name}</b><div class="muted">${x.kcal} kcal · ${x.protein} g Protein / 100 g bzw. Portion</div></div><button class="smallbtn" onclick="usePreset(${i})">Nutzen</button></div>`).join('')}
 function usePreset(i){let x=presets[i];$('foodName').value=x.name;$('amount').value=x.drink?x.drink:100;$('unit').value=x.drink?'ml':'g';nutritionBase={...nutritionBase,kcal:x.kcal,protein:x.protein,carbs:x.carbs,fat:x.fat,fiber:x.fiber};recalculateNutrition();$('drink').value=x.drink}
-function renderRecipes(){let d=$('diet').value,focus=$('focus').value;let r=recipes.filter(x=>d==='Alle'||x.diet===d);r.sort((a,b)=>focus==='Proteinreich'?b.p-a.p:focus==='Kalorienarm'?a.kcal-b.kcal:b.p/a.kcal-a.p/a.kcal);$('recipeList').innerHTML=r.map(x=>`<div class="item"><b>${x.name}</b> <span class="pill">${x.diet}</span><div class="muted">${x.desc}</div><div>${x.kcal} kcal · ${x.p} g Protein</div></div>`).join('')}
+function renderRecipes(){let d=$('diet').value,focus=$('focus').value;let r=recipes.filter(x=>d==='Alle'||x.diet===d);r.sort((a,b)=>focus==='Proteinreich'?b.p-a.p:focus==='Kalorienarm'?a.kcal-b.kcal:b.p/a.kcal-a.p/a.kcal);$('recipeList').innerHTML='<div class="recipe-grid">'+r.map(x=>`<article class="recipe-card"><img class="recipe-photo" src="${x.image}" alt="Food-Foto: ${x.name}" loading="lazy" onerror="this.style.display='none'"><div class="recipe-content"><div class="recipe-title">${x.name}</div><span class="pill">${x.diet}</span><div class="recipe-desc" style="margin-top:9px">${x.desc}</div><div class="recipe-meta"><span class="recipe-chip">${x.kcal} kcal</span><span class="recipe-chip">${x.p} g Protein</span></div><div class="recipe-source">${x.source||'Food-Foto'}</div></div></article>`).join('')+'</div>'}
 function suggestFromIngredients(){let s=$('ingredients').value.trim();$('ingredientIdeas').textContent=s?'Ideen: Skyr-Bowl, Gemüse-Omelett oder eine Reis-/Linsen-Pfanne – abhängig von den genannten Zutaten. Für konkrete Rezepte und Mengen braucht es eine verbundene Rezept-KI.':'Bitte zuerst Zutaten eingeben.'}
 function calcTargets(age,sex,height,weight,activity,goal,sessions,gym){const bmr=10*weight+6.25*height-5*age+(sex==='male'?5:-161);const sportBonus=Math.min(350,Math.max(0,sessions)*55+Math.max(0,gym)*25);const maintenance=Math.round((bmr*activity+sportBonus)/50)*50;let kcal=maintenance+({lean:150,muscle:200,maintain:0,fatloss:-300,mass:300}[goal]||0);const teen=age<18;if(teen)kcal=maintenance;const protein=Math.round(weight*2);const steps=activity<=1.2?7000:activity<=1.375?8000:activity<=1.55?9000:10000;return{bmr:Math.round(bmr),maintenance,kcal,protein,steps,teen};}
 function calculateFitness(){const age=Number($('age').value),height=Number($('height').value),weight=Number($('weight').value);if(!age||!height||!weight||age<13||height<120||weight<30){$('fitnessResult').textContent='Bitte Alter, Größe und Gewicht gültig eintragen.';return null;}const r=calcTargets(age,$('sex').value,height,weight,Number($('activity').value),$('fitnessGoal').value,Number($('sportSessions').value)||0,Number($('gymDays').value)||0);$('fitnessResult').innerHTML='<b>Deine ungefähren Richtwerte</b><br>Erhaltung: '+r.maintenance+' kcal/Tag<br>Zielwert: '+r.kcal+' kcal/Tag<br>Protein: '+r.protein+' g/Tag<br>Schritte: etwa '+r.steps.toLocaleString('de-AT')+' pro Tag<br>Grundumsatz (geschätzt): '+r.bmr+' kcal';$('fitnessAdvice').textContent=r.teen?'Du bist unter 18: Dein Körper wächst noch. Die App setzt bei „Fett verlieren“ deshalb keinen automatischen Kaloriendefizitwert. Bitte besprich Abnehmziele mit Arzt/Ärztin oder Sporternährungsfachkraft.':'Die Werte sind Startschätzungen, keine exakten Vorgaben. Passe sie anhand von Energie, Leistung und längerfristigem Verlauf vorsichtig an.';return r;}
