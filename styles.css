@@ -431,21 +431,20 @@ body nav.mfit-nav button.active .nav-icon{transform:translateY(-1px);color:var(-
 #addWeekShopBtn:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:390px){.shop-catalog{gap:6px}.shop-product{padding:9px 8px;font-size:11px}.shop-price-fields{grid-template-columns:minmax(0,1fr) minmax(62px,.7fr) 34px}}
 
-/* v42 — Einkaufs-Produktkästchen strikt neutral, unabhängig von Theme und Button-Regeln */
-#shop #shopCatalog .shop-product,
-#shop #shopCatalog button.shop-product,
-#shop .shop-catalog .shop-product,
-#shop .shop-catalog button.shop-product,
-#shop .shop-catalog button.shop-product:visited,
-#shop .shop-catalog button.shop-product:hover,
-#shop .shop-catalog button.shop-product:focus,
-#shop .shop-catalog button.shop-product:active{
-  background:#222d3a!important;
+/* v43 — exakt die gelben Lebensmittel-Kacheln im Shop neutral grau darstellen */
+#shop #shopCatalog button.shop-product{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  background:#26313e!important;
+  background-color:#26313e!important;
   background-image:none!important;
   color:#edf2f8!important;
-  border:1px solid rgba(190,205,222,.15)!important;
+  border:1px solid #3a4858!important;
   box-shadow:none!important;
 }
-#shop .shop-catalog .shop-product span,
-#shop .shop-catalog .shop-product b{color:#edf2f8!important}
-#shop .shop-catalog .shop-product small{color:#9cabbc!important}
+#shop #shopCatalog button.shop-product span,
+#shop #shopCatalog button.shop-product b{color:#edf2f8!important}
+#shop #shopCatalog button.shop-product small{color:#aab6c5!important}
+#shop #shopCatalog button.shop-product:active,
+#shop #shopCatalog button.shop-product:hover,
+#shop #shopCatalog button.shop-product:focus{background:#303d4c!important;background-image:none!important}
