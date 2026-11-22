@@ -186,3 +186,62 @@ function saveFitnessProfile(){const r=calculateFitness();if(!r)return;const prof
 function saveSetup(){const map=[['setupAge','age'],['setupSex','sex'],['setupHeight','height'],['setupWeight','weight'],['setupGoal','fitnessGoal'],['setupActivity','activity'],['setupSessions','sportSessions'],['setupSports','sports'],['setupGym','gymDays']];map.forEach(([a,b])=>$(b).value=$(a).value);const r=calculateFitness();if(!r)return;saveFitnessProfile();storage.set('mfit_setup_done','1');$('setupOverlay').style.display='none';}
 function skipSetup(){storage.set('mfit_setup_done','1');$('setupOverlay').style.display='none';}
 function loadProfile(){let p=null;try{p=JSON.parse(storage.get('mfit_profile')||'null')}catch(e){}if(!p||typeof p!=='object')return;const vals={age:p.age,sex:p.sex,height:p.height,weight:p.weight,fitnessGoal:p.goal,activity:p.activity,sportSessions:p.sessions,sports:p.sports,gymDays:p.gym,currentSteps:p.steps};Object.entries(vals).forEach(([k,v])=>{if($(k)&&v!==undefined)$(k).value=v;});if(Number(p.weight)>0){goals.protein=Math.round(Number(p.weight)*2);storage.set('mfit_goals',JSON.stringify(goals));}$('goalKcal').value=goals.kcal;$('goalProtein').value=goals.protein;}
+
+/* MFit product autocomplete: live community product search */
+let productSearchResults=[];
+let productSearchTimer=null;
+let productSearchController=null;
+async function searchProductSuggestions(query){
+ const box=$('productSuggestions');if(!box)return;
+ if(productSearchController)productSearchController.abort();
+ productSearchController=new AbortController();
+ box.hidden=false;box.innerHTML='<div class="suggestion-status">🔎 Suche passende Produkte …</div>';
+ try{
+  const fields='code,product_name,product_name_de,generic_name,brands,quantity,product_quantity,product_quantity_unit,nutriments,categories';
+  const url='https://world.openfoodfacts.org/api/v2/search?search_terms='+encodeURIComponent(query)+'&page_size=10&fields='+fields;
+  const response=await fetch(url,{signal:productSearchController.signal,headers:{Accept:'application/json'}});
+  if(!response.ok)throw new Error('Suche gerade nicht verfügbar');
+  const payload=await response.json(),seen=new Set();
+  productSearchResults=(payload.products||[]).filter(p=>{
+   const name=p.product_name_de||p.product_name||p.generic_name||'';
+   const key=(String(p.brands||'')+' '+name).toLowerCase().trim();
+   if(!name||seen.has(key))return false;seen.add(key);return true;
+  }).slice(0,10);
+  if(!productSearchResults.length){box.innerHTML='<div class="suggestion-status">Keine passenden Produkte gefunden. Du kannst den Namen trotzdem manuell eintragen.</div>';return;}
+  box.innerHTML=productSearchResults.map((p,i)=>{
+   const name=p.product_name_de||p.product_name||p.generic_name||'Produkt',brand=p.brands||'Marke nicht angegeben';
+   const categories=String(p.categories||'').split(',').map(x=>x.trim()).filter(Boolean).slice(0,2).join(' · ');
+   const n=p.nutriments||{},kcal=Number(n['energy-kcal_100g']??(n['energy-kj_100g']?n['energy-kj_100g']/4.184:0)),protein=Number(n.proteins_100g||0);
+   const nutrition=(kcal||protein)?Math.round(kcal)+' kcal · '+protein.toLocaleString('de-AT',{maximumFractionDigits:1})+' g Protein / 100 g':'Nährwerte nicht hinterlegt';
+   return '<button type="button" class="product-suggestion" role="option" onclick="selectProductSuggestion('+i+')"><span class="suggestion-main"><b>'+esc(name)+'</b><span class="suggestion-brand">'+esc(brand)+'</span><span class="suggestion-meta">'+esc(categories||'Lebensmittel / Getränk')+'</span></span><span class="suggestion-nutrition">'+esc(nutrition)+'</span></button>';
+  }).join('');
+ }catch(error){if(error.name==='AbortError')return;box.innerHTML='<div class="suggestion-status">Produktsuche gerade nicht erreichbar. Prüfe deine Internetverbindung oder gib das Produkt manuell ein.</div>';}
+}
+function selectProductSuggestion(index){
+ const p=productSearchResults[index];if(!p)return;
+ const name=p.product_name_de||p.product_name||p.generic_name||'Produkt';
+ $('foodName').value=(p.brands?p.brands+' – ':'')+name;
+ if($('barcode'))$('barcode').value=p.code||'';
+ const cats=String(p.categories||'').toLowerCase(),tags=Array.isArray(p.categories_tags)?p.categories_tags.join(' '):'';
+ const isDrink=/beverage|drink|getränk|wasser|soft-drink|juice|soda/.test(cats+' '+tags);
+ $('unit').value=isDrink?'ml':'g';$('amount').value=100;$('packSize').value='';$('portionMode').value='custom';
+ setNutritionFromProduct(p.nutriments||{});
+ $('drink').value=isDrink?100:0;
+ if(isDrink)$('meal').value='Getränk';else if($('meal').value==='Getränk')$('meal').value='Snack';
+ const pack=getPackAmount(p);
+ if(pack){$('packSize').value=pack.amount;$('unit').value=pack.unit;$('portionMode').value='whole';applyPortionMode();if(isDrink)$('drink').value=Number($('amount').value)||pack.amount;}
+ $('barcodeStatus').textContent='Ausgewählt: '+(p.brands?p.brands+' – ':'')+name+'. Nährwerte aus Open Food Facts übernommen, soweit vorhanden. Bitte mit der Verpackung vergleichen.';
+ $('productSuggestions').hidden=true;$('productSuggestions').innerHTML='';$('amount').focus();
+}
+function initProductAutocomplete(){
+ const input=$('foodName');if(!input)return;
+ input.addEventListener('input',()=>{
+  const q=input.value.trim();if(productSearchTimer)clearTimeout(productSearchTimer);
+  if(productSearchController)productSearchController.abort();
+  const box=$('productSuggestions');
+  if(q.length<1){if(box){box.hidden=true;box.innerHTML='';}return;}
+  productSearchTimer=setTimeout(()=>searchProductSuggestions(q),350);
+ });
+ document.addEventListener('click',event=>{const box=$('productSuggestions');if(box&&!box.contains(event.target)&&event.target!==input)box.hidden=true;});
+}
+initProductAutocomplete();
