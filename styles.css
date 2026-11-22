@@ -431,9 +431,21 @@ body nav.mfit-nav button.active .nav-icon{transform:translateY(-1px);color:var(-
 #addWeekShopBtn:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:390px){.shop-catalog{gap:6px}.shop-product{padding:9px 8px;font-size:11px}.shop-price-fields{grid-template-columns:minmax(0,1fr) minmax(62px,.7fr) 34px}}
 
-
-
-/* v41 — Produktkacheln im Einkauf neutral halten, unabhängig von der Akzentfarbe */
-.shop-catalog button.shop-product,
-.shop-catalog button.shop-product:not(.secondary):not(.danger):not(.theme-swatch){background:#202a36!important;color:#e8edf4!important;border:1px solid rgba(190,205,222,.13)!important;box-shadow:none!important}
-.shop-catalog button.shop-product:active{background:#293646!important}
+/* v42 — Einkaufs-Produktkästchen strikt neutral, unabhängig von Theme und Button-Regeln */
+#shop #shopCatalog .shop-product,
+#shop #shopCatalog button.shop-product,
+#shop .shop-catalog .shop-product,
+#shop .shop-catalog button.shop-product,
+#shop .shop-catalog button.shop-product:visited,
+#shop .shop-catalog button.shop-product:hover,
+#shop .shop-catalog button.shop-product:focus,
+#shop .shop-catalog button.shop-product:active{
+  background:#222d3a!important;
+  background-image:none!important;
+  color:#edf2f8!important;
+  border:1px solid rgba(190,205,222,.15)!important;
+  box-shadow:none!important;
+}
+#shop .shop-catalog .shop-product span,
+#shop .shop-catalog .shop-product b{color:#edf2f8!important}
+#shop .shop-catalog .shop-product small{color:#9cabbc!important}
