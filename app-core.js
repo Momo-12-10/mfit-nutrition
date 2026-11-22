@@ -191,6 +191,90 @@ function loadProfile(){let p=null;try{p=JSON.parse(storage.get('mfit_profile')||
 let productSearchResults=[];
 let productSearchTimer=null;
 let productSearchController=null;
+
+const mfitNutritionTemplates={
+ 'skyr natur':{kcal:63,protein:11,carbs:4,fat:.2,fiber:0,calcium:120,potassium:150},
+ 'skyr vanille':{kcal:85,protein:10,carbs:9,fat:.2,fiber:0,calcium:110},
+ 'skyr erdbeere':{kcal:78,protein:10,carbs:7,fat:.2,fiber:.5,calcium:110},
+ 'skyr heidelbeere':{kcal:78,protein:10,carbs:7,fat:.2,fiber:.5,calcium:110},
+ 'skyr mango':{kcal:80,protein:10,carbs:8,fat:.2,fiber:.3,calcium:110},
+ 'magerquark':{kcal:67,protein:12,carbs:4,fat:.2,calcium:90,potassium:130},
+ 'topfen':{kcal:98,protein:12,carbs:4,fat:4,calcium:90},
+ 'griechisches joghurt':{kcal:120,protein:6,carbs:4,fat:9,calcium:110},
+ 'naturjoghurt':{kcal:63,protein:4,carbs:5,fat:3,calcium:120},
+ 'fruchtjoghurt':{kcal:105,protein:4,carbs:15,fat:3,calcium:120},
+ 'protein pudding':{kcal:75,protein:10,carbs:6,fat:1,calcium:120},
+ 'protein joghurt':{kcal:75,protein:10,carbs:6,fat:1,calcium:120},
+ 'hüttenkäse':{kcal:98,protein:12,carbs:3,fat:4,calcium:80},
+ 'milch':{kcal:64,protein:3.3,carbs:4.8,fat:3.5,calcium:120,b12:.4},
+ 'hafermilch':{kcal:46,protein:1,carbs:6.7,fat:1.5,calcium:120},
+ 'ei':{kcal:143,protein:13,carbs:1.1,fat:9.5,vitd:2,iron:1.8,b12:1.1},
+ 'eier':{kcal:143,protein:13,carbs:1.1,fat:9.5,vitd:2,iron:1.8,b12:1.1},
+ 'hähnchenbrust':{kcal:110,protein:23,carbs:0,fat:1.5,vitb12:.3,niacin:13},
+ 'putenbrust':{kcal:135,protein:24,carbs:0,fat:1.5},
+ 'rindfleisch':{kcal:170,protein:26,carbs:0,fat:7,iron:2.5,zinc:5,b12:2.5},
+ 'lachs':{kcal:208,protein:20,carbs:0,fat:13,vitd:11,b12:3.2,potassium:363},
+ 'thunfisch':{kcal:116,protein:26,carbs:0,fat:1,vitd:2,b12:9},
+ 'reis':{kcal:130,protein:2.7,carbs:28,fat:.3,fiber:.4},
+ 'basmatireis':{kcal:130,protein:2.7,carbs:28,fat:.3,fiber:.4},
+ 'nudeln':{kcal:157,protein:5.8,carbs:30,fat:.9,fiber:1.8},
+ 'vollkornnudeln':{kcal:149,protein:6,carbs:27,fat:1.5,fiber:4.5},
+ 'haferflocken':{kcal:372,protein:13.5,carbs:58,fat:7,fiber:10,iron:4.3,magnesium:138,zinc:3.6},
+ 'müsli':{kcal:370,protein:10,carbs:64,fat:7,fiber:8},
+ 'cornflakes':{kcal:357,protein:7,carbs:84,fat:.4,fiber:3},
+ 'kelloggs frosties':{kcal:375,protein:4,carbs:87,fat:.6,fiber:2},
+ 'kelloggs corn flakes':{kcal:357,protein:7,carbs:84,fat:.4,fiber:3},
+ 'kelloggs choco krispies':{kcal:385,protein:6,carbs:83,fat:3,fiber:4},
+ 'brot':{kcal:250,protein:9,carbs:47,fat:3,fiber:3},
+ 'vollkornbrot':{kcal:230,protein:9,carbs:40,fat:3,fiber:7},
+ 'toast':{kcal:265,protein:9,carbs:49,fat:3.5,fiber:2.5},
+ 'banane':{kcal:89,protein:1.1,carbs:23,fat:.3,fiber:2.6,vitc:8.7,potassium:358},
+ 'apfel':{kcal:52,protein:.3,carbs:14,fat:.2,fiber:2.4,vitc:4.6,potassium:107},
+ 'erdbeeren':{kcal:32,protein:.7,carbs:7.7,fat:.3,fiber:2,vitc:59},
+ 'heidelbeeren':{kcal:57,protein:.7,carbs:14.5,fat:.3,fiber:2.4,vitc:9.7},
+ 'avocado':{kcal:160,protein:2,carbs:8.5,fat:14.7,fiber:6.7,potassium:485},
+ 'gurke':{kcal:15,protein:.7,carbs:3.6,fat:.1,fiber:.5,vitc:2.8},
+ 'tomaten':{kcal:18,protein:.9,carbs:3.9,fat:.2,fiber:1.2,vitc:14},
+ 'paprika':{kcal:31,protein:1,carbs:6,fat:.3,fiber:2.1,vitc:127},
+ 'brokkoli':{kcal:34,protein:2.8,carbs:6.6,fat:.4,fiber:2.6,vitc:89,calcium:47},
+ 'karotten':{kcal:41,protein:.9,carbs:9.6,fat:.2,fiber:2.8,vitc:5.9},
+ 'kartoffeln':{kcal:77,protein:2,carbs:17,fat:.1,fiber:2.2,potassium:425},
+ 'mandeln':{kcal:579,protein:21,carbs:22,fat:50,fiber:12.5,magnesium:270,calcium:269},
+ 'erdnussbutter':{kcal:588,protein:25,carbs:20,fat:50,fiber:6},
+ 'schokolade':{kcal:535,protein:7.5,carbs:59,fat:30,fiber:7},
+ 'chips':{kcal:536,protein:7,carbs:52,fat:35,fiber:4},
+ 'cola zero':{kcal:0,protein:0,carbs:0,fat:0,fiber:0},
+ 'coca-cola':{kcal:42,protein:0,carbs:10.6,fat:0,fiber:0},
+ 'pepsi max':{kcal:0,protein:0,carbs:0,fat:0,fiber:0},
+ 'red bull sugarfree':{kcal:3,protein:0,carbs:0,fat:0,fiber:0},
+ 'monster ultra':{kcal:2,protein:0,carbs:.5,fat:0,fiber:0},
+ 'wasser':{kcal:0,protein:0,carbs:0,fat:0,fiber:0},
+ 'mineralwasser':{kcal:0,protein:0,carbs:0,fat:0,fiber:0},
+ 'eistee zero':{kcal:1,protein:0,carbs:0,fat:0,fiber:0}
+};
+const mfitDefaultPortions={
+ 'skyr':200,'magerquark':250,'topfen':150,'joghurt':150,'protein pudding':200,'hüttenkäse':150,
+ 'milch':250,'hafermilch':250,'ei':100,'eier':100,'hähnchenbrust':150,'putenbrust':150,'rindfleisch':150,'lachs':150,'thunfisch':100,
+ 'reis':150,'nudeln':180,'haferflocken':50,'müsli':50,'cornflakes':40,'kelloggs':40,'brot':60,'toast':30,
+ 'banane':120,'apfel':150,'erdbeeren':150,'heidelbeeren':100,'avocado':70,'gurke':100,'tomaten':100,'paprika':100,'brokkoli':100,'karotten':100,'kartoffeln':200,'mandeln':25,'erdnussbutter':15,'schokolade':25,'chips':30,
+ 'cola':330,'pepsi':330,'red bull':250,'monster':500,'wasser':500,'eistee':500
+};
+function mfitTemplateForName(name){
+ const n=String(name||'').toLowerCase();
+ const exact=mfitNutritionTemplates[n];if(exact)return exact;
+ const key=Object.keys(mfitNutritionTemplates).sort((a,b)=>b.length-a.length).find(k=>n.includes(k));
+ return key?mfitNutritionTemplates[key]:null;
+}
+function mfitDefaultAmount(name,isDrink){
+ const n=String(name||'').toLowerCase();
+ const key=Object.keys(mfitDefaultPortions).sort((a,b)=>b.length-a.length).find(k=>n.includes(k));
+ return key?mfitDefaultPortions[key]:(isDrink?250:100);
+}
+function setNutritionFromTemplate(t){
+ nutritionBase={kcal:Number(t.kcal)||0,protein:Number(t.protein)||0,carbs:Number(t.carbs)||0,fat:Number(t.fat)||0,fiber:Number(t.fiber)||0,vitc:Number(t.vitc)||0,vitd:Number(t.vitd)||0,calcium:Number(t.calcium)||0,iron:Number(t.iron)||0,magnesium:Number(t.magnesium)||0,potassium:Number(t.potassium)||0,zinc:Number(t.zinc)||0,b12:Number(t.b12)||0};
+ recalculateNutrition();
+}
+
 const mfitFoodCatalog=[
 'Skyr natur','Skyr Vanille','Skyr Erdbeere','Skyr Heidelbeere','Skyr Mango','Magerquark','Topfen','Griechisches Joghurt','Naturjoghurt','Fruchtjoghurt','Protein Pudding','Protein Joghurt','Hüttenkäse','Cottage Cheese','Milch','Hafermilch','Kakao','Eier','Eiklar','Hähnchenbrust','Putenbrust','Rindfleisch','Lachs','Thunfisch','Schinken','Salami','Käse','Mozzarella','Gouda','Emmentaler','Butter','Frischkäse','Tofu','Linsen','Kichererbsen','Bohnen','Reis','Basmatireis','Vollkornreis','Nudeln','Vollkornnudeln','Haferflocken','Müsli','Cornflakes','Kelloggs Frosties','Kelloggs Corn Flakes','Kelloggs Choco Krispies','Granola','Brot','Vollkornbrot','Toast','Semmel','Wrap','Tortilla','Banane','Apfel','Erdbeeren','Heidelbeeren','Himbeeren','Orange','Kiwi','Avocado','Gurke','Tomaten','Paprika','Brokkoli','Karotten','Kartoffeln','Süßkartoffeln','Salat','Spinat','Mais','Erbsen','Nüsse','Mandeln','Erdnussbutter','Honig','Marmelade','Schokolade','Proteinriegel','Müsliriegel','Chips','Reiswaffeln','Popcorn','Pizza','Pommes','Sushi','Cola Zero','Coca-Cola','Pepsi Max','Red Bull Sugarfree','Monster Ultra','Wasser','Mineralwasser','Eistee Zero','Orangensaft','Apfelsaft','Kaffee','Cappuccino','Energy Drink','Iso Drink','Butterkäse','Parmesan','Feta','Skyr Drink','Proteindrink','Milchreis','Grießbrei','Pudding','Porridge','Sauerteigbrot','Knäckebrot','Kürbiskerne','Chiasamen','Leinsamen','Olivenöl','Rapsöl','Ketchup','Senf','Hummus','Guacamole'
 ];
@@ -228,17 +312,19 @@ function selectProductSuggestion(index){
  if($('barcode'))$('barcode').value=p.code||'';
  const cats=String(p.categories||'').toLowerCase(),tags=Array.isArray(p.categories_tags)?p.categories_tags.join(' '):'';
  const isDrink=/beverage|drink|getränk|wasser|soft-drink|juice|soda/.test(cats+' '+tags)||/wasser|cola|saft|drink|energy|eistee|milch$|kakao/.test(name.toLowerCase());
- $('unit').value=isDrink?'ml':'g';$('amount').value=100;$('packSize').value='';$('portionMode').value='custom';
- if(p.nutriments&&Object.keys(p.nutriments).length)setNutritionFromProduct(p.nutriments);
+ $('unit').value=isDrink?'ml':'g';$('amount').value=mfitDefaultAmount(name,isDrink);$('packSize').value='';$('portionMode').value='custom';
+ const template=mfitTemplateForName(name);
+ if(p.nutriments&&Object.keys(p.nutriments).length){setNutritionFromProduct(p.nutriments);}
+ else if(template){setNutritionFromTemplate(template);}
  else{
-  const preset=presets.find(x=>x.name.toLowerCase()===name.toLowerCase());
-  if(preset){nutritionBase={kcal:preset.kcal,protein:preset.protein,carbs:preset.carbs,fat:preset.fat,fiber:preset.fiber,vitc:0,vitd:0,calcium:0,iron:0,magnesium:0,potassium:0,zinc:0,b12:0};recalculateNutrition();}
+  nutritionBase={kcal:0,protein:0,carbs:0,fat:0,fiber:0,vitc:0,vitd:0,calcium:0,iron:0,magnesium:0,potassium:0,zinc:0,b12:0};
+  recalculateNutrition();
  }
  $('drink').value=isDrink?100:0;
  if(isDrink)$('meal').value='Getränk';else if($('meal').value==='Getränk')$('meal').value='Snack';
  const pack=getPackAmount(p);
  if(pack){$('packSize').value=pack.amount;$('unit').value=pack.unit;$('portionMode').value='whole';applyPortionMode();if(isDrink)$('drink').value=Number($('amount').value)||pack.amount;}
- $('barcodeStatus').textContent=p.local?'Produkt ausgewählt. Bitte Menge und Nährwerte prüfen bzw. ergänzen.':'Produkt ausgewählt. Bitte Nährwerte mit der Verpackung vergleichen.';
+ $('barcodeStatus').textContent=p.local?(template?'Durchschnittliche Nährwerte als Schätzung übernommen. Menge kannst du anpassen.':'Für dieses Lebensmittel sind keine hinterlegten Nährwerte vorhanden. Bitte ergänzen oder Barcode scannen.'):'Produktdaten übernommen. Bitte mit der Verpackung vergleichen.';
  $('productSuggestions').hidden=true;$('productSuggestions').innerHTML='';$('amount').focus();
 }
 function initProductAutocomplete(){
