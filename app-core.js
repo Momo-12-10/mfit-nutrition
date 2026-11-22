@@ -323,12 +323,23 @@ function selectProductSuggestion(index){
  const isDrink=/beverage|drink|getränk|wasser|soft-drink|juice|soda/.test(cats+' '+tags)||/wasser|cola|saft|drink|energy|eistee|milch$|kakao/.test(name.toLowerCase());
  $('unit').value=isDrink?'ml':'g';$('amount').value=mfitDefaultAmount(name,isDrink);$('packSize').value='';$('portionMode').value='custom';
  const template=mfitTemplateForName(name);
+ const pieceWeights={'semmel':60,'kaisersemmel':60,'kornspitz':75,'mohnflesserl':70,'vollkornsemmel':70,'weckerl':70,'mohnweckerl':70,'vollkornweckerl':70,'breze':80,'laugenstange':90,'banane':120,'apfel':150,'ei':60,'eier':60,'orange':150,'kiwi':75};
+ const normName=v=>String(v||'').toLocaleLowerCase('de').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/ß/g,'ss').trim();
+ const pieceKey=Object.keys(pieceWeights).find(k=>normName(name)===normName(k)||normName(name).includes(normName(k)));
+ const pieceWeight=pieceKey?pieceWeights[pieceKey]:0;
  if(p.nutriments&&Object.keys(p.nutriments).length){setNutritionFromProduct(p.nutriments);}
  else if(template){setNutritionFromTemplate(template);}
  else{
   nutritionBase={kcal:0,protein:0,carbs:0,fat:0,fiber:0,vitc:0,vitd:0,calcium:0,iron:0,magnesium:0,potassium:0,zinc:0,b12:0};
   recalculateNutrition();
  }
+ if(pieceWeight>0&&!isDrink){
+  $('unit').value='Stück';$('amount').value='1';$('packSize').value=pieceWeight;$('portionMode').value='custom';
+  if(template){
+   nutritionBase={kcal:template.kcal*pieceWeight/100,protein:template.protein*pieceWeight/100,carbs:template.carbs*pieceWeight/100,fat:template.fat*pieceWeight/100,fiber:(template.fiber||0)*pieceWeight/100,vitc:(template.vitc||0)*pieceWeight/100,vitd:(template.vitd||0)*pieceWeight/100,calcium:(template.calcium||0)*pieceWeight/100,iron:(template.iron||0)*pieceWeight/100,magnesium:(template.magnesium||0)*pieceWeight/100,potassium:(template.potassium||0)*pieceWeight/100,zinc:(template.zinc||0)*pieceWeight/100,b12:(template.b12||0)*pieceWeight/100};
+  }
+  recalculateNutrition();
+ }else if(!isDrink){$('unit').value='g';$('amount').value=mfitDefaultAmount(name,false);}
  $('drink').value=isDrink?(Number($('amount').value)||0):0;
  if(isDrink)$('meal').value='Getränk';else if($('meal').value==='Getränk')$('meal').value='Snack';
  const pack=getPackAmount(p);
@@ -338,9 +349,15 @@ function selectProductSuggestion(index){
 }
 function initProductAutocomplete(){
  const input=$('foodName');if(!input)return;
- const show=()=>searchProductSuggestions(input.value);
+ const show=()=>{
+  searchProductSuggestions(input.value);
+  const q=String(input.value||'').trim().toLocaleLowerCase('de').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/ß/g,'ss');
+  if(!q)return;
+  const exact=productSearchResults.findIndex(p=>String(p.product_name_de||p.product_name||'').trim().toLocaleLowerCase('de').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/ß/g,'ss')===q);
+  if(exact>=0)selectProductSuggestion(exact);
+ };
  input.addEventListener('input',show);
- input.addEventListener('focus',show);
+ input.addEventListener('focus',()=>searchProductSuggestions(input.value));
  document.addEventListener('click',event=>{const box=$('productSuggestions');if(box&&!box.contains(event.target)&&event.target!==input)box.hidden=true;});
 }
 initProductAutocomplete();
