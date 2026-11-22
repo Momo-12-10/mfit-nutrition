@@ -1,0 +1,433 @@
+
+:root{color-scheme:dark;--bg:#0d1410;--panel:#17221b;--panel2:#202d24;--green:#65d58b;--muted:#a8b8ad;--line:#2b3b30}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f2f7f3;font:16px system-ui,-apple-system,sans-serif;padding-bottom:84px}
+header{padding:22px 18px 14px;background:linear-gradient(135deg,#14251a,#0d1410)}h1{margin:0;font-size:25px}header p{margin:5px 0;color:var(--muted);font-size:13px}
+main{max-width:720px;margin:auto;padding:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:15px;margin:12px 0}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.muted{color:var(--muted);font-size:13px}.big{font-size:29px;font-weight:800;color:var(--green)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+label{display:block;font-size:13px;color:var(--muted);margin:10px 0 5px}input,select,textarea{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:#0f1913;color:white;font:inherit}
+button{background:var(--green);color:#092012;border:0;border-radius:12px;padding:11px 14px;font-weight:700;font-size:14px;cursor:pointer}button.secondary{background:var(--panel2);color:#f2f7f3;border:1px solid var(--line)}button.danger{background:#4a2424;color:#ffdada}
+nav{position:fixed;bottom:0;left:0;right:0;background:#111b14;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 3px calc(8px + env(safe-area-inset-bottom));z-index:5}
+nav button{background:transparent;color:var(--muted);padding:9px 7px;font-size:12px}nav button.active{color:var(--green);background:#203326}
+.progress{height:9px;background:#2b3b30;border-radius:10px;overflow:hidden}.progress span{display:block;height:100%;background:var(--green)}
+.item{padding:10px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}.hidden{display:none}.pill{font-size:11px;color:var(--green);border:1px solid #376849;padding:4px 8px;border-radius:20px}
+h2{font-size:18px;margin:0 0 8px}h3{font-size:15px;margin:0 0 6px}
+ .smallbtn{padding:7px 10px;font-size:12px}.savebar{position:sticky;bottom:78px;padding:10px 0;background:linear-gradient(transparent,var(--panel) 22%);z-index:4}.notice{background:#1d3023;border:1px solid #31563b;padding:11px;border-radius:12px;font-size:13px;color:#d6f0dd}
+@media(min-width:600px){main{padding:20px}.grid.three{grid-template-columns:repeat(3,1fr)}}
+
+/* MFit visual refresh */
+body{background:radial-gradient(ellipse at 50% -15%,#203b2a 0%,#0d1410 48%);background-attachment:fixed}
+header{background:linear-gradient(135deg,rgba(31,65,43,.96),rgba(13,20,16,.96));border-bottom:1px solid rgba(101,213,139,.16);padding-top:28px}
+header h1{letter-spacing:-.7px;font-size:28px}
+.card{background:linear-gradient(145deg,rgba(29,43,33,.98),rgba(19,29,22,.98));border:1px solid rgba(128,171,139,.16);box-shadow:0 10px 28px rgba(0,0,0,.18);border-radius:20px;padding:17px;transition:transform .18s ease,border-color .18s ease}
+.card h2{letter-spacing:-.25px}
+.big{letter-spacing:-1px;text-shadow:0 0 22px rgba(101,213,139,.12)}
+button{box-shadow:0 5px 14px rgba(42,145,78,.12);transition:transform .15s ease,filter .15s ease}
+button:active{transform:scale(.97)}
+button.secondary{box-shadow:none}
+input,select,textarea{background:#0d1711;border-color:#34483a}
+nav{backdrop-filter:blur(16px);background:rgba(15,25,19,.94);border-top:1px solid rgba(128,171,139,.18)}
+nav button{border-radius:12px;min-width:48px}
+.recipe-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px}
+.recipe-card{overflow:hidden;border:1px solid rgba(128,171,139,.18);border-radius:18px;background:linear-gradient(145deg,#1d2b21,#121d16);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.recipe-photo{width:100%;height:178px;object-fit:cover;display:block;background:#25352a}
+.recipe-content{padding:13px 14px 15px}
+.recipe-title{font-size:16px;font-weight:800;margin:0 0 7px}
+.recipe-meta{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.recipe-chip{font-size:11px;border:1px solid #3b5b43;background:#1c3323;color:#bfe9c9;border-radius:20px;padding:5px 9px}
+.recipe-desc{font-size:13px;color:var(--muted);line-height:1.45}
+.recipe-nutrition{display:flex;gap:14px;font-size:13px;font-weight:700}
+.recipe-source{font-size:10px;color:#8fa296;margin-top:9px}
+@media(min-width:600px){.recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.recipe-photo{height:190px}}
+
+
+
+/* MFit Performance — premium product interface refresh */
+:root{--bg:#090d12;--panel:#121922;--panel2:#1a2430;--line:#293542;--muted:#94a2b3;--accent:var(--green);--accent-soft:color-mix(in srgb,var(--accent) 13%,transparent);--accent-border:color-mix(in srgb,var(--accent) 38%,#293542)}
+*{-webkit-tap-highlight-color:transparent}
+body{background:radial-gradient(ellipse at 50% -25%,color-mix(in srgb,var(--accent) 12%,#18212d) 0%,#090d12 54%);background-attachment:fixed;color:#f4f7fb;font-size:15px;letter-spacing:-.12px;padding-bottom:100px}
+header{position:relative;overflow:hidden;padding:25px 19px 22px;background:linear-gradient(115deg,#172431 0%,#101720 65%,#111b18 100%);border-bottom:1px solid rgba(255,255,255,.07)}
+header:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-65px;top:-100px;background:var(--accent);opacity:.11;filter:blur(3px);pointer-events:none}
+header h1{font-size:25px;font-weight:850;letter-spacing:-1.1px}
+header p{font-size:12px;letter-spacing:.3px;color:#a7b4c3}
+header .pill{font-size:9px;letter-spacing:1px;font-weight:800}
+main{max-width:780px;padding:14px 15px 28px}
+.card{position:relative;background:linear-gradient(150deg,rgba(24,34,46,.98),rgba(16,24,33,.98));border:1px solid rgba(174,194,218,.10);border-radius:21px;padding:17px;margin:11px 0;box-shadow:0 10px 28px rgba(0,0,0,.18)}
+.card h2{font-size:16px;font-weight:800;letter-spacing:-.45px;margin-bottom:11px}
+.card h3{font-size:14px;font-weight:750}
+.muted{color:#98a7b8;font-size:12px;line-height:1.45}
+.big{font-size:31px;font-weight:850;letter-spacing:-1.35px;color:var(--accent);text-shadow:none;line-height:1.15;margin:4px 0}
+.grid{gap:10px}
+.grid.three{gap:9px}
+.grid.three .card{min-width:0;padding:14px 12px}
+.grid.three .big{font-size:24px}
+label{font-size:11px;text-transform:uppercase;letter-spacing:.65px;color:#aab7c6;font-weight:750;margin:13px 0 6px}
+input,select,textarea{background:#0d141c;color:#f4f7fb;border:1px solid #2a3745;border-radius:12px;padding:12px 13px;font-size:14px;min-height:44px}
+input::placeholder,textarea::placeholder{color:#647386}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+button{border-radius:12px;min-height:42px;padding:10px 15px;font-size:13px;font-weight:800;letter-spacing:-.1px;box-shadow:none}
+button:not(.secondary):not(.danger){background:var(--accent);color:#08120d}
+button.secondary{background:#202c39;color:#e7edf5;border:1px solid #334252}
+button.danger{background:#47272c;color:#ffdfe2}
+button:active{transform:scale(.985)}
+.progress{height:7px;background:#26313e;border-radius:20px;margin-top:9px}
+.progress span{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 75%,white),var(--accent));border-radius:20px}
+.pill{background:var(--accent-soft);border:1px solid var(--accent-border);color:var(--accent);font-weight:800;letter-spacing:.25px}
+.item{padding:12px 0;border-bottom:1px solid rgba(174,194,218,.09)}
+.notice{background:var(--accent-soft);border:1px solid var(--accent-border);color:#e4f4e9;border-radius:14px;padding:13px}
+nav{left:10px;right:10px;bottom:8px;border:1px solid rgba(180,198,220,.13);border-radius:20px;background:rgba(15,22,31,.94);box-shadow:0 12px 35px rgba(0,0,0,.45);padding:7px 5px calc(7px + env(safe-area-inset-bottom));backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);gap:2px}
+nav button{flex:1;min-width:0;min-height:50px;border-radius:13px;color:#8e9cad;padding:6px 2px;font-size:10px;line-height:1.3;font-weight:700}
+nav button.active{color:var(--accent);background:var(--accent-soft)}
+nav button br{display:block}
+.smallbtn{min-height:32px;padding:6px 10px;font-size:11px}
+.recipe-grid{gap:13px}
+.recipe-card{border:1px solid rgba(174,194,218,.12);border-radius:19px;background:linear-gradient(150deg,#192533,#111923);box-shadow:0 9px 25px rgba(0,0,0,.22)}
+.recipe-photo{height:185px}
+.recipe-content{padding:14px}
+.recipe-title{font-size:15px;letter-spacing:-.35px}
+.recipe-chip{border-color:var(--accent-border);background:var(--accent-soft);color:color-mix(in srgb,var(--accent) 76%,white);font-weight:800}
+.recipe-source{color:#7f8ea0}
+.theme-card{border-color:var(--accent-border)}
+.theme-preview{background:var(--accent-soft);border-color:var(--accent-border)}
+.theme-swatches{gap:14px}
+button.theme-swatch{min-height:36px}
+.savebar{background:linear-gradient(transparent,var(--panel) 22%)}
+hr{border-color:rgba(174,194,218,.12)!important}
+@media(min-width:600px){main{padding:22px}.card{padding:20px}.recipe-photo{height:205px}nav{left:50%;right:auto;transform:translateX(-50%);width:min(680px,calc(100% - 32px))}}
+@media(max-width:380px){nav button{font-size:9px;padding-left:0;padding-right:0}main{padding-left:11px;padding-right:11px}.grid.three .card{padding:12px 9px}.grid.three .big{font-size:21px}}
+@media(prefers-reduced-motion:no-preference){.card{transition:border-color .2s ease,transform .2s ease}.card:active{transform:translateY(1px)}button{transition:filter .16s ease,transform .16s ease}button:active{filter:brightness(.94)}}
+
+
+/* v21 — stronger personal color identity + refined premium finish */
+:root{--accent:var(--green);--accent-soft:color-mix(in srgb,var(--accent) 15%,transparent);--accent-border:color-mix(in srgb,var(--accent) 43%,#293542)}
+body{background:radial-gradient(ellipse 90% 34% at 50% -4%,color-mix(in srgb,var(--accent) 18%,#17212b) 0%,#090d12 72%);background-attachment:fixed}
+header{background:linear-gradient(112deg,color-mix(in srgb,var(--accent) 22%,#172431),#111923 62%,color-mix(in srgb,var(--accent) 9%,#101720));border-bottom:1px solid color-mix(in srgb,var(--accent) 34%,transparent)}
+header:after{background:var(--accent);opacity:.17;filter:blur(1px)}
+header h1{background:linear-gradient(90deg,#fff 12%,color-mix(in srgb,var(--accent) 70%,white));-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{border-color:color-mix(in srgb,var(--accent) 19%,#293542);background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 7%,#1a2531),#111923 78%);box-shadow:0 12px 30px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.025)}
+#home>.card:first-of-type{background:linear-gradient(115deg,color-mix(in srgb,var(--accent) 17%,#172431),#121b26 76%);border-color:color-mix(in srgb,var(--accent) 42%,#293542)}
+.big{color:var(--accent);text-shadow:0 0 25px color-mix(in srgb,var(--accent) 25%,transparent)}
+.card h2{color:#f5f8fc}
+button:not(.secondary):not(.danger):not(.theme-swatch){background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 88%,white),var(--accent));color:#08120d;box-shadow:0 5px 18px color-mix(in srgb,var(--accent) 18%,transparent)}
+button.secondary{background:color-mix(in srgb,var(--accent) 9%,#202c39);border-color:color-mix(in srgb,var(--accent) 22%,#334252)}
+.progress{background:#26313e}
+.progress span{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 65%,white),var(--accent));box-shadow:0 0 12px color-mix(in srgb,var(--accent) 38%,transparent)}
+nav{border-color:color-mix(in srgb,var(--accent) 25%,rgba(180,198,220,.13));background:color-mix(in srgb,var(--accent) 7%,rgba(15,22,31,.96))}
+nav button.active{color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 23%,transparent)}
+.pill{color:var(--accent);background:var(--accent-soft);border-color:var(--accent-border)}
+.recipe-card{border-color:color-mix(in srgb,var(--accent) 22%,#293542);background:linear-gradient(150deg,color-mix(in srgb,var(--accent) 8%,#192533),#111923)}
+.recipe-chip{border-color:var(--accent-border);background:var(--accent-soft);color:color-mix(in srgb,var(--accent) 76%,white)}
+.notice{background:var(--accent-soft);border-color:var(--accent-border)}
+.theme-preview{background:linear-gradient(110deg,var(--accent-soft),rgba(255,255,255,.025));border-color:var(--accent-border)}
+.theme-preview-dot{background:var(--accent);box-shadow:0 0 0 5px var(--accent-soft),0 0 22px color-mix(in srgb,var(--accent) 48%,transparent)}
+.theme-picker-row input[type=color]{border:2px solid var(--accent-border);background:#111923}
+button.theme-swatch{background:var(--swatch)!important;border:2px solid rgba(255,255,255,.32);box-shadow:0 0 0 1px rgba(0,0,0,.35),0 5px 14px rgba(0,0,0,.22)}
+button.theme-swatch.selected{outline:2px solid var(--accent);outline-offset:3px}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.item{border-color:color-mix(in srgb,var(--accent) 12%,rgba(174,194,218,.09))}
+@media(min-width:600px){header{padding-left:max(22px,calc((100% - 740px)/2));padding-right:max(22px,calc((100% - 740px)/2))}}
+
+
+/* v23 — ursprüngliche Navigations-Icons, neutrale Icon-Flächen */
+nav{background:rgba(15,22,31,.97);border-color:rgba(180,198,220,.15)}
+nav button{color:#aeb9c7;background:transparent}
+nav button.active{color:var(--accent);background:#26313d;box-shadow:inset 0 0 0 1px rgba(220,232,245,.12)}
+/* v24: Navigation komplett neutral, auch aktiver Icon- und Textton */
+nav button,
+nav button.active{color:#c4ccd6}
+nav button.active{background:#26313d;box-shadow:inset 0 0 0 1px rgba(220,232,245,.12)}
+/* v25: Auch die Flächen direkt um jedes Navigations-Icon neutral halten */
+body nav{background:rgba(15,22,31,.97)!important;border-color:rgba(180,198,220,.15)!important}
+body nav button,
+body nav button.active{color:#c4ccd6!important;background:#202a36!important;border:1px solid rgba(190,205,222,.10)!important;box-shadow:none!important}
+body nav button.active{background:#2b3745!important;border-color:rgba(210,222,238,.20)!important}
+body nav button:focus,
+body nav button:focus-visible{outline:none!important;box-shadow:none!important}
+
+/* v29 — aufgeräumtes Wasser-Tracking */
+.water-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+.water-controls button{width:100%;min-width:0;min-height:46px;flex:none;padding:12px 10px;font-size:13px;line-height:1.25;letter-spacing:0;text-align:center;border-radius:13px;color:#edf2f8;background:#263444;border:1px solid rgba(190,205,222,.15);box-shadow:none}
+.water-controls button:first-child{background:color-mix(in srgb,var(--accent) 18%,#202c39);border-color:color-mix(in srgb,var(--accent) 35%,#334252);color:#f3f7fb}
+.water-controls button:active{transform:scale(.98)}
+.water-custom{margin-top:20px;padding-top:16px;border-top:1px solid rgba(174,194,218,.12)}
+.water-custom label{display:block;margin:0 0 10px;font-size:12px;letter-spacing:.3px}
+.water-custom-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:stretch}
+.water-custom-row input{min-width:0;min-height:46px}
+.water-custom-row button{flex:none;min-width:112px;min-height:46px;padding:10px 16px;font-size:13px;letter-spacing:0;white-space:nowrap}
+.water-history-heading{margin-top:22px;margin-bottom:10px;line-height:1.55}
+.water-history-heading b{display:block;font-size:14px;margin-bottom:3px}
+.water-history{margin-top:8px}
+.water-history .item{display:flex;align-items:center;gap:14px;padding:13px 2px}
+.water-history .item>div{min-width:0;flex:1;line-height:1.45;padding:2px 0}
+.water-history .item button{flex:none;width:auto;min-width:108px;min-height:38px;padding:8px 12px;font-size:12px;letter-spacing:0;white-space:nowrap}
+@media(max-width:360px){.water-custom-row{grid-template-columns:1fr}.water-custom-row button{width:100%}.water-history .item button{min-width:94px;padding:8px 9px}}
+
+
+/* v30 — konsistentes, sauberes Layout in allen Bereichen */
+:root{--surface-elevated:#182330;--border-soft:rgba(174,194,218,.13);--text-main:#edf2f8}
+body{color:var(--text-main);letter-spacing:.01em}
+main{width:100%;max-width:760px;padding:16px 14px 28px}
+.card{width:100%;min-width:0;margin:13px 0;padding:18px;border:1px solid var(--border-soft);border-radius:20px;background:linear-gradient(150deg,rgba(25,36,50,.98),rgba(16,24,34,.98));box-shadow:0 12px 30px rgba(0,0,0,.20)}
+.card h2{font-size:17px;line-height:1.35;font-weight:760;margin:0 0 13px;letter-spacing:-.25px}
+.card h3{line-height:1.4;margin:0 0 9px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;min-width:0}
+.row>div{min-width:0}
+.grid{align-items:stretch;gap:11px;min-width:0}
+.grid>*{min-width:0}
+button{display:inline-flex;align-items:center;justify-content:center;text-align:center;vertical-align:middle;min-height:44px;height:auto;padding:11px 14px;border-radius:13px;font-family:inherit;font-size:13px;line-height:1.3;font-weight:720;letter-spacing:0;white-space:normal;overflow-wrap:anywhere}
+.row>button{flex:1 1 125px;min-width:0}
+.grid>button,.grid>div>button{width:100%;min-width:0}
+.item.row{flex-wrap:nowrap;gap:12px}
+.item.row>div{flex:1 1 auto;min-width:0;line-height:1.45;padding:2px 0}
+.item.row>button{flex:0 0 auto;width:auto;min-width:42px;max-width:48%;padding:9px 12px;font-size:12px;white-space:normal}
+button.secondary{background:linear-gradient(145deg,#263444,#202b38);border:1px solid rgba(190,205,222,.16);color:#e9eef5}
+button.danger{background:linear-gradient(145deg,#542f37,#40252c);border:1px solid rgba(255,190,198,.12);color:#ffe3e6}
+button:not(.secondary):not(.danger):not(.theme-swatch){background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 90%,white),var(--accent));color:#08120d}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+input,select,textarea{display:block;width:100%;min-width:0;min-height:46px;padding:12px 14px;border-radius:13px;font:inherit;font-size:14px;line-height:1.4}
+label{display:block;line-height:1.45;margin:14px 0 7px;font-size:11px;letter-spacing:.55px}
+.muted{line-height:1.5}
+.progress{height:9px;margin-top:8px;border-radius:999px;background:#263341;overflow:hidden}
+.progress span{border-radius:999px;transition:width .25s ease}
+.pill{display:inline-flex;align-items:center;line-height:1.25}
+nav{gap:5px;padding-left:7px;padding-right:7px}
+nav button{flex:1 1 0;min-width:0;min-height:50px;padding:7px 3px;font-size:10px;line-height:1.25;white-space:normal;overflow-wrap:normal}
+.water-controls button{flex:1 1 auto}
+.water-custom-row button{flex:0 0 auto}
+.water-history .item button{flex:0 0 auto}
+@media(max-width:380px){
+ main{padding-left:11px;padding-right:11px}
+ .card{padding:15px;border-radius:18px}
+ .row{gap:8px}
+ .row>button{flex:1 1 112px;padding:10px 8px;font-size:12px}
+ .item.row>button{flex:0 0 auto;min-width:40px;padding:8px 9px;font-size:11px}
+ nav{gap:3px}
+ nav button{font-size:9px;padding-left:1px;padding-right:1px}
+}
+@media(min-width:600px){main{padding:22px 20px 32px}.card{padding:20px}}
+
+
+
+/* v31 — mehr Erlebnis, klare Bereiche und weniger Formular-Wand */
+section:not(.hidden){animation:mfitSectionIn .28s ease both}
+@keyframes mfitSectionIn{from{opacity:.0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+section:not(#home)::before{display:block;margin:5px 4px 17px;color:var(--accent);font-size:10px;font-weight:850;letter-spacing:1.8px;text-transform:uppercase}
+#track::before{content:"DEIN FOOD JOURNAL  /  ERFASSEN"}
+#recipes::before{content:"INSPIRATION  /  REZEPTE"}
+#shop::before{content:"DEIN ALLTAG  /  EINKAUFEN"}
+#fitness::before{content:"PERFORMANCE  /  TRAINING"}
+#profile::before{content:"PERSÖNLICH  /  EINSTELLUNGEN"}
+.card{margin:16px 0;padding:20px;overflow:hidden}
+.card h2{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.card h2:before{content:"";width:4px;height:18px;flex:0 0 4px;border-radius:8px;background:var(--accent);box-shadow:0 0 14px var(--accent-soft)}
+#home>.card:first-child{padding:22px;background:linear-gradient(125deg,color-mix(in srgb,var(--accent) 19%,#1b2b3b),#111b27 75%);border-color:color-mix(in srgb,var(--accent) 38%,#293542)}
+#home>.grid.three{gap:10px;margin:12px 0}
+#home>.grid.three>.card{min-height:122px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:15px 13px}
+#home>.grid.three .muted:first-child{font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:800}
+#home>.grid.three .big{font-size:clamp(22px,6vw,29px)}
+#home>.card{margin:14px 0}
+#home .notice{line-height:1.6}
+#track .card:first-child{background:linear-gradient(155deg,color-mix(in srgb,var(--accent) 9%,#1b2938),#111923 65%);border-color:color-mix(in srgb,var(--accent) 25%,#293542)}
+#track label{margin-top:17px}
+#track input,#track select{margin-bottom:2px}
+#track .grid{margin-top:12px}
+#track .notice{margin-top:15px;line-height:1.55}
+#track details{margin-top:18px!important;padding:14px;border:1px solid var(--border-soft);border-radius:15px;background:rgba(255,255,255,.025)}
+#track summary{font-weight:750;color:#dce6f1;cursor:pointer}
+#track details .grid{margin-top:12px}
+.recipe-grid{grid-template-columns:1fr;gap:16px}
+.recipe-card{min-width:0;transition:transform .2s ease,border-color .2s ease}
+.recipe-card:active{transform:scale(.99)}
+.recipe-photo{height:190px}
+.recipe-content{display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.recipe-desc{line-height:1.55}
+.recipe-meta{margin-top:11px}
+#fitness .card,#profile .card,#shop .card{margin:17px 0}
+#fitness .card h2,#profile .card h2,#shop .card h2{margin-bottom:17px}
+#fitness .grid,#profile .grid,#shop .grid{gap:12px}
+#fitness .item,#profile .item,#shop .item{padding:14px 2px}
+#fitness input,#fitness select,#profile input,#profile select,#shop input,#shop select{margin-bottom:3px}
+#fitness .notice,#profile .notice,#shop .notice{line-height:1.6}
+button{min-height:46px}
+button.secondary{background:linear-gradient(145deg,#263647,#1b2734)}
+input,select,textarea{box-shadow:inset 0 1px 2px rgba(0,0,0,.15)}
+input::placeholder{opacity:.8}
+.progress{margin:10px 0 5px}
+@media(max-width:390px){
+ .card{padding:16px;margin:14px 0}
+ #home>.grid.three>.card{padding:13px 10px;min-height:112px}
+ .recipe-card{display:grid;grid-template-columns:112px minmax(0,1fr);align-items:stretch}
+ .recipe-photo{height:100%;min-height:190px;max-height:240px}
+ .recipe-content{padding:12px 11px}
+ .recipe-title{font-size:14px;line-height:1.35}
+ .recipe-desc{font-size:11px;line-height:1.4}
+ .recipe-meta{gap:5px;margin-top:8px}
+ .recipe-chip{font-size:10px;padding:4px 7px}
+ .recipe-source{display:none}
+}
+@media(min-width:391px) and (max-width:599px){
+ .recipe-card{display:grid;grid-template-columns:125px minmax(0,1fr);align-items:stretch}
+ .recipe-photo{height:100%;min-height:190px}
+ .recipe-content{padding:13px}
+}
+@media(min-width:600px){
+ .recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .recipe-card{display:flex;flex-direction:column}
+ .recipe-photo{height:180px;min-height:0}
+}
+
+
+
+/* v32 — Fitness Studio Look: saubere Profile-Layouts und abwechslungsreiche Flächen */
+#profile{--profile-gap:18px}
+#profile>.card{margin:18px 0;padding:22px;display:flex;flex-direction:column;align-items:stretch;gap:0}
+#profile>.card:first-child{background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 12%,#1b2938),#111923 72%);border-color:color-mix(in srgb,var(--accent) 30%,#293542)}
+#profile>.card:nth-child(2){background:radial-gradient(ellipse at 100% 0%,color-mix(in srgb,var(--accent) 18%,transparent),transparent 48%),linear-gradient(145deg,#1b2635,#111923 76%)}
+#profile>.card:nth-child(3){background:linear-gradient(135deg,#1b2a37,#121b27 72%);border-left:3px solid #42c7e8}
+#profile>.card:nth-child(4){background:linear-gradient(135deg,#28243a,#171b2a 75%);border-left:3px solid #a78bfa}
+#profile>.card:nth-child(5){background:linear-gradient(135deg,#30291f,#1b2028 75%);border-left:3px solid #ffad5c}
+#profile>.card h2{width:100%;min-height:26px;align-items:center;justify-content:flex-start;margin:0 0 16px}
+#profile>.card:first-child>.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 13px;width:100%;align-items:end}
+#profile>.card:first-child>.grid>div{min-width:0;display:flex;flex-direction:column;justify-content:flex-end}
+#profile>.card:first-child>.grid label{min-height:30px;display:flex;align-items:flex-end;margin:0 0 7px;line-height:1.3}
+#profile>.card:first-child>.grid input,#profile>.card:first-child>.grid select{width:100%;min-width:0;height:48px;margin:0}
+#profile>.card:first-child>label{margin:17px 0 7px}
+#profile>.card:first-child>input,#profile>.card:first-child>select{width:100%;height:48px;margin:0}
+#profile>.card:first-child>.grid+label{margin-top:19px}
+#profile>.card:first-child>.grid:nth-of-type(2){margin-top:3px}
+#profile>.card:first-child>.notice{margin-top:18px;min-height:64px;display:flex;align-items:center}
+#profile>.card:first-child>button{width:100%;margin:9px 0 0!important;min-height:48px}
+#profile>.card:first-child>button+button{margin-top:9px!important}
+#profile>.card:first-child>#fitnessAdvice{display:block;text-align:center;margin:12px 4px 4px!important}
+#profile>.card:first-child>hr{width:100%;margin:19px 0!important}
+#profile>.card:first-child>h3{width:100%;margin:0 0 10px}
+#profile>.card:first-child>hr~label{margin:13px 0 7px}
+#profile>.card:first-child>hr~input,#profile>.card:first-child>hr~select{height:48px}
+#profile>.card:first-child>hr~button{width:100%;margin-top:13px!important}
+#profile>.card:nth-child(2)>.row{width:100%;align-items:flex-start;gap:14px}
+#profile>.card:nth-child(2)>.row>div{flex:1;min-width:0}
+#profile>.card:nth-child(2)>.row .pill{flex:0 0 auto;white-space:nowrap;margin-top:3px}
+#profile>.card:nth-child(2)>.row h2{margin-bottom:7px}
+#profile>.card:nth-child(2)>.row p{margin:0;max-width:34ch}
+#profile .theme-picker-row{display:grid;grid-template-columns:62px minmax(0,1fr);gap:15px;align-items:center;width:100%;padding:14px;border:1px solid var(--border-soft);border-radius:16px;background:rgba(7,13,20,.28)}
+#profile .theme-picker-row input[type=color]{width:62px;height:54px;min-height:54px;padding:4px;border-radius:13px;cursor:pointer}
+#profile .theme-picker-row b{font-size:14px;display:block;margin-bottom:3px}
+#profile>.card:nth-child(2)>label{margin:17px 0 9px}
+#profile .theme-swatches{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;width:100%;margin:2px 0 17px}
+#profile button.theme-swatch{width:100%;height:58px;min-height:58px;border-radius:15px;padding:5px;display:flex;align-items:flex-end;justify-content:center;position:relative;overflow:visible;color:#111923;font-size:10px;font-weight:850;letter-spacing:-.1px;text-shadow:0 1px 0 rgba(255,255,255,.3)}
+#profile button.theme-swatch:after{content:attr(title);display:block;position:absolute;left:0;right:0;bottom:6px;text-align:center;white-space:nowrap}
+#profile button.theme-swatch.selected{outline:2px solid #fff;outline-offset:3px;box-shadow:0 0 0 5px var(--accent-soft),0 8px 20px rgba(0,0,0,.25)}
+#profile .theme-preview{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:13px;align-items:center;width:100%;padding:15px;border-radius:16px;border:1px solid var(--accent-border)}
+#profile .theme-preview-dot{width:12px;height:12px;border-radius:50%}
+#profile .theme-preview b{font-size:13px}
+#profile .theme-preview button{min-height:38px;padding:8px 10px;white-space:nowrap}
+#profile>.card:not(:first-child) label{margin:15px 0 7px}
+#profile>.card:not(:first-child) input,#profile>.card:not(:first-child) select{height:48px;margin:0}
+#profile>.card:not(:first-child)>button{width:100%;margin-top:13px!important;min-height:48px}
+#profile>.card:not(:first-child) p{line-height:1.6;margin:0 0 7px}
+#profile #weightHistory,#profile #reminderStatus{margin-top:13px!important;padding:12px 13px;border-radius:13px;background:rgba(5,10,16,.24);line-height:1.55}
+#profile>.card:last-child{background:linear-gradient(135deg,#1d3029,#131f20 78%);border-left:3px solid #65d58b}
+#profile>.card:last-child .secondary{width:100%;margin-top:12px}
+@media(max-width:390px){
+ #profile>.card{padding:17px 15px;gap:0}
+ #profile>.card:first-child>.grid{gap:12px 10px}
+ #profile>.card:first-child>.grid label{font-size:10px;letter-spacing:.35px}
+ #profile .theme-swatches{grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+ #profile button.theme-swatch{height:54px;min-height:54px;font-size:9px}
+ #profile .theme-preview{grid-template-columns:12px minmax(0,1fr);gap:11px}
+ #profile .theme-preview button{grid-column:1/-1;width:100%}
+}
+@media(min-width:600px){
+ #profile>.card{padding:24px}
+ #profile>.card:first-child>.grid{gap:16px 18px}
+ #profile .theme-swatches{grid-template-columns:repeat(7,minmax(0,1fr))}
+}
+
+
+
+/* v33 — kompletter MFit App-Store Design-Refresh */
+:root{--glow:color-mix(in srgb,var(--accent) 24%,transparent)}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(ellipse 100% 34% at 50% -7%,color-mix(in srgb,var(--accent) 17%,#1a2735),transparent 72%),linear-gradient(180deg,#0b1119 0%,#090e15 58%,#0b121a 100%);background-attachment:fixed}
+header{padding-top:30px;padding-bottom:25px;background:linear-gradient(118deg,color-mix(in srgb,var(--accent) 19%,#182536),#101923 58%,#111c25);box-shadow:0 12px 35px rgba(0,0,0,.18)}
+header:before{content:"";display:block;width:38px;height:4px;border-radius:99px;background:var(--accent);box-shadow:0 0 18px var(--glow);margin-bottom:13px}
+header h1{font-size:clamp(27px,7vw,32px);letter-spacing:-1.25px}
+header p{max-width:34ch;line-height:1.5}
+main{padding-top:17px}
+section:not(.hidden){animation:mfitSectionIn .24s ease both}
+section:not(#home)::before{display:flex;align-items:center;gap:9px;min-height:32px;margin:8px 5px 17px;padding:0 2px;font-size:10px;letter-spacing:1.45px}
+#track::before{content:"🍽️  DEIN FOOD JOURNAL  /  ERFASSEN"}
+#recipes::before{content:"🥗  INSPIRATION  /  REZEPTE"}
+#shop::before{content:"🛒  DEIN ALLTAG  /  EINKAUFEN"}
+#fitness::before{content:"🏋️  PERFORMANCE  /  TRAINING"}
+#profile::before{content:"⚙️  PERSÖNLICH  /  EINSTELLUNGEN"}
+.card{border-radius:23px;padding:19px;background:linear-gradient(145deg,rgba(27,40,56,.96),rgba(15,23,33,.98));border:1px solid rgba(181,203,228,.12);box-shadow:0 14px 34px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.035)}
+.card h2{font-size:16px;letter-spacing:-.35px;gap:11px}
+.card h2:before{width:5px;height:21px;flex-basis:5px;border-radius:9px;box-shadow:0 0 16px var(--glow)}
+.card h3{font-size:14px;letter-spacing:-.15px}
+#home>.card:first-child{position:relative;isolation:isolate;min-height:145px;padding:23px;border-radius:25px;background:radial-gradient(circle at 92% 12%,var(--glow),transparent 34%),linear-gradient(125deg,color-mix(in srgb,var(--accent) 20%,#1b2a3c),#121d2a 72%);border-color:color-mix(in srgb,var(--accent) 38%,#344354)}
+#home>.card:first-child:after{content:"";position:absolute;z-index:-1;width:128px;height:128px;right:-38px;bottom:-54px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:50%;box-shadow:0 0 0 16px color-mix(in srgb,var(--accent) 5%,transparent),0 0 0 34px color-mix(in srgb,var(--accent) 3%,transparent)}
+#home>.grid.three>.card{position:relative;border-radius:19px;background:linear-gradient(150deg,#1c2b3b,#121c28);border-color:rgba(190,210,235,.12)}
+#home>.grid.three>.card:nth-child(2){background:linear-gradient(150deg,color-mix(in srgb,var(--accent) 13%,#1b2b3b),#121c28)}
+#home>.grid.three>.card:nth-child(3){background:linear-gradient(150deg,#202a3a,#141c2a)}
+#home>.grid.three>.card .muted:first-child{letter-spacing:.85px;font-size:10px;font-weight:850}
+.big{font-variant-numeric:tabular-nums;letter-spacing:-1.5px}
+.pill{padding:5px 9px;border-radius:999px;font-size:10px}
+.notice{border-radius:16px;line-height:1.6}
+button{border-radius:14px;min-height:46px;letter-spacing:-.12px}
+button:not(.secondary):not(.danger):not(.theme-swatch){box-shadow:0 6px 18px color-mix(in srgb,var(--accent) 17%,transparent),inset 0 1px 0 rgba(255,255,255,.18)}
+button.secondary{background:linear-gradient(145deg,#27384a,#1b2938);border-color:rgba(190,210,235,.16)}
+button.danger{background:linear-gradient(145deg,#57323a,#3e252d);border-color:rgba(255,190,198,.15)}
+button:active{transform:scale(.975);filter:brightness(1.06)}
+input,select,textarea{border-radius:14px;background:rgba(9,16,25,.82);border-color:rgba(169,192,219,.19)}
+label{letter-spacing:.7px;font-size:10px}
+.item{border-color:rgba(180,202,226,.10)}
+.progress{height:9px;background:#273545;border:1px solid rgba(255,255,255,.035)}
+.progress span{box-shadow:0 0 13px var(--glow)}
+/* Navigation: Icon-/Label-Hierarchie */
+body nav.mfit-nav{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:stretch;gap:5px;left:9px;right:9px;bottom:8px;padding:8px 7px calc(8px + env(safe-area-inset-bottom));border:1px solid rgba(190,210,235,.15);border-radius:23px;background:rgba(13,20,30,.96);box-shadow:0 15px 42px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.045);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+body nav.mfit-nav button,body nav.mfit-nav button.active{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;min-height:55px;height:auto;padding:6px 2px;border-radius:15px;background:transparent!important;border:1px solid transparent!important;color:#aeb9c8!important;box-shadow:none!important}
+body nav.mfit-nav button.active{background:#263443!important;border-color:rgba(220,233,248,.12)!important;color:#fff!important}
+.nav-icon{display:grid;place-items:center;width:29px;height:27px;font-size:21px;line-height:1;font-weight:700;transition:transform .18s ease}
+.nav-label{font-size:9px;line-height:1.15;font-weight:800;letter-spacing:.1px;white-space:nowrap}
+body nav.mfit-nav button.active .nav-icon{transform:translateY(-1px);color:var(--accent);filter:drop-shadow(0 0 7px var(--glow))}
+.recipe-card{border-radius:21px;box-shadow:0 12px 28px rgba(0,0,0,.25)}
+.recipe-photo{background:linear-gradient(135deg,#243447,#172230)}
+.recipe-content{gap:6px}
+.recipe-title{font-size:16px;letter-spacing:-.45px}
+.recipe-chip{border-radius:999px;padding:6px 10px}
+.theme-preview,.theme-picker-row{border-radius:17px!important}
+#fitness .card:first-child{background:radial-gradient(circle at 100% 0%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 42%),linear-gradient(145deg,#1b2c3b,#121c29)}
+#fitness .card:nth-child(even){background:linear-gradient(145deg,#1b2637,#121c29)}
+#shop .card:first-child{background:radial-gradient(circle at 100% 0%,rgba(66,199,232,.10),transparent 42%),linear-gradient(145deg,#1a2b3b,#121c29)}
+#track .card:first-child{background:radial-gradient(circle at 100% 0%,var(--glow),transparent 42%),linear-gradient(145deg,#1b2d3b,#121c29)}
+#profile>.card{border-radius:22px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:390px){body nav.mfit-nav{left:6px;right:6px;gap:3px;padding-left:5px;padding-right:5px}body nav.mfit-nav button,body nav.mfit-nav button.active{min-height:53px}.nav-icon{font-size:20px}.nav-label{font-size:8px}.card{padding:16px;border-radius:20px}}
+@media(min-width:600px){body nav.mfit-nav{left:50%;right:auto;transform:translateX(-50%);width:min(680px,calc(100% - 32px));grid-template-columns:repeat(6,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+
+/* v34 — Meal planner, shopping and workout builder */
+.shop-catalog{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.shop-product{display:flex;align-items:center;justify-content:space-between;gap:7px;text-align:left;padding:10px 11px;min-height:54px;background:linear-gradient(145deg,#203246,#172331);border:1px solid rgba(180,205,230,.13);border-radius:13px}
+.shop-product small,.shop-line small,.exercise-row small{display:block;color:#9cabbc;font-size:10px;margin-top:3px}
+.shop-list-head{display:flex;justify-content:space-between;align-items:center;margin:22px 0 10px}
+.shop-line{padding:12px 0;border-bottom:1px solid rgba(180,205,230,.1)}
+.shop-check{display:flex;align-items:center;gap:10px;margin:0 0 9px;letter-spacing:0;font-size:13px}
+.shop-check input{width:19px;height:19px;min-height:19px;margin:0;accent-color:var(--accent)}
+.shop-line.done .shop-check span{text-decoration:line-through;opacity:.55}
+.shop-price-fields{display:flex;align-items:center;justify-content:flex-end;gap:9px}.shop-estimate{font-size:13px;font-weight:850;color:var(--accent);white-space:nowrap}.shop-price-fields button{min-height:34px;padding:4px 10px}
+.shop-link{display:flex;align-items:center;justify-content:center;padding:13px;border:1px solid var(--accent-border);border-radius:14px;background:rgba(255,255,255,.035);color:#eaf2fb;text-decoration:none;text-align:center;font-size:12px;font-weight:800}
+.meal-day,.generated-day{margin-top:13px;padding:14px;border:1px solid rgba(180,205,230,.12);border-radius:16px;background:rgba(7,14,23,.26)}
+.meal-plan-item{display:flex;flex-direction:column;gap:5px;padding:10px 0;border-bottom:1px solid rgba(180,205,230,.09)}
+.meal-plan-item:last-child{border-bottom:0}
+.meal-plan-item small{color:#aab8c8;line-height:1.5}
+.generated-day h3{margin:0 0 10px}
+.exercise-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid rgba(180,205,230,.09)}
+.exercise-row:last-child{border-bottom:0}
+.exercise-row>div{min-width:0}
+.exercise-row span{display:block;font-size:11px;color:var(--accent);margin-top:4px;font-weight:750}
+.exercise-row button{flex:0 0 auto}
+#addWeekShopBtn:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:390px){.shop-catalog{gap:6px}.shop-product{padding:9px 8px;font-size:11px}.shop-price-fields{grid-template-columns:minmax(0,1fr) minmax(62px,.7fr) 34px}}
+
