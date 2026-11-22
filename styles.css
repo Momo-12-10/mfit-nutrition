@@ -430,21 +430,11 @@ body nav.mfit-nav button.active .nav-icon{transform:translateY(-1px);color:var(-
 .exercise-row button{flex:0 0 auto}
 #addWeekShopBtn:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:390px){.shop-catalog{gap:6px}.shop-product{padding:9px 8px;font-size:11px}.shop-price-fields{grid-template-columns:minmax(0,1fr) minmax(62px,.7fr) 34px}}
-
-/* v43 — exakt die gelben Lebensmittel-Kacheln im Shop neutral grau darstellen */
-#shop #shopCatalog button.shop-product{
-  appearance:none!important;
-  -webkit-appearance:none!important;
-  background:#26313e!important;
-  background-color:#26313e!important;
-  background-image:none!important;
-  color:#edf2f8!important;
-  border:1px solid #3a4858!important;
-  box-shadow:none!important;
-}
-#shop #shopCatalog button.shop-product span,
-#shop #shopCatalog button.shop-product b{color:#edf2f8!important}
-#shop #shopCatalog button.shop-product small{color:#aab6c5!important}
-#shop #shopCatalog button.shop-product:active,
-#shop #shopCatalog button.shop-product:hover,
-#shop #shopCatalog button.shop-product:focus{background:#303d4c!important;background-image:none!important}
+/* v44 — Auswahlfelder für persönliche Essensplan-Filter */
+.meal-preferences{margin-top:18px;padding:15px;border:1px solid rgba(180,205,230,.13);border-radius:17px;background:rgba(7,14,23,.25)}
+.meal-preferences>b{font-size:14px}
+.meal-pref-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;margin:12px 0}
+.meal-pref-grid label,.meal-pref-check{display:flex;align-items:center;gap:8px;margin:0;padding:8px 9px;border:1px solid rgba(180,205,230,.10);border-radius:11px;background:rgba(255,255,255,.025);font-size:11px;line-height:1.35;letter-spacing:0;text-transform:none;font-weight:600;color:#dce5ef}
+.meal-pref-grid input,.meal-pref-check input{width:17px;height:17px;min-height:17px;flex:0 0 17px;margin:0;accent-color:var(--accent)}
+.meal-medical-note{margin-top:12px;padding:12px;border-radius:12px;background:rgba(181,128,48,.12);border:1px solid rgba(220,170,90,.25);color:#f0d9b4;font-size:11px;line-height:1.55}
+@media(max-width:390px){.meal-preferences{padding:12px}.meal-pref-grid{gap:7px}.meal-pref-grid label{padding:8px 6px;font-size:10px}}
