@@ -43,10 +43,10 @@ h2{font-size:18px;margin:0 0 8px}h3{font-size:15px;margin:0 0 6px}
 <label>Barcode (EAN)</label><input id="barcode" inputmode="numeric" placeholder="EAN-13 / EAN-8">
 <div id="barcodeStatus" class="muted"></div>
 <div class="notice">Produktdaten werden – wenn verfügbar – über Open Food Facts geladen. Angaben können unvollständig sein; prüfe die Verpackung.</div>
-<label>Packungsgröße (automatisch erkannt, falls hinterlegt)</label><input id="packSize" type="number" min="0" placeholder="z. B. 500" readonly><label>Wie viel hast du gegessen?</label><select id="portionMode" onchange="applyPortionMode()"><option value="whole">Ganze Packung</option><option value="half">Halbe Packung</option><option value="custom">Eigene Menge</option></select><div class="grid"><div><label>Menge (g/ml)</label><input id="amount" type="number" value="100" min="0" oninput="document.getElementById('portionMode').value='custom'"></div><div><label>Einheit</label><select id="unit"><option>g</option><option>ml</option><option>Stück</option></select></div></div>
-<div class="grid"><div><label>Kalorien (kcal)</label><input id="kcal" type="number" min="0" value="0"></div><div><label>Protein (g)</label><input id="protein" type="number" min="0" value="0"></div><div><label>Kohlenhydrate (g)</label><input id="carbs" type="number" min="0" value="0"></div><div><label>Fett (g)</label><input id="fat" type="number" min="0" value="0"></div><div><label>Ballaststoffe (g)</label><input id="fiber" type="number" min="0" value="0"></div><div><label>Getränkemenge (ml)</label><input id="drink" type="number" min="0" value="0"></div></div>
+<label>Packungsgröße (automatisch erkannt, falls hinterlegt)</label><input id="packSize" type="number" min="0" placeholder="z. B. 500" readonly><label>Wie viel hast du gegessen?</label><select id="portionMode" onchange="applyPortionMode()"><option value="whole">Ganze Packung</option><option value="half">Halbe Packung</option><option value="custom">Eigene Menge</option></select><div class="grid"><div><label>Menge (g/ml)</label><input id="amount" type="number" value="" placeholder="wird aus Packung übernommen" min="0" oninput="document.getElementById('portionMode').value='custom';recalculateNutrition()"></div><div><label>Einheit</label><select id="unit"><option>g</option><option>ml</option><option>Stück</option></select></div></div>
+<div class="grid"><div><label>Kalorien (pro 100 g/ml)</label><input id="kcal" type="number" min="0" value="0" oninput="updateNutritionBase('kcal')"></div><div><label>Protein (g)</label><input id="protein" type="number" min="0" value="0" oninput="updateNutritionBase('protein')"></div><div><label>Kohlenhydrate (g)</label><input id="carbs" type="number" min="0" value="0" oninput="updateNutritionBase('carbs')"></div><div><label>Fett (g)</label><input id="fat" type="number" min="0" value="0" oninput="updateNutritionBase('fat')"></div><div><label>Ballaststoffe (g)</label><input id="fiber" type="number" min="0" value="0" oninput="updateNutritionBase('fiber')"></div><div><label>Getränkemenge (ml)</label><input id="drink" type="number" min="0" value="0"></div></div>
 <details style="margin-top:10px"><summary>Vitamine & Mineralstoffe (optional)</summary>
-<div class="grid"><div><label>Vitamin C (mg)</label><input id="vitc" type="number" min="0" value="0"></div><div><label>Vitamin D (µg)</label><input id="vitd" type="number" min="0" value="0"></div><div><label>Kalzium (mg)</label><input id="calcium" type="number" min="0" value="0"></div><div><label>Eisen (mg)</label><input id="iron" type="number" min="0" value="0"></div><div><label>Magnesium (mg)</label><input id="magnesium" type="number" min="0" value="0"></div><div><label>Kalium (mg)</label><input id="potassium" type="number" min="0" value="0"></div><div><label>Zink (mg)</label><input id="zinc" type="number" min="0" value="0"></div><div><label>Vitamin B12 (µg)</label><input id="b12" type="number" min="0" value="0"></div></div></details>
+<div class="grid"><div><label>Vitamin C (mg)</label><input id="vitc" type="number" min="0" value="0" oninput="updateNutritionBase('vitc')"></div><div><label>Vitamin D (µg)</label><input id="vitd" type="number" min="0" value="0" oninput="updateNutritionBase('vitd')"></div><div><label>Kalzium (mg)</label><input id="calcium" type="number" min="0" value="0" oninput="updateNutritionBase('calcium')"></div><div><label>Eisen (mg)</label><input id="iron" type="number" min="0" value="0" oninput="updateNutritionBase('iron')"></div><div><label>Magnesium (mg)</label><input id="magnesium" type="number" min="0" value="0" oninput="updateNutritionBase('magnesium')"></div><div><label>Kalium (mg)</label><input id="potassium" type="number" min="0" value="0" oninput="updateNutritionBase('potassium')"></div><div><label>Zink (mg)</label><input id="zinc" type="number" min="0" value="0" oninput="updateNutritionBase('zinc')"></div><div><label>Vitamin B12 (µg)</label><input id="b12" type="number" min="0" value="0" oninput="updateNutritionBase('b12')"></div></div></details>
 <label>Mahlzeit</label><select id="meal"><option>Frühstück</option><option>Mittagessen</option><option>Abendessen</option><option>Snack</option><option>Getränk</option></select>
 <button style="width:100%;margin-top:12px" onclick="addFood()">Eintrag speichern</button>
 <p class="muted">Beispiel: Cola Zero hat je nach Produkt praktisch keine Kalorien. Bitte Etikettwerte und tatsächliche Menge eintragen. Getränke werden zusätzlich als Trinkmenge gezählt, wenn du ml angibst.</p></div>
@@ -69,6 +69,7 @@ h2{font-size:18px;margin:0 0 8px}h3{font-size:15px;margin:0 0 6px}
 <script>
 const $=id=>document.getElementById(id);
 let data=JSON.parse(localStorage.getItem('mfit_entries')||'[]');
+let nutritionBase={kcal:0,protein:0,carbs:0,fat:0,fiber:0,vitc:0,vitd:0,calcium:0,iron:0,magnesium:0,potassium:0,zinc:0,b12:0};
 let water=Number(localStorage.getItem('mfit_water')||0);
 let goals=JSON.parse(localStorage.getItem('mfit_goals')||'{"kcal":2800,"protein":150}');
 const presets=[
@@ -90,11 +91,11 @@ const recipes=[
 ];
 
 function getPackAmount(product){
- const qty=String(product.quantity||'').replace(',','.');
+ const qty=String(product.quantity||'').replace(/,/g,'.');
  const match=qty.match(/(\d+(?:\.\d+)?)\s*(kg|g|ml|cl|l)\b/i);
  if(match){let value=Number(match[1]),unit=match[2].toLowerCase();if(unit==='kg')return {amount:value*1000,unit:'g'};if(unit==='l')return {amount:value*1000,unit:'ml'};if(unit==='cl')return {amount:value*10,unit:'ml'};return {amount:value,unit};}
  const q=Number(product.product_quantity),u=String(product.product_quantity_unit||'').toLowerCase();
- if(q>0&&['g','ml'].includes(u))return {amount:q,unit:u};
+ if(q>0){if(u==='kg')return {amount:q*1000,unit:'g'};if(u==='l')return {amount:q*1000,unit:'ml'};if(u==='g'||u==='ml')return {amount:q,unit:u};}
  return null;
 }
 async function lookupBarcode(){
@@ -110,12 +111,10 @@ async function lookupBarcode(){
   if(!name)throw new Error('Produktname fehlt in der Datenbank');
   $('foodName').value=(x.brands?x.brands+' – ':'')+name;
   $('unit').value='g';$('amount').value=100;
-  $('kcal').value=Math.round(n['energy-kcal_100g']??(n['energy-kj_100g']?n['energy-kj_100g']/4.184:0));
-  $('protein').value=n.proteins_100g??0;$('carbs').value=n.carbohydrates_100g??0;$('fat').value=n.fat_100g??0;$('fiber').value=n.fiber_100g??0;
-  $('vitc').value=n['vitamin-c_100g']??0;$('vitd').value=n['vitamin-d_100g']??0;$('calcium').value=n.calcium_100g??0;$('iron').value=n.iron_100g??0;$('magnesium').value=n.magnesium_100g??0;$('potassium').value=n.potassium_100g??0;$('zinc').value=n.zinc_100g??0;$('b12').value=n['vitamin-b12_100g']??0;
+  setNutritionFromProduct(n);
   const pack=getPackAmount(x);
   if(pack){$('packSize').value=pack.amount;$('unit').value=pack.unit;$('portionMode').value='whole';applyPortionMode();}
-  else{$('packSize').value='';$('portionMode').value='custom';$('amount').value=100;}
+  else{$('packSize').value='';$('portionMode').value='custom';$('amount').value='';recalculateNutrition();}
   $('barcodeStatus').textContent='Produkt gefunden: '+name+'. '+(pack?'Packungsgröße '+pack.amount+' '+pack.unit+' erkannt. ':'Packungsgröße nicht hinterlegt. ')+(Object.keys(n).length?'Nährwerte übernommen.':'Keine Nährwerte hinterlegt.')+' Bitte Etikett prüfen und Portionsgröße auswählen.';
  }catch(e){$('barcodeStatus').textContent='Kein vollständiger Datensatz für diesen Barcode gefunden. Prüfe die Ziffern oder gib die Nährwerte manuell ein. ('+e.message+')';}
 }
@@ -123,14 +122,19 @@ function applyPortionMode(){
  const mode=$('portionMode')?.value,pack=Number($('packSize')?.value)||0;
  if(mode==='whole'&&pack>0)$('amount').value=pack;
  else if(mode==='half'&&pack>0)$('amount').value=pack/2;
-}async function startBarcode(){
+ recalculateNutrition();
+}
+const nutrientKeys=['kcal','protein','carbs','fat','fiber','vitc','vitd','calcium','iron','magnesium','potassium','zinc','b12'];
+function recalculateNutrition(){const amount=Number($('amount').value)||0,factor=$('unit').value==='Stück'?amount:amount/100;nutrientKeys.forEach(k=>{const el=$(k);if(el)el.value=String(Math.round((Number(nutritionBase[k]||0)*factor)*100)/100)});}
+function updateNutritionBase(key){nutritionBase[key]=Number($(key).value)||0;recalculateNutrition();}
+function setNutritionFromProduct(n){nutritionBase={kcal:Number(n['energy-kcal_100g']??(n['energy-kj_100g']?n['energy-kj_100g']/4.184:0)),protein:Number(n.proteins_100g??0),carbs:Number(n.carbohydrates_100g??0),fat:Number(n.fat_100g??0),fiber:Number(n.fiber_100g??0),vitc:Number(n['vitamin-c_100g']??0),vitd:Number(n['vitamin-d_100g']??0),calcium:Number(n.calcium_100g??0),iron:Number(n.iron_100g??0),magnesium:Number(n.magnesium_100g??0),potassium:Number(n.potassium_100g??0),zinc:Number(n.zinc_100g??0),b12:Number(n['vitamin-b12_100g']??0)};recalculateNutrition();}async function startBarcode(){
  if(!navigator.mediaDevices?.getUserMedia){$('barcodeStatus').textContent='Dieser Browser bietet keinen Kamerazugriff. Bitte Barcode manuell eingeben.';return}
  let overlay=null,scanner=null,started=false,finished=false,torchOn=false;
  const closeScanner=async()=>{if(finished)return;finished=true;if(scanner&&started){try{await scanner.stop()}catch(e){}}if(scanner){try{scanner.clear()}catch(e){}}if(overlay)overlay.remove();};
  try{
-  overlay=document.createElement('div');overlay.style='position:fixed;inset:0;background:#07100bf5;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:18px;overflow:auto';
+  overlay=document.createElement('div');overlay.style='position:fixed;inset:0;background:#07100bf5;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px;overflow:hidden';
   const title=document.createElement('p');title.textContent='Barcode vollständig in die Kamera halten';title.style='color:white;font-weight:700;text-align:center;margin:0';
-  const reader=document.createElement('div');reader.id='mfit-barcode-reader';reader.style='width:min(96vw,600px);overflow:hidden;border-radius:16px';
+  const reader=document.createElement('div');reader.id='mfit-barcode-reader';reader.style='width:min(96vw,600px);max-height:42vh;overflow:hidden;border-radius:16px';
   const hint=document.createElement('p');hint.textContent='Kamera langsam über den Barcode bewegen. Halte das Handy ruhig und achte auf scharfen Fokus.';hint.style='color:#c8d5cc;text-align:center;margin:0;font-size:14px';
   const controls=document.createElement('div');controls.style='display:flex;gap:10px;flex-wrap:wrap;justify-content:center';
   const torch=document.createElement('button');torch.textContent='🔦 Licht einschalten';torch.className='secondary';
@@ -143,14 +147,14 @@ function applyPortionMode(){
   scanner=new Html5Qrcode('mfit-barcode-reader',{formatsToSupport:formats,verbose:false});
   await scanner.start({facingMode:'environment'},{fps:20,aspectRatio:1.5,videoConstraints:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}}},async decodedText=>{
    if(finished)return;const code=String(decodedText).replace(/\D/g,'');if(!/^\d{8,14}$/.test(code))return;
-   $('barcode').value=code;$('barcodeStatus').textContent='Barcode erkannt: '+code+'. Produktdaten werden geladen …';await closeScanner();await lookupBarcode();
+   $('barcode').value=code;$('barcodeStatus').textContent='Barcode erkannt: '+code+'. Produktdaten werden geladen …';await closeScanner();await lookupBarcode();showTab('track');$('portionMode').scrollIntoView({behavior:'smooth',block:'center'});
   },()=>{});
   started=true;
  }catch(e){await closeScanner();$('barcodeStatus').textContent='Scanner konnte nicht gestartet werden: '+e.message;}
 }
 function save(){localStorage.setItem('mfit_entries',JSON.stringify(data));localStorage.setItem('mfit_water',water);render()}
 function showTab(t){['home','track','recipes','shop','profile'].forEach(x=>$(x).classList.toggle('hidden',x!==t));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));if(t==='recipes')renderRecipes()}
-function addFood(){let n=$('foodName').value.trim(),a=Number($('amount').value)||0;if(!n||a<=0)return alert('Bitte Lebensmittel und Menge eintragen.');let factor=$('unit').value==='g'||$('unit').value==='ml'?a/100:a;let entry={name:n,amount:a,unit:$('unit').value,meal:$('meal').value,kcal:Number($('kcal').value)*factor,protein:Number($('protein').value)*factor,carbs:Number($('carbs').value)*factor,fat:Number($('fat').value)*factor,fiber:Number($('fiber').value)*factor,drink:Number($('drink').value),vitc:Number($('vitc')?.value||0)*factor,vitd:Number($('vitd')?.value||0)*factor,calcium:Number($('calcium')?.value||0)*factor,iron:Number($('iron')?.value||0)*factor,magnesium:Number($('magnesium')?.value||0)*factor,potassium:Number($('potassium')?.value||0)*factor,zinc:Number($('zinc')?.value||0)*factor,b12:Number($('b12')?.value||0)*factor};data.push(entry);water+=entry.drink;['foodName','barcode'].forEach(x=>$(x).value='');$('portionMode').value='whole';$('packSize').value='';save();showTab('home')}
+function addFood(){let n=$('foodName').value.trim(),a=Number($('amount').value)||0;if(!n||a<=0)return alert('Bitte Lebensmittel und Menge eintragen.');let entry={name:n,amount:a,unit:$('unit').value,meal:$('meal').value,kcal:Number($('kcal').value),protein:Number($('protein').value),carbs:Number($('carbs').value),fat:Number($('fat').value),fiber:Number($('fiber').value),drink:Number($('drink').value),vitc:Number($('vitc')?.value||0),vitd:Number($('vitd')?.value||0),calcium:Number($('calcium')?.value||0),iron:Number($('iron')?.value||0),magnesium:Number($('magnesium')?.value||0),potassium:Number($('potassium')?.value||0),zinc:Number($('zinc')?.value||0),b12:Number($('b12')?.value||0)};data.push(entry);water+=entry.drink;['foodName','barcode'].forEach(x=>$(x).value='');$('portionMode').value='whole';$('packSize').value='';save();showTab('home')}
 function addWater(n){water+=n;save()}
 function render(){let sum=k=>data.reduce((s,e)=>s+(e[k]||0),0),k=sum('kcal'),p=sum('protein'),f=sum('fiber');$('kcalTotal').textContent=Math.round(k)+' kcal';$('kcalLeft').textContent='Tagesziel: '+goals.kcal+' kcal · '+Math.max(0,Math.round(goals.kcal-k))+' übrig';$('kcalBar').style.width=Math.min(100,k/goals.kcal*100)+'%';$('proteinTotal').textContent=Math.round(p)+' g';$('proteinLeft').textContent='Ziel: '+goals.protein+' g · '+Math.max(0,Math.round(goals.protein-p))+' übrig';$('waterTotal').textContent=Math.round(water)+' ml';$('fiberTotal').textContent=f.toFixed(1)+' g';$('todayList').innerHTML=data.length?data.map((e,i)=>`<div class="item row"><div><b>${esc(e.name)}</b><div class="muted">${esc(e.meal)} · ${e.amount}${esc(e.unit)} · ${Math.round(e.kcal)} kcal · ${e.protein.toFixed(1)} g Protein</div></div><button class="danger smallbtn" onclick="removeEntry(${i})">×</button></div>`).join(''):'Noch keine Einträge.';[['vitc','sumVitC','mg'],['vitd','sumVitD','µg'],['calcium','sumCalcium','mg'],['iron','sumIron','mg'],['magnesium','sumMagnesium','mg'],['potassium','sumPotassium','mg'],['zinc','sumZinc','mg'],['b12','sumB12','µg']].forEach(([k,id,u])=>{if($(id))$(id).textContent=sum(k).toFixed(1)+' '+u})}
 function removeEntry(i){water=Math.max(0,water-(data[i].drink||0));data.splice(i,1);save()}
