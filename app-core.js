@@ -402,6 +402,49 @@ const mfitNutritionTemplates={
  'ketchup':{kcal:100,protein:1.5,carbs:23,fat:.2,fiber:.5},
  'hummus':{kcal:240,protein:8,carbs:14,fat:17,fiber:6},
  'guacamole':{kcal:150,protein:2,carbs:8,fat:13,fiber:6}
+
+ 'billa protein mousse schoko':{kcal:78,protein:10,carbs:6,fat:1.5},
+ 'billa protein double choco':{kcal:85,protein:10,carbs:7,fat:2},
+ 'billa protein topfencreme vanille schoko':{kcal:105,protein:9,carbs:11,fat:2.5},
+ 'billa protein topfencreme erdbeere':{kcal:95,protein:9,carbs:10,fat:1.5},
+ 'billa protein naturjoghurt':{kcal:60,protein:10,carbs:4,fat:.5},
+ 'billa protein toast':{kcal:260,protein:20,carbs:27,fat:7,fiber:8},
+ 'billa proteindrink kakao':{kcal:62,protein:7,carbs:6,fat:1.5},
+ 'billa proteindrink vanille':{kcal:62,protein:7,carbs:6,fat:1.5},
+ 'billa high protein butter chicken':{kcal:145,protein:9,carbs:13,fat:6},
+ 'billa high protein pasta hähnchen und gemüse':{kcal:145,protein:10,carbs:18,fat:4},
+ 'billa high protein kürbis orzo hähnchen':{kcal:135,protein:9,carbs:17,fat:3.5},
+ 'billa high protein chicken tikka masala':{kcal:140,protein:9,carbs:12,fat:6},
+ 'billa high protein pasta chicken alfredo':{kcal:165,protein:10,carbs:17,fat:6},
+ 'billa high protein linsenbolognese':{kcal:125,protein:8,carbs:17,fat:2},
+ 'schärdinger protein käse-kugel':{kcal:280,protein:28,carbs:2,fat:17},
+ 'schärdinger protein mozzarella leicht':{kcal:170,protein:25,carbs:2,fat:7},
+ 'schärdinger protein bergbaron scheiben':{kcal:280,protein:30,carbs:1,fat:17},
+ 'dr. oetker high protein milchreis':{kcal:105,protein:7,carbs:15,fat:2},
+ 'dr. oetker high protein pudding grieß':{kcal:110,protein:7,carbs:16,fat:2},
+ 'dr. oetker high protein pudding grieß schoko':{kcal:115,protein:7,carbs:17,fat:2.5},
+ 'ehrmann high protein pudding karamell':{kcal:78,protein:10,carbs:6,fat:1.5},
+ 'ehrmann high protein pudding haselnuss':{kcal:82,protein:10,carbs:6,fat:2},
+ 'ehrmann high protein pudding vanille':{kcal:76,protein:10,carbs:5.5,fat:1.5},
+ 'ehrmann high protein mousse vanille':{kcal:80,protein:10,carbs:6,fat:2},
+ 'ehrmann high protein mousse lemon':{kcal:80,protein:10,carbs:7,fat:1.5},
+ 'noem pro proteinmilch':{kcal:62,protein:7,carbs:5,fat:1.5},
+ 'noem pro vanille proteindrink':{kcal:62,protein:7,carbs:6,fat:1.5},
+ 'noem pro kakao proteindrink':{kcal:65,protein:7,carbs:6,fat:1.8},
+ 'noem pro banane proteindrink':{kcal:63,protein:7,carbs:6,fat:1.5},
+ 'noem pro erdbeere proteindrink':{kcal:63,protein:7,carbs:6,fat:1.5},
+ 'noem pro salted caramel proteindrink':{kcal:65,protein:7,carbs:6,fat:1.8},
+ 'noem pro protein skyr':{kcal:65,protein:11,carbs:4,fat:.2},
+ 'noem pro vanille protein skyr':{kcal:80,protein:10,carbs:7,fat:.2},
+ 'noem pro vanille protein topfencreme':{kcal:95,protein:9,carbs:9,fat:1.5},
+ 'noem pro blueberry cheesecake protein topfencreme':{kcal:100,protein:9,carbs:10,fat:2},
+ 'noem pro stracciatella protein topfencreme':{kcal:105,protein:9,carbs:11,fat:2.5},
+ 'noem pro schoko-banane protein topfencreme':{kcal:100,protein:9,carbs:10,fat:2},
+ 'emmi caffe latte protein':{kcal:55,protein:6,carbs:6,fat:1},
+ 'alpro protein joghurt mango-banane':{kcal:75,protein:5,carbs:9,fat:2.5},
+ 'oelz protein waffeln':{kcal:420,protein:20,carbs:48,fat:15},
+ 'mini babybel protein':{kcal:270,protein:27,carbs:1,fat:17},
+
 };
 const mfitSugarOverrides={
  'banane':{sugar:12.2,addedSugar:0},'apfel':{sugar:10.4,addedSugar:0},'erdbeeren':{sugar:4.9,addedSugar:0},'heidelbeeren':{sugar:10,addedSugar:0},
@@ -422,6 +465,15 @@ const mfitDefaultPortions={
  'cola':330,'pepsi':330,'red bull':250,'monster':500,'wasser':500,'eistee':500,
  'putenfarmerschinken':30,'puten-farmerschinken':30,'putenschinken':30,'putenbrust aufschnitt':30,'hühnerbrust aufschnitt':30,'farmerschinken':30,'kochschinken':30,'beinschinken':30,'toastschinken':30,'prosciutto':25,'parmaschinken':25,'roher schinken':25,'extrawurst':30,'pikante extrawurst':30,'polnische':50,'krakauer':50,'putenwurst':30,'putensalami':25,'salami':25,'schinkenwurst':30,'leberkäse':100,'fleischkäse':100,'frankfurter':100,'debreziner':100,'käsekrainer':100,'bratwurst':100,'putenfrankfurter':100,'hühnerwürstel':100,
  'cheddar':25,'bergkäse':25,'frischkäse':20,'körniger frischkäse':150,'proteinbrot':60,'eiweißbrot':60,'roggenbrot':60,'mischbrot':60,'bagel':90,'baguette':60,'ciabatta':60,'rinderfaschiertes':150,'hühnerfaschiertes':150,'putenfaschiertes':150,'schweinsfilet':150,'hühnerkeule':150,'hühnerfilet':150,'hühnerstreifen':150,'putenfilet':150,'speck':20,'bacon':20,'quinoa':150,'couscous':150,'bulgur':150,'gnocchi':200,'spätzle':200,'tortellini':200,'kidneybohnen':100,'edamame':100,'zucchini':100,'champignons':100,'zwiebel':50,'blumenkohl':100,'sauerkraut':100,'rote rüben':100,'birne':150,'trauben':100,'mango':150,'walnüsse':25,'cashews':25,'haselnüsse':25,'pistazien':25,'pecannüsse':25,'macadamianüsse':25,'paranüsse':20,'erdnüsse':25,'pinienkerne':20,'studentenfutter':30,'nutella':15,'reiswaffel':10,'kefir':250,'buttermilch':250,'sauerrahm':30,'crème fraîche':30,'schlagobers':30,'light mayonnaise':15,'hummus':40,'guacamole':40
+ 'billa protein mousse schoko':200,'billa protein double choco':200,'billa protein topfencreme vanille schoko':180,'billa protein topfencreme erdbeere':180,'billa protein naturjoghurt':200,'billa protein toast':60,'billa proteindrink kakao':250,'billa proteindrink vanille':250,
+ 'billa high protein butter chicken':350,'billa high protein pasta hähnchen und gemüse':350,'billa high protein kürbis orzo hähnchen':350,'billa high protein chicken tikka masala':350,'billa high protein pasta chicken alfredo':350,'billa high protein linsenbolognese':350,
+ 'schärdinger protein käse-kugel':100,'schärdinger protein mozzarella leicht':125,'schärdinger protein bergbaron scheiben':30,
+ 'dr. oetker high protein milchreis':400,'dr. oetker high protein pudding grieß':400,'dr. oetker high protein pudding grieß schoko':400,
+ 'ehrmann high protein pudding karamell':200,'ehrmann high protein pudding haselnuss':200,'ehrmann high protein pudding vanille':200,'ehrmann high protein mousse vanille':200,'ehrmann high protein mousse lemon':200,
+ 'noem pro proteinmilch':250,'noem pro vanille proteindrink':250,'noem pro kakao proteindrink':250,'noem pro banane proteindrink':250,'noem pro erdbeere proteindrink':250,'noem pro salted caramel proteindrink':250,'noem pro protein skyr':200,'noem pro vanille protein skyr':200,
+ 'noem pro vanille protein topfencreme':180,'noem pro blueberry cheesecake protein topfencreme':180,'noem pro stracciatella protein topfencreme':180,'noem pro schoko-banane protein topfencreme':180,
+ 'emmi caffe latte protein':230,'alpro protein joghurt mango-banane':150,'oelz protein waffeln':45,'mini babybel protein':20,
+
 };
 function mfitTemplateForName(name){
  const n=String(name||'').toLowerCase();
@@ -440,6 +492,9 @@ function setNutritionFromTemplate(t){
 }
 
 const mfitFoodCatalog=[
+'BILLA Protein Mousse Schoko','BILLA Protein Double Choco','BILLA Protein Topfencreme Vanille Schoko','BILLA Protein Topfencreme Erdbeere','BILLA Protein Naturjoghurt','BILLA Protein Toast','BILLA Proteindrink Kakao','BILLA Proteindrink Vanille','BILLA High Protein Butter Chicken','BILLA High Protein Pasta Hähnchen und Gemüse','BILLA High Protein Kürbis Orzo Hähnchen','BILLA High Protein Chicken Tikka Masala','BILLA High Protein Pasta Chicken Alfredo','BILLA High Protein Linsenbolognese',
+'Schärdinger Protein Käse-Kugel','Schärdinger Protein Mozzarella leicht','Schärdinger Protein Bergbaron Scheiben','Dr. Oetker High Protein Milchreis','Dr. Oetker High Protein Pudding Grieß','Dr. Oetker High Protein Pudding Grieß Schoko','Ehrmann High Protein Pudding Karamell','Ehrmann High Protein Pudding Haselnuss','Ehrmann High Protein Pudding Vanille','Ehrmann High Protein Mousse Vanille','Ehrmann High Protein Mousse Lemon',
+'nöm PRO Proteinmilch','nöm PRO Vanille Proteindrink','nöm PRO Kakao Proteindrink','nöm PRO Banane Proteindrink','nöm PRO Erdbeere Proteindrink','nöm PRO Salted Caramel Proteindrink','nöm PRO Protein Skyr','nöm PRO Vanille Protein Skyr','nöm PRO Vanille Protein Topfencreme','nöm PRO Blueberry Cheesecake Protein Topfencreme','nöm PRO Stracciatella Protein Topfencreme','nöm PRO Schoko-Banane Protein Topfencreme','Emmi Caffè Latte Protein','Alpro Protein Joghurt Mango-Banane','Ölz Protein Waffeln','Mini Babybel Protein',
 'MILSANI High Protein Mousse Vanille','MILSANI High Protein Mousse Schoko','MILSANI XXL High Protein Drink Schokolade','MILSANI XXL High Protein Drink Erdbeere','MILSANI Protein Naturjoghurt','MILSANI High Protein Joghurt Erdbeere','MILSANI Protein Shot Erdbeere','MILSANI High Protein Pudding Schoko','ALDI SPORTS Protein Coffee Pulver','GOLDEN BRIDGE Protein Granola','GOLDEN BRIDGE Protein Hafer Cubes','HAPPY HARVEST Protein Knäcke','NATURE VALLEY Protein Riegel Salted Caramel','NATURE VALLEY Protein Riegel Peanut Chocolate','LAYENBERGER 3K Crunchy Riegel','MULTIPOWER Protein Layer Riegel Cookies & Cream','MULTIPOWER Protein Layer Riegel White Choco Salty Almond','EHRMANN High Protein Pudding Schoko','EHRMANN High Protein Mousse','BILLA immer gut Protein Vanillepudding','BILLA immer gut Protein Caffe Latte','SPAR High Protein Joghurt Natur','MILBONA High Protein Pudding Schoko','CRANE High Protein Pudding Schoko','MEVGAL High Protein Joghurt','NOEM Pro 35 High Protein Drink Banane','SCHAERDINGER Protein Traum Kakao','ALPRO Protein Drink Schokolade','LATTELLA Proteinmolke',
 'Skyr natur','Skyr Vanille','Skyr Erdbeere','Skyr Heidelbeere','Skyr Mango','Magerquark','Topfen','Griechisches Joghurt','Naturjoghurt','Fruchtjoghurt','Protein Pudding','Protein Joghurt','Hüttenkäse','Cottage Cheese','Milch','Hafermilch','Kakao','Eier','Eiklar','Hähnchenbrust','Putenbrust','Rindfleisch','Lachs','Thunfisch','Schinken','Salami','Käse','Mozzarella','Gouda','Emmentaler','Butter','Frischkäse','Tofu','Linsen','Kichererbsen','Bohnen','Reis','Basmatireis','Vollkornreis','Nudeln','Vollkornnudeln','Haferflocken','Müsli','Cornflakes','Kelloggs Frosties','Kelloggs Corn Flakes','Kelloggs Choco Krispies','Granola','Brot','Vollkornbrot','Toast','Semmel','Kaisersemmel','Kornspitz','Mohnflesserl','Vollkornsemmel','Weckerl','Mohnweckerl','Vollkornweckerl','Laugenstange','Breze','Wrap','Tortilla','Banane','Apfel','Erdbeeren','Heidelbeeren','Himbeeren','Orange','Kiwi','Avocado','Gurke','Tomaten','Paprika','Brokkoli','Karotten','Kartoffeln','Süßkartoffeln','Salat','Spinat','Mais','Erbsen','Nüsse','Mandeln','Erdnussbutter','Honig','Marmelade','Schokolade','Proteinriegel','Müsliriegel','Chips','Reiswaffeln','Popcorn','Pizza','Pommes','Sushi','Cola Zero','Coca-Cola','Pepsi Max','Red Bull Sugarfree','Monster Ultra','Wasser','Mineralwasser','Eistee Zero','Orangensaft','Apfelsaft','Kaffee','Cappuccino','Energy Drink','Iso Drink','Butterkäse','Parmesan','Feta','Skyr Drink','Proteindrink','Milchreis','Grießbrei','Pudding','Porridge','Sauerteigbrot','Knäckebrot','Kürbiskerne','Chiasamen','Leinsamen','Olivenöl','Rapsöl','Ketchup','Senf','Hummus','Guacamole',
 'Putenfarmerschinken','Puten-Farmerschinken','Puten-Formschninken','Putenschinken','Putenbrust Aufschnitt','Hühnerbrust Aufschnitt','Hühnerfarmerschinken','Farmerschinken','Schwarzwälder Schinken','Kochschinken','Beinschinken','Toastschinken','Prosciutto','Parmaschinken','Roher Schinken','Extrawurst','Pikante Extrawurst','Polnische','Krakauer','Putenwurst','Putenextrawurst','Putensalami','Salami mild','Salami scharf','Haussalami','Schinkenwurst','Leberkäse','Fleischkäse','Frankfurter','Debreziner','Wiener Würstel','Käsekrainer','Bratwurst','Putenfrankfurter','Hühnerwürstel',
