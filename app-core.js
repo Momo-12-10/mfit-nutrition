@@ -320,7 +320,7 @@ function selectProductSuggestion(index){
   nutritionBase={kcal:0,protein:0,carbs:0,fat:0,fiber:0,vitc:0,vitd:0,calcium:0,iron:0,magnesium:0,potassium:0,zinc:0,b12:0};
   recalculateNutrition();
  }
- $('drink').value=isDrink?100:0;
+ $('drink').value=isDrink?(Number($('amount').value)||0):0;
  if(isDrink)$('meal').value='Getränk';else if($('meal').value==='Getränk')$('meal').value='Snack';
  const pack=getPackAmount(p);
  if(pack){$('packSize').value=pack.amount;$('unit').value=pack.unit;$('portionMode').value='whole';applyPortionMode();if(isDrink)$('drink').value=Number($('amount').value)||pack.amount;}
