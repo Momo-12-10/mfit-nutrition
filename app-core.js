@@ -192,50 +192,30 @@ let productSearchResults=[];
 let productSearchTimer=null;
 let productSearchController=null;
 const productSearchCache=new Map();
-const productSearchRequestTimes=[];
 async function searchProductSuggestions(query){
  const box=$('productSuggestions');if(!box)return;
  const normalized=query.trim().toLowerCase();
  if(normalized.length<2){box.hidden=true;return;}
  if(productSearchController)productSearchController.abort();
  if(productSearchCache.has(normalized)){renderProductSuggestions(productSearchCache.get(normalized));return;}
- const now=Date.now();
- while(productSearchRequestTimes.length&&now-productSearchRequestTimes[0]>60000)productSearchRequestTimes.shift();
- if(productSearchRequestTimes.length>=8){
-  box.hidden=false;box.innerHTML='<div class="suggestion-status">Kurz warten: Die Produktsuche ist zum Schutz der Datenbank begrenzt. Du kannst den Namen auch manuell eingeben.</div>';return;
- }
- productSearchRequestTimes.push(now);
  productSearchController=new AbortController();
  box.hidden=false;box.innerHTML='<div class="suggestion-status">🇦🇹 Suche österreichische Produkte …</div>';
  try{
-  const fields='code,product_name,product_name_de,generic_name,brands,quantity,product_quantity,product_quantity_unit,nutriments,categories,stores,countries';
-  const params=new URLSearchParams({
-   search_terms:query,
-   search_simple:'1',
-   action:'process',
-   json:'1',
-   page_size:'24',
-   fields,
-   tagtype_0:'countries',
-   tag_contains_0:'contains',
-   tag_0:'Austria'
-  });
-  const response=await fetch('https://world.openfoodfacts.org/cgi/search.pl?'+params.toString(),{
-   signal:productSearchController.signal,
-   headers:{Accept:'application/json'}
-  });
-  if(!response.ok)throw new Error('Produktsuche nicht verfügbar');
-  const payload=await response.json(),seen=new Set();
-  productSearchResults=(payload.products||[]).filter(p=>{
+  const fields=['code','product_name','product_name_de','generic_name','brands','quantity','nutriments','categories','stores','countries_tags'];
+  const params=new URLSearchParams({q:query+' countries_tags:"en:austria"',page:'1',page_size:'20',langs:'de,en',fields:fields.join(',')});
+  const response=await fetch('https://search.openfoodfacts.org/search?'+params.toString(),{signal:productSearchController.signal,headers:{Accept:'application/json'}});
+  if(!response.ok)throw new Error('Suchdienst antwortet mit HTTP '+response.status);
+  const payload=await response.json(),hits=Array.isArray(payload.hits)?payload.hits:[];
+  const seen=new Set();
+  productSearchResults=hits.map(hit=>hit._source||hit.document||hit).filter(p=>{
    const name=p.product_name_de||p.product_name||p.generic_name||'';
    const key=(String(p.brands||'')+' '+name).toLowerCase().trim();
    if(!name||seen.has(key))return false;seen.add(key);return true;
   }).slice(0,20);
-  productSearchCache.set(normalized,productSearchResults);
-  renderProductSuggestions(productSearchResults);
+  productSearchCache.set(normalized,productSearchResults);renderProductSuggestions(productSearchResults);
  }catch(error){
   if(error.name==='AbortError')return;
-  box.innerHTML='<div class="suggestion-status">Die österreichische Produktsuche ist gerade nicht erreichbar. Bitte erneut versuchen oder das Produkt manuell eintragen.</div>';
+  box.hidden=false;box.innerHTML='<div class="suggestion-status">Produktsuche fehlgeschlagen ('+esc(error.message||'Netzwerkfehler')+'). Bitte erneut versuchen. Manuelle Eingabe bleibt möglich.</div>';
  }
 }
 function renderProductSuggestions(products){
@@ -274,7 +254,7 @@ function initProductAutocomplete(){
   if(productSearchController)productSearchController.abort();
   const box=$('productSuggestions');
   if(q.length<2){if(box){box.hidden=true;box.innerHTML='';}return;}
-  productSearchTimer=setTimeout(()=>searchProductSuggestions(q),900);
+  productSearchTimer=setTimeout(()=>searchProductSuggestions(q),500);
  });
  document.addEventListener('click',event=>{const box=$('productSuggestions');if(box&&!box.contains(event.target)&&event.target!==input)box.hidden=true;});
 }
