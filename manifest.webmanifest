@@ -1,12 +1,18 @@
 {
   "name": "MFit Performance",
   "short_name": "MFit",
-  "start_url": "./",
+  "start_url": "./?v=52",
   "display": "standalone",
   "background_color": "#090c11",
   "theme_color": "#090c11",
   "description": "MFit Performance – Eat smart. Train hard. Become more.",
   "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "icon.svg",
       "sizes": "any",
