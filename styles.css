@@ -451,3 +451,35 @@ body nav.mfit-nav button.active .nav-icon{transform:translateY(-1px);color:var(-
 .pantry-ingredient-state{display:grid;gap:5px;padding-top:8px;border-top:1px solid rgba(180,205,230,.1);font-size:10px;line-height:1.45;color:#aebdcd}
 .pantry-ingredient-state b{color:#e8eef5}
 .pantry-ready{color:var(--accent);font-weight:800}
+
+
+/* v51 — MFit brand system: premium performance, bold and youthful */
+:root{--green:#a6ff3f;--accent:var(--green);--accent-soft:color-mix(in srgb,var(--accent) 14%,transparent);--accent-border:color-mix(in srgb,var(--accent) 42%,#293542)}
+body{background:radial-gradient(ellipse 95% 34% at 50% -8%,rgba(166,255,63,.12),transparent 68%),#090c11;color:#f7f8fb}
+.brand-header{padding:17px 17px 19px;background:linear-gradient(115deg,#101720 0%,#0c1119 65%,#101a12 100%);border-bottom:1px solid rgba(166,255,63,.17)}
+.brand-lockup{display:flex;align-items:center;gap:12px;max-width:760px;margin:auto;position:relative;z-index:1}
+.brand-logo{width:54px;height:54px;border-radius:15px;box-shadow:0 0 24px rgba(166,255,63,.16)}
+.brand-copy{min-width:0;flex:1}
+.brand-eyebrow{font-size:8px;letter-spacing:2px;font-weight:900;color:#a6ff3f;margin-bottom:3px}
+.brand-header h1{font-size:24px;line-height:1;letter-spacing:-1.3px;color:#f8fafc;background:none;-webkit-text-fill-color:currentColor;margin:0}
+.brand-header h1 span{color:#a6ff3f}
+.brand-header h1 small{font-size:8px;letter-spacing:1.6px;color:#9ba8b7;vertical-align:middle;margin-left:3px}
+.brand-header p{font-size:10px;margin:5px 0 0;color:#9aa8b8;letter-spacing:.15px}
+.brand-pill{font-size:8px;white-space:nowrap;letter-spacing:.8px}
+.daily-motivation{display:flex;align-items:center;gap:12px;padding:14px 16px;margin:0 0 13px;border:1px solid rgba(166,255,63,.2);border-radius:17px;background:linear-gradient(105deg,rgba(166,255,63,.105),rgba(20,28,37,.94) 72%);box-shadow:0 10px 28px rgba(0,0,0,.17)}
+.motivation-mark{display:grid;place-items:center;width:34px;height:34px;flex:none;border-radius:11px;background:rgba(166,255,63,.14);color:#b7ff69;font-size:20px}
+.daily-motivation>div{display:grid;gap:3px;min-width:0}
+.daily-motivation small{font-size:8px;font-weight:900;letter-spacing:1.6px;color:#b7ff69}
+.daily-motivation b{font-size:13px;letter-spacing:-.2px;line-height:1.35}
+.motivation-spark{margin-left:auto;color:#b7ff69;font-size:19px}
+nav.mfit-nav{background:rgba(11,15,21,.96)!important;border:1px solid rgba(195,210,230,.14)!important;box-shadow:0 12px 36px rgba(0,0,0,.52)}
+body nav.mfit-nav button,body nav.mfit-nav button.active{background:transparent!important;border:0!important;color:#8f9baa!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+body nav.mfit-nav button.active{color:#b5ff68!important}
+.nav-icon{font-size:19px;line-height:1.1;filter:saturate(.9)}
+.nav-label{font-size:8px;letter-spacing:.2px}
+.card{border-color:rgba(190,210,230,.11);background:linear-gradient(150deg,rgba(24,32,43,.98),rgba(14,20,29,.98));box-shadow:0 12px 30px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.025)}
+#home>.card:first-of-type{border-color:rgba(166,255,63,.24);background:radial-gradient(ellipse at 100% 0%,rgba(166,255,63,.12),transparent 48%),linear-gradient(135deg,#19242d,#101720)}
+.big{color:var(--accent);text-shadow:0 0 22px color-mix(in srgb,var(--accent) 17%,transparent)}
+button:not(.secondary):not(.danger):not(.theme-swatch){background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 88%,white),var(--accent));color:#10150a}
+.recipe-card,.pantry-recipe,.meal-day,.generated-day{border-color:rgba(190,210,230,.13)}
+@media(max-width:390px){.brand-header{padding:14px 12px}.brand-logo{width:47px;height:47px}.brand-header h1{font-size:21px}.brand-header h1 small{font-size:7px}.brand-pill{font-size:7px;padding:4px 6px}.daily-motivation{padding:12px 13px}}
