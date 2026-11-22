@@ -103,6 +103,36 @@ hr{border-color:rgba(174,194,218,.12)!important}
 @media(max-width:380px){nav button{font-size:9px;padding-left:0;padding-right:0}main{padding-left:11px;padding-right:11px}.grid.three .card{padding:12px 9px}.grid.three .big{font-size:21px}}
 @media(prefers-reduced-motion:no-preference){.card{transition:border-color .2s ease,transform .2s ease}.card:active{transform:translateY(1px)}button{transition:filter .16s ease,transform .16s ease}button:active{filter:brightness(.94)}}
 
+
+/* v21 — stronger personal color identity + refined premium finish */
+:root{--accent:var(--green);--accent-soft:color-mix(in srgb,var(--accent) 15%,transparent);--accent-border:color-mix(in srgb,var(--accent) 43%,#293542)}
+body{background:radial-gradient(ellipse 90% 34% at 50% -4%,color-mix(in srgb,var(--accent) 18%,#17212b) 0%,#090d12 72%);background-attachment:fixed}
+header{background:linear-gradient(112deg,color-mix(in srgb,var(--accent) 22%,#172431),#111923 62%,color-mix(in srgb,var(--accent) 9%,#101720));border-bottom:1px solid color-mix(in srgb,var(--accent) 34%,transparent)}
+header:after{background:var(--accent);opacity:.17;filter:blur(1px)}
+header h1{background:linear-gradient(90deg,#fff 12%,color-mix(in srgb,var(--accent) 70%,white));-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{border-color:color-mix(in srgb,var(--accent) 19%,#293542);background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 7%,#1a2531),#111923 78%);box-shadow:0 12px 30px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.025)}
+#home>.card:first-of-type{background:linear-gradient(115deg,color-mix(in srgb,var(--accent) 17%,#172431),#121b26 76%);border-color:color-mix(in srgb,var(--accent) 42%,#293542)}
+.big{color:var(--accent);text-shadow:0 0 25px color-mix(in srgb,var(--accent) 25%,transparent)}
+.card h2{color:#f5f8fc}
+button:not(.secondary):not(.danger):not(.theme-swatch){background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 88%,white),var(--accent));color:#08120d;box-shadow:0 5px 18px color-mix(in srgb,var(--accent) 18%,transparent)}
+button.secondary{background:color-mix(in srgb,var(--accent) 9%,#202c39);border-color:color-mix(in srgb,var(--accent) 22%,#334252)}
+.progress{background:#26313e}
+.progress span{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 65%,white),var(--accent));box-shadow:0 0 12px color-mix(in srgb,var(--accent) 38%,transparent)}
+nav{border-color:color-mix(in srgb,var(--accent) 25%,rgba(180,198,220,.13));background:color-mix(in srgb,var(--accent) 7%,rgba(15,22,31,.96))}
+nav button.active{color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 23%,transparent)}
+.pill{color:var(--accent);background:var(--accent-soft);border-color:var(--accent-border)}
+.recipe-card{border-color:color-mix(in srgb,var(--accent) 22%,#293542);background:linear-gradient(150deg,color-mix(in srgb,var(--accent) 8%,#192533),#111923)}
+.recipe-chip{border-color:var(--accent-border);background:var(--accent-soft);color:color-mix(in srgb,var(--accent) 76%,white)}
+.notice{background:var(--accent-soft);border-color:var(--accent-border)}
+.theme-preview{background:linear-gradient(110deg,var(--accent-soft),rgba(255,255,255,.025));border-color:var(--accent-border)}
+.theme-preview-dot{background:var(--accent);box-shadow:0 0 0 5px var(--accent-soft),0 0 22px color-mix(in srgb,var(--accent) 48%,transparent)}
+.theme-picker-row input[type=color]{border:2px solid var(--accent-border);background:#111923}
+button.theme-swatch{background:var(--swatch)!important;border:2px solid rgba(255,255,255,.32);box-shadow:0 0 0 1px rgba(0,0,0,.35),0 5px 14px rgba(0,0,0,.22)}
+button.theme-swatch.selected{outline:2px solid var(--accent);outline-offset:3px}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.item{border-color:color-mix(in srgb,var(--accent) 12%,rgba(174,194,218,.09))}
+@media(min-width:600px){header{padding-left:max(22px,calc((100% - 740px)/2));padding-right:max(22px,calc((100% - 740px)/2))}}
+
 </style>
 </head>
 <body>
