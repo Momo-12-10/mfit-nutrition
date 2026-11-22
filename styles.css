@@ -714,3 +714,52 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 .reminder-toggle span{display:grid;gap:4px}
 .reminder-toggle small{color:var(--muted);line-height:1.45}
 .reminder-notice{margin-top:12px;border-color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,var(--panel))}
+
+
+/* v71 — aligned profile, reminder controls and responsive form layout */
+#profile{width:100%;min-width:0}
+#profile>.card{width:100%;min-width:0;overflow:hidden}
+#profile .card>.row{align-items:flex-start;min-width:0;gap:12px}
+#profile .card>.row>div{flex:1 1 auto;min-width:0}
+#profile .card>.row>.pill{flex:0 0 auto;max-width:42%;white-space:normal;text-align:center;line-height:1.35}
+#profile .grid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:end;column-gap:12px;row-gap:10px}
+#profile .grid>div{min-width:0;width:100%}
+#profile input:not([type=checkbox]):not([type=color]),
+#profile select,
+#profile textarea{display:block;width:100%;max-width:100%;min-width:0;min-height:46px;box-sizing:border-box}
+#profile label{display:block;max-width:100%;line-height:1.35;overflow-wrap:anywhere}
+#profile button{max-width:100%;white-space:normal;line-height:1.35}
+#profile .notice,#profile .muted{overflow-wrap:anywhere}
+#profile hr{opacity:.8}
+#profile .reminder-card{padding:clamp(15px,3.5vw,21px)}
+#profile .reminder-card>.row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px}
+#profile .reminder-card>.row h2{margin:0 0 6px}
+#profile .reminder-card>.row p{margin:0;max-width:48ch}
+#profile .reminder-card>.row .pill{font-size:9px;letter-spacing:.35px;padding:6px 8px}
+#profile .reminder-setting{margin-top:14px;padding:15px 0 2px;border-top:1px solid var(--stroke)}
+#profile .reminder-toggle{display:grid;grid-template-columns:20px minmax(0,1fr);align-items:start;gap:11px;margin:0 0 12px;padding:2px 0;cursor:pointer}
+#profile .reminder-toggle input[type=checkbox]{appearance:auto;-webkit-appearance:checkbox;width:18px;height:18px;min-height:18px;margin:2px 0 0;accent-color:var(--accent);box-shadow:none;flex:none}
+#profile .reminder-toggle span{display:grid;gap:5px;min-width:0}
+#profile .reminder-toggle b{font-size:13px;line-height:1.35;color:var(--text-main)}
+#profile .reminder-toggle small{font-size:11px;line-height:1.5;color:var(--text-secondary);font-weight:450;letter-spacing:0;text-transform:none}
+#profile .reminder-setting>.grid{align-items:end}
+#profile .reminder-setting>.grid>div{min-width:0}
+#profile .reminder-setting>.grid label{min-height:2.6em}
+#profile .reminder-card>button{width:100%;margin-top:16px!important;min-height:48px}
+#profile #reminderStatus{padding:0 2px;line-height:1.5}
+#profile #reminderNotice{margin-top:12px}
+#profile .theme-picker-row,#profile .theme-preview{min-width:0;gap:12px}
+#profile .theme-preview>div{min-width:0;flex:1}
+@media(max-width:430px){
+ #profile .card{padding:15px}
+ #profile .card>.row>.pill{max-width:38%;font-size:8px}
+ #profile .grid{column-gap:9px;row-gap:9px}
+ #profile .reminder-card>.row{gap:8px}
+ #profile .reminder-card>.row .pill{max-width:36%;font-size:8px;padding:5px 6px}
+ #profile .reminder-setting>.grid label{min-height:3.2em}
+}
+@media(max-width:350px){
+ #profile .grid{grid-template-columns:minmax(0,1fr)}
+ #profile .card>.row>.pill{max-width:42%}
+ #profile .reminder-card>.row .pill{max-width:40%}
+}
