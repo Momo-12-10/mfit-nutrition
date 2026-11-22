@@ -97,14 +97,30 @@ function updateShopItem(id,k,v){const x=shopItems.find(x=>String(x.id)===String(
 function removeShopItem(id){shopItems=shopItems.filter(x=>String(x.id)!==String(id));persistShop()}
 function clearCompletedShopItems(){shopItems=shopItems.filter(x=>!x.done);persistShop()}
 function copyShopping(){const txt=shopItems.filter(x=>!x.done).map(x=>'[ ] '+x.name+' – '+(x.qty||'1')+(x.store?' · '+x.store:'')+(x.price?' · '+x.price+' €':'')).join('\n');if(navigator.clipboard?.writeText){navigator.clipboard.writeText(txt).then(()=>alert('Einkaufsliste kopiert.')).catch(()=>alert(txt||'Noch nichts auf der Liste.'))}else alert(txt||'Noch nichts auf der Liste.')}
+function mealRecipeCost(meal){
+ return meal.ingredients.reduce((sum,[name,qty])=>{
+  const price=shopEstimatedPrice({name,qty});
+  return sum+(price===null?0:price);
+ },0);
+}
 function generateMealWeek(){
  const f=$('mealPlanFocus').value,n=Number($('mealPlanMeals').value)||3,excluded=selectedMealExclusions();
  const custom=($('mealPlanAvoidCustom')?.value||'').toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
  let pool=weekMeals.filter(x=>x.focus.includes(f)&&mealAllowed(x,excluded,custom));
  if(!pool.length){$('mealWeek').innerHTML='<div class="notice">Mit diesen Ausschlüssen gibt es gerade keine passenden Gerichte. Entferne einzelne Ausschlüsse oder wähle einen anderen Schwerpunkt.</div>';$('addWeekShopBtn').disabled=true;mealWeekData=[];return}
- pool=pool.slice().sort(()=>Math.random()-.5);
- const needed=7*n;
- const selected=Array.from({length:needed},(_,i)=>pool[i%pool.length]);
+ const amount=Number($('mealBudgetAmount')?.value)||0,period=$('mealBudgetPeriod')?.value||'day';
+ pool=pool.slice().sort((a,b)=>mealRecipeCost(a)-mealRecipeCost(b));
+ const needed=7*n,selected=[];
+ for(let i=0;i<needed;i++){
+  if(amount>0){
+   const dayIndex=Math.floor(i/n),dayMeals=selected.slice(dayIndex*n,i);
+   const current=dayMeals.reduce((s,m)=>s+mealRecipeCost(m),0);
+   const cap=period==='day'?amount:amount/7;
+   const affordable=pool.filter(m=>mealRecipeCost(m)+current<=cap+0.001);
+   const choices=affordable.length?affordable:pool;
+   selected.push(choices[i%choices.length]);
+  }else selected.push(pool[Math.floor(Math.random()*pool.length)]);
+ }
  mealWeekData=Array.from({length:7},(_,d)=>({day:['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'][d],meals:selected.slice(d*n,(d+1)*n)}));
  renderMealWeek();
 }
@@ -112,7 +128,11 @@ function renderMealWeek(){
  const el=$('mealWeek');if(!el)return;
  const diabetes=$('mealPlanDiabetes')?.checked;
  const warning=diabetes?'<div class="meal-medical-note">Blutzucker-Hinweis: Dieser Plan berechnet keine Kohlenhydratportionen und passt keine Medikamente oder Insulindosen an. Bitte nutze ihn nicht als Diabetes-Therapieplan und stimme Mahlzeiten und Kohlenhydratmengen mit deinem Behandlungsteam ab.</div>':'';
- el.innerHTML='<div class="notice">Deine gespeicherten Tagesrichtwerte: '+(goals.kcal||'–')+' kcal und '+(goals.protein||'–')+' g Protein. Die Gerichte sind Vorschläge, keine exakt berechneten Nährwertpläne. Du kannst jederzeit neu generieren.</div>'+warning+mealWeekData.map(day=>'<div class="meal-day"><b>'+day.day+'</b>'+day.meals.map((meal,i)=>'<div class="meal-plan-item"><span class="pill">Mahlzeit '+(i+1)+'</span><strong>'+meal.name+'</strong><small>'+meal.ingredients.map(x=>x[0]+' ('+x[1]+')').join(' · ')+'</small></div>').join('')+'</div>').join('');
+ const dailyCosts=mealWeekData.map(day=>day.meals.reduce((sum,m)=>sum+mealRecipeCost(m),0));
+ const weekCost=dailyCosts.reduce((a,b)=>a+b,0),budget=Number($('mealBudgetAmount')?.value)||0,period=$('mealBudgetPeriod')?.value||'day';
+ const budgetText=budget>0?' · Ziel: '+budget.toFixed(2).replace('.',',')+' € / '+(period==='day'?'Tag':'Woche'):'';
+ const costSummary='<div class="notice meal-cost-summary">Geschätzte Lebensmittelkosten: <b>'+weekCost.toFixed(2).replace('.',',')+' € / Woche</b> · Ø '+(weekCost/7).toFixed(2).replace('.',',')+' € / Tag'+budgetText+'. <small>Richtpreise, keine Livepreise. Es zählen nur Zutaten mit hinterlegtem Richtpreis.</small></div>';
+ el.innerHTML='<div class="notice">Deine gespeicherten Tagesrichtwerte: '+(goals.kcal||'–')+' kcal und '+(goals.protein||'–')+' g Protein. Die Gerichte sind Vorschläge, keine exakt berechneten Nährwertpläne. Du kannst jederzeit neu generieren.</div>'+costSummary+warning+mealWeekData.map((day,d)=>'<div class="meal-day"><b>'+day.day+'</b><span class="meal-day-cost">'+dailyCosts[d].toFixed(2).replace('.',',')+' €</span>'+day.meals.map((meal,i)=>'<div class="meal-plan-item"><span class="pill">Mahlzeit '+(i+1)+'</span><strong>'+meal.name+'</strong><small>'+meal.ingredients.map(x=>x[0]+' ('+x[1]+')').join(' · ')+'</small></div>').join('')+'</div>').join('');
  $('addWeekShopBtn').disabled=!mealWeekData.length;
 }
 function addMealWeekToShopping(){if(!mealWeekData.length)return;const merged={};mealWeekData.forEach(d=>d.meals.forEach(m=>m.ingredients.forEach(([name,qty])=>{merged[name]=(merged[name]?merged[name]+' + ':'')+qty})));Object.entries(merged).forEach(([name,qty])=>addShopItem(name,qty));showTab('shop');$('mealWeek').scrollIntoView({behavior:'smooth',block:'start'});alert('Die Zutaten deiner 7-Tage-Woche wurden auf die Einkaufsliste gesetzt.')}
