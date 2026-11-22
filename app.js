@@ -97,9 +97,74 @@ function updateShopItem(id,k,v){const x=shopItems.find(x=>String(x.id)===String(
 function removeShopItem(id){shopItems=shopItems.filter(x=>String(x.id)!==String(id));persistShop()}
 function clearCompletedShopItems(){shopItems=shopItems.filter(x=>!x.done);persistShop()}
 function copyShopping(){const txt=shopItems.filter(x=>!x.done).map(x=>'[ ] '+x.name+' – '+(x.qty||'1')+(x.store?' · '+x.store:'')+(x.price?' · '+x.price+' €':'')).join('\n');if(navigator.clipboard?.writeText){navigator.clipboard.writeText(txt).then(()=>alert('Einkaufsliste kopiert.')).catch(()=>alert(txt||'Noch nichts auf der Liste.'))}else alert(txt||'Noch nichts auf der Liste.')}
-function generateMealWeek(){const f=$('mealPlanFocus').value,n=Number($('mealPlanMeals').value)||3;let pool=weekMeals.filter(x=>x.focus.includes(f));if(pool.length<4)pool=weekMeals.filter(x=>x.focus.includes('balanced'));mealWeekData=Array.from({length:7},(_,d)=>({day:['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'][d],meals:Array.from({length:n},(_,m)=>pool[(d*n+m*3)%pool.length])}));renderMealWeek()}
-function renderMealWeek(){const el=$('mealWeek');if(!el)return;el.innerHTML='<div class="notice">Deine gespeicherten Tagesrichtwerte: '+(goals.kcal||'–')+' kcal und '+(goals.protein||'–')+' g Protein. Die Mahlzeiten sind Vorschläge; passe Portionsgrößen an Hunger, Aktivität und deinen Bedarf an.</div>'+mealWeekData.map(day=>'<div class="meal-day"><b>'+day.day+'</b>'+day.meals.map((meal,i)=>'<div class="meal-plan-item"><span class="pill">Mahlzeit '+(i+1)+'</span><strong>'+meal.name+'</strong><small>'+meal.ingredients.map(x=>x[0]+' ('+x[1]+')').join(' · ')+'</small></div>').join('')+'</div>').join('');$('addWeekShopBtn').disabled=!mealWeekData.length}
+function generateMealWeek(){
+ const f=$('mealPlanFocus').value,n=Number($('mealPlanMeals').value)||3,excluded=selectedMealExclusions();
+ const custom=($('mealPlanAvoidCustom')?.value||'').toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
+ let pool=weekMeals.filter(x=>x.focus.includes(f)&&mealAllowed(x,excluded,custom));
+ if(!pool.length){$('mealWeek').innerHTML='<div class="notice">Mit diesen Ausschlüssen gibt es gerade keine passenden Gerichte. Entferne einzelne Ausschlüsse oder wähle einen anderen Schwerpunkt.</div>';$('addWeekShopBtn').disabled=true;mealWeekData=[];return}
+ pool=pool.slice().sort(()=>Math.random()-.5);
+ const needed=7*n;
+ const selected=Array.from({length:needed},(_,i)=>pool[i%pool.length]);
+ mealWeekData=Array.from({length:7},(_,d)=>({day:['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'][d],meals:selected.slice(d*n,(d+1)*n)}));
+ renderMealWeek();
+}
+function renderMealWeek(){
+ const el=$('mealWeek');if(!el)return;
+ const diabetes=$('mealPlanDiabetes')?.checked;
+ const warning=diabetes?'<div class="meal-medical-note">Blutzucker-Hinweis: Dieser Plan berechnet keine Kohlenhydratportionen und passt keine Medikamente oder Insulindosen an. Bitte nutze ihn nicht als Diabetes-Therapieplan und stimme Mahlzeiten und Kohlenhydratmengen mit deinem Behandlungsteam ab.</div>':'';
+ el.innerHTML='<div class="notice">Deine gespeicherten Tagesrichtwerte: '+(goals.kcal||'–')+' kcal und '+(goals.protein||'–')+' g Protein. Die Gerichte sind Vorschläge, keine exakt berechneten Nährwertpläne. Du kannst jederzeit neu generieren.</div>'+warning+mealWeekData.map(day=>'<div class="meal-day"><b>'+day.day+'</b>'+day.meals.map((meal,i)=>'<div class="meal-plan-item"><span class="pill">Mahlzeit '+(i+1)+'</span><strong>'+meal.name+'</strong><small>'+meal.ingredients.map(x=>x[0]+' ('+x[1]+')').join(' · ')+'</small></div>').join('')+'</div>').join('');
+ $('addWeekShopBtn').disabled=!mealWeekData.length;
+}
 function addMealWeekToShopping(){if(!mealWeekData.length)return;const merged={};mealWeekData.forEach(d=>d.meals.forEach(m=>m.ingredients.forEach(([name,qty])=>{merged[name]=(merged[name]?merged[name]+' + ':'')+qty})));Object.entries(merged).forEach(([name,qty])=>addShopItem(name,qty));showTab('shop');$('mealWeek').scrollIntoView({behavior:'smooth',block:'start'});alert('Die Zutaten deiner 7-Tage-Woche wurden auf die Einkaufsliste gesetzt.')}
+
+/* v44 — zusätzliche Gerichte für mehr Abwechslung */
+weekMeals.push(
+{name:"Puten-Gemüse-Pfanne mit Couscous",focus:["balanced","protein","lowfat","budget"],ingredients:[["Putenbrust","150 g"],["Couscous","70 g"],["Zucchini","100 g"],["Karotten","80 g"]]},
+{name:"Ofenkartoffel mit Kräutertopfen",focus:["balanced","protein","vegetarian","budget"],ingredients:[["Kartoffeln","300 g"],["Topfen","150 g"],["Gurken","80 g"],["Kräuter","nach Geschmack"]]},
+{name:"Bunter Quinoa-Bohnen-Salat",focus:["balanced","vegan","vegetarian"],ingredients:[["Quinoa","70 g"],["Kidneybohnen","100 g"],["Paprika","80 g"],["Gurken","80 g"]]},
+{name:"Rührei mit Kartoffeln und Spinat",focus:["balanced","protein","vegetarian"],ingredients:[["Eier","3 Stück"],["Kartoffeln","200 g"],["Spinat TK","100 g"]]},
+{name:"Hähnchen-Wrap mit Salat",focus:["balanced","protein","lowfat"],ingredients:[["Hähnchenbrust","120 g"],["Wraps","1 Stück"],["Salat","30 g"],["Naturjoghurt","40 g"]]},
+{name:"Linsen-Bolognese mit Nudeln",focus:["balanced","protein","vegan","vegetarian","budget"],ingredients:[["Linsen","80 g trocken"],["Vollkornnudeln","80 g trocken"],["Tomatenpassata","150 g"],["Karotten","50 g"]]},
+{name:"Thunfisch-Kartoffel-Salat",focus:["balanced","protein","lowfat"],ingredients:[["Thunfisch","1 Dose"],["Kartoffeln","200 g"],["Gurken","80 g"],["Olivenöl","1 TL"]]},
+{name:"Süßkartoffel-Tofu-Bowl",focus:["balanced","vegan","vegetarian"],ingredients:[["Tofu","150 g"],["Süßkartoffel","200 g"],["Brokkoli","100 g"],["Olivenöl","1 TL"]]},
+{name:"Bananen-Pancakes",focus:["energy","vegetarian"],ingredients:[["Banane","1 Stück"],["Eier","2 Stück"],["Haferflocken","50 g"]]},
+{name:"Hüttenkäse-Brot mit Tomaten",focus:["balanced","protein","lowfat","vegetarian"],ingredients:[["Hüttenkäse","150 g"],["Vollkornbrot","2 Scheiben"],["Tomaten","100 g"]]},
+{name:"Mediterrane Kichererbsen-Pfanne",focus:["balanced","vegan","vegetarian","budget"],ingredients:[["Kichererbsen","150 g"],["Zucchini","100 g"],["Tomatenpassata","100 g"],["Couscous","50 g"]]},
+{name:"Rinderstreifen mit Reis und Gemüse",focus:["protein","balanced"],ingredients:[["Rinderfaschiertes","150 g"],["Reis","70 g trocken"],["Paprika","80 g"],["Karotten","60 g"]]},
+{name:"Baked Oats mit Beeren",focus:["energy","vegetarian"],ingredients:[["Haferflocken","60 g"],["Milch","150 ml"],["Beeren TK","100 g"],["Banane","1/2 Stück"]]},
+{name:"Falafel-Wrap mit Gurke",focus:["balanced","vegan","vegetarian"],ingredients:[["Kichererbsen","120 g"],["Wraps","1 Stück"],["Gurken","80 g"],["Salat","30 g"]]},
+{name:"Lachs-Reis-Bowl",focus:["balanced","protein","energy"],ingredients:[["Lachs","130 g"],["Reis","70 g trocken"],["Gurken","60 g"],["Karotten","60 g"]]},
+{name:"Gemüse-Omelett mit Brot",focus:["balanced","protein","vegetarian","lowfat"],ingredients:[["Eier","2 Stück"],["Paprika","60 g"],["Spinat TK","60 g"],["Vollkornbrot","2 Scheiben"]]},
+{name:"Bohnen-Kartoffel-Eintopf",focus:["balanced","vegan","vegetarian","budget"],ingredients:[["Kidneybohnen","120 g"],["Kartoffeln","200 g"],["Karotten","80 g"],["Gemüsebrühe","250 ml"]]},
+{name:"Hähnchen-Pasta mit Spinat",focus:["balanced","protein"],ingredients:[["Hähnchenbrust","130 g"],["Vollkornnudeln","80 g trocken"],["Spinat TK","80 g"],["Naturjoghurt","40 g"]]},
+{name:"Apfel-Zimt-Porridge",focus:["balanced","vegetarian","budget"],ingredients:[["Haferflocken","60 g"],["Milch","200 ml"],["Äpfel","1 Stück"],["Leinsamen","10 g"]]},
+{name:"Tofu-Gemüse-Wrap",focus:["balanced","vegan","vegetarian"],ingredients:[["Tofu","130 g"],["Wraps","1 Stück"],["Karotten","50 g"],["Gurken","50 g"]]},
+{name:"Topfen-Beeren-Creme",focus:["protein","lowfat","vegetarian"],ingredients:[["Topfen","200 g"],["Beeren TK","100 g"],["Haferflocken","20 g"]]},
+{name:"Pasta mit Erbsen und Frischkäse",focus:["balanced","vegetarian"],ingredients:[["Vollkornnudeln","80 g trocken"],["Erbsen","80 g"],["Frischkäse","40 g"]]},
+{name:"Reis-Bowl mit Ei und Gemüse",focus:["balanced","vegetarian","budget"],ingredients:[["Reis","70 g trocken"],["Eier","2 Stück"],["Karotten","60 g"],["Gurken","60 g"]]},
+{name:"Kartoffel-Gemüse-Blech mit Feta",focus:["balanced","vegetarian"],ingredients:[["Kartoffeln","250 g"],["Zucchini","100 g"],["Paprika","80 g"],["Feta","50 g"]]}
+);
+function selectedMealExclusions(){return [...document.querySelectorAll('[data-meal-exclude]:checked')].map(x=>x.dataset.mealExclude)}
+function mealIngredientText(meal){return meal.ingredients.map(x=>x[0]).join(' ').toLowerCase()}
+function mealAllowed(meal,excluded,custom){
+ const s=mealIngredientText(meal);
+ const tests={
+ dairy:/skyr|quark|topfen|joghurt|milch|hüttenkäse|käse|mozzarella|feta|frischkäse/i,
+ lactose:/skyr|quark|topfen|joghurt|milch|hüttenkäse|käse|mozzarella|feta|frischkäse/i,
+ gluten:/haferflocken|vollkornbrot|wraps|couscous|vollkornnudeln/i,
+ egg:/eier|ei\b/i,soy:/tofu|soja/i,nuts:/nüsse|mandel|cashew|walnuss/i,peanuts:/erdnuss/i,
+ fish:/lachs|thunfisch|fisch/i,shellfish:/garnele|krabbe|muschel|meeresfrucht/i,sesame:/sesam/i,
+ meat:/hähnchen|putenbrust|rinderfaschiertes|schwein|lachs|thunfisch/i,
+ pork:/schwein/i,beef:/rinderfaschiertes|rind/i,poultry:/hähnchen|putenbrust/i,
+ fructose:/äpfel|banane|honig|mango|birne|fruchtsaft/i,
+ histamine:/thunfisch|lachs|tomaten|spinat|avocado|käse|ferment/i,
+ fodmap:/äpfel|milch|zwiebel|knoblauch|kichererbsen|linsen|bohnen|honig/i
+ };
+ if(excluded.some(k=>tests[k]?.test(s)))return false;
+ if(custom.some(term=>term&&s.includes(term)))return false;
+ return true;
+}
+
 const exerciseLibrary={
 back:[['Latzug zur Brust','Maschine / Kabelzug','3 × 8–12','Latissimus'],['Sitzendes Kabelrudern','Kabelzug','3 × 8–12','Rückenmitte'],['Brustgestütztes Rudern','Maschine / Kurzhanteln','3 × 10–12','Rücken'],['Einarmiges Kurzhantelrudern','Kurzhantel + Bank','2 × 10–12','Latissimus'],['Face Pull','Kabelzug + Seil','2 × 12–15','hintere Schulter'],['Rückenstrecker','Rückenstreckerbank','2 × 10–15','unterer Rücken']],
 chest:[['Brustpresse','Maschine','3 × 8–12','Brust'],['Schrägbankdrücken','Kurzhanteln','3 × 8–12','obere Brust'],['Butterfly / Pec Deck','Maschine','2 × 10–15','Brust'],['Kabel-Flys','Kabelzug','2 × 12–15','Brust']],
