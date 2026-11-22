@@ -445,6 +445,7 @@ const mfitNutritionTemplates={
  'oelz protein waffeln':{kcal:420,protein:20,carbs:48,fat:15},
  'mini babybel protein':{kcal:270,protein:27,carbs:1,fat:17},
 
+ 'nöm pro proteinmilch':{kcal:62,protein:7,carbs:5,fat:1.5},'nöm pro vanille proteindrink':{kcal:62,protein:7,carbs:6,fat:1.5},'nöm pro kakao proteindrink':{kcal:65,protein:7,carbs:6,fat:1.8},'nöm pro banane proteindrink':{kcal:63,protein:7,carbs:6,fat:1.5},'nöm pro erdbeere proteindrink':{kcal:63,protein:7,carbs:6,fat:1.5},'nöm pro salted caramel proteindrink':{kcal:65,protein:7,carbs:6,fat:1.8},'nöm pro protein skyr':{kcal:65,protein:11,carbs:4,fat:.2},'nöm pro vanille protein skyr':{kcal:80,protein:10,carbs:7,fat:.2},'nöm pro vanille protein topfencreme':{kcal:95,protein:9,carbs:9,fat:1.5},'nöm pro blueberry cheesecake protein topfencreme':{kcal:100,protein:9,carbs:10,fat:2},'nöm pro stracciatella protein topfencreme':{kcal:105,protein:9,carbs:11,fat:2.5},'nöm pro schoko-banane protein topfencreme':{kcal:100,protein:9,carbs:10,fat:2},'emmi caffè latte protein':{kcal:55,protein:6,carbs:6,fat:1},'ölz protein waffeln':{kcal:420,protein:20,carbs:48,fat:15},
 };
 const mfitSugarOverrides={
  'banane':{sugar:12.2,addedSugar:0},'apfel':{sugar:10.4,addedSugar:0},'erdbeeren':{sugar:4.9,addedSugar:0},'heidelbeeren':{sugar:10,addedSugar:0},
