@@ -207,3 +207,24 @@ document.querySelectorAll('#fitnessGoal option').forEach(o=>{});
 $('store').addEventListener('change',renderShopItems);$('budget').addEventListener('input',renderShopItems);
 renderShopCatalog();renderShopItems();
 
+
+
+// v51 — rotating daily mindset copy (offline, no tracking)
+(function(){
+ const lines=[
+  "Small steps. Big changes.",
+  "Discipline beats motivation.",
+  "Earn your progress. Every day.",
+  "Fuel your body. Respect the process.",
+  "Stronger than yesterday.",
+  "Consistency is your superpower.",
+  "Train with purpose. Recover with pride.",
+  "Progress takes patience. Keep showing up.",
+  "Your only competition is your last session.",
+  "Build habits. Build strength. Build confidence.",
+  "No shortcuts. Just smart work.",
+  "Make today count."
+ ];
+ const el=document.getElementById('dailyQuote');
+ if(el){const day=Math.floor(Date.now()/86400000);el.textContent=lines[((day%lines.length)+lines.length)%lines.length];}
+})();
