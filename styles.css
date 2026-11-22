@@ -505,3 +505,153 @@ button:not(.secondary):not(.danger):not(.theme-swatch){background:linear-gradien
 
 /* Tracking history */
 .tracking-history-card{overflow:hidden}.history-periods{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:12px 0}.history-periods button{padding:9px 5px;background:var(--panel2);color:var(--muted);border:1px solid var(--line);font-size:13px}.history-periods button.active{background:var(--green);color:#092012;border-color:var(--green)}.history-navigation{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;margin:12px 0}.history-navigation>div{text-align:center;min-width:0}.history-navigation b{font-size:14px;display:block;overflow-wrap:anywhere}.history-navigation button{font-size:12px;padding:9px 10px;white-space:nowrap}.tracking-history-list{max-height:430px;overflow-y:auto;border-top:1px solid var(--line);margin-top:10px}.history-day{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;background:transparent;color:var(--text);border:0;border-bottom:1px solid var(--line);border-radius:0;padding:11px 4px}.history-day.selected{background:var(--panel2)}.history-day-main{display:flex;flex-direction:column;gap:4px;min-width:0}.history-status{font-size:11px;color:var(--muted)}.history-status.done{color:var(--green)}.history-day-stats{font-size:12px;color:var(--muted);white-space:nowrap}.history-entry-list{padding:12px 4px}.history-entry{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}.history-entry small{display:block;color:var(--muted);margin-top:3px}.history-entry b{white-space:nowrap}
+
+
+/* v64 — MFit Performance design system: refined, consistent, app-store quality */
+:root{
+ --surface-0:#090d13;--surface-1:#111923;--surface-2:#172230;
+ --surface-3:#202d3b;--stroke:rgba(190,207,228,.12);
+ --stroke-strong:rgba(190,207,228,.2);--text-main:#f5f7fb;
+ --text-secondary:#a2afbf;--accent-glow:color-mix(in srgb,var(--accent) 22%,transparent);
+}
+html{scroll-behavior:smooth;scroll-padding-top:16px}
+body{
+ background:
+  radial-gradient(ellipse 78% 30% at 50% -8%,color-mix(in srgb,var(--accent) 13%,#172231),transparent 75%),
+  radial-gradient(ellipse 50% 24% at 100% 35%,rgba(70,104,145,.08),transparent 75%),
+  var(--surface-0);
+ color:var(--text-main);font-feature-settings:"ss01" on,"cv11" on;
+ -webkit-font-smoothing:antialiased;
+}
+.brand-header{
+ padding:20px 18px 21px;
+ background:linear-gradient(118deg,rgba(20,30,43,.98),rgba(11,17,25,.97) 68%,rgba(20,31,24,.96));
+ border-bottom:1px solid color-mix(in srgb,var(--accent) 23%,transparent);
+ box-shadow:0 12px 34px rgba(0,0,0,.16);
+}
+.brand-lockup{max-width:760px;gap:14px}
+.brand-logo{width:58px;height:58px;border-radius:17px;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 25px rgba(0,0,0,.28),0 0 24px color-mix(in srgb,var(--accent) 13%,transparent)}
+.brand-eyebrow{font-size:9px;letter-spacing:2.15px;margin-bottom:5px}
+.brand-header h1{font-size:26px;letter-spacing:-1.45px}
+.brand-header h1 small{font-size:8px;letter-spacing:1.8px}
+.brand-header p{font-size:11px;letter-spacing:.2px;margin-top:7px}
+.brand-pill{padding:6px 9px;background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.13);color:#c5cfdb}
+main{max-width:790px;padding:18px 16px 34px}
+.card{
+ border:1px solid var(--stroke);
+ border-radius:21px;
+ padding:19px;
+ margin:13px 0;
+ background:linear-gradient(148deg,rgba(24,34,47,.98),rgba(15,22,32,.99) 78%);
+ box-shadow:0 10px 30px rgba(0,0,0,.19),inset 0 1px 0 rgba(255,255,255,.025);
+}
+.card h2{font-size:16px;font-weight:780;letter-spacing:-.35px;margin:0 0 12px}
+.card h3{font-size:14px;font-weight:760;letter-spacing:-.15px}
+.card>.muted:first-child{margin-top:1px}
+.muted{color:var(--text-secondary);font-size:12px;line-height:1.55}
+.big{font-size:32px;letter-spacing:-1.5px;line-height:1.08;font-weight:850}
+.pill{font-size:10px;letter-spacing:.45px;font-weight:850;padding:5px 9px}
+.grid{gap:11px}
+.grid.three{gap:9px}
+.grid.three .card{border-radius:17px;background:linear-gradient(145deg,#182331,#111923);padding:15px 12px}
+.grid.three .big{font-size:25px}
+label{color:#aebaca;font-size:10px;letter-spacing:.8px;font-weight:800;margin:15px 0 7px}
+input,select,textarea{
+ background:#0b121b;border:1px solid #2a3747;color:#f4f7fb;
+ border-radius:13px;min-height:47px;padding:12px 14px;
+ transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
+}
+input:hover,select:hover,textarea:hover{border-color:#405166}
+input:focus,select:focus,textarea:focus{background:#0e1722}
+textarea{line-height:1.5}
+button{
+ min-height:44px;border-radius:13px;padding:11px 15px;
+ font-size:12px;font-weight:820;letter-spacing:.05px;
+ transition:transform .16s ease,filter .16s ease,box-shadow .16s ease;
+}
+button:not(.secondary):not(.danger):not(.theme-swatch){
+ box-shadow:0 5px 16px color-mix(in srgb,var(--accent) 13%,transparent);
+}
+button.secondary{background:linear-gradient(145deg,#253344,#1b2735);border-color:rgba(190,207,228,.13);color:#e8eef6}
+button.danger{border:1px solid rgba(255,160,170,.14)}
+button:active{transform:scale(.975)}
+.progress{height:8px;background:#273444;border:1px solid rgba(255,255,255,.025);margin-top:10px}
+.progress span{box-shadow:0 0 13px color-mix(in srgb,var(--accent) 28%,transparent)}
+.notice{background:linear-gradient(120deg,color-mix(in srgb,var(--accent) 10%,#172331),rgba(20,30,42,.85));border:1px solid color-mix(in srgb,var(--accent) 24%,#2a3747);color:#dce6f1;line-height:1.55}
+.daily-motivation{
+ border:1px solid color-mix(in srgb,var(--accent) 24%,#2a3747);
+ background:linear-gradient(110deg,color-mix(in srgb,var(--accent) 12%,#172330),#121c28 74%);
+ box-shadow:0 12px 28px rgba(0,0,0,.18);border-radius:19px;padding:15px 17px;margin-bottom:15px;
+}
+.motivation-mark{background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 24%,transparent)}
+.daily-motivation b{font-size:13px;letter-spacing:-.1px}
+section:not(.hidden)::before{margin:7px 5px 15px;font-size:9px;letter-spacing:2px}
+nav.mfit-nav{
+ bottom:9px;left:50%;right:auto;transform:translateX(-50%);
+ width:min(690px,calc(100% - 24px));padding:7px 8px calc(7px + env(safe-area-inset-bottom));
+ border:1px solid rgba(190,207,228,.15)!important;border-radius:21px;
+ background:rgba(12,18,27,.94)!important;
+ box-shadow:0 15px 42px rgba(0,0,0,.52),inset 0 1px 0 rgba(255,255,255,.04);
+ backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+}
+body nav.mfit-nav button,body nav.mfit-nav button.active{
+ min-height:52px;border-radius:14px!important;gap:4px;
+ color:#8e9cad!important;background:transparent!important;
+}
+body nav.mfit-nav button.active{
+ color:var(--accent)!important;background:color-mix(in srgb,var(--accent) 10%,#1a2633)!important;
+ box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 19%,transparent)!important;
+}
+.nav-icon{font-size:18px;line-height:1.05}
+.nav-label{font-size:9px;font-weight:760;letter-spacing:.1px}
+.history-periods button{border-radius:11px;min-height:38px;background:#1a2633;border-color:rgba(190,207,228,.1);font-weight:750}
+.history-periods button.active{background:var(--accent);color:#10160b;border-color:var(--accent)}
+.history-navigation{gap:9px}
+.history-navigation button{border-radius:11px;min-height:39px}
+.history-day{padding:13px 8px;border-radius:10px}
+.history-day.selected{background:color-mix(in srgb,var(--accent) 8%,#1b2735);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 17%,transparent)}
+.product-suggestions{background:#111a26;border-color:rgba(190,207,228,.17);border-radius:15px}
+.product-suggestion{padding:13px 14px}
+.product-suggestion:hover{background:#1b2938}
+.recipe-card,.pantry-recipe,.meal-day,.generated-day{
+ border-radius:17px;overflow:hidden;background:linear-gradient(145deg,#192635,#111a25);
+ box-shadow:0 8px 22px rgba(0,0,0,.16);
+}
+.recipe-photo{height:190px}
+.recipe-content{padding:15px}
+.recipe-title{font-size:15px}
+.recipe-meta{gap:7px}
+.recipe-chip{border-radius:9px;padding:5px 8px}
+.item{border-color:rgba(190,207,228,.1)}
+.water-controls button{border-radius:13px}
+.savebar{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+details{border-color:var(--stroke)}
+summary{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(hover:hover){
+ .card{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+ .card:hover{border-color:var(--stroke-strong);box-shadow:0 14px 34px rgba(0,0,0,.24)}
+ button:hover{filter:brightness(1.06)}
+}
+@media(max-width:390px){
+ .brand-header{padding:15px 12px 16px}
+ .brand-logo{width:49px;height:49px;border-radius:15px}
+ .brand-header h1{font-size:22px}
+ .brand-header p{font-size:9px}
+ .brand-pill{display:none}
+ main{padding:14px 11px 28px}
+ .card{padding:16px;border-radius:18px}
+ .grid.three .card{padding:13px 10px}
+ .grid.three .big{font-size:22px}
+ nav.mfit-nav{width:calc(100% - 18px);bottom:6px}
+ .nav-label{font-size:8px}
+}
+@media(min-width:700px){
+ .brand-header{padding-top:24px;padding-bottom:24px}
+ main{padding-top:23px}
+ .card{padding:21px}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
