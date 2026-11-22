@@ -439,3 +439,15 @@ body nav.mfit-nav button.active .nav-icon{transform:translateY(-1px);color:var(-
 #shop .meal-cost-summary small{display:block;margin-top:4px;font-size:9px;opacity:.8}
 #shop .meal-day{position:relative}
 #shop .meal-day-cost{float:right;font-size:10px;font-weight:800;color:var(--accent)}
+
+/* v49 — Zutatenfinder: echte Rezeptvorschläge aus dem Vorrat */
+#ingredientIdeas{margin-top:12px}
+.pantry-results-head{display:flex;flex-direction:column;gap:3px;margin:8px 0 10px}
+.pantry-results-head small,.pantry-recipe>small{color:var(--muted,#9cabbc);font-size:10px}
+.pantry-recipe{padding:13px;margin:9px 0;border:1px solid var(--border-soft,rgba(180,205,230,.13));border-radius:15px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(0,0,0,.08))}
+.pantry-recipe-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pantry-recipe-top b{font-size:13px}
+.pantry-recipe p{font-size:11px;line-height:1.5;margin:8px 0}
+.pantry-ingredient-state{display:grid;gap:5px;padding-top:8px;border-top:1px solid rgba(180,205,230,.1);font-size:10px;line-height:1.45;color:#aebdcd}
+.pantry-ingredient-state b{color:#e8eef5}
+.pantry-ready{color:var(--accent);font-weight:800}
