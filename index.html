@@ -91,11 +91,28 @@ const recipes=[
 ];
 
 function getPackAmount(product){
+ const normalize=(value,unit)=>{
+  let amount=Number(String(value).replace(',','.')),u=String(unit||'').toLowerCase().trim();
+  if(!Number.isFinite(amount)||amount<=0)return null;
+  if(u==='kg')return {amount:amount*1000,unit:'g'};
+  if(u==='l')return {amount:amount*1000,unit:'ml'};
+  if(u==='cl')return {amount:amount*10,unit:'ml'};
+  if(['g','ml'].includes(u))return {amount,unit:u};
+  return null;
+ };
+ const pq=String(product.product_quantity??'').trim();
+ const pMatch=pq.match(/^(\d+(?:[.,]\d+)?)\s*(kg|g|ml|cl|l)?$/i);
+ if(pMatch){
+  const parsed=normalize(pMatch[1],pMatch[2]||product.product_quantity_unit);
+  if(parsed)return parsed;
+ }
+ const qNum=normalize(product.product_quantity,product.product_quantity_unit);
+ if(qNum)return qNum;
  const qty=String(product.quantity||'').replace(/,/g,'.');
+ const multi=qty.match(/(\d+(?:\.\d+)?)\s*[x×]\s*(\d+(?:\.\d+)?)\s*(kg|g|ml|cl|l)\b/i);
+ if(multi){const one=normalize(multi[2],multi[3]);if(one)return {amount:Number(multi[1])*one.amount,unit:one.unit};}
  const match=qty.match(/(\d+(?:\.\d+)?)\s*(kg|g|ml|cl|l)\b/i);
- if(match){let value=Number(match[1]),unit=match[2].toLowerCase();if(unit==='kg')return {amount:value*1000,unit:'g'};if(unit==='l')return {amount:value*1000,unit:'ml'};if(unit==='cl')return {amount:value*10,unit:'ml'};return {amount:value,unit};}
- const q=Number(product.product_quantity),u=String(product.product_quantity_unit||'').toLowerCase();
- if(q>0){if(u==='kg')return {amount:q*1000,unit:'g'};if(u==='l')return {amount:q*1000,unit:'ml'};if(u==='g'||u==='ml')return {amount:q,unit:u};}
+ if(match)return normalize(match[1],match[2]);
  return null;
 }
 async function lookupBarcode(){
