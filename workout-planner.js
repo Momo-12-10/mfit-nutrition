@@ -120,18 +120,80 @@ const exerciseCatalog=[
 function muscleKey(s){return ({'Brust':'chest','Rücken':'back','Schultern':'shoulders','Bizeps':'biceps','Trizeps':'triceps','Beine':'quads','Quadrizeps':'quads','Beinrückseite':'hamstrings','Gesäß':'glutes','Bauch':'core','Rumpf':'core','Waden':'calves','unterer Rücken':'lowerback','hintere Schulter':'shoulders','Unterarme':'forearms','Trapez':'traps','oberer Rücken':'back','schräge Bauchmuskeln':'core','Hüftbeuger':'core'})[s]||'core';}
 function secondaryForExercise(name){const n=String(name).toLowerCase();const item=exerciseCatalog.find(x=>x.name.toLowerCase()===n)||readCustomExercises().find(x=>x.name.toLowerCase()===n);if(item?.secondary)return item.secondary;if(/kniebeuge|squat|ausfallschritt|lunge|beinpresse|step.?up/.test(n))return ['Gesäß','Beinrückseite','Rumpf'];if(/kreuzheben|deadlift|rumänisch|hip hinge|beinbeuger/.test(n))return ['Gesäß','Rumpf','unterer Rücken'];if(/brust|bankdrück|liegestütz|push.?up|fly/.test(n))return ['Trizeps','Schultern'];if(/latzug|klimmzug|rudern|row/.test(n))return ['Bizeps','hintere Schulter'];if(/schulterdrück|seitheben/.test(n))return ['Trizeps','oberer Rücken'];if(/bizeps|curl/.test(n))return ['Unterarme'];if(/trizeps/.test(n))return ['Schultern'];if(/plank|rumpf/.test(n))return ['Schultern','Gesäß'];if(/waden/.test(n))return ['Fußgelenk'];return [];}
 function exerciseImageId(name){const n=String(name).toLowerCase();if(/goblet/.test(n))return 'goblet-squat';if(/kniebeuge|squat/.test(n))return 'bodyweight-squat';if(/kreuzheben|deadlift|hinge/.test(n))return 'deadlift';if(/bankdrücken|brustpresse|bench/.test(n))return 'bench-press';if(/liegestütz|push.?up/.test(n))return 'push-up';if(/latzug|klimmzug|pulldown/.test(n))return 'lat-pulldown';if(/rudern|row/.test(n))return 'chest-supported-dumbbell-row';if(/bizeps|curl/.test(n))return 'biceps-curl';if(/schulterdrücken|shoulder press/.test(n))return 'dumbbell-shoulder-press';if(/beinpresse|leg press/.test(n))return 'leg-press';if(/hip thrust|glute bridge/.test(n))return 'hip-thrusts';if(/plank/.test(n))return 'plank';return '';}
-function muscleSvg(primary,secondary){
- const p=new Set((primary||[]).map(muscleKey)),s=new Set((secondary||[]).map(muscleKey));
- function el(k,shape,attrs){return '<'+shape+' class="muscle-shape '+(p.has(k)?'primary':s.has(k)?'secondary':'')+'" '+attrs+'/>';}
- function body(x,back){
-  let a='<g transform="translate('+x+' 14)"><circle class="muscle-base" cx="49" cy="17" r="11"/><path class="muscle-base" d="M42 29 L56 29 L61 39 L70 45 L65 88 L59 100 L62 126 L58 185 L49 190 L40 185 L36 126 L39 100 L33 88 L28 45 L37 39Z"/><path class="muscle-base" d="M31 42 Q21 42 18 58 L10 104 L16 108 L27 73 L36 55Z M66 42 Q77 42 80 58 L88 104 L82 108 L71 73 L61 55Z"/><path class="muscle-base" d="M40 184 L32 230 L40 233 L51 197 L58 233 L66 230 L58 184Z"/>';
-  a+=el('shoulders','ellipse','cx="34" cy="46" rx="10" ry="9"')+el('shoulders','ellipse','cx="64" cy="46" rx="10" ry="9"');
-  if(back){a+=el('traps','path','d="M38 38 L49 31 L60 38 L57 55 L49 60 L41 55"')+el('back','path','d="M38 55 Q49 61 60 55 L64 85 L58 99 L40 99 L34 85Z"')+el('glutes','ellipse','cx="42" cy="107" rx="9" ry="10"')+el('glutes','ellipse','cx="57" cy="107" rx="9" ry="10"')+el('hamstrings','ellipse','cx="42" cy="139" rx="8" ry="25"')+el('hamstrings','ellipse','cx="57" cy="139" rx="8" ry="25"')+el('lowerback','path','d="M41 83 L57 83 L57 101 L41 101"');}
-  else{a+=el('chest','path','d="M35 52 Q49 45 63 52 L60 69 Q49 76 38 69Z')+el('core','path','d="M40 72 L58 72 L57 99 Q49 106 41 99Z')+el('quads','ellipse','cx="42" cy="132" rx="8" ry="27"')+el('quads','ellipse','cx="57" cy="132" rx="8" ry="27"');}
-  a+=el('biceps','ellipse','cx="21" cy="68" rx="6" ry="15"')+el('biceps','ellipse','cx="77" cy="68" rx="6" ry="15"')+el('triceps','ellipse','cx="17" cy="84" rx="4" ry="13"')+el('triceps','ellipse','cx="81" cy="84" rx="4" ry="13"')+el('calves','ellipse','cx="37" cy="198" rx="6" ry="20"')+el('calves','ellipse','cx="63" cy="198" rx="6" ry="20"')+'</g>';
-  return a;
- }
- return '<svg class="muscle-map-svg" viewBox="0 0 220 246" role="img" aria-label="Vereinfachte Muskelkarte Vorder- und Rückseite"><defs><linearGradient id="muscleBase" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#9aabba"/><stop offset=".48" stop-color="#53677b"/><stop offset="1" stop-color="#26394b"/></linearGradient><filter id="muscleGlow"><feGaussianBlur stdDeviation="1.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><text x="53" y="10" fill="#b9c7d6" font-size="8" text-anchor="middle">VORNE</text><text x="166" y="10" fill="#b9c7d6" font-size="8" text-anchor="middle">HINTEN</text>'+body(4,false)+body(116,true)+'</svg>';
+const anatomyGroups=[
+ {id:'lower',label:'Unterkörper',subs:[['quadriceps','Vorderer Oberschenkel','Quadriceps femoris'],['hamstrings','Beinbeuger','Ischiocrurale Muskulatur'],['glutes','Gesäß','Musculus gluteus maximus'],['adductors','Innenschenkel','Adduktorengruppe'],['calves','Waden','Triceps surae']]},
+ {id:'chest',label:'Brust',subs:[['chestUpper','Obere Brust','Musculus pectoralis major – Pars clavicularis'],['chestMid','Mittlere Brust','Musculus pectoralis major – Pars sternocostalis'],['chestLower','Untere Brust','Musculus pectoralis major – Pars abdominalis']]},
+ {id:'back',label:'Rücken',subs:[['lats','Breiter Rücken','Musculus latissimus dorsi'],['traps','Trapezmuskel','Musculus trapezius'],['lowerback','Unterer Rücken','Musculus erector spinae'],['rhomboids','Rautenmuskeln','Musculi rhomboidei']]},
+ {id:'shoulders',label:'Schultern',subs:[['frontDelts','Vordere Schulter','Musculus deltoideus – Pars clavicularis'],['sideDelts','Seitliche Schulter','Musculus deltoideus – Pars acromialis'],['rearDelts','Hintere Schulter','Musculus deltoideus – Pars spinalis']]},
+ {id:'arms',label:'Arme',subs:[['biceps','Bizeps','Musculus biceps brachii'],['triceps','Trizeps','Musculus triceps brachii'],['forearms','Unterarme','Musculi antebrachii']]},
+ {id:'core',label:'Bauch & Rumpf',subs:[['abs','Gerader Bauchmuskel','Musculus rectus abdominis'],['obliques','Schräge Bauchmuskeln','Musculi obliqui abdominis']]}
+];
+const muscleExerciseTerms={
+ quadriceps:['kniebeuge','squat','beinpresse','beinstrecker','ausfallschritt','lunge','step-up','bulgarian','goblet','front squat','countermovement','standweitsprung'],
+ hamstrings:['beinbeuger','leg curl','rumänisches kreuzheben','kreuzheben','deadlift','back extension','hip hinge'],
+ glutes:['hip thrust','glute bridge','kniebeuge','squat','ausfallschritt','lunge','step-up','kreuzheben','deadlift','bulgarian'],
+ adductors:['kniebeuge','squat','adduktor'],
+ calves:['waden','pogo','sprung','jump'],
+ chestUpper:['schrägbank','incline'],
+ chestMid:['bankdrücken','brustpresse','liegestütz','push-up','kabel-flys','brust'],
+ chestLower:['dips','decline'],
+ lats:['latzug','klimmzug','rudern','row'],
+ traps:['farmer','shrug','rudern','row'],
+ lowerback:['kreuzheben','deadlift','back extension','rumänisches'],
+ rhomboids:['rudern','row','reverse fly'],
+ frontDelts:['schulterdrücken','front raise','bankdrücken','schrägbank'],
+ sideDelts:['seitheben','lateral raise','schulterdrücken'],
+ rearDelts:['reverse fly','face pull','rudern','row'],
+ biceps:['bizeps','curl','klimmzug','latzug','rudern'],
+ triceps:['trizeps','bankdrücken','liegestütz','push-up','schulterdrücken','brustpresse'],
+ forearms:['farmer','curl','kreuzheben','deadlift','handgelenk'],
+ abs:['plank','crunch','hanging knee','sit-up','bauch'],
+ obliques:['russian twist','rotation','seitstütz','woodchop']
+};
+function anatomyMuscleSvg(primary,secondary){
+ const active=new Set([...(primary||[]),...(secondary||[])]);
+ const shapes={
+ front:[
+ ['frontDelts','path','M66 93 Q78 76 96 88 Q102 104 88 117 Q73 114 66 93Z'],
+ ['frontDelts','path','M144 93 Q132 76 114 88 Q108 104 122 117 Q137 114 144 93Z'],
+ ['chestUpper','path','M79 113 Q101 101 123 113 L119 128 Q101 133 83 128Z'],
+ ['chestMid','path','M81 130 Q101 125 121 130 L118 148 Q101 153 84 148Z'],
+ ['chestLower','path','M84 150 Q101 148 118 150 L114 161 Q101 166 88 161Z'],
+ ['biceps','path','M65 119 Q55 125 56 151 L63 165 Q72 158 74 132Z'],
+ ['biceps','path','M145 119 Q155 125 154 151 L147 165 Q138 158 136 132Z'],
+ ['forearms','path','M56 166 Q50 179 51 205 L60 215 Q67 193 65 169Z'],
+ ['forearms','path','M154 166 Q160 179 159 205 L150 215 Q143 193 145 169Z'],
+ ['abs','path','M88 164 Q101 161 114 164 L112 207 Q101 213 90 207Z'],
+ ['obliques','path','M80 160 Q87 163 88 180 L85 205 L75 197 L77 171Z'],
+ ['obliques','path','M122 160 Q115 163 114 180 L117 205 L127 197 L125 171Z'],
+ ['quadriceps','path','M80 218 Q92 214 98 223 L95 284 Q88 302 78 294 Q70 271 80 218Z'],
+ ['quadriceps','path','M102 222 Q111 214 122 218 L130 294 Q120 302 111 284Z'],
+ ['adductors','path','M97 224 L104 224 L109 277 L101 289 L94 269Z'],
+ ['adductors','path','M105 224 L112 224 L118 269 L111 289 L103 277Z'],
+ ['calves','path','M78 306 Q89 301 95 310 L91 365 L80 371 Q73 343 78 306Z'],
+ ['calves','path','M108 310 Q116 301 126 306 Q131 343 124 371 L113 365Z']
+ ],
+ back:[
+ ['rearDelts','path','M65 94 Q77 78 95 91 Q98 108 83 118 Q69 113 65 94Z'],
+ ['rearDelts','path','M145 94 Q133 78 115 91 Q112 108 127 118 Q141 113 145 94Z'],
+ ['traps','path','M87 94 L101 84 L115 94 L123 122 L101 136 L79 122Z'],
+ ['rhomboids','path','M88 126 L101 137 L114 126 L119 158 L101 169 L83 158Z'],
+ ['lats','path','M82 133 Q75 137 72 165 L81 194 L95 184 L98 143Z'],
+ ['lats','path','M120 133 Q127 137 130 165 L121 194 L107 184 L104 143Z'],
+ ['triceps','path','M65 119 Q55 126 57 153 L65 164 Q73 156 74 132Z'],
+ ['triceps','path','M145 119 Q155 126 153 153 L145 164 Q137 156 136 132Z'],
+ ['forearms','path','M56 166 L51 205 L60 215 L66 170Z'],
+ ['forearms','path','M154 166 L159 205 L150 215 L144 170Z'],
+ ['lowerback','path','M91 165 L111 165 L116 207 L101 216 L86 207Z'],
+ ['glutes','path','M83 216 Q91 208 101 216 Q101 239 91 246 Q78 242 78 230Z'],
+ ['glutes','path','M101 216 Q111 208 119 216 L124 230 Q124 242 111 246 Q101 239 101 216Z'],
+ ['hamstrings','path','M79 249 Q91 243 98 251 L95 303 L84 310 Q75 283 79 249Z'],
+ ['hamstrings','path','M104 251 Q112 243 124 249 Q128 283 119 310 L108 303Z'],
+ ['calves','path','M80 315 Q90 307 96 317 L91 365 L80 371 Q74 345 80 315Z'],
+ ['calves','path','M107 317 Q114 307 124 315 Q130 345 124 371 L113 365Z']
+ ]};
+ const body=(x,back)=>'<g transform="translate('+x+' 0)"><defs><linearGradient id="skin'+(back?'B':'F')+'" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dce5ee"/><stop offset=".48" stop-color="#8499ad"/><stop offset="1" stop-color="#34495f"/></linearGradient></defs><circle cx="101" cy="35" r="19" class="anatomy-skin"/><path class="anatomy-skin" d="M88 54 L114 54 L124 69 Q143 72 151 93 L164 159 L151 166 L137 119 L133 186 L124 216 L128 300 L137 373 L117 378 L101 311 L85 378 L65 373 L78 300 L78 216 L69 186 L65 119 L51 166 L38 159 L51 93 Q59 72 78 69Z"/><path class="anatomy-muscle-outline" d="M79 70 Q101 80 123 70 M78 185 Q101 198 124 185 M101 72 L101 210 M78 218 L101 230 L124 218 M84 310 L101 316 L118 310"/>'+shapes[back?'back':'front'].map(([k,shape,d],i)=>'<path class="anatomy-muscle '+(active.has(k)?'is-primary':'')+'" d="'+d+'"/>').join('')+'<path class="anatomy-detail" d="M101 54 L101 70 M88 165 Q101 171 114 165 M90 249 Q101 255 112 249"/></g>';
+ return '<svg class="anatomy-body-svg" viewBox="0 0 420 405" role="img" aria-label="Detaillierte MFit-Muskelkarte mit Vorder- und Rückseite"><defs><linearGradient id="anatomyBase" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dbe6f0"/><stop offset=".45" stop-color="#8499ad"/><stop offset="1" stop-color="#30445a"/></linearGradient><linearGradient id="anatomyHot" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e5ffad"/><stop offset=".48" stop-color="#a4f15c"/><stop offset="1" stop-color="#4aa66c"/></linearGradient><filter id="anatomyShadow" x="-40%" y="-20%" width="180%" height="160%"><feGaussianBlur stdDeviation="4"/></filter></defs><text x="101" y="17" class="anatomy-view-label">VORDERSEITE</text><text x="311" y="17" class="anatomy-view-label">RÜCKSEITE</text><ellipse cx="101" cy="390" rx="75" ry="8" fill="#000" opacity=".24" filter="url(#anatomyShadow)"/><ellipse cx="311" cy="390" rx="75" ry="8" fill="#000" opacity=".24" filter="url(#anatomyShadow)"/>'+body(0,false)+body(210,true)+'</svg>';
 }
 function exerciseIllustrationSvg(name){
  const n=String(name).toLowerCase(),squat=/kniebeuge|squat|step.?up|ausfallschritt|split squat|lunge/.test(n),hinge=/kreuzheben|deadlift|hip thrust|glute bridge|hinge/.test(n),push=/bankdrück|brustpresse|liegestütz|push.?up|shoulder press|schulterdrück/.test(n);
@@ -141,11 +203,35 @@ function exerciseIllustrationSvg(name){
 function detailHtml(name,muscle,secondary,id){
  const item=exerciseCatalog.find(x=>x.name.toLowerCase()===String(name).toLowerCase())||readCustomExercises().find(x=>x.name.toLowerCase()===String(name).toLowerCase())||{};
  const note=item.note||'Bewege das Gewicht kontrolliert, halte die Körperposition stabil und vermeide Schwung. Wähle eine Variante, die du technisch sicher ausführen kannst.';
- return '<div class="exercise-detail-panel"><div class="exercise-demo-frames">'+exerciseIllustrationSvg(name)+'<small>Originale MFit-Bewegungsskizze · schematische Orientierung, keine exakte Bewegungsanalyse</small></div><div class="muscle-map-wrap"><div class="muscle-map-title">BEANSPRUCHTE MUSKELN</div>'+muscleSvg([muscle],secondary||[])+'<div class="muscle-labels"><span>Hauptmuskel: '+esc(muscle)+'</span>'+(secondary||[]).map(x=>'<span class="secondary-label">'+esc(x)+'</span>').join('')+'</div></div><div class="exercise-detail-copy"><b>Ausführung</b><br>'+esc(note)+'<br><br>Die Muskelgrafik ist eine vereinfachte Orientierung. Die tatsächliche Belastung hängt von Variante, Technik und Bewegungsumfang ab.</div></div>';
+ const group=anatomyGroups.find(g=>g.subs.some(x=>x[1]===muscle))||anatomyGroups.find(g=>g.id==='lower');const ids=group.subs.filter(x=>x[1]===muscle).map(x=>x[0]);const secondaryIds=group.subs.filter(x=>(secondary||[]).includes(x[1])).map(x=>x[0]);return '<div class="exercise-detail-panel"><div class="anatomy-detail-visual"><div class="muscle-map-title">MUSKELATLAS · '+esc(muscle)+' <small>'+esc(group.subs.find(x=>x[1]===muscle)?.[2]||'Muskelgruppe')+'</small></div>'+anatomyMuscleSvg(ids,secondaryIds)+'<div class="anatomy-legend"><span><i class="primary-dot"></i>Hauptbeanspruchung</span><span><i class="secondary-dot"></i>Unterstützend</span></div></div><div class="exercise-demo-frames">'+exerciseIllustrationSvg(name)+'<small>Originale MFit-Bewegungsskizze · schematische Orientierung</small></div><div class="exercise-detail-copy"><b>Ausführung</b><br>'+esc(note)+'<br><br>Die Muskelkarte zeigt die ungefähre Beteiligung. Sie ist eine Lernhilfe, keine medizinische oder biomechanische Messung.</div></div>';
 }
 window.mfitToggleExerciseDetail=function(btn){const card=btn.closest('.mfit-exercise-card,.workout-exercise-item');if(!card)return;let panel=card.querySelector('.workout-exercise-detail');if(panel){panel.remove();btn.textContent='Muskeln & Ausführung';return;}panel=document.createElement('div');panel.className='workout-exercise-detail';panel.innerHTML=detailHtml(btn.dataset.name||'',btn.dataset.muscle||'Ganzkörper',(btn.dataset.secondary||'').split('|').filter(Boolean),btn.dataset.image||'');card.appendChild(panel);btn.textContent='Details schließen';};
 function allLibraryExercises(){return exerciseCatalog.concat(readCustomExercises().map(e=>({...e,id:'custom',secondary:e.secondary||[]})));}
-window.mfitRenderExerciseLibrary=function(){const host=$('mfitExerciseCatalog');if(!host)return;const q=($('mfitExerciseSearch')?.value||'').toLowerCase();const list=allLibraryExercises().filter(e=>(e.name+' '+e.muscle+' '+(e.secondary||[]).join(' ')+' '+e.equipment).toLowerCase().includes(q));host.innerHTML=list.map(e=>{const i=allLibraryExercises().indexOf(e);return '<div class="mfit-exercise-card"><div class="mfit-exercise-card-head"><div><b>'+esc(e.name)+'</b><small>'+esc(e.muscle)+' · '+esc(e.equipment)+(e.custom?' · Eigene Übung':'')+'</small></div><button type="button" class="secondary" onclick="mfitLoadCatalogExercise('+i+')">Tracken</button><button type="button" class="secondary" onclick="mfitAddCatalogToPlan('+i+')">Zum Plan</button><button type="button" class="secondary" data-name="'+esc(e.name)+'" data-muscle="'+esc(e.muscle)+'" data-secondary="'+esc((e.secondary||[]).join('|'))+'" onclick="mfitToggleExerciseDetail(this)">Muskeln & Technik</button></div></div>';}).join('')||'<p class="muted">Keine passende Übung gefunden.</p>';};
+let selectedAnatomyGroup='lower',selectedAnatomySub='all';
+function exerciseMatchesSub(e,sub){if(sub==='all')return true;const terms=muscleExerciseTerms[sub]||[];const n=(e.name+' '+e.muscle+' '+(e.secondary||[]).join(' ')).toLowerCase();return terms.some(t=>n.includes(t.toLowerCase()))||e.muscle.toLowerCase().includes(sub.toLowerCase());}
+function renderAnatomyFilters(){
+ const groupHost=$('mfitAnatomyGroups'),subHost=$('mfitAnatomySubgroups');if(!groupHost||!subHost)return;
+ groupHost.innerHTML=anatomyGroups.map(g=>'<button type="button" class="anatomy-filter-chip '+(selectedAnatomyGroup===g.id?'active':'')+'" onclick="mfitSelectAnatomyGroup(\''+g.id+'\')">'+g.label+'</button>').join('');
+ const group=anatomyGroups.find(g=>g.id===selectedAnatomyGroup)||anatomyGroups[0];
+ subHost.innerHTML='<button type="button" class="anatomy-sub-chip '+(selectedAnatomySub==='all'?'active':'')+'" onclick="mfitSelectAnatomySub(\'all\')">Alle '+group.label+'</button>'+group.subs.map(([id,de,la])=>'<button type="button" class="anatomy-sub-chip '+(selectedAnatomySub===id?'active':'')+'" onclick="mfitSelectAnatomySub(\''+id+'\')"><b>'+de+'</b><small>'+la+'</small></button>').join('');
+}
+window.mfitSelectAnatomyGroup=function(id){selectedAnatomyGroup=id;selectedAnatomySub='all';renderAnatomyFilters();window.mfitRenderExerciseLibrary();};
+window.mfitSelectAnatomySub=function(id){selectedAnatomySub=id;renderAnatomyFilters();window.mfitRenderExerciseLibrary();};
+window.mfitRenderExerciseLibrary=function(){
+ const host=$('mfitExerciseCatalog');if(!host)return;
+ const q=($('mfitExerciseSearch')?.value||'').toLowerCase(),group=anatomyGroups.find(g=>g.id===selectedAnatomyGroup)||anatomyGroups[0];
+ const groupNames={lower:['Beine','Quadrizeps','Beinrückseite','Gesäß','Waden'],chest:['Brust'],back:['Rücken','unterer Rücken','oberer Rücken'],shoulders:['Schultern','hintere Schulter'],arms:['Bizeps','Trizeps','Unterarme'],core:['Bauch','Rumpf','unterer Rücken']};
+ let list=allLibraryExercises().filter(e=>{
+  const txt=(e.name+' '+e.muscle+' '+(e.secondary||[]).join(' ')+' '+e.equipment).toLowerCase();
+  if(q&&!txt.includes(q))return false;
+  const names=groupNames[group.id]||[];
+  const groupMatch=names.some(n=>e.muscle.toLowerCase().includes(n.toLowerCase())||(e.secondary||[]).some(x=>x.toLowerCase().includes(n.toLowerCase())));
+  if(!groupMatch)return false;
+  return exerciseMatchesSub(e,selectedAnatomySub);
+ });
+ host.innerHTML=list.map(e=>{const i=allLibraryExercises().indexOf(e);return '<div class="mfit-exercise-card"><div class="mfit-exercise-card-head"><div><b>'+esc(e.name)+'</b><small>'+esc(e.muscle)+' · '+esc(e.equipment)+(e.custom?' · Eigene Übung':'')+'</small></div><button type="button" class="secondary" onclick="mfitLoadCatalogExercise('+i+')">Tracken</button><button type="button" class="secondary" onclick="mfitAddCatalogToPlan('+i+')">Zum Plan</button><button type="button" class="secondary" data-name="'+esc(e.name)+'" data-muscle="'+esc(e.muscle)+'" data-secondary="'+esc((e.secondary||[]).join('|'))+'" onclick="mfitToggleExerciseDetail(this)">Muskeln & Technik</button></div></div>';}).join('')||'<p class="muted">In diesem Bereich wurden keine passenden Übungen gefunden. Wähle „Alle“ oder nutze die Suche.</p>';
+};
+
 function loadExerciseToTracker(name,muscle,sets,reps){const set=(id,v)=>{const el=$(id);if(el)el.value=v;};set('workoutExercise',name);set('workoutMuscle',muscle==='Beinrückseite'||muscle==='Quadrizeps'?'Beine':muscle==='Rumpf'?'Bauch':muscle);set('workoutSets',sets||3);set('workoutReps',reps||10);set('workoutWeight',0);const status=$('workoutStatus');if(status)status.textContent='Übung übernommen: '+name+'. Gewicht passend zu deiner Technik eintragen.';$('workoutTrackerCard')?.scrollIntoView({behavior:'smooth',block:'start'});}
 window.mfitLoadCatalogExercise=function(i){const e=allLibraryExercises()[i];if(e)loadExerciseToTracker(e.name,e.muscle,e.sets||3,e.reps||10);};
 window.mfitAddCatalogToPlan=function(i){const e=allLibraryExercises()[i],plan=window.mfitCurrentTrainingPlan;if(!e)return;if(!plan?.plan?.some(d=>!d.rest)){alert('Erstelle zuerst deinen 7-Tage-Plan. Danach kannst du die Übung direkt hinzufügen.');return;}const day=plan.plan.find(d=>!d.rest);day.exercises.push({name:e.name,muscle:e.muscle,equipment:e.equipment,sets:e.sets||3,reps:String(e.reps||10),rest:'90 Sek.',secondary:e.secondary||[],custom:!!e.custom});render(plan);try{localStorage.setItem(storeKey,JSON.stringify(plan));}catch(err){}$('mfitTrainingPlanOutput')?.scrollIntoView({behavior:'smooth',block:'start'});};
@@ -167,5 +253,5 @@ window.mfitLoadPlanExercise=function(dayIndex,exerciseIndex){
 };
 window.mfitSavePlan=function(){const data=window.mfitCurrentTrainingPlan;if(!data)return;try{localStorage.setItem(storeKey,JSON.stringify(data));const status=$('mfitTrainingPlanOutput');if(status){const note=document.createElement('p');note.className='muted';note.textContent='✓ Dein Trainingsplan ist auf diesem Gerät gespeichert.';status.appendChild(note);}}catch(e){alert('Der Plan konnte auf diesem Gerät nicht gespeichert werden.');}};
 try{const saved=JSON.parse(localStorage.getItem(storeKey)||'null');if(saved&&saved.plan?.length===7){window.mfitCurrentTrainingPlan=saved;render(saved);}}catch(e){}
-window.mfitRenderExerciseLibrary();window.mfitRenderCustomExercises();
+renderAnatomyFilters();window.mfitRenderExerciseLibrary();window.mfitRenderCustomExercises();
 })();
