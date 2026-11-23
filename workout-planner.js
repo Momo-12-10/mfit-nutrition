@@ -1,4 +1,4 @@
-/* MFit Performance v87 — five training methods and progressive 7-day plans */
+/* MFit Performance v88 — muscle atlas with front/back anatomy and Latin names */
 (function(){
 'use strict';
 const $=id=>document.getElementById(id);
@@ -152,27 +152,56 @@ const muscleExerciseTerms={
 };
 function anatomyMuscleSvg(primary,secondary,atlasMode=false){
   const main=new Set(primary||[]),support=new Set(secondary||[]);
-  const sections=[
-   {title:'BRUST',items:[['chestUpper','Obere Brust'],['chestMid','Mittlere Brust'],['chestLower','Untere Brust']]},
-   {title:'SCHULTERN',items:[['frontDelts','Vordere Schulter'],['sideDelts','Seitliche Schulter'],['rearDelts','Hintere Schulter']]},
-   {title:'ARME',items:[['biceps','Bizeps'],['triceps','Trizeps'],['forearms','Unterarme']]},
-   {title:'BAUCH & RUMPF',items:[['abs','Gerader Bauch'],['obliques','Schräge Bauchmuskeln'],['lowerback','Unterer Rücken']]},
-   {title:'RÜCKEN',items:[['lats','Breiter Rücken'],['traps','Trapezmuskel'],['rhomboids','Rautenmuskeln']]},
-   {title:'BEINE & GESÄSS',items:[['quadriceps','Oberschenkel vorn'],['hamstrings','Beinbeuger'],['adductors','Innenschenkel'],['glutes','Gesäß'],['calves','Waden']]}
+  const colors=key=>main.has(key)?'#b8f36b':support.has(key)?'#63c7ec':'#43586b';
+  const opacity=key=>(main.has(key)||support.has(key))?'.98':'.72';
+  const latinItems=[
+   ['chestUpper','Obere Brust','Pectoralis major · Pars clavicularis'],
+   ['chestMid','Mittlere Brust','Pectoralis major · Pars sternocostalis'],
+   ['chestLower','Untere Brust','Pectoralis major · Pars abdominalis'],
+   ['frontDelts','Vordere Schulter','Deltoideus · Pars clavicularis'],
+   ['sideDelts','Seitliche Schulter','Deltoideus · Pars acromialis'],
+   ['rearDelts','Hintere Schulter','Deltoideus · Pars spinalis'],
+   ['biceps','Bizeps','Biceps brachii'],
+   ['triceps','Trizeps','Triceps brachii'],
+   ['forearms','Unterarme','Musculi antebrachii'],
+   ['abs','Gerader Bauch','Rectus abdominis'],
+   ['obliques','Schräge Bauchmuskeln','Obliquus externus abdominis'],
+   ['lowerback','Unterer Rücken','Erector spinae'],
+   ['lats','Breiter Rücken','Latissimus dorsi'],
+   ['traps','Trapezmuskel','Trapezius'],
+   ['rhomboids','Rautenmuskeln','Rhomboidei'],
+   ['quadriceps','Vorderer Oberschenkel','Quadriceps femoris'],
+   ['hamstrings','Beinbeuger','Ischiocrurales'],
+   ['adductors','Innenschenkel','Adductores'],
+   ['glutes','Gesäß','Gluteus maximus'],
+   ['calves','Waden','Triceps surae']
   ];
-  const cards=sections.map((section,i)=>{
-   const x=8+(i%3)*172,y=18+Math.floor(i/3)*158;
-   const rows=section.items.map(([key,label],j)=>{
-    const isMain=main.has(key),isSupport=support.has(key);
-    const fill=isMain?'#b8f36b':isSupport?'#63c7ec':'#26384a';
-    const stroke=isMain?'#d9ffad':isSupport?'#a7e7ff':'#40566b';
-    const txt=(isMain||isSupport)?'#101a22':'#c5d2df';
-    return '<rect x="'+(x+9)+'" y="'+(y+36+j*19)+'" width="148" height="16" rx="5" fill="'+fill+'" fill-opacity="'+(isMain||isSupport?'.96':'.78')+'" stroke="'+stroke+'" stroke-opacity=".42"/><text x="'+(x+16)+'" y="'+(y+47+j*19)+'" fill="'+txt+'" font-size="9.2" font-weight="'+(isMain||isSupport?'700':'500')+'">'+label+'</text>';
-   }).join('');
-   const height=section.items.length>4?139:139;
-   return '<g><rect x="'+x+'" y="'+y+'" width="164" height="'+height+'" rx="12" fill="#142233" stroke="#40566b" stroke-opacity=".72"/><text x="'+(x+10)+'" y="'+(y+22)+'" fill="#b8f36b" font-size="9.5" font-weight="800" letter-spacing="1">'+section.title+'</text>'+rows+'</g>';
-  }).join('');
-  return '<svg class="anatomy-body-svg mfit-muscle-atlas mfit-muscle-grid" viewBox="0 0 524 334" role="img" aria-label="Übersicht der Muskelgruppen in sechs übersichtlichen Kategorien">'+cards+'</svg>';
+  const shape=(key,cx,cy,rx,ry)=>'<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="'+colors(key)+'" fill-opacity="'+opacity(key)+'" stroke="#b8c9d8" stroke-opacity=".2" stroke-width="1"/>';
+  const front=[
+   shape('frontDelts',105,80,17,19),shape('frontDelts',175,80,17,19),
+   shape('chestUpper',124,111,20,13),shape('chestUpper',156,111,20,13),
+   shape('chestMid',124,132,20,13),shape('chestMid',156,132,20,13),
+   shape('chestLower',132,150,15,9),shape('chestLower',148,150,15,9),
+   shape('biceps',88,124,9,25),shape('biceps',192,124,9,25),
+   shape('forearms',78,166,8,24),shape('forearms',202,166,8,24),
+   shape('abs',140,180,12,31),shape('obliques',120,174,8,23),shape('obliques',160,174,8,23),
+   shape('quadriceps',119,249,16,40),shape('quadriceps',161,249,16,40),
+   shape('adductors',135,250,8,30),shape('adductors',145,250,8,30),
+   shape('calves',119,323,10,28),shape('calves',161,323,10,28)
+  ].join('');
+  const back=[
+   shape('traps',360,106,22,25),shape('rearDelts',326,82,17,19),shape('rearDelts',394,82,17,19),
+   shape('lats',345,145,17,37),shape('lats',375,145,17,37),
+   shape('rhomboids',360,126,12,20),shape('lowerback',360,181,13,25),
+   shape('triceps',309,125,9,26),shape('triceps',411,125,9,26),
+   shape('forearms',299,167,8,24),shape('forearms',421,167,8,24),
+   shape('glutes',347,220,15,20),shape('glutes',373,220,15,20),
+   shape('hamstrings',344,266,14,37),shape('hamstrings',376,266,14,37),
+   shape('calves',344,326,10,27),shape('calves',376,326,10,27)
+  ].join('');
+  const silhouette=(x)=>'<g transform="translate('+x+' 0)" fill="#24384a" stroke="#91a6b9" stroke-width="1.3"><circle cx="140" cy="43" r="19"/><rect x="129" y="60" width="22" height="13" rx="6"/><path d="M112 72 Q140 63 168 72 L181 153 Q177 178 164 201 L158 222 L122 222 L116 201 Q103 178 99 153 Z"/><path d="M111 77 Q95 76 88 94 L69 159 Q66 172 76 176 Q85 178 90 164 L111 119 Z"/><path d="M169 77 Q185 76 192 94 L211 159 Q214 172 204 176 Q195 178 190 164 L169 119 Z"/><path d="M122 211 L158 211 L164 266 L159 339 Q157 352 145 352 Q134 352 134 339 L132 273 L128 339 Q128 352 116 352 Q104 352 106 339 L101 266 Z"/></g>';
+  const key=latinItems.map(([id,de,la])=>'<div class="anatomy-key-item '+(main.has(id)?'is-primary':support.has(id)?'is-support':'')+'"><span class="anatomy-key-dot"></span><span><b>'+de+'</b><small>'+la+'</small></span></div>').join('');
+  return '<div class="mfit-anatomy-graphic"><svg class="anatomy-body-svg mfit-muscle-atlas" viewBox="0 0 500 370" role="img" aria-label="Schematische Muskelgrafik mit Vorder- und Rückansicht"><text x="140" y="16" text-anchor="middle" fill="#c5d2df" font-size="11" font-weight="800" letter-spacing="1.2">VORDERSEITE</text><text x="360" y="16" text-anchor="middle" fill="#c5d2df" font-size="11" font-weight="800" letter-spacing="1.2">RÜCKSEITE</text>'+silhouette(0)+silhouette(220)+'<g>'+front+back+'</g><path d="M250 28V350" stroke="#52677a" stroke-dasharray="3 6" opacity=".5"/></svg><div class="anatomy-muscle-key">'+key+'</div></div>';
  }
  function renderNaturalBodyOverviews(){const svg=anatomyMuscleSvg([],[],true);document.querySelectorAll('.mfit-body-overview').forEach(host=>{host.innerHTML=svg;});}renderNaturalBodyOverviews();function exerciseIllustrationSvg(name){
  const n=String(name).toLowerCase(),squat=/kniebeuge|squat|step.?up|ausfallschritt|split squat|lunge/.test(n),hinge=/kreuzheben|deadlift|hip thrust|glute bridge|hinge/.test(n),push=/bankdrück|brustpresse|liegestütz|push.?up|shoulder press|schulterdrück/.test(n);
