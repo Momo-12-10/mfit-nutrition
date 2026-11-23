@@ -154,7 +154,7 @@ function anatomyMuscleSvg(primary,secondary,atlasMode=false){
  const main=new Set(primary||[]),support=new Set(secondary||[]);
  const fill=k=>main.has(k)?'#b8f36b':support.has(k)?'#63c7ec':'#52677a';
  const alpha=k=>(main.has(k)||support.has(k))?1:.82;
- const muscle=(k,d)=>'<path class="mfit-muscle-hit" data-muscle-key="'+k+'" role="button" tabindex="0" aria-label="Muskel auswählen: '+k+'" onclick="mfitSelectMuscleFromAtlas(\\''+k+'\\')" d="'+d+'" fill="'+fill(k)+'" fill-opacity="'+alpha(k)+'" stroke="#b9c8d4" stroke-opacity=".42" stroke-width="1.1" stroke-linejoin="round"/>';
+ const muscle=(k,d)=>'<path class="mfit-muscle-hit" data-muscle-key="'+k+'" role="button" tabindex="0" aria-label="Muskel auswählen: '+k+'" d="'+d+'" fill="'+fill(k)+'" fill-opacity="'+alpha(k)+'" stroke="#b9c8d4" stroke-opacity=".42" stroke-width="1.1" stroke-linejoin="round"/>';
  const front=[
   muscle('frontDelts','M105 78 Q91 73 86 87 Q82 101 95 111 L108 104 Q115 91 105 78Z'),
   muscle('frontDelts','M175 78 Q189 73 194 87 Q198 101 185 111 L172 104 Q165 91 175 78Z'),
@@ -248,6 +248,8 @@ window.mfitSelectMuscleFromAtlas=function(id){
  document.querySelectorAll('.mfit-muscle-hit').forEach(path=>path.classList.toggle('is-selected',path.dataset.muscleKey===id));
  const results=$('mfitExerciseCatalog');results?.scrollIntoView({behavior:'smooth',block:'start'});
 };
+document.addEventListener('click',event=>{const path=event.target.closest?.('.mfit-muscle-hit');if(path)window.mfitSelectMuscleFromAtlas(path.dataset.muscleKey);});
+document.addEventListener('keydown',event=>{if((event.key==='Enter'||event.key===' ')&&event.target.matches?.('.mfit-muscle-hit')){event.preventDefault();window.mfitSelectMuscleFromAtlas(event.target.dataset.muscleKey);}});
 function exerciseMatchesSub(e,sub){if(sub==='all')return true;const terms=muscleExerciseTerms[sub]||[];const n=(e.name+' '+e.muscle+' '+(e.secondary||[]).join(' ')).toLowerCase();return terms.some(t=>n.includes(t.toLowerCase()))||e.muscle.toLowerCase().includes(sub.toLowerCase());}
 function renderAnatomyFilters(){
  const groupHost=$('mfitAnatomyGroups'),subHost=$('mfitAnatomySubgroups');if(!groupHost||!subHost)return;
