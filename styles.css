@@ -1179,3 +1179,11 @@ hr{opacity:.7}
 .anatomy-key-item b{display:block;font-size:11px;line-height:1.25;color:#eaf2f5}
 .anatomy-key-item small{display:block;margin-top:2px;font-size:9px;line-height:1.25;color:#91a6b9;overflow-wrap:anywhere}
 @media(max-width:390px){.anatomy-muscle-key{grid-template-columns:1fr;gap:5px}.anatomy-key-item{padding:6px 8px}.mfit-muscle-atlas{max-height:360px}}
+
+
+/* v90 — interaktiver Muskelatlas: direkt auf Muskelgruppen tippen */
+.mfit-muscle-hit{cursor:pointer;pointer-events:all;transition:filter .16s ease,stroke .16s ease,opacity .16s ease;outline:none;touch-action:manipulation}
+.mfit-muscle-hit:hover,.mfit-muscle-hit:focus-visible{filter:drop-shadow(0 0 6px rgba(184,243,107,.78));stroke:#f2ffd9!important;stroke-opacity:1!important;stroke-width:2.5!important}
+.mfit-muscle-hit:active{filter:drop-shadow(0 0 8px rgba(184,243,107,.9))}
+.mfit-muscle-hit.is-selected{filter:drop-shadow(0 0 7px rgba(184,243,107,.9));stroke:#f5ffdc!important;stroke-opacity:1!important;stroke-width:2.6!important}
+#mfitExerciseCatalog{scroll-margin-top:18px}
