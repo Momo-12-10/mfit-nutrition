@@ -1201,3 +1201,19 @@ hr{opacity:.7}
 .mfit-body-overview .mfit-dot-primary{background:#d7ff83}.mfit-body-overview .mfit-dot-support{background:#79d9f4}
 .mfit-body-overview .anatomy-body-svg{max-height:500px;max-width:560px}
 @media(max-width:390px){.mfit-body-overview .anatomy-body-svg{max-height:430px}}
+
+/* v92 — feinere Anatomie, bessere Proportionen und hochwertiger Atlas-Look */
+.mfit-body-overview{border-radius:20px!important;padding:12px!important;background:linear-gradient(145deg,#fff 0%,#f4f5f7 100%)!important}
+.mfit-body-overview .mfit-anatomy-graphic{padding:12px 8px 14px;border-radius:16px;background:linear-gradient(180deg,#fff,#fafafa);box-shadow:inset 0 0 0 1px rgba(20,20,20,.06)}
+.mfit-body-overview .anatomy-body-svg{display:block;width:100%;max-width:620px;max-height:none;height:auto;margin:0 auto;overflow:visible}
+.mfit-body-overview .mfit-anatomy-viewlabel{font-size:10px;letter-spacing:1.6px;fill:#333!important;font-weight:900}
+.mfit-body-overview .mfit-anatomy-legend{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;padding:4px 0 10px;font-size:11px;font-weight:700}
+.mfit-body-overview .mfit-muscle-hit{stroke:#171717!important;stroke-width:1.35!important;stroke-opacity:.94!important;paint-order:stroke fill;transition:filter .18s ease,opacity .18s ease}
+.mfit-body-overview .mfit-muscle-hit:hover,.mfit-body-overview .mfit-muscle-hit:focus-visible,.mfit-body-overview .mfit-muscle-hit.is-selected{stroke:#111!important;stroke-width:2.8!important;filter:drop-shadow(0 2px 2px rgba(0,0,0,.22))}
+.mfit-body-overview .mfit-muscle-fibers,.mfit-body-overview .mfit-anatomy-detail-lines{pointer-events:none}
+.mfit-body-overview .anatomy-muscle-key{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding-top:10px}
+.mfit-body-overview .anatomy-key-item{align-items:center;min-height:42px;padding:7px 9px;border:1px solid #e5e5e5;border-radius:11px;background:rgba(255,255,255,.9);box-shadow:0 1px 3px rgba(0,0,0,.035)}
+.mfit-body-overview .anatomy-key-dot{width:11px;height:11px;flex-basis:11px;border:1px solid rgba(0,0,0,.15)}
+.mfit-body-overview .anatomy-key-item b{font-size:11px;font-weight:800}
+.mfit-body-overview .anatomy-key-item small{font-size:9px;color:#707070}
+@media(max-width:390px){.mfit-body-overview{padding:8px!important}.mfit-body-overview .mfit-anatomy-graphic{padding:8px 3px}.mfit-body-overview .anatomy-muscle-key{gap:5px}.mfit-body-overview .anatomy-key-item{padding:6px 6px}}
