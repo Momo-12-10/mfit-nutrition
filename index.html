@@ -160,12 +160,12 @@
 <div class="card settings-hub" id="settingsHub">
  <div class="settings-hub-top"><div><span class="settings-kicker">MFIT PERSONAL</span><h2>Deine Einstellungen</h2><p class="muted">Alles Wichtige an einem Ort – übersichtlich und schnell erreichbar.</p></div><span class="settings-hub-icon">⚙</span></div>
  <div class="settings-shortcuts">
-  <button type="button" class="secondary" onclick="document.getElementById('profileGoals').scrollIntoView({behavior:'smooth',block:'start'})"><span>👤</span><b>Profil & Ziele</b><small>Persönliche Angaben</small></button>
-  <button type="button" class="secondary" onclick="document.getElementById('appAppearance').scrollIntoView({behavior:'smooth',block:'start'})"><span>🎨</span><b>Darstellung</b><small>Farben & Design</small></button>
-  <button type="button" class="secondary" onclick="document.getElementById('appReminders').scrollIntoView({behavior:'smooth',block:'start'})"><span>🔔</span><b>Erinnerungen</b><small>Deine Check-ins</small></button>
-  <button type="button" class="secondary" onclick="document.getElementById('weightHistory').scrollIntoView({behavior:'smooth',block:'start'})"><span>⚖️</span><b>Verlauf</b><small>Körpergewicht</small></button>
-  <button type="button" class="secondary" onclick="document.getElementById('dataBackup').scrollIntoView({behavior:'smooth',block:'start'})"><span>🛡️</span><b>Daten & Backup</b><small>Sichern & wiederherstellen</small></button>
-  <button type="button" class="secondary" onclick="document.getElementById('trainingNutrition').scrollIntoView({behavior:'smooth',block:'start'})"><span>⚡</span><b>Training</b><small>Ernährungstipps</small></button>
+  <button type="button" class="secondary" onclick="mfitOpenProfileSection('profileGoals')"><span>👤</span><b>Profil & Ziele</b><small>Persönliche Angaben</small></button>
+  <button type="button" class="secondary" onclick="mfitOpenProfileSection('appAppearance')"><span>🎨</span><b>Darstellung</b><small>Farben & Design</small></button>
+  <button type="button" class="secondary" onclick="mfitOpenProfileSection('appReminders')"><span>🔔</span><b>Erinnerungen</b><small>Deine Check-ins</small></button>
+  <button type="button" class="secondary" onclick="mfitOpenProfileSection('weightHistory')"><span>⚖️</span><b>Verlauf</b><small>Körpergewicht</small></button>
+  <button type="button" class="secondary" onclick="mfitOpenProfileSection('dataBackup')"><span>🛡️</span><b>Daten & Backup</b><small>Sichern & wiederherstellen</small></button>
+  <button type="button" class="secondary" onclick="mfitOpenProfileSection('trainingNutrition')"><span>⚡</span><b>Training</b><small>Ernährungstipps</small></button>
  </div>
  <div class="settings-language"><div><b>🌐 App-Sprache</b><p class="muted">Wähle die Sprache für die gesamte App. Deine Auswahl wird auf diesem Gerät gespeichert.</p></div><select id="appLanguage" aria-label="App-Sprache"><option value="de-AT">Deutsch (Österreich)</option><option value="en">English</option><option value="ru">Русский</option></select></div>
  <div class="settings-local-note"><span>🔒</span><p><b>Deine Daten bleiben privat.</b><br>Deine Einträge werden auf diesem Gerät gespeichert. Mit dem Backup kannst du sie manuell sichern.</p></div>
@@ -187,6 +187,6 @@
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="./app-core.js?v=77"></script><script src="./app.js?v=82"></script><script src="./workout-planner.js?v=92"></script>
+<script src="./app-core.js?v=77"></script><script src="./app.js?v=83"></script><script src="./workout-planner.js?v=92"></script>
 <script src="./i18n.js?v=79"></script>
 </body></html>
