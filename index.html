@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=76">
 <link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=76">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=77">
+<link rel="stylesheet" href="./styles.css?v=79">
 </head>
 <body>
 <header class="brand-header"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR FITNESS COMPANION</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Eat smart. Train hard. Become more.</p></div><span class="pill brand-pill">PERFORMANCE OS</span><button type="button" class="header-settings" onclick="showTab('profile');setTimeout(()=>document.getElementById('settingsHub')?.scrollIntoView({behavior:'smooth',block:'start'}),90)" aria-label="Einstellungen öffnen" title="Einstellungen">⚙</button></div></header>
@@ -94,7 +94,35 @@
 <button class="meal-generate-btn" style="width:100%;margin-top:12px" onclick="generateMealWeek()">Meine Woche erstellen</button><div id="mealWeek"></div><button id="addWeekShopBtn" style="width:100%;margin-top:12px" onclick="addMealWeekToShopping()" disabled>Alle Zutaten auf die Einkaufsliste</button></div>
 </section>
 <section id="fitness" class="hidden">
-<div class="card"><h2>🧠 Dein persönlicher Trainingsplan</h2><p class="muted">Erstellt einen Gym-Plan nach Muskelgruppe, Trainingstagen und verfügbarem Equipment. Geräteausstattung kann je FITINN- oder McFIT-Standort abweichen.</p><label>Was möchtest du trainieren?</label><select id="planMuscle"><option value="full">Ganzkörper</option><option value="back">Rücken</option><option value="chest">Brust</option><option value="shoulders">Schultern</option><option value="arms">Arme</option><option value="legs">Beine & Gesäß</option><option value="upper">Oberkörper</option><option value="push">Push</option><option value="pull">Pull</option></select><div class="grid"><div><label>Trainingstage pro Woche</label><select id="planDays"><option value="2">2 Tage</option><option value="3" selected>3 Tage</option><option value="4">4 Tage</option><option value="5">5 Tage</option></select></div><div><label>Gym / Equipment</label><select id="planGym"><option value="commercial">FITINN / McFIT – Standardgeräte</option><option value="machines">Überwiegend Maschinen</option><option value="free">Freihanteln & Kabelzug</option><option value="body">Körpergewicht</option></select></div></div><label>Trainingsdauer pro Einheit</label><select id="planDuration"><option value="45">ca. 45 Minuten</option><option value="60" selected>ca. 60 Minuten</option><option value="75">ca. 75 Minuten</option></select><button style="width:100%;margin-top:12px" onclick="generateWorkoutPlan()">Trainingsplan erstellen</button><div id="generatedWorkoutPlan"></div></div>
+<div class="card workout-planner-card">
+ <div class="workout-planner-hero"><div><span class="workout-kicker">MFIT TRAINING LAB</span><h2>Dein Trainingsplan. Dein Fortschritt.</h2><p>Wähle Trainingsart, Ziel und Zeitraum. MFit erstellt dir eine abwechslungsreiche 7-Tage-Woche mit Training und sinnvoller Regeneration.</p></div><span class="workout-hero-icon">⚡</span></div>
+ <div class="workout-planner-controls">
+  <label for="mfitTrainingType">Welche Trainingsart möchtest du trainieren?</label>
+  <select id="mfitTrainingType">
+   <option value="hypertrophy">Hypertrophietraining · Muskelaufbau</option>
+   <option value="endurance">Kraftausdauertraining · Belastbarkeit</option>
+   <option value="maxstrength">Maximalkrafttraining · Kraftentwicklung</option>
+   <option value="reactive">Reaktivkrafttraining · Explosivität</option>
+   <option value="adaptation">Gewöhnungstraining · Einstieg & Anpassung</option>
+   <option value="mixed">Kombination · ausgewogene Entwicklung</option>
+  </select>
+  <label for="mfitTrainingGoal">Was möchtest du erreichen?</label>
+  <select id="mfitTrainingGoal">
+   <option value="muscle">Mehr Muskelmasse aufbauen</option><option value="strength">Stärker werden</option><option value="endurance">Kraftausdauer verbessern</option><option value="athletic">Athletik & Explosivität verbessern</option><option value="balanced">Rundum fitter und leistungsfähiger werden</option>
+  </select>
+  <div class="grid">
+   <div><label for="mfitGoalHorizon">Zeitraum für dein Ziel</label><select id="mfitGoalHorizon"><option value="3">3 Monate</option><option value="6" selected>6 Monate</option><option value="12">12 Monate</option><option value="steady">So bald wie sinnvoll</option></select></div>
+   <div><label for="mfitTrainingDays">Krafteinheiten pro Woche</label><select id="mfitTrainingDays"><option value="2">2 Tage</option><option value="3" selected>3 Tage</option><option value="4">4 Tage</option><option value="5">5 Tage</option></select></div>
+  </div>
+  <div class="grid">
+   <div><label for="mfitTrainingSplit">Trainingsaufteilung</label><select id="mfitTrainingSplit"><option value="full">Ganzkörper</option><option value="upperlower">Oberkörper / Unterkörper</option><option value="pushpull">Push / Pull / Beine</option></select></div>
+   <div><label for="mfitTrainingEquipment">Equipment</label><select id="mfitTrainingEquipment"><option value="gym">Fitnessstudio</option><option value="machines">Maschinen & Kabelzug</option><option value="free">Freihanteln & Kabelzug</option><option value="body">Körpergewicht</option></select></div>
+  </div>
+  <button type="button" class="workout-create-btn" onclick="mfitBuildTrainingPlan()">✦ Meinen 7-Tage-Plan erstellen</button>
+ </div>
+ <div id="mfitTrainingPlanOutput" aria-live="polite"></div>
+ <div class="workout-science-note"><b>Trainingshinweis</b><p>Ein 7-Tage-Plan bedeutet nicht sieben harte Trainingstage. Er enthält bewusst Ruhetage. Steigere Belastung schrittweise und trainiere technisch sauber. Bei Maximalkraft keine 1-Wiederholungs-Maximaltests auf eigene Faust; Reaktivkraftübungen nur mit sicherer Landetechnik und passender Anleitung.</p></div>
+</div>
 <div class="card"><div class="row"><div><h2>🏋️ Trainings-Tracker</h2><p class="muted">Übungen, Sätze, Wiederholungen und Gewichte speichern.</p></div><span class="pill">TRAINING</span></div>
 <label>Übung</label><input id="workoutExercise" placeholder="z. B. Bankdrücken">
 <div class="grid"><div><label>Muskelgruppe</label><select id="workoutMuscle"><option>Brust</option><option>Rücken</option><option>Schultern</option><option>Bizeps</option><option>Trizeps</option><option>Beine</option><option>Gesäß</option><option>Bauch</option><option>Waden</option><option>Ganzkörper</option></select></div><div><label>Datum</label><input id="workoutDate" type="date"></div><div><label>Sätze</label><input id="workoutSets" type="number" min="1" max="20" value="3"></div><div><label>Wiederholungen je Satz</label><input id="workoutReps" type="number" min="1" max="100" value="10"></div><div><label>Gewicht (kg)</label><input id="workoutWeight" type="number" min="0" step="0.5" value="0"></div></div>
@@ -137,5 +165,6 @@
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="./app-core.js?v=77"></script><script src="./app.js?v=71"></script><script src="./i18n.js?v=78"></script>
+<script src="./app-core.js?v=77"></script><script src="./app.js?v=79"></script><script src="./workout-planner.js?v=79"></script>
+<script src="./i18n.js?v=79"></script>
 </body></html>
