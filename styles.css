@@ -948,3 +948,13 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 .workout-exercise-detail{flex:0 0 100%;width:100%}
 @media(max-width:420px){.exercise-detail-panel{grid-template-columns:1fr}.muscle-map-svg{max-height:165px}.exercise-demo-frames img{height:145px}}
 @media(min-width:650px){.fitness-shortcuts{grid-template-columns:repeat(4,minmax(0,1fr))}.exercise-photo-strip img{height:170px}}
+
+/* v81 — original illustrations and expanded exercise library */
+.exercise-original-svg{display:block;width:100%;height:auto;max-height:205px;border-radius:12px;background:linear-gradient(145deg,#0e1925,#1a2b3c)}
+.exercise-demo-frames{align-content:start;min-width:0}
+.exercise-demo-frames>small{display:block;font-size:8px;line-height:1.45;color:var(--muted);padding:6px 2px}
+.mfit-exercise-card-head{flex-wrap:wrap}
+.mfit-exercise-card-head>div{flex:1 1 100%;min-width:0}
+.mfit-exercise-card-head button{flex:1 1 auto}
+.exercise-detail-panel{align-items:start}
+.exercise-detail-copy{padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035)}
