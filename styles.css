@@ -990,3 +990,16 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 .exercise-demo-frames>small{text-align:center}
 .exercise-detail-copy{grid-column:1}
 @media(min-width:650px){.anatomy-detail-visual{max-width:620px;margin:0 auto;width:100%}.anatomy-body-svg{max-height:470px}.anatomy-filter-groups,.anatomy-filter-subgroups{gap:9px}}
+
+/* v83 — natürliche, übersichtliche Ganzkörpergrafik */
+.mfit-body-card{overflow:hidden}
+.mfit-body-card-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.mfit-body-card-heading h2{margin:5px 0 4px}
+.mfit-body-card-heading p{font-size:10px;line-height:1.5;margin:0;max-width:310px}
+.mfit-body-overview{width:100%;max-width:560px;margin:8px auto 0;padding:8px 4px 2px;border:1px solid rgba(160,190,215,.13);border-radius:16px;background:radial-gradient(ellipse at 50% 38%,rgba(95,125,150,.18),rgba(12,20,30,.1) 70%)}
+.mfit-body-overview .anatomy-body-svg{display:block;width:100%;height:auto;max-height:340px;margin:0 auto}
+.mfit-body-overview .anatomy-view-label{font-size:10px;fill:#c6d3df;letter-spacing:1px}
+.mfit-natural-body{max-height:330px}
+.mfit-body-overview-library{margin:12px auto 14px;max-width:440px;padding:6px 8px}
+.mfit-body-overview-library .anatomy-body-svg{max-height:250px}
+@media(max-width:390px){.mfit-body-overview{padding:5px 2px}.mfit-body-overview .anatomy-body-svg{max-height:290px}.mfit-body-overview-library .anatomy-body-svg{max-height:215px}}
