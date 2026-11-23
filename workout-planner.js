@@ -105,8 +105,8 @@ function muscleSvg(primary,secondary){
 }
 function detailHtml(name,muscle,secondary,id){
  const img=id||exerciseImageId(name),base='https://raw.githubusercontent.com/MarvinNazari/exercise-images/main/images/'+img+'/';let frames='';
- if(/kniebeuge|squat/i.test(name)){frames='<img class="photo-demo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Fitness_enthusiast_performs_a_single-leg_squat_exercise_in_an_indoor_gym_setting.jpg" alt="Foto einer Kniebeugenvariante" loading="lazy"><small>Foto: Shixart1985 · CC BY 2.0</small>';}
- else if(/kreuzheben|deadlift/i.test(name)){frames='<img class="photo-demo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Fit_young_man_doing_deadlift_exercise_in_gym.jpg" alt="Foto Kreuzheben" loading="lazy"><small>Foto: Nenad Stojkovic · CC BY 2.0</small>';}
+ if(/kniebeuge|squat/i.test(name)){frames='<img class="photo-demo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Fitness_enthusiast_performs_a_single-leg_squat_exercise_in_an_indoor_gym_setting.jpg/500px-Fitness_enthusiast_performs_a_single-leg_squat_exercise_in_an_indoor_gym_setting.jpg" alt="Foto einer Kniebeugenvariante" loading="lazy"><small>Foto: Shixart1985 · CC BY 2.0</small>';}
+ else if(/kreuzheben|deadlift/i.test(name)){frames='<img class="photo-demo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Fit_young_man_doing_deadlift_exercise_in_gym.jpg/960px-Fit_young_man_doing_deadlift_exercise_in_gym.jpg" alt="Foto Kreuzheben" loading="lazy"><small>Foto: Nenad Stojkovic · CC BY 2.0</small>';}
  else if(img==='plank'){frames='<img src="'+base+'hold.webp" alt="'+esc(name)+' Halteposition" loading="lazy"><small>Halteposition · CC0 1.0</small>';}
  else if(img){frames='<img src="'+base+'start.webp" alt="'+esc(name)+' Startposition" loading="lazy"><img src="'+base+'end.webp" alt="'+esc(name)+' Endposition" loading="lazy"><small>Bewegungsdarstellung · CC0 1.0</small>';}
  else{frames='<small>Für diese Übung ist derzeit keine passende Bilddatei hinterlegt.</small>';}
