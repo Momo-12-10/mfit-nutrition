@@ -1,4 +1,4 @@
-/* MFit Performance v89 — Technogym-inspired anatomical muscle atlas */
+/* MFit Performance v91 — interactive full-body anatomical atlas */
 (function(){
 'use strict';
 const $=id=>document.getElementById(id);
@@ -152,9 +152,10 @@ const muscleExerciseTerms={
 };
 function anatomyMuscleSvg(primary,secondary,atlasMode=false){
  const main=new Set(primary||[]),support=new Set(secondary||[]);
- const fill=k=>main.has(k)?'#b8f36b':support.has(k)?'#63c7ec':'#52677a';
- const alpha=k=>(main.has(k)||support.has(k))?1:.82;
- const muscle=(k,d)=>'<path class="mfit-muscle-hit" data-muscle-key="'+k+'" role="button" tabindex="0" aria-label="Muskel auswählen: '+k+'" d="'+d+'" fill="'+fill(k)+'" fill-opacity="'+alpha(k)+'" stroke="#b9c8d4" stroke-opacity=".42" stroke-width="1.1" stroke-linejoin="round"/>';
+ const palette={chestUpper:'#f07836',chestMid:'#f07836',chestLower:'#e96b31',frontDelts:'#e94e32',sideDelts:'#e94e32',rearDelts:'#e94e32',biceps:'#f2cf45',triceps:'#f2cf45',forearms:'#79bd3d',abs:'#f18a3c',obliques:'#247e67',lowerback:'#f2eee9',lats:'#ef7b35',traps:'#e94e32',rhomboids:'#d88a36',quadriceps:'#3939a6',hamstrings:'#5b20a0',adductors:'#183f88',glutes:'#176f83',calves:'#a32688'};
+ const fill=k=>main.has(k)?'#d7ff83':support.has(k)?'#79d9f4':(palette[k]||'#c9cdd2');
+ const alpha=k=>(main.has(k)||support.has(k))?1:1;
+ const muscle=(k,d)=>'<path class="mfit-muscle-hit" data-muscle-key="'+k+'" role="button" tabindex="0" aria-label="Muskel auswählen: '+k+'" d="'+d+'" fill="'+fill(k)+'" fill-opacity="'+alpha(k)+'" stroke="#171717" stroke-opacity=".9" stroke-width="1.5" stroke-linejoin="round"/>';
  const front=[
   muscle('frontDelts','M105 78 Q91 73 86 87 Q82 101 95 111 L108 104 Q115 91 105 78Z'),
   muscle('frontDelts','M175 78 Q189 73 194 87 Q198 101 185 111 L172 104 Q165 91 175 78Z'),
@@ -195,7 +196,7 @@ function anatomyMuscleSvg(primary,secondary,atlasMode=false){
   muscle('calves','M342 287 Q352 282 357 293 L354 328 Q348 338 340 330Z'),
   muscle('calves','M378 287 Q368 282 363 293 L366 328 Q372 338 380 330Z')
  ].join('');
- const body=(x)=>'<g transform="translate('+x+' 0)"><g fill="#26394a" stroke="#a8b8c7" stroke-width="1.5" stroke-linejoin="round"><circle cx="140" cy="43" r="18"/><path d="M130 61 L150 61 L154 76 Q171 77 178 91 L183 148 Q181 166 168 181 L162 211 L118 211 L112 181 Q99 166 97 148 L102 91 Q109 77 126 76Z"/><path d="M102 84 Q91 80 85 94 L69 151 Q65 166 75 174 Q84 178 90 164 L112 111Z"/><path d="M178 84 Q189 80 195 94 L211 151 Q215 166 205 174 Q196 178 190 164 L168 111Z"/><path d="M119 207 L140 213 L161 207 L165 268 L160 333 Q157 344 147 344 Q139 344 139 333 L140 267 L134 333 Q133 344 123 344 Q113 344 112 333 L107 268Z"/></g><g>'+ (x===0?front:back)+'</g><g fill="none" stroke="#d0dbe4" stroke-opacity=".24" stroke-width="1"><path d="M140 77V207 M112 159Q140 170 168 159 M115 213Q140 221 165 213 M140 234V329"/><path d="M101 105L88 158 M179 105L192 158"/></g></g>';
+ const body=(x)=>'<g transform="translate('+x+' 0)"><g fill="#fff" stroke="#151515" stroke-width="1.8" stroke-linejoin="round"><circle cx="140" cy="43" r="18"/><path d="M130 61 L150 61 L154 76 Q171 77 178 91 L183 148 Q181 166 168 181 L162 211 L118 211 L112 181 Q99 166 97 148 L102 91 Q109 77 126 76Z"/><path d="M102 84 Q91 80 85 94 L69 151 Q65 166 75 174 Q84 178 90 164 L112 111Z"/><path d="M178 84 Q189 80 195 94 L211 151 Q215 166 205 174 Q196 178 190 164 L168 111Z"/><path d="M119 207 L140 213 L161 207 L165 268 L160 333 Q157 344 147 344 Q139 344 139 333 L140 267 L134 333 Q133 344 123 344 Q113 344 112 333 L107 268Z"/></g><g>'+ (x===0?front:back)+'</g><g fill="none" stroke="#171717" stroke-opacity=".34" stroke-width="1"><path d="M140 77V207 M112 159Q140 170 168 159 M115 213Q140 221 165 213 M140 234V329"/><path d="M101 105L88 158 M179 105L192 158"/></g></g>';
  const latin=[
  ['chestUpper','Obere Brust','Pectoralis major · Pars clavicularis'],['chestMid','Mittlere Brust','Pectoralis major · Pars sternocostalis'],['chestLower','Untere Brust','Pectoralis major · Pars abdominalis'],
  ['frontDelts','Vordere Schulter','Deltoideus · Pars clavicularis'],['sideDelts','Seitliche Schulter','Deltoideus · Pars acromialis'],['rearDelts','Hintere Schulter','Deltoideus · Pars spinalis'],
@@ -205,7 +206,7 @@ function anatomyMuscleSvg(primary,secondary,atlasMode=false){
  ['quadriceps','Vorderer Oberschenkel','Quadriceps femoris'],['hamstrings','Beinbeuger','Ischiocrurales'],['adductors','Innenschenkel','Adductores'],['glutes','Gesäß','Gluteus maximus'],['calves','Waden','Triceps surae']
  ];
  const key=latin.map(([id,de,la])=>'<div class="anatomy-key-item '+(main.has(id)?'is-primary':support.has(id)?'is-support':'')+'"><span class="anatomy-key-dot"></span><span><b>'+de+'</b><small>'+la+'</small></span></div>').join('');
- return '<div class="mfit-anatomy-graphic"><div class="mfit-anatomy-legend"><span><i class="mfit-dot-primary"></i>Hauptmuskel</span><span><i class="mfit-dot-support"></i>Unterstützend</span></div><svg class="anatomy-body-svg mfit-muscle-atlas" viewBox="0 0 500 360" role="img" aria-label="Anatomische Muskelübersicht, Vorder- und Rückansicht"><text x="140" y="16" text-anchor="middle" class="mfit-anatomy-viewlabel">VORDERANSICHT</text><text x="360" y="16" text-anchor="middle" class="mfit-anatomy-viewlabel">RÜCKANSICHT</text>'+body(0)+body(220)+'<path d="M250 27V345" stroke="#52677a" stroke-dasharray="3 6" opacity=".45"/></svg><div class="anatomy-muscle-key">'+key+'</div></div>';
+ return '<div class="mfit-anatomy-graphic"><div class="mfit-anatomy-legend"><span><i class="mfit-dot-primary"></i>Hauptmuskel</span><span><i class="mfit-dot-support"></i>Unterstützend</span></div><svg class="anatomy-body-svg mfit-muscle-atlas" viewBox="0 0 500 360" role="img" aria-label="Anatomische Muskelübersicht, Vorder- und Rückansicht"><text x="140" y="16" text-anchor="middle" class="mfit-anatomy-viewlabel">VORDERANSICHT</text><text x="360" y="16" text-anchor="middle" class="mfit-anatomy-viewlabel">RÜCKANSICHT</text>'+body(0)+body(220)+'<path d="M250 27V345" stroke="#c5c5c5" stroke-dasharray="3 6" opacity=".7"/></svg><div class="anatomy-muscle-key">'+key+'</div></div>';
 }
 function renderNaturalBodyOverviews(){const svg=anatomyMuscleSvg([],[],true);document.querySelectorAll('.mfit-body-overview').forEach(host=>{host.innerHTML=svg;});}renderNaturalBodyOverviews();function exerciseIllustrationSvg(name){
  const n=String(name).toLowerCase(),squat=/kniebeuge|squat|step.?up|ausfallschritt|split squat|lunge/.test(n),hinge=/kreuzheben|deadlift|hip thrust|glute bridge|hinge/.test(n),push=/bankdrück|brustpresse|liegestütz|push.?up|shoulder press|schulterdrück/.test(n);
