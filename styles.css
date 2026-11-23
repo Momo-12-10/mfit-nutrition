@@ -958,3 +958,35 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 .mfit-exercise-card-head button{flex:1 1 auto}
 .exercise-detail-panel{align-items:start}
 .exercise-detail-copy{padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035)}
+
+/* v82 — detailed anatomical muscle atlas and region-based exercise browsing */
+.anatomy-browser{margin:14px 0 12px;padding:13px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(135,178,213,.09),rgba(255,255,255,.018))}
+.anatomy-browser-heading p{font-size:10px;color:var(--muted);margin:5px 0 10px}
+.anatomy-filter-groups,.anatomy-filter-subgroups{display:flex;flex-wrap:wrap;gap:7px}
+.anatomy-filter-chip,.anatomy-sub-chip{border:1px solid var(--line)!important;border-radius:999px!important;padding:8px 11px!important;background:rgba(255,255,255,.04)!important;color:var(--text)!important;font-size:10px!important;line-height:1.2}
+.anatomy-filter-chip.active,.anatomy-sub-chip.active{background:rgba(183,255,107,.15)!important;border-color:rgba(183,255,107,.58)!important;color:#d7ffad!important}
+.anatomy-filter-chip.active{box-shadow:0 0 0 2px rgba(183,255,107,.07)}
+.anatomy-filter-subgroups{padding-top:10px;margin-top:10px;border-top:1px solid var(--line)}
+.anatomy-sub-chip{display:grid;gap:3px;text-align:left;border-radius:11px!important;max-width:100%}
+.anatomy-sub-chip b{font-size:10px}
+.anatomy-sub-chip small{font-size:8px;color:var(--muted);font-style:italic;line-height:1.25;white-space:normal}
+.anatomy-detail-visual{grid-column:1/-1;min-width:0;padding:10px;border:1px solid rgba(155,190,220,.16);border-radius:15px;background:radial-gradient(ellipse at 50% 35%,#26394b 0%,#152332 52%,#0b121b 100%);overflow:hidden}
+.anatomy-detail-visual .muscle-map-title{display:flex;justify-content:space-between;gap:8px;align-items:baseline;font-size:10px;letter-spacing:.8px}
+.anatomy-detail-visual .muscle-map-title small{font-size:8px;color:#9fb2c5;font-weight:500;letter-spacing:0;text-align:right}
+.anatomy-body-svg{display:block;width:100%;height:auto;max-height:410px;margin:0 auto}
+.anatomy-view-label{fill:#b9cad9;font-size:10px;font-weight:800;letter-spacing:1.1px;text-anchor:middle}
+.anatomy-skin{fill:url(#anatomyBase);stroke:#d8e2ec;stroke-width:1.2;filter:drop-shadow(0 5px 7px rgba(0,0,0,.28))}
+.anatomy-muscle{fill:#536a80;stroke:#a6b8c8;stroke-width:1.1;opacity:.92;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+.anatomy-muscle.is-primary{fill:url(#anatomyHot);stroke:#edffc9;stroke-width:1.6;filter:drop-shadow(0 0 5px rgba(176,255,103,.48))}
+.anatomy-detail{fill:none;stroke:rgba(18,34,48,.55);stroke-width:1.6;stroke-linecap:round}
+.anatomy-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:13px;padding:7px 0 1px;color:#c5d2df;font-size:9px}
+.anatomy-legend span{display:flex;align-items:center;gap:5px}
+.anatomy-legend i{display:inline-block;width:9px;height:9px;border-radius:50%}
+.anatomy-legend .primary-dot{background:#b5f66b;box-shadow:0 0 7px rgba(181,246,107,.5)}
+.anatomy-legend .secondary-dot{background:#65bce8}
+.exercise-detail-panel{grid-template-columns:minmax(0,1fr);gap:10px}
+.exercise-demo-frames{grid-template-columns:1fr;max-width:310px;margin:0 auto}
+.exercise-demo-frames .exercise-original-svg{max-width:310px}
+.exercise-demo-frames>small{text-align:center}
+.exercise-detail-copy{grid-column:1}
+@media(min-width:650px){.anatomy-detail-visual{max-width:620px;margin:0 auto;width:100%}.anatomy-body-svg{max-height:470px}.anatomy-filter-groups,.anatomy-filter-subgroups{gap:9px}}
