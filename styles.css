@@ -1003,3 +1003,9 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 .mfit-body-overview-library{margin:12px auto 14px;max-width:440px;padding:6px 8px}
 .mfit-body-overview-library .anatomy-body-svg{max-height:250px}
 @media(max-width:390px){.mfit-body-overview{padding:5px 2px}.mfit-body-overview .anatomy-body-svg{max-height:290px}.mfit-body-overview-library .anatomy-body-svg{max-height:215px}}
+
+/* v84 – neu gezeichnete, anatomisch lesbare Basis-Körpergrafik */
+.mfit-body-overview{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));border-color:rgba(180,200,220,.18)}
+.mfit-body-overview .anatomy-body-svg{max-width:500px;max-height:370px}
+.mfit-body-overview-library .anatomy-body-svg{max-width:390px;max-height:280px}
+.mfit-natural-body .anatomy-view-label{font-size:10px;letter-spacing:1.2px}
