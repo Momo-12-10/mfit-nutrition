@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=53">
 <link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=53">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=71">
+<link rel="stylesheet" href="./styles.css?v=72">
 </head>
 <body>
 <header class="brand-header"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR FITNESS COMPANION</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Eat smart. Train hard. Become more.</p></div><span class="pill brand-pill">PERFORMANCE OS</span></div></header>
@@ -15,6 +15,20 @@
 <section id="home">
 <div class="card tracking-history-card"><div class="row"><div><h2>📅 Tracking-Verlauf</h2><p class="muted">Sieh dir jeden Tag einzeln an und blättere zurück.</p></div><span class="pill">HISTORY</span></div><div class="history-periods"><button class="active" data-history-mode="day" onclick="setHistoryMode('day')">Tag</button><button data-history-mode="week" onclick="setHistoryMode('week')">Woche</button><button data-history-mode="month" onclick="setHistoryMode('month')">Monat</button><button data-history-mode="year" onclick="setHistoryMode('year')">Jahr</button></div><div class="history-navigation"><button id="historyPrev" class="secondary" onclick="mfitShiftHistory(-1)">‹ Tag</button><div><b id="trackingHistoryTitle">Heute</b><div class="muted" id="trackingHistoryCount">0 von 1 Tagen getrackt</div></div><button id="historyNext" class="secondary" onclick="mfitShiftHistory(1)">Tag ›</button></div><div id="trackingHistoryList" class="tracking-history-list"></div></div>
 <div class="daily-motivation"><span class="motivation-mark">✦</span><div><small>DAILY MINDSET</small><b id="dailyQuote">Small steps. Big changes.</b></div><span class="motivation-spark">↗</span></div>
+<div class="card weekly-momentum-card">
+ <div class="row weekly-heading"><div><div class="muted">DEIN RÜCKBLICK</div><h2>Deine Woche</h2></div><span class="pill">7 TAGE</span></div>
+ <div class="weekly-summary-row"><b id="weeklyTrackedCount">0 / 7 Tage</b><span id="weeklyEntryCount" class="muted">0 Einträge</span></div>
+ <div id="weeklyDayGrid" class="weekly-day-grid" aria-label="Tracking der letzten sieben Tage"></div>
+ <p id="weeklyMomentumHint" class="muted weekly-hint">Jeder Eintrag hilft dir, deinen Alltag besser zu verstehen.</p>
+</div>
+<div class="card quick-start-card">
+ <div class="muted">DIREKT LOSLEGEN</div><h2>Schnellzugriff</h2>
+ <div class="quick-start-grid">
+  <button type="button" onclick="showTab('track')"><span>＋</span><b>Food tracken</b><small>Lebensmittel erfassen</small></button>
+  <button type="button" class="secondary" onclick="showTab('fitness')"><span>⚡</span><b>Workout</b><small>Training öffnen</small></button>
+  <button type="button" class="secondary" onclick="showTab('recipes')"><span>🥗</span><b>Rezepte</b><small>Neue Ideen finden</small></button>
+ </div>
+</div>
 <div class="card"><div class="row"><div><div class="muted">AUSGEWÄHLTER TAG · KALORIEN</div><div class="big" id="kcalTotal">0 kcal</div><div class="muted" id="kcalLeft">Tagesziel: 2.800 kcal</div></div><div style="font-size:38px">🔥</div></div><div class="progress"><span id="kcalBar" style="width:0%"></span></div></div>
 <div class="grid three">
 <div class="card"><div class="muted">Protein</div><div class="big" id="proteinTotal">0 g</div><div class="muted" id="proteinLeft">Ziel: 150 g</div></div>
@@ -104,5 +118,5 @@
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="./app-core.js?v=71"></script><script src="./app.js?v=71"></script>
+<script src="./app-core.js?v=72"></script><script src="./app.js?v=71"></script>
 </body></html>
