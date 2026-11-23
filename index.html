@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a0d12"><meta name="description" content="MFit Performance – Ernährung, Fitness und Alltag in einer App">
-<link rel="manifest" href="manifest.webmanifest?v=53">
-<link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=53">
-<link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=53">
+<link rel="manifest" href="manifest.webmanifest?v=74">
+<link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=74">
+<link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=74">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=72">
+<link rel="stylesheet" href="./styles.css?v=74">
 </head>
 <body>
 <header class="brand-header"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR FITNESS COMPANION</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Eat smart. Train hard. Become more.</p></div><span class="pill brand-pill">PERFORMANCE OS</span></div></header>
@@ -114,9 +114,15 @@
 <div class="reminder-setting"><label class="reminder-toggle"><input id="reminderMealEnabled" type="checkbox" checked onchange="saveReminderSettings()"> <span><b>🍽️ Fehlende Mahlzeit</b><small>Erinnert dich, wenn die ausgewählte Mahlzeit noch nicht eingetragen ist.</small></span></label><div class="grid"><div><label>Mahlzeit</label><select id="reminderMealName" onchange="saveReminderSettings()"><option>Frühstück</option><option selected>Mittagessen</option><option>Abendessen</option></select></div><div><label>Prüfzeit</label><input id="reminderMealTime" type="time" value="14:00" onchange="saveReminderSettings()"></div></div></div>
 <button style="width:100%;margin-top:12px" onclick="enableReminder()">iPhone-Mitteilungen erlauben</button><div id="reminderStatus" class="muted" style="margin-top:9px"></div><div id="reminderNotice" class="notice reminder-notice" hidden></div><p class="muted">Die Erinnerungen werden nur ausgelöst, solange MFit geöffnet ist. iOS stoppt normale Webseiten-Timer im Hintergrund. Für echte Push-Mitteilungen bei geschlossener App wäre ein zusätzlicher Push-Dienst nötig.</p></div>
 <div class="card"><h2>Körpergewicht-Verlauf</h2><p class="muted">Trage dein Gewicht gelegentlich ein und verfolge den Verlauf.</p><label>Aktuelles Gewicht (kg)</label><input id="weightLogInput" type="number" step="0.1" placeholder="z. B. 78,0"><button style="width:100%;margin-top:8px" onclick="saveWeightLog()">Gewicht speichern</button><div id="weightHistory" class="muted" style="margin-top:10px"></div></div>
+<div class="card backup-card">
+ <div class="row"><div><h2>🛡️ Datensicherung</h2><p class="muted">Deine Einträge bleiben auf diesem Gerät. Sichere sie regelmäßig, damit sie bei Geräte- oder Browserwechsel nicht verloren gehen.</p></div><span class="pill">DEINE DATEN</span></div>
+ <div class="backup-actions"><button type="button" onclick="downloadMfitBackup()">Backup herunterladen</button><button type="button" class="secondary" onclick="document.getElementById('mfitBackupFile').click()">Backup wiederherstellen</button></div>
+ <input id="mfitBackupFile" type="file" accept=".json,application/json" hidden onchange="restoreMfitBackup(event)">
+ <p id="backupStatus" class="muted backup-status" aria-live="polite">Das Backup enthält deine Ernährungs-, Wasser-, Trainings-, Profil- und Einkaufseinträge. Es wird nicht an einen Server gesendet.</p>
+</div>
 <div class="card"><h2>Trainingsernährung</h2><p class="muted">Vor dem Training (ca. 1–3 Stunden): leicht verdauliche Kohlenhydrate plus etwas Protein. Danach: eine normale Mahlzeit mit Protein und Kohlenhydraten. Timing und Menge an Hunger, Trainingsdauer und Verträglichkeit anpassen.</p><button class="secondary" onclick="alert('Pre-Workout: Banane + Skyr oder Brot + Topfen. Post-Workout: Reis mit Ei/Huhn/Tofu oder Skyr-Bowl. Passe Portionen an deinen Hunger und Tagesbedarf an.')">Ideen anzeigen</button></div>
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="./app-core.js?v=73"></script><script src="./app.js?v=71"></script>
+<script src="./app-core.js?v=74"></script><script src="./app.js?v=71"></script>
 </body></html>
