@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a0d12"><meta name="description" content="MFit Performance – Ernährung, Fitness und Alltag in einer App">
-<link rel="manifest" href="manifest.webmanifest?v=74">
-<link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=74">
-<link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=74">
+<link rel="manifest" href="manifest.webmanifest?v=75">
+<link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=75">
+<link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=75">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=74">
+<link rel="stylesheet" href="./styles.css?v=75">
 </head>
 <body>
 <header class="brand-header"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR FITNESS COMPANION</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Eat smart. Train hard. Become more.</p></div><span class="pill brand-pill">PERFORMANCE OS</span></div></header>
@@ -58,7 +58,7 @@
 <div class="card"><h2>Lebensmittel-Vorlagen</h2><div id="presets"></div></div>
 </section>
 <section id="recipes" class="hidden">
-<div class="card"><h2>Rezeptfinder</h2><label>Ernährungsform</label><select id="diet"><option>Alle</option><option>Vegan</option><option>Vegetarisch</option><option>Pescetarisch</option><option>Omnivor</option></select><label>Fokus</label><select id="focus"><option>Proteinreich</option><option>Kalorienarm</option><option>Fettarm</option><option>Fettreicher / energiereich</option><option>Ausgewogen</option></select><div id="recipeList"></div></div>
+<div class="recipe-hero"><div class="recipe-hero-copy"><span class="recipe-kicker">MFIT FOOD STUDIO</span><h2>Gutes Essen. Starke Performance.</h2><p>Entdecke neue Mahlzeiten, speichere deine Favoriten und finde Ideen passend zu deinem Alltag.</p><div class="recipe-hero-stats"><span>🥗 Alltagstauglich</span><span>⚡ Protein & Energie</span></div></div><div class="recipe-hero-art" aria-hidden="true"><span>🥑</span><span>🍓</span><span>🥙</span></div></div><div class="card recipe-finder-card"><div class="row recipe-finder-heading"><div><span class="recipe-kicker">ENTDECKEN</span><h2>Rezeptfinder</h2></div><span class="pill" id="recipeCount">0 IDEEN</span></div><label for="recipeSearch">Rezept oder Zutat suchen</label><input id="recipeSearch" type="search" placeholder="z. B. Chicken, Beeren, Pasta …" oninput="renderRecipes()"><div class="recipe-filter-grid"><div><label>Ernährungsform</label><select id="diet" onchange="renderRecipes()"><option>Alle</option><option>Vegan</option><option>Vegetarisch</option><option>Pescetarisch</option><option>Omnivor</option></select></div><div><label>Fokus</label><select id="focus" onchange="renderRecipes()"><option>Proteinreich</option><option>Kalorienarm</option><option>Fettarm</option><option>Fettreicher / energiereich</option><option>Ausgewogen</option></select></div></div><div class="recipe-toolbar"><button type="button" class="secondary" id="recipeFavoritesToggle" onclick="toggleRecipeFavoritesView()" aria-pressed="false">♡ Nur Favoriten</button><button type="button" class="secondary" onclick="pickRandomRecipe()">✦ Zufällige Idee</button></div><div id="recipeList"></div></div>
 <div class="card"><h2>Was ist in deiner Küche?</h2><textarea id="ingredients" rows="3" placeholder="z. B. Eier, Skyr, Reis, TK-Gemüse"></textarea><button style="width:100%;margin-top:10px" onclick="suggestFromIngredients()">Ideen aus meinen Zutaten</button><div id="ingredientIdeas" class="muted"></div></div>
 </section>
 <section id="shop" class="hidden">
@@ -124,5 +124,5 @@
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="./app-core.js?v=74"></script><script src="./app.js?v=71"></script>
+<script src="./app-core.js?v=75"></script><script src="./app.js?v=71"></script>
 </body></html>
