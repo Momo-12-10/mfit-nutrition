@@ -821,3 +821,33 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 .recipe-image-wrap{height:185px;position:relative;overflow:hidden;background:linear-gradient(135deg,#273849,#39483f)}.recipe-photo{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}.recipe-card:hover .recipe-photo{transform:scale(1.035)}.recipe-image-label{position:absolute;left:11px;top:11px;padding:5px 8px;border-radius:20px;background:rgba(9,15,22,.72);border:1px solid rgba(255,255,255,.18);color:#fff;font-size:8px;font-weight:900;letter-spacing:1px;backdrop-filter:blur(10px)}.recipe-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.recipe-title-row .recipe-title{flex:1;min-width:0}.favorite-button{flex:0 0 35px;width:35px;min-height:35px;height:35px;padding:0;border-radius:50%;font-size:20px;background:#263444!important;color:#e9edf2!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:none!important}.favorite-button.is-favorite{background:rgba(255,110,140,.15)!important;color:#ff8ca5!important;border-color:rgba(255,140,165,.45)!important}.recipe-empty{display:grid;justify-items:center;text-align:center;gap:7px;padding:28px 12px;color:var(--muted)}.recipe-empty>span{font-size:34px}.recipe-empty b{color:#f4f7fb}.recipe-empty p{margin:0;font-size:12px}
 @media(max-width:420px){.recipe-hero{min-height:178px;padding:18px 15px}.recipe-hero-art{flex-basis:67px}.recipe-hero-art span{width:45px;height:45px;font-size:24px;border-radius:15px}.recipe-filter-grid{gap:8px}.recipe-toolbar{gap:6px}.recipe-toolbar button{font-size:10px}.recipe-image-wrap{height:170px}}
 @media(prefers-reduced-motion:reduce){.recipe-photo{transition:none}}
+
+
+/* v77 — settings hub and quick access */
+.brand-lockup{gap:10px}
+.header-settings{flex:0 0 42px;width:42px;height:42px;min-height:42px;padding:0!important;display:grid;place-items:center;border-radius:14px!important;background:rgba(255,255,255,.07)!important;color:#f3f6fa!important;border:1px solid rgba(210,225,242,.16)!important;font-size:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)!important}
+.header-settings:active{transform:scale(.96)}
+.settings-hub{scroll-margin-top:18px;overflow:hidden;background:radial-gradient(ellipse at 100% 0%,rgba(166,255,63,.14),transparent 42%),linear-gradient(145deg,#1b2936,#111923 72%)!important;border-color:rgba(166,255,63,.23)!important}
+.settings-hub-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:17px}
+.settings-hub-top>div{min-width:0}
+.settings-kicker{font-size:9px;letter-spacing:1.7px;font-weight:900;color:#b5ff68}
+.settings-hub-top h2{font-size:21px!important;letter-spacing:-.7px;margin:5px 0 6px!important}
+.settings-hub-top p{font-size:12px;line-height:1.5;margin:0;max-width:38ch}
+.settings-hub-icon{flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;border-radius:15px;background:rgba(166,255,63,.12);border:1px solid rgba(166,255,63,.22);font-size:22px;color:#c8ff8d}
+.settings-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.settings-shortcuts button{display:grid;grid-template-columns:27px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;column-gap:8px;row-gap:3px;min-width:0;min-height:69px;padding:11px 10px!important;text-align:left;border-radius:14px!important;background:rgba(255,255,255,.045)!important;border:1px solid rgba(220,235,250,.11)!important;color:#edf3fa!important}
+.settings-shortcuts button>span{grid-row:1/3;font-size:20px}
+.settings-shortcuts button>b{font-size:11px;line-height:1.2;white-space:normal}
+.settings-shortcuts button>small{font-size:9px;line-height:1.25;color:#aab7c7}
+.settings-shortcuts button:active{border-color:rgba(166,255,63,.45)!important;background:rgba(166,255,63,.08)!important}
+.settings-language{display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,.9fr);align-items:center;gap:12px;margin-top:16px;padding:14px 0;border-top:1px solid rgba(220,235,250,.1)}
+.settings-language b{font-size:12px}
+.settings-language p{font-size:10px;line-height:1.45;margin:5px 0 0}
+.settings-language select{width:100%;min-width:0;min-height:42px;margin:0!important;font-size:11px}
+.settings-local-note{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid rgba(166,255,63,.16);border-radius:13px;background:rgba(166,255,63,.055)}
+.settings-local-note>span{font-size:18px}
+.settings-local-note p{font-size:10px;line-height:1.5;color:#aebdcd;margin:0}
+.settings-local-note b{color:#eaf3e6;font-size:11px}
+#profileGoals,#appAppearance,#appReminders,#weightHistory,#dataBackup,#trainingNutrition{scroll-margin-top:16px}
+@media(max-width:360px){.header-settings{width:37px;height:37px;min-height:37px;flex-basis:37px}.brand-pill{display:none}.settings-shortcuts{gap:7px}.settings-shortcuts button{padding:10px 8px!important}.settings-language{grid-template-columns:minmax(0,1fr) minmax(112px,.85fr);gap:8px}}
+@media(min-width:600px){.settings-hub{padding:24px!important}.settings-shortcuts{grid-template-columns:repeat(3,minmax(0,1fr))}}
