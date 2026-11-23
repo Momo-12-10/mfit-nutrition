@@ -162,7 +162,27 @@ function render(){
  if($('sugarGoalLabel'))$('sugarGoalLabel').textContent='Orientierung: unter '+sugarGoal+' g freie/zugesetzte Zucker · ideal möglichst weniger';if($('sugarBar'))$('sugarBar').style.width=Math.min(100,freeSugar/sugarGoal*100)+'%';
  $('todayList').innerHTML=dayData.length?dayData.map(e=>{const i=data.indexOf(e);return '<div class="item row"><div><b>'+esc(e.name)+'</b><div class="muted">'+esc(e.meal)+' · '+e.amount+esc(e.unit)+' · '+Math.round(e.kcal)+' kcal · '+(Number(e.protein)||0).toFixed(1)+' g Protein</div></div><button class="danger smallbtn" onclick="removeEntry('+i+')">×</button></div>'}).join(''):'Noch keine Einträge für diesen Tag.';
  [['vitc','sumVitC','mg'],['vitd','sumVitD','µg'],['calcium','sumCalcium','mg'],['iron','sumIron','mg'],['magnesium','sumMagnesium','mg'],['potassium','sumPotassium','mg'],['zinc','sumZinc','mg'],['b12','sumB12','µg']].forEach(([key,id,unit])=>{if($(id))$(id).textContent=sum(key).toFixed(1)+' '+unit});
- renderWaterQuickHistory();renderHistory();
+
+function renderWeeklyMomentum(){
+ const grid=$('weeklyDayGrid');if(!grid)return;
+ const today=new Date(),start=new Date(today);start.setDate(today.getDate()-6);
+ const days=Array.from({length:7},(_,i)=>{
+  const date=new Date(start);date.setDate(start.getDate()+i);
+  const key=mfitDateKey(date),entries=data.filter(e=>(e.date||mfitDateKey())===key);
+  return {key,date,entries};
+ });
+ const tracked=days.filter(d=>d.entries.length>0).length;
+ const total=days.reduce((n,d)=>n+d.entries.length,0);
+ if($('weeklyTrackedCount'))$('weeklyTrackedCount').textContent=tracked+' / 7 Tage';
+ if($('weeklyEntryCount'))$('weeklyEntryCount').textContent=total+' Einträge';
+ grid.innerHTML=days.map(d=>{
+  const label=d.date.toLocaleDateString('de-AT',{weekday:'short'}).replace('.','');
+  return '<div class="weekly-day '+(d.entries.length?'is-tracked':'')+(d.key===mfitDateKey()?' is-today':'')+'"><span class="weekly-day-mark">'+(d.entries.length?'✓':'·')+'</span><span class="weekly-day-label">'+label+'</span></div>';
+ }).join('');
+ const hint=tracked===7?'Eine lückenlose Woche – stark dokumentiert.':tracked===0?'Noch kein Eintrag diese Woche. Fang einfach mit dem nächsten an.':tracked+' von 7 Tagen erfasst. Es geht um Orientierung, nicht um Perfektion.';
+ if($('weeklyMomentumHint'))$('weeklyMomentumHint').textContent=hint;
+}
+ renderWaterQuickHistory();renderHistory();renderWeeklyMomentum();
 }
 function mfitParseDate(key){const [y,m,d]=String(key).split('-').map(Number);return new Date(y,m-1,d,12)}
 function mfitAddDays(date,n){const d=mfitParseDate(date);d.setDate(d.getDate()+n);return mfitDateKey(d)}
