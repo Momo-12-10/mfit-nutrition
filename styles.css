@@ -1217,3 +1217,24 @@ hr{opacity:.7}
 .mfit-body-overview .anatomy-key-item b{font-size:11px;font-weight:800}
 .mfit-body-overview .anatomy-key-item small{font-size:9px;color:#707070}
 @media(max-width:390px){.mfit-body-overview{padding:8px!important}.mfit-body-overview .mfit-anatomy-graphic{padding:8px 3px}.mfit-body-overview .anatomy-muscle-key{gap:5px}.mfit-body-overview .anatomy-key-item{padding:6px 6px}}
+
+/* v93 — kompakte, anklickbare Profil- und Fitnessbereiche */
+.mfit-compact-accordion{margin:0 0 9px;border:1px solid var(--line);border-radius:15px;overflow:hidden;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));box-shadow:0 5px 18px rgba(0,0,0,.10)}
+.mfit-compact-accordion>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:58px;padding:11px 14px;cursor:pointer;user-select:none}
+.mfit-compact-accordion>summary::-webkit-details-marker{display:none}
+.mfit-accordion-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
+.mfit-accordion-copy b{font-size:13px;line-height:1.25;font-weight:800;color:var(--text)}
+.mfit-accordion-copy small{font-size:10px;line-height:1.3;color:var(--muted)}
+.mfit-accordion-chevron{display:grid;place-items:center;flex:0 0 27px;width:27px;height:27px;border-radius:9px;background:rgba(255,255,255,.07);color:var(--accent,#b8f36b);font-size:20px;transition:transform .2s ease}
+.mfit-compact-accordion[open]>summary{border-bottom:1px solid var(--line);background:rgba(255,255,255,.025)}
+.mfit-compact-accordion[open] .mfit-accordion-chevron{transform:rotate(180deg)}
+.mfit-accordion-content{padding:8px}
+.mfit-accordion-inner{margin:0!important;border:0!important;box-shadow:none!important;background:transparent!important;padding:8px!important}
+#profile,#fitness{display:block}
+#profile>.mfit-compact-accordion,#fitness>.mfit-compact-accordion{scroll-margin-top:12px}
+#fitness .mfit-compact-accordion .mfit-body-card{padding:8px!important}
+#fitness .mfit-compact-accordion .workout-planner-card{padding:10px!important}
+#fitness .mfit-compact-accordion .workout-planner-hero h2{font-size:17px}
+#fitness .mfit-compact-accordion .mfit-body-overview{margin:0}
+#fitness .mfit-compact-accordion .workout-library-card{margin:0!important}
+@media(max-width:480px){.mfit-compact-accordion{margin-bottom:7px;border-radius:13px}.mfit-compact-accordion>summary{min-height:53px;padding:9px 11px}.mfit-accordion-content{padding:6px}.mfit-accordion-inner{padding:5px!important}}
