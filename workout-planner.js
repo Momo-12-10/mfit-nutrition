@@ -152,50 +152,12 @@ const muscleExerciseTerms={
 };
 function anatomyMuscleSvg(primary,secondary){
  const active=new Set([...(primary||[]),...(secondary||[])]);
- const shapes={
- front:[
- ['frontDelts','path','M66 93 Q78 76 96 88 Q102 104 88 117 Q73 114 66 93Z'],
- ['frontDelts','path','M144 93 Q132 76 114 88 Q108 104 122 117 Q137 114 144 93Z'],
- ['chestUpper','path','M79 113 Q101 101 123 113 L119 128 Q101 133 83 128Z'],
- ['chestMid','path','M81 130 Q101 125 121 130 L118 148 Q101 153 84 148Z'],
- ['chestLower','path','M84 150 Q101 148 118 150 L114 161 Q101 166 88 161Z'],
- ['biceps','path','M65 119 Q55 125 56 151 L63 165 Q72 158 74 132Z'],
- ['biceps','path','M145 119 Q155 125 154 151 L147 165 Q138 158 136 132Z'],
- ['forearms','path','M56 166 Q50 179 51 205 L60 215 Q67 193 65 169Z'],
- ['forearms','path','M154 166 Q160 179 159 205 L150 215 Q143 193 145 169Z'],
- ['abs','path','M88 164 Q101 161 114 164 L112 207 Q101 213 90 207Z'],
- ['obliques','path','M80 160 Q87 163 88 180 L85 205 L75 197 L77 171Z'],
- ['obliques','path','M122 160 Q115 163 114 180 L117 205 L127 197 L125 171Z'],
- ['quadriceps','path','M80 218 Q92 214 98 223 L95 284 Q88 302 78 294 Q70 271 80 218Z'],
- ['quadriceps','path','M102 222 Q111 214 122 218 L130 294 Q120 302 111 284Z'],
- ['adductors','path','M97 224 L104 224 L109 277 L101 289 L94 269Z'],
- ['adductors','path','M105 224 L112 224 L118 269 L111 289 L103 277Z'],
- ['calves','path','M78 306 Q89 301 95 310 L91 365 L80 371 Q73 343 78 306Z'],
- ['calves','path','M108 310 Q116 301 126 306 Q131 343 124 371 L113 365Z']
- ],
- back:[
- ['rearDelts','path','M65 94 Q77 78 95 91 Q98 108 83 118 Q69 113 65 94Z'],
- ['rearDelts','path','M145 94 Q133 78 115 91 Q112 108 127 118 Q141 113 145 94Z'],
- ['traps','path','M87 94 L101 84 L115 94 L123 122 L101 136 L79 122Z'],
- ['rhomboids','path','M88 126 L101 137 L114 126 L119 158 L101 169 L83 158Z'],
- ['lats','path','M82 133 Q75 137 72 165 L81 194 L95 184 L98 143Z'],
- ['lats','path','M120 133 Q127 137 130 165 L121 194 L107 184 L104 143Z'],
- ['triceps','path','M65 119 Q55 126 57 153 L65 164 Q73 156 74 132Z'],
- ['triceps','path','M145 119 Q155 126 153 153 L145 164 Q137 156 136 132Z'],
- ['forearms','path','M56 166 L51 205 L60 215 L66 170Z'],
- ['forearms','path','M154 166 L159 205 L150 215 L144 170Z'],
- ['lowerback','path','M91 165 L111 165 L116 207 L101 216 L86 207Z'],
- ['glutes','path','M83 216 Q91 208 101 216 Q101 239 91 246 Q78 242 78 230Z'],
- ['glutes','path','M101 216 Q111 208 119 216 L124 230 Q124 242 111 246 Q101 239 101 216Z'],
- ['hamstrings','path','M79 249 Q91 243 98 251 L95 303 L84 310 Q75 283 79 249Z'],
- ['hamstrings','path','M104 251 Q112 243 124 249 Q128 283 119 310 L108 303Z'],
- ['calves','path','M80 315 Q90 307 96 317 L91 365 L80 371 Q74 345 80 315Z'],
- ['calves','path','M107 317 Q114 307 124 315 Q130 345 124 371 L113 365Z']
- ]};
- const body=(x,back)=>'<g transform="translate('+x+' 0)"><defs><linearGradient id="skin'+(back?'B':'F')+'" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dce5ee"/><stop offset=".48" stop-color="#8499ad"/><stop offset="1" stop-color="#34495f"/></linearGradient></defs><circle cx="101" cy="35" r="19" class="anatomy-skin"/><path class="anatomy-skin" d="M88 54 L114 54 L124 69 Q143 72 151 93 L164 159 L151 166 L137 119 L133 186 L124 216 L128 300 L137 373 L117 378 L101 311 L85 378 L65 373 L78 300 L78 216 L69 186 L65 119 L51 166 L38 159 L51 93 Q59 72 78 69Z"/><path class="anatomy-muscle-outline" d="M79 70 Q101 80 123 70 M78 185 Q101 198 124 185 M101 72 L101 210 M78 218 L101 230 L124 218 M84 310 L101 316 L118 310"/>'+shapes[back?'back':'front'].map(([k,shape,d],i)=>'<path class="anatomy-muscle '+(active.has(k)?'is-primary':'')+'" d="'+d+'"/>').join('')+'<path class="anatomy-detail" d="M101 54 L101 70 M88 165 Q101 171 114 165 M90 249 Q101 255 112 249"/></g>';
- return '<svg class="anatomy-body-svg" viewBox="0 0 420 405" role="img" aria-label="Detaillierte MFit-Muskelkarte mit Vorder- und Rückseite"><defs><linearGradient id="anatomyBase" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dbe6f0"/><stop offset=".45" stop-color="#8499ad"/><stop offset="1" stop-color="#30445a"/></linearGradient><linearGradient id="anatomyHot" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e5ffad"/><stop offset=".48" stop-color="#a4f15c"/><stop offset="1" stop-color="#4aa66c"/></linearGradient><filter id="anatomyShadow" x="-40%" y="-20%" width="180%" height="160%"><feGaussianBlur stdDeviation="4"/></filter></defs><text x="101" y="17" class="anatomy-view-label">VORDERSEITE</text><text x="311" y="17" class="anatomy-view-label">RÜCKSEITE</text><ellipse cx="101" cy="390" rx="75" ry="8" fill="#000" opacity=".24" filter="url(#anatomyShadow)"/><ellipse cx="311" cy="390" rx="75" ry="8" fill="#000" opacity=".24" filter="url(#anatomyShadow)"/>'+body(0,false)+body(210,true)+'</svg>';
+ const zones={frontDelts:[100,88,32,19],sideDelts:[100,91,40,22],rearDelts:[100,91,40,22],chestUpper:[100,112,36,16],chestMid:[100,126,36,18],chestLower:[100,140,32,15],biceps:[72,119,11,27],triceps:[128,119,11,27],forearms:[65,157,9,25],abs:[100,157,17,34],obliques:[83,157,9,28],quadriceps:[88,210,13,38],hamstrings:[112,211,13,38],adductors:[100,213,12,30],calves:[88,263,11,25],glutes:[100,183,26,17],lats:[100,129,39,30],traps:[100,103,23,25],lowerback:[100,157,20,25],rhomboids:[100,126,24,22]};
+ const marks=[...active].filter(k=>zones[k]).map(k=>{const [x,y,rx,ry]=zones[k];return '<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="'+((primary||[]).includes(k)?'#baff78':'#69c5ee')+'" opacity="'+((primary||[]).includes(k)?'.48':'.28')+'"/>';}).join('');
+ const person=(x,back)=>'<g transform="translate('+x+' 0)"><ellipse cx="100" cy="292" rx="52" ry="5" fill="#000" opacity=".18"/><circle cx="100" cy="29" r="15" fill="#c4d0d9" stroke="#eef4f8" stroke-width="1.2"/><path d="M93 44 L93 55 L107 55 L107 44" fill="#aebdca"/><path d="M91 54 Q75 55 65 66 L53 119 Q51 128 59 131 L68 102 L72 151 L79 177 L76 218 L68 280 Q76 285 88 281 L100 221 L112 281 Q124 285 132 280 L124 218 L121 177 L128 151 L132 102 L141 131 Q149 128 147 119 L135 66 Q125 55 109 54Z" fill="#9aabba" stroke="#dbe5ec" stroke-width="1.4" stroke-linejoin="round"/><path d="M72 151 Q100 160 128 151 L121 179 Q100 187 79 179Z" fill="#465d72" stroke="#7f94a7" stroke-width="1"/><path d="M79 179 Q100 185 121 179 L124 218 Q100 225 76 218Z" fill="#344b60" stroke="#71879b" stroke-width="1"/><path d="M53 119 L43 166 Q42 175 49 177 L61 133 M147 119 L157 166 Q158 175 151 177 L139 133" fill="#9aabba" stroke="#dbe5ec" stroke-width="1.2"/><path d="M43 166 L40 183 Q45 189 52 184 L56 174 M157 166 L160 183 Q155 189 148 184 L144 174" fill="#aebdca"/><path d="M76 218 L72 279 Q69 288 58 290 L51 292 Q49 296 57 297 L83 296 Q90 295 89 288 L100 229 M124 218 L128 279 Q131 288 142 290 L149 292 Q151 296 143 297 L117 296 Q110 295 111 288 L100 229" fill="#9aabba" stroke="#dbe5ec" stroke-width="1.2" stroke-linejoin="round"/>'+(back?'<path d="M100 57 L100 151 M82 154 Q100 163 118 154" fill="none" stroke="#6f8497" stroke-width="2" opacity=".65"/>':'<path d="M100 62 L100 151 M85 151 Q100 158 115 151" fill="none" stroke="#6f8497" stroke-width="1.4" opacity=".55"/>')+'<g>'+marks+'</g></g>';
+ return '<svg class="anatomy-body-svg mfit-natural-body" viewBox="0 0 420 310" role="img" aria-label="Schlichte Ganzkörperansicht von vorne und hinten"><text x="100" y="13" class="anatomy-view-label">VORDERANSICHT</text><text x="310" y="13" class="anatomy-view-label">RÜCKANSICHT</text>'+person(0,false)+person(210,true)+'</svg>';
 }
-function exerciseIllustrationSvg(name){
+function renderNaturalBodyOverviews(){const svg=anatomyMuscleSvg([],[]);document.querySelectorAll('.mfit-body-overview').forEach(host=>{host.innerHTML=svg;});}renderNaturalBodyOverviews();function exerciseIllustrationSvg(name){
  const n=String(name).toLowerCase(),squat=/kniebeuge|squat|step.?up|ausfallschritt|split squat|lunge/.test(n),hinge=/kreuzheben|deadlift|hip thrust|glute bridge|hinge/.test(n),push=/bankdrück|brustpresse|liegestütz|push.?up|shoulder press|schulterdrück/.test(n);
  const poses=squat?'<g transform="translate(10 0)"><circle cx="48" cy="27" r="9"/><path d="M48 37 L48 77 L25 96 L16 122 M48 77 L70 94 L82 119 M48 47 L23 57 L10 78 M48 47 L72 56 L88 76"/><path d="M25 96 L45 111 L69 94 M45 111 L41 143 L28 166 M69 94 L75 126 L93 143"/></g><g transform="translate(125 0)"><circle cx="48" cy="54" r="9"/><path d="M48 64 L49 94 L27 110 L17 139 M49 94 L69 110 L81 139 M48 72 L25 83 L10 105 M48 72 L72 82 L88 105"/><path d="M27 110 L45 123 L68 110 M45 123 L43 155 L30 174 M68 110 L76 148 L94 162"/></g>':hinge?'<g transform="translate(8 0)"><circle cx="47" cy="36" r="9"/><path d="M50 46 L70 76 L45 100 L20 117 M70 76 L92 104 L105 126 M58 58 L30 68 L12 92 M58 58 L84 62 L106 84"/><path d="M45 100 L56 137 L42 174 M56 137 L79 170"/></g><g transform="translate(122 0)"><circle cx="45" cy="51" r="9"/><path d="M49 61 L73 89 L48 112 L20 130 M73 89 L96 115 L109 137 M58 71 L30 83 L12 105 M58 71 L84 77 L107 98"/><path d="M48 112 L56 148 L42 177 M56 148 L80 177"/></g>':push?'<g transform="translate(8 0)"><circle cx="45" cy="32" r="9"/><path d="M45 42 L45 91 L20 105 L9 132 M45 91 L69 105 L81 132 M45 52 L20 62 L10 85 M45 52 L70 62 L83 85"/><path d="M20 105 L20 147 M69 105 L70 147"/></g><g transform="translate(122 0)"><circle cx="45" cy="32" r="9"/><path d="M45 42 L45 91 L20 105 L9 132 M45 91 L69 105 L81 132 M45 52 L20 62 L10 85 M45 52 L70 62 L83 85"/><path d="M20 105 L20 147 M69 105 L70 147"/></g>':'<g transform="translate(10 0)"><circle cx="48" cy="27" r="9"/><path d="M48 37 L48 91 M48 48 L22 67 L13 94 M48 48 L73 66 L86 92 M48 91 L29 139 L23 174 M48 91 L68 139 L75 174"/></g><g transform="translate(125 0)"><circle cx="48" cy="27" r="9"/><path d="M48 37 L48 91 M48 48 L22 67 L13 94 M48 48 L73 66 L86 92 M48 91 L29 139 L23 174 M48 91 L68 139 L75 174"/></g>';
  return '<svg class="exercise-original-svg" viewBox="0 0 230 205" role="img" aria-label="Selbst erstellte schematische Bewegungsillustration"><defs><linearGradient id="demoGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#baff78"/><stop offset="1" stop-color="#5bbd9a"/></linearGradient></defs><rect x="3" y="5" width="104" height="190" rx="15" fill="#172638"/><rect x="123" y="5" width="104" height="190" rx="15" fill="#172638"/><g fill="none" stroke="url(#demoGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">'+poses+'</g><path d="M108 100h14m-5 -5 5 5-5 5" stroke="#d8e7f4" stroke-width="2" fill="none"/><text x="55" y="185" text-anchor="middle" fill="#d8e7f4" font-size="9">START</text><text x="175" y="185" text-anchor="middle" fill="#d8e7f4" font-size="9">BEWEGUNG</text></svg>';
