@@ -1009,3 +1009,12 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 .mfit-body-overview .anatomy-body-svg{max-width:500px;max-height:370px}
 .mfit-body-overview-library .anatomy-body-svg{max-width:390px;max-height:280px}
 .mfit-natural-body .anatomy-view-label{font-size:10px;letter-spacing:1.2px}
+
+
+/* v85 — detaillierter Muskelatlas im Fitnessstudio-Stil */
+.mfit-body-overview{background:radial-gradient(ellipse at 50% 38%,rgba(90,128,157,.18),rgba(10,17,26,.34) 72%);padding:10px 5px 6px}
+.mfit-body-overview .mfit-muscle-atlas{max-width:520px;max-height:410px}
+.mfit-muscle-atlas .anatomy-muscle{transition:fill .18s ease,filter .18s ease}
+.mfit-muscle-atlas .anatomy-muscle.is-active{filter:drop-shadow(0 0 4px rgba(184,243,107,.48))}
+.mfit-muscle-atlas .anatomy-view-label{font-size:10px;fill:#d5e1eb;font-weight:800;letter-spacing:1.2px}
+@media(max-width:390px){.mfit-body-overview .mfit-muscle-atlas{max-height:340px}}
