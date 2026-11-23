@@ -237,3 +237,65 @@ renderShopCatalog();renderShopItems();
  const el=document.getElementById('dailyQuote');
  if(el){const day=Math.floor(Date.now()/86400000);el.textContent=lines[((day%lines.length)+lines.length)%lines.length];}
 })();
+
+
+/* v93 — compact expandable sections for Profile and Fitness */
+(function(){
+ function makeAccordion(title,subtitle,items,open){
+  if(!items.length)return null;
+  const details=document.createElement('details');details.className='mfit-compact-accordion';details.open=!!open;
+  const summary=document.createElement('summary');
+  summary.innerHTML='<span class="mfit-accordion-copy"><b>'+title+'</b><small>'+(subtitle||'Tippen zum Öffnen')+'</small></span><span class="mfit-accordion-chevron" aria-hidden="true">⌄</span>';
+  details.appendChild(summary);
+  const content=document.createElement('div');content.className='mfit-accordion-content';
+  items.forEach(node=>content.appendChild(node));
+  details.appendChild(content);return details;
+ }
+ function initProfile(){
+  const section=document.getElementById('profile');if(!section||section.dataset.compactReady)return;
+  section.dataset.compactReady='1';
+  [...section.children].filter(el=>el.classList.contains('card')).forEach((card,i)=>{
+   const heading=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';
+   const subtitle=card.id==='settingsHub'?'Persönliche App-Einstellungen':card.id==='profileGoals'?'Persönliche Angaben und Trainingsziele':card.id==='appAppearance'?'Farben und Darstellung':card.id==='appReminders'?'Erinnerungen und Check-ins':card.id==='weightHistory'?'Dein Gewichtsverlauf':card.id==='dataBackup'?'Daten sichern und wiederherstellen':'Hinweise und Empfehlungen';
+   const wrap=makeAccordion(heading,subtitle,[card],false);section.insertBefore(wrap,card);card.classList.add('mfit-accordion-inner');
+  });
+ }
+ function initFitness(){
+  const section=document.getElementById('fitness');if(!section||section.dataset.compactReady)return;
+  section.dataset.compactReady='1';
+  const children=[...section.children];
+  const byId=id=>children.findIndex(el=>el.id===id);
+  const byClass=cls=>children.findIndex(el=>el.classList.contains(cls));
+  const headingIndex=(txt,from=0)=>children.findIndex((el,i)=>i>=from&&el.querySelector('h2')?.textContent?.includes(txt));
+  const groups=[];
+  let i=0;
+  while(i<children.length){
+   const el=children[i];
+   if(el.classList.contains('mfit-body-card')){groups.push({title:'Muskelatlas',sub:'Vorder- und Rückansicht · Muskelgruppen antippen',items:[el]});i++;continue;}
+   if(el.classList.contains('workout-planner-card')){groups.push({title:'Trainingsplan erstellen',sub:'Trainingsart, Ziel und Wochenplan',items:[el]});i++;continue;}
+   if(el.classList.contains('workout-library-card')){
+    const end=Math.max(i+1,byId('workoutTrackerCard'));
+    groups.push({title:'Übungen & Muskelgruppen',sub:'Übungen suchen, auswählen oder eigene Übungen speichern',items:children.slice(i,end)});i=end;continue;
+   }
+   if(el.id==='workoutTrackerCard'){groups.push({title:'Training tracken',sub:'Sätze, Wiederholungen und Gewichte eintragen',items:[el]});i++;continue;}
+   const h2=el.querySelector('h2')?.textContent||'';
+   let title='',sub='';
+   if(h2.includes('Trainingsvorlagen')){title='Trainingsvorlagen';sub='Push, Pull, Legs und Upper';}
+   else if(h2.includes('Pausentimer')){title='Pausentimer';sub='Pausen zwischen deinen Sätzen';}
+   else if(el.id==='workoutHistoryCard'){title='Trainingshistorie';sub='Trainingsvolumen und Einheiten';}
+   else if(h2.includes('Fortschrittsanalyse')){title='Fortschritt & Bestleistungen';sub='Gewichtsverlauf und persönliche Rekorde';}
+   else if(h2.includes('Muskelgruppen-Tracker')){title='Muskelgruppen-Tracker';sub='Wöchentliches Trainingsvolumen';}
+   else if(h2.includes('Regeneration')){title='Regeneration';sub='Schlaf, Muskelkater und Energie';}
+   if(title){groups.push({title,sub,items:[el]});}
+   else {groups.push({title:'Weitere Trainingsdaten',sub:'Zusätzliche Informationen',items:[el]});}
+   i++;
+  }
+  groups.forEach(g=>{const wrap=makeAccordion(g.title,g.sub,g.items,false);section.appendChild(wrap);});
+ }
+ window.mfitOpenProfileSection=function(id){
+  const target=document.getElementById(id);if(!target)return;
+  const accordion=target.closest('details.mfit-compact-accordion');if(accordion)accordion.open=true;
+  target.scrollIntoView({behavior:'smooth',block:'start'});
+ };
+ initProfile();initFitness();
+})();
