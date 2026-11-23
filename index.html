@@ -131,9 +131,6 @@
 </div>
 <div class="card workout-library-card" id="mfitExerciseLibrary">
  <div class="row"><div><span class="workout-kicker">EXERCISE LIBRARY</span><h2>Übungen entdecken</h2><p class="muted">Übung auswählen, Muskelgruppen ansehen oder eigene Übungen speichern.</p></div><span class="workout-hero-icon">🧠</span></div>
- <div class="exercise-photo-strip">
-  <figure><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Fitness_enthusiast_performs_a_single-leg_squat_exercise_in_an_indoor_gym_setting.jpg/500px-Fitness_enthusiast_performs_a_single-leg_squat_exercise_in_an_indoor_gym_setting.jpg" alt="Einbeinige Kniebeuge im Fitnessstudio" loading="lazy"><figcaption><b>Kniebeugen-Variante</b><small>Foto: Shixart1985 · CC BY 2.0 · <a href="https://commons.wikimedia.org/wiki/File:Fitness_enthusiast_performs_a_single-leg_squat_exercise_in_an_indoor_gym_setting.jpg" target="_blank" rel="noopener">Quelle & Lizenz</a></small></figcaption></figure>
-  <figure><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Fit_young_man_doing_deadlift_exercise_in_gym.jpg/960px-Fit_young_man_doing_deadlift_exercise_in_gym.jpg" alt="Kreuzheben im Fitnessstudio" loading="lazy"><figcaption><b>Kreuzheben</b><small>Foto: Nenad Stojkovic · CC BY 2.0 · <a href="https://commons.wikimedia.org/wiki/File:Fit_young_man_doing_deadlift_exercise_in_gym.jpg" target="_blank" rel="noopener">Quelle & Lizenz</a></small></figcaption></figure>
  </div>
  <div class="exercise-library-search"><label for="mfitExerciseSearch">Übung suchen</label><input id="mfitExerciseSearch" type="search" placeholder="z. B. Kniebeuge, Bankdrücken, Rudern" oninput="mfitRenderExerciseLibrary()"></div>
  <div id="mfitExerciseCatalog" class="mfit-exercise-catalog"></div>
@@ -142,8 +139,6 @@
    <label for="mfitCustomExerciseName">Übungsname</label><input id="mfitCustomExerciseName" placeholder="z. B. Kniebeuge oder Step-ups">
    <div class="grid"><div><label for="mfitCustomExerciseMuscle">Hauptmuskelgruppe</label><select id="mfitCustomExerciseMuscle"><option value="Beine">Beine</option><option value="Gesäß">Gesäß</option><option value="Brust">Brust</option><option value="Rücken">Rücken</option><option value="Schultern">Schultern</option><option value="Bizeps">Bizeps</option><option value="Trizeps">Trizeps</option><option value="Bauch">Bauch / Rumpf</option><option value="Waden">Waden</option><option value="Ganzkörper">Ganzkörper</option></select></div><div><label for="mfitCustomExerciseEquipment">Equipment</label><select id="mfitCustomExerciseEquipment"><option>Fitnessstudio</option><option>Langhantel</option><option>Kurzhantel</option><option>Maschine</option><option>Kabelzug</option><option>Körpergewicht</option><option>Theraband</option><option>Sonstiges</option></select></div></div>
    <div class="grid"><div><label for="mfitCustomExerciseSets">Sätze</label><input id="mfitCustomExerciseSets" type="number" min="1" max="10" value="3"></div><div><label for="mfitCustomExerciseReps">Wiederholungen</label><input id="mfitCustomExerciseReps" type="number" min="1" max="50" value="10"></div></div>
-   <label class="knee-care-toggle"><input id="mfitKneeCare" type="checkbox"> Knie / Kreuzband bei der Übung besonders beachten</label>
-   <p class="muted knee-care-note">Wenn du eine aktuelle Kreuzbandverletzung, eine Operation oder Beschwerden hast: Übungen und Bewegungsumfang bitte zuerst mit Ärztin/Arzt oder Physiotherapie abstimmen. MFit kann keine Reha-Freigabe erteilen.</p>
    <button type="button" onclick="mfitAddCustomExercise()">Übung speichern</button>
   </div>
  </details>
