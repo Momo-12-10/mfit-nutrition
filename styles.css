@@ -1140,3 +1140,13 @@ hr{opacity:.7}
 @media(prefers-reduced-motion:no-preference){
  .card,button,input,select,textarea{transition:background .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease}
 }
+
+
+/* v87 — clear category-based muscle atlas (no anatomical silhouette) */
+.mfit-muscle-grid{display:block;width:100%;height:auto;max-width:100%;min-height:0;overflow:visible}
+.anatomy-detail-visual{min-width:0;overflow:hidden;border-radius:17px}
+.anatomy-detail-visual .mfit-muscle-grid{margin:8px auto 2px}
+.mfit-body-overview{display:block;width:100%;overflow:hidden;border-radius:17px;padding:7px;background:linear-gradient(145deg,#101c29,#0c1621);border:1px solid rgba(170,195,220,.13)}
+.mfit-body-overview .mfit-muscle-grid{width:100%}
+.mfit-muscle-grid text{font-family:inherit}
+@media(max-width:390px){.mfit-muscle-grid{min-width:0}.anatomy-detail-visual{padding:7px}.mfit-muscle-grid text{font-size:9px}}
