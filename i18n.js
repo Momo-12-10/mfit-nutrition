@@ -8,9 +8,11 @@ const dictionaries={
 const originalText=new WeakMap(),originalAttrs=new WeakMap();
 const key='mfit_language';
 function active(){const v=localStorage.getItem(key)||'de-AT';return v==='en'||v==='ru'?v:'de-AT'}
-function tr(value,lang){if(lang==='de-AT'||!value)return value;let out=value;const dict=dictionaries[lang]||{};for(const k of Object.keys(dict).sort((a,b)=>b.length-a.length))if(out.includes(k))out=out.split(k).join(dict[k]);return out}
+function tr(value,lang){if(lang==='de-AT'||!value)return value;let out=value;const dict=dictionaries[lang]||{};const word=c=>!!c&&/[A-Za-z0-9À-žА-яЁё_]/.test(c);for(const k of Object.keys(dict).sort((a,b)=>b.length-a.length)){let from=0,pos;while((pos=out.indexOf(k,from))!==-1){const left=word(k[0])&&word(out[pos-1]),right=word(k[k.length-1])&&word(out[pos+k.length]);if(!left&&!right){out=out.slice(0,pos)+dict[k]+out.slice(pos+k.length);from=pos+dict[k].length}else from=pos+k.length}}return out}
 function scan(root,lang){
  if(!root)return;
+ const options=[];if(root.matches&&root.matches('option'))options.push(root);if(root.querySelectorAll)options.push(...root.querySelectorAll('option'));
+ for(const option of options)if(!option.hasAttribute('value'))option.setAttribute('value',option.textContent.trim());
  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;
  while((n=walker.nextNode())){if(!n.parentElement||['SCRIPT','STYLE','NOSCRIPT'].includes(n.parentElement.tagName))continue;if(!originalText.has(n))originalText.set(n,n.nodeValue);const v=tr(originalText.get(n),lang);if(n.nodeValue!==v)n.nodeValue=v}
  const els=[root,...(root.querySelectorAll?root.querySelectorAll('*'):[])];
