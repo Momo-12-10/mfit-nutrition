@@ -851,3 +851,41 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 #profileGoals,#appAppearance,#appReminders,#weightHistory,#dataBackup,#trainingNutrition{scroll-margin-top:16px}
 @media(max-width:360px){.header-settings{width:37px;height:37px;min-height:37px;flex-basis:37px}.brand-pill{display:none}.settings-shortcuts{gap:7px}.settings-shortcuts button{padding:10px 8px!important}.settings-language{grid-template-columns:minmax(0,1fr) minmax(112px,.85fr);gap:8px}}
 @media(min-width:600px){.settings-hub{padding:24px!important}.settings-shortcuts{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+
+/* v79 — structured 5-method workout planner */
+.workout-planner-card{overflow:hidden}
+.workout-planner-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:18px;margin:-2px -2px 18px;border-radius:17px;background:radial-gradient(circle at 85% 20%,rgba(166,255,63,.18),transparent 35%),linear-gradient(135deg,#203b37,#172735 68%,#262c3c);border:1px solid rgba(166,255,63,.17)}
+.workout-planner-hero h2{font-size:21px;line-height:1.12;letter-spacing:-.7px;margin:7px 0}
+.workout-planner-hero p{font-size:11px;line-height:1.55;color:#c5d2d8;margin:0;max-width:44ch}
+.workout-kicker{font-size:9px;letter-spacing:1.6px;font-weight:900;color:#baff78}
+.workout-hero-icon{flex:0 0 43px;width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:rgba(166,255,63,.13);border:1px solid rgba(166,255,63,.22);font-size:23px}
+.workout-planner-controls{display:grid;gap:8px}
+.workout-planner-controls label{margin-top:5px}
+.workout-create-btn{width:100%;margin-top:8px;background:linear-gradient(100deg,#b5ff6c,#8ce83e)!important;color:#10180d!important;font-weight:900!important;border:0!important;box-shadow:0 8px 22px rgba(142,232,62,.15)!important}
+.workout-goal-card{margin-top:15px;padding:14px;border-radius:15px;background:linear-gradient(135deg,rgba(166,255,63,.09),rgba(48,75,91,.22));border:1px solid rgba(166,255,63,.19)}
+.workout-goal-card h3{margin:0 0 7px;font-size:15px}
+.workout-goal-card p{font-size:11px;line-height:1.5;margin:5px 0;color:var(--muted)}
+.workout-phase-list{display:grid;gap:7px;margin-top:10px}
+.workout-phase{padding:9px 11px;border-radius:11px;background:rgba(255,255,255,.035);border:1px solid var(--line);font-size:11px}
+.workout-phase b{display:block;margin-bottom:3px}
+.workout-week-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:18px 0 10px}
+.workout-week-head h3{margin:0;font-size:16px}
+.workout-day-card{margin:9px 0;padding:13px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}
+.workout-day-card.is-rest{background:rgba(150,170,190,.045)}
+.workout-day-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.workout-day-top b{font-size:13px}
+.workout-day-top span{font-size:9px;letter-spacing:.4px;font-weight:850;padding:5px 8px;border-radius:20px;background:rgba(166,255,63,.1);color:#c5ff8c}
+.workout-day-card.is-rest .workout-day-top span{background:rgba(160,180,200,.1);color:#b8c5d1}
+.workout-method-line{font-size:10px;color:var(--muted);margin-bottom:8px}
+.workout-exercise-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.workout-exercise-item>div{min-width:0}
+.workout-exercise-item b{display:block;font-size:11px}
+.workout-exercise-item small{display:block;font-size:9px;color:var(--muted);margin-top:3px}
+.workout-exercise-item .smallbtn{flex:0 0 auto}
+.workout-plan-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.workout-plan-actions button{font-size:11px}
+.workout-science-note{margin-top:15px;padding:12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.025)}
+.workout-science-note b{font-size:11px}
+.workout-science-note p{font-size:10px;line-height:1.55;color:var(--muted);margin:5px 0 0}
+@media(max-width:380px){.workout-planner-hero{padding:14px}.workout-plan-actions{grid-template-columns:1fr}.workout-exercise-item{align-items:flex-start}}
