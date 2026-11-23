@@ -154,10 +154,12 @@ function anatomyMuscleSvg(primary,secondary,atlasMode=false){
  const main=new Set(primary||[]),support=new Set(secondary||[]);
  const fill=k=>main.has(k)?'#b8f36b':support.has(k)?'#63c7ec':'#52677a';
  const alpha=k=>(main.has(k)||support.has(k))?1:.82;
- const muscle=(k,d)=>'<path d="'+d+'" fill="'+fill(k)+'" fill-opacity="'+alpha(k)+'" stroke="#b9c8d4" stroke-opacity=".42" stroke-width="1.1" stroke-linejoin="round"/>';
+ const muscle=(k,d)=>'<path class="mfit-muscle-hit" data-muscle-key="'+k+'" role="button" tabindex="0" aria-label="Muskel auswählen: '+k+'" onclick="mfitSelectMuscleFromAtlas(\\''+k+'\\')" d="'+d+'" fill="'+fill(k)+'" fill-opacity="'+alpha(k)+'" stroke="#b9c8d4" stroke-opacity=".42" stroke-width="1.1" stroke-linejoin="round"/>';
  const front=[
   muscle('frontDelts','M105 78 Q91 73 86 87 Q82 101 95 111 L108 104 Q115 91 105 78Z'),
   muscle('frontDelts','M175 78 Q189 73 194 87 Q198 101 185 111 L172 104 Q165 91 175 78Z'),
+  muscle('sideDelts','M101 79 Q91 76 86 88 Q81 99 91 108 L104 101 Q108 89 101 79Z'),
+  muscle('sideDelts','M179 79 Q189 76 194 88 Q199 99 189 108 L176 101 Q172 89 179 79Z'),
   muscle('chestUpper','M111 105 Q126 94 140 106 Q154 94 169 105 L164 123 Q151 128 140 120 Q129 128 116 123Z'),
   muscle('chestMid','M116 124 Q129 119 140 126 Q151 119 164 124 L161 143 Q149 148 140 141 Q131 148 119 143Z'),
   muscle('chestLower','M120 144 Q131 139 140 145 Q149 139 160 144 L154 157 Q140 163 126 157Z'),
@@ -230,6 +232,22 @@ function detailHtml(name,muscle,secondary,id){
 window.mfitToggleExerciseDetail=function(btn){const card=btn.closest('.mfit-exercise-card,.workout-exercise-item');if(!card)return;let panel=card.querySelector('.workout-exercise-detail');if(panel){panel.remove();btn.textContent='Muskeln & Ausführung';return;}panel=document.createElement('div');panel.className='workout-exercise-detail';panel.innerHTML=detailHtml(btn.dataset.name||'',btn.dataset.muscle||'Ganzkörper',(btn.dataset.secondary||'').split('|').filter(Boolean),btn.dataset.image||'');card.appendChild(panel);btn.textContent='Details schließen';};
 function allLibraryExercises(){return exerciseCatalog.concat(readCustomExercises().map(e=>({...e,id:'custom',secondary:e.secondary||[]})));}
 let selectedAnatomyGroup='lower',selectedAnatomySub='all';
+const anatomyMuscleTargets={
+ chestUpper:['chest','chestUpper'],chestMid:['chest','chestMid'],chestLower:['chest','chestLower'],
+ frontDelts:['shoulders','frontDelts'],sideDelts:['shoulders','sideDelts'],rearDelts:['shoulders','rearDelts'],
+ biceps:['arms','biceps'],triceps:['arms','triceps'],forearms:['arms','forearms'],
+ abs:['core','abs'],obliques:['core','obliques'],lowerback:['back','lowerback'],
+ lats:['back','lats'],traps:['back','traps'],rhomboids:['back','rhomboids'],
+ quadriceps:['lower','quadriceps'],hamstrings:['lower','hamstrings'],adductors:['lower','adductors'],
+ glutes:['lower','glutes'],calves:['lower','calves']
+};
+window.mfitSelectMuscleFromAtlas=function(id){
+ const target=anatomyMuscleTargets[id];if(!target)return;
+ selectedAnatomyGroup=target[0];selectedAnatomySub=target[1];
+ renderAnatomyFilters();window.mfitRenderExerciseLibrary();
+ document.querySelectorAll('.mfit-muscle-hit').forEach(path=>path.classList.toggle('is-selected',path.dataset.muscleKey===id));
+ const results=$('mfitExerciseCatalog');results?.scrollIntoView({behavior:'smooth',block:'start'});
+};
 function exerciseMatchesSub(e,sub){if(sub==='all')return true;const terms=muscleExerciseTerms[sub]||[];const n=(e.name+' '+e.muscle+' '+(e.secondary||[]).join(' ')).toLowerCase();return terms.some(t=>n.includes(t.toLowerCase()))||e.muscle.toLowerCase().includes(sub.toLowerCase());}
 function renderAnatomyFilters(){
  const groupHost=$('mfitAnatomyGroups'),subHost=$('mfitAnatomySubgroups');if(!groupHost||!subHost)return;
