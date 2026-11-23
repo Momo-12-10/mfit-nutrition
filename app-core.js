@@ -608,3 +608,44 @@ function initProductAutocomplete(){
  document.addEventListener('click',event=>{const box=$('productSuggestions');if(box&&!box.contains(event.target)&&event.target!==input)box.hidden=true;});
 }
 initProductAutocomplete();
+
+
+/* v74 — portable local backup and restore */
+function downloadMfitBackup(){
+ const payload={app:'MFit Performance',formatVersion:1,exportedAt:new Date().toISOString(),data:{}};
+ try{
+  for(let i=0;i<localStorage.length;i++){
+   const key=localStorage.key(i);
+   if(key&&key.startsWith('mfit_'))payload.data[key]=localStorage.getItem(key);
+  }
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='mfit-backup-'+mfitDateKey()+'.json';
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  if($('backupStatus'))$('backupStatus').textContent='Backup erstellt: '+Object.keys(payload.data).length+' Datensätze/ Einstellungen gesichert. Bewahre die Datei an einem sicheren Ort auf.';
+ }catch(e){if($('backupStatus'))$('backupStatus').textContent='Backup konnte nicht erstellt werden. Prüfe den verfügbaren Gerätespeicher.';}
+}
+function restoreMfitBackup(event){
+ const file=event?.target?.files?.[0];if(!file)return;
+ const input=event.target;
+ if(file.size>5*1024*1024){if($('backupStatus'))$('backupStatus').textContent='Die Datei ist größer als 5 MB und wurde nicht geöffnet.';input.value='';return;}
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const payload=JSON.parse(String(reader.result||''));
+   if(!payload||payload.app!=='MFit Performance'||payload.formatVersion!==1||!payload.data||typeof payload.data!=='object'||Array.isArray(payload.data))throw new Error('Ungültiges MFit-Backup');
+   const entries=payload.data;
+   const keys=Object.keys(entries).filter(k=>k.startsWith('mfit_')&&typeof entries[k]==='string');
+   if(!keys.length)throw new Error('Keine MFit-Daten gefunden');
+   if(!confirm('Backup vom '+(payload.exportedAt?new Date(payload.exportedAt).toLocaleString('de-AT'):'unbekannten Datum')+' wiederherstellen? Deine aktuell gespeicherten MFit-Daten auf diesem Gerät werden dabei ersetzt.')){input.value='';return;}
+   const remove=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('mfit_'))remove.push(k);}
+   remove.forEach(k=>localStorage.removeItem(k));
+   keys.forEach(k=>localStorage.setItem(k,entries[k]));
+   if($('backupStatus'))$('backupStatus').textContent='Backup erfolgreich eingelesen. MFit wird mit deinen wiederhergestellten Daten neu geladen …';
+   setTimeout(()=>location.reload(),350);
+  }catch(e){if($('backupStatus'))$('backupStatus').textContent='Backup konnte nicht gelesen werden: '+e.message+'. Deine bisherigen Daten wurden nicht verändert.';}
+  input.value='';
+ };
+ reader.onerror=()=>{if($('backupStatus'))$('backupStatus').textContent='Die Datei konnte nicht gelesen werden.';input.value='';};
+ reader.readAsText(file);
+}
