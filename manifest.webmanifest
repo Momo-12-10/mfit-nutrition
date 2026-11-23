@@ -1,20 +1,20 @@
 {
   "name": "MFit Performance",
   "short_name": "MFit",
-  "start_url": "./?v=77",
+  "start_url": "./?v=78",
   "display": "standalone",
   "background_color": "#090c11",
   "theme_color": "#090c11",
   "description": "MFit Performance – Eat smart. Train hard. Become more.",
   "icons": [
     {
-      "src": "https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=77",
+      "src": "https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=78",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=77",
+      "src": "https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=78",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
