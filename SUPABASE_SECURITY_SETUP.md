@@ -1,12 +1,12 @@
 # Supabase-Sicherheit für MFit Performance
 
-Diese Anleitung prüft die Tabelle \`public.mfit_user_data\`, die MFit für private Cloud-Backups verwendet. Die App-Codeänderungen aktivieren **nicht** automatisch Row Level Security (RLS). RLS muss in Supabase selbst geprüft und eingerichtet werden.
+Diese Anleitung prüft die Tabelle `public.mfit_user_data`, die MFit für private Cloud-Backups verwendet. Die App-Codeänderungen aktivieren **nicht** automatisch Row Level Security (RLS). RLS muss in Supabase selbst geprüft und eingerichtet werden.
 
 ## 1. Vorhandene Tabellenstruktur prüfen
 
 Öffne Supabase → SQL Editor und führe zuerst nur diese lesenden Abfragen aus:
 
-\`\`\`sql
+```sql
 select column_name, data_type, is_nullable
 from information_schema.columns
 where table_schema = 'public'
@@ -39,9 +39,9 @@ left join information_schema.key_column_usage kcu
  and tc.table_schema = kcu.table_schema
 where tc.table_schema = 'public'
   and tc.table_name = 'mfit_user_data';
-\`\`\`
+```
 
-Prüfe, dass die Tabelle die von der App verwendeten Spalten \`user_id\`, \`data\` und \`updated_at\` besitzt. Für den aktuellen Upsert-Aufruf muss \`user_id\` eindeutig sein (PRIMARY KEY oder UNIQUE). Der übliche Supabase-Aufbau verwendet \`user_id uuid\`, \`data jsonb\` und \`updated_at timestamptz\`.
+Prüfe, dass die Tabelle die von der App verwendeten Spalten `user_id`, `data` und `updated_at` besitzt. Für den aktuellen Upsert-Aufruf muss `user_id` eindeutig sein (PRIMARY KEY oder UNIQUE). Der übliche Supabase-Aufbau verwendet `user_id uuid`, `data jsonb` und `updated_at timestamptz`.
 
 ## 2. Bestehende Policies prüfen, bevor du etwas änderst
 
@@ -49,11 +49,11 @@ Jede permissive Policy kann Zugriffe erlauben. PostgreSQL kombiniert permissive 
 
 Wenn die Abfrage oben Policies zeigt, prüfe jede einzelne. Entferne oder korrigiere jede Policy, die nicht strikt auf die eigene Benutzer-ID beschränkt ist. Führe keine Änderungen aus, bevor du die vorhandenen Policies verstanden hast.
 
-## 3. Zielregeln für eine Tabelle mit \`user_id uuid\`
+## 3. Zielregeln für eine Tabelle mit `user_id uuid`
 
-Nur wenn du in Schritt 1 bestätigt hast, dass \`user_id\` vom Typ \`uuid\` ist und die Tabelle die erwarteten Spalten enthält, ist dies die vorgesehene Policy-Struktur:
+Nur wenn du in Schritt 1 bestätigt hast, dass `user_id` vom Typ `uuid` ist und die Tabelle die erwarteten Spalten enthält, ist dies die vorgesehene Policy-Struktur:
 
-\`\`\`sql
+```sql
 alter table public.mfit_user_data enable row level security;
 
 revoke all on table public.mfit_user_data from anon;
@@ -78,7 +78,7 @@ on public.mfit_user_data
 for update to authenticated
 using ((select auth.uid()) = user_id)
 with check ((select auth.uid()) = user_id);
-\`\`\`
+```
 
 Diese Regeln erlauben angemeldeten Benutzern nur SELECT, INSERT und UPDATE für die eigene Benutzer-ID. Es wird keine DELETE-Policy angelegt. Wenn die Tabelle eine andere Spaltenstruktur oder einen anderen Typ hat, diesen SQL-Block nicht unverändert ausführen.
 
