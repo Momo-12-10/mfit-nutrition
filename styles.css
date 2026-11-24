@@ -1733,3 +1733,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .mfit-austrian-food-grid button small{font-size:9px;color:var(--muted);line-height:1.4}
 .mfit-export-button{width:100%;margin-top:12px}
 @media(max-width:360px){.mfit-austrian-food-grid{grid-template-columns:1fr}}
+
+
+/* MFit v110 — recovery overview */
+#mfitProRecovery .mfit-pro-kpis{margin:12px 0 8px}
+#mfitProRecovery .mfit-pro-note{line-height:1.55}
