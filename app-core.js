@@ -643,7 +643,7 @@ function mfitApplyDataSnapshot(entries,options={}){
  const clean=mfitValidateDataSnapshot(entries);
  const oldData=mfitCaptureLocalData();
  const oldOwner=localStorage.getItem(MFIT_CLOUD_OWNER_KEY);
- const ownerId=typeof options.ownerId==='string'&&options.ownerId?options.ownerId:oldOwner;
+ const ownerId=Object.prototype.hasOwnProperty.call(options,'ownerId')?(typeof options.ownerId==='string'&&options.ownerId?options.ownerId:null):oldOwner;
  if(options.saveSafety!==false){
   const backup={app:'MFit Performance',formatVersion:1,savedAt:new Date().toISOString(),ownerId:oldOwner,data:oldData};
   const serialized=JSON.stringify(backup);
