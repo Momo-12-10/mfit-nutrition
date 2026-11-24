@@ -1,4 +1,4 @@
-/* MFit Performance v94 — compact weekly plan and clean anatomy atlas */
+/* MFit Performance v95 — resilient weekly planner and polished training UI */
 (function(){
 'use strict';
 const $=id=>document.getElementById(id);
@@ -63,8 +63,21 @@ function build(){
  render(data);try{localStorage.setItem(storeKey,JSON.stringify(data));}catch(e){}
 }
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function normalizePlan(data){
+ const source=Array.isArray(data?.plan)?data.plan:[];
+ const safeType=methods[data?.type]?data.type:'hypertrophy';
+ const plan=Array.from({length:7},(_,i)=>{
+  const d=source[i]&&typeof source[i]==='object'?source[i]:{};
+  const rest=!!d.rest;
+  const exercises=(Array.isArray(d.exercises)?d.exercises:[]).filter(e=>e&&typeof e==='object').map(e=>({name:String(e.name||'Übung'),muscle:String(e.muscle||'Ganzkörper'),equipment:String(e.equipment||'Nicht angegeben'),sets:Math.max(1,Number(e.sets)||3),reps:String(e.reps||'8–12'),rest:String(e.rest||'90 Sek.'),secondary:Array.isArray(e.secondary)?e.secondary:[],kneeCare:!!e.kneeCare,custom:!!e.custom}));
+  return {day:String(d.day||dayNames[i]),rest,title:String(d.title||(rest?'Regeneration':'Training')),note:String(d.note||(rest?'Erholung und lockere Bewegung.':'Plane deine Einheit passend zu deiner Erholung.')),type:String(d.type||safeType),method:String(d.method||methods[safeType].method[0]),exercises};
+ });
+ const n=Number(data?.count);
+ return {...data,type:safeType,goal:String(data?.goal||'muscle'),horizon:String(data?.horizon||'6'),count:Number.isFinite(n)&&n>=2&&n<=5?n:plan.filter(d=>!d.rest).length,plan};
+}
 function render(data){
  const out=$('mfitTrainingPlanOutput');if(!out)return;
+ data=normalizePlan(data);
  const type=methods[data.type]||methods.hypertrophy;
  const goalNames={muscle:'Muskelaufbau',strength:'Kraft steigern',endurance:'Kraftausdauer',athletic:'Athletik & Explosivität',balanced:'Allgemeine Fitness'};
  const horizon=data.horizon==='steady'?'fortlaufend':data.horizon+' Monate';
@@ -303,6 +316,6 @@ window.mfitLoadPlanExercise=function(dayIndex,exerciseIndex){
  $('workoutExercise')?.scrollIntoView({behavior:'smooth',block:'center'});
 };
 window.mfitSavePlan=function(){const data=window.mfitCurrentTrainingPlan;if(!data)return;try{localStorage.setItem(storeKey,JSON.stringify(data));const status=$('mfitTrainingPlanOutput');if(status){const note=document.createElement('p');note.className='muted';note.textContent='✓ Dein Trainingsplan ist auf diesem Gerät gespeichert.';status.appendChild(note);}}catch(e){alert('Der Plan konnte auf diesem Gerät nicht gespeichert werden.');}};
-try{const saved=JSON.parse(localStorage.getItem(storeKey)||'null');if(saved&&saved.plan?.length===7){window.mfitCurrentTrainingPlan=saved;render(saved);}}catch(e){}
+try{const saved=JSON.parse(localStorage.getItem(storeKey)||'null');if(saved&&Array.isArray(saved.plan)&&saved.plan.length===7){render(saved);}}catch(e){const out=$('mfitTrainingPlanOutput');if(out)out.innerHTML='<div class="workout-load-error"><b>Dein gespeicherter Plan konnte nicht geladen werden.</b><p>Deine übrigen App-Daten bleiben unberührt. Erstelle einfach eine neue Trainingswoche.</p></div>';}
 renderAnatomyFilters();window.mfitRenderExerciseLibrary();window.mfitRenderCustomExercises();
 })();
