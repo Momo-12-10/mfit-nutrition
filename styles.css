@@ -1437,3 +1437,20 @@ hr{opacity:.7}
  .mfit-exercise-actions button{flex:0 0 auto}
  .mfit-body-overview-library .mfit-muscle-atlas{max-height:145px!important}
 }
+
+
+/* v99 — refined system settings and compact status panels */
+.mfit-system-card{overflow:hidden;scroll-margin-top:18px}
+.mfit-system-card>.row{align-items:flex-start}
+.mfit-status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:13px 0}
+.mfit-status-tile{min-width:0;padding:11px 12px;border:1px solid rgba(180,205,230,.12);border-radius:13px;background:rgba(255,255,255,.035)}
+.mfit-status-tile small{display:block;color:#91a2b5;font-size:8px;font-weight:850;letter-spacing:1px;margin-bottom:5px}
+.mfit-status-tile b{display:block;color:#eff6fc;font-size:12px;overflow-wrap:anywhere}
+.mfit-system-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.mfit-system-actions button{min-width:0;min-height:39px;padding:9px 10px!important;font-size:10px!important}
+.mfit-install-help{font-size:11px;line-height:1.5;margin:10px 0;padding:12px}
+.mfit-system-check{display:grid;gap:6px;margin:10px 0;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.12);font-size:10px;color:#c4d0dc;line-height:1.4}
+.mfit-system-check>div{overflow-wrap:anywhere}
+#mfitDataTools .danger{background:#482b32!important;color:#ffdfe3!important;border:1px solid rgba(255,130,145,.2)!important}
+@media(max-width:360px){.mfit-system-actions{grid-template-columns:1fr}.mfit-status-grid{gap:6px}.mfit-status-tile{padding:9px}}
+@media(prefers-reduced-motion:reduce){.mfit-system-card,.mfit-system-card *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
