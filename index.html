@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a0d12"><meta name="description" content="MFit Performance – Ernährung, Fitness und Alltag in einer App">
-<link rel="manifest" href="manifest.webmanifest?v=98">
+<link rel="manifest" href="manifest.webmanifest?v=99">
 <link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=76">
 <link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=76">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=98">
+<link rel="stylesheet" href="./styles.css?v=99">
 </head>
 <body>
 <header class="brand-header"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR FITNESS COMPANION</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Eat smart. Train hard. Become more.</p></div><span class="pill brand-pill">PERFORMANCE OS</span><button type="button" class="header-settings" onclick="mfitToggleSettingsMenu()" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mfitSettingsMenu" title="Menü">⚙</button></div></header>
@@ -173,6 +173,8 @@
   <button type="button" class="secondary" onclick="mfitOpenSettingsSection('privacyCenter')"><span>🔒</span><b>Datenschutz</b><small>Deine Daten & Kontrolle</small></button>
   <button type="button" class="secondary" onclick="mfitOpenSettingsSection('dataBackup')"><span>🛡️</span><b>Datensicherung</b><small>Sichern & wiederherstellen</small></button>
   <button type="button" class="secondary" onclick="mfitOpenSettingsSection('mfitLanguageSettings')"><span>🌐</span><b>Sprache</b><small>App-Sprache wählen</small></button>
+  <button type="button" class="secondary" onclick="mfitOpenSettingsSection('mfitAppStatus')"><span>✨</span><b>App-Status</b><small>Installation & Systemcheck</small></button>
+  <button type="button" class="secondary" onclick="mfitOpenSettingsSection('mfitDataTools')"><span>🧰</span><b>Daten & Kontrolle</b><small>Speicher & Sicherheit</small></button>
   <button type="button" class="secondary" onclick="mfitOpenSettingsSection('mfitAboutSettings')"><span>ⓘ</span><b>Über MFit</b><small>Version & Hinweise</small></button>
  </div>
 </div>
@@ -182,7 +184,20 @@
  <p class="muted" id="mfitPreferencesStatus" aria-live="polite">Deine Einstellungen werden auf diesem Gerät gespeichert.</p>
 </div>
 <div class="card" id="mfitLanguageSettings"><h2>🌐 App-Sprache</h2><p class="muted">Wähle die Sprache für die gesamte App. Deine Auswahl wird auf diesem Gerät gespeichert.</p><select id="appLanguage" aria-label="App-Sprache"><option value="de-AT">Deutsch (Österreich)</option><option value="en">English</option><option value="ru">Русский</option></select></div>
-<div class="card" id="mfitAboutSettings"><h2>ⓘ Über MFit Performance</h2><div class="privacy-info-list"><div><b>Version 98</b><p>Deine persönliche Fitness- und Ernährungsbegleitung.</p></div><div><b>Deine Daten</b><p>Die aktuelle Version speichert deine Einträge lokal auf diesem Gerät. Eine automatische Cloud-Synchronisierung und ein MFit-Nutzerkonto sind derzeit nicht enthalten.</p></div></div></div>
+<div class="card mfit-system-card" id="mfitAppStatus"><div class="row"><div><span class="settings-kicker">MFIT SYSTEM</span><h2>✨ App-Status & Installation</h2><p class="muted">MFit als Web-App verwenden, prüfen und aktuell halten.</p></div><span class="settings-hub-icon">✦</span></div>
+ <div class="mfit-status-grid"><div class="mfit-status-tile"><small>VERBINDUNG</small><b id="mfitNetworkStatus">Wird geprüft …</b></div><div class="mfit-status-tile"><small>OFFLINE-MODUS</small><b id="mfitOfflineStatus">Wird geprüft …</b></div><div class="mfit-status-tile"><small>INSTALLATION</small><b id="mfitInstallStatus">Browser-App</b></div></div>
+ <div class="mfit-system-actions"><button type="button" id="mfitInstallButton" onclick="mfitInstallApp()">App installieren</button><button type="button" class="secondary" onclick="mfitRefreshSystemCheck()">Systemcheck aktualisieren</button></div>
+ <div class="notice mfit-install-help" id="mfitInstallHelp">Du kannst MFit im Browser verwenden. Für eine App-ähnliche Ansicht kannst du die Seite über das Browser-Menü zum Home-Bildschirm hinzufügen.</div>
+ <div class="mfit-system-check" id="mfitSystemCheck" aria-live="polite">Systemcheck wird geladen …</div>
+ <p class="muted">Hinweis: Die Installation hängt vom Browser und Gerät ab. MFit ist derzeit eine Web-App auf GitHub Pages, keine App aus dem Apple App Store oder Google Play Store.</p>
+</div>
+<div class="card mfit-system-card" id="mfitDataTools"><h2>🧰 Daten & Kontrolle</h2><p class="muted">Behalte im Blick, was lokal gespeichert wird und wie du deine Daten sichern kannst.</p>
+ <div class="mfit-status-grid"><div class="mfit-status-tile"><small>LOKALER SPEICHER</small><b id="mfitStorageUsage">Wird geprüft …</b></div><div class="mfit-status-tile"><small>DATENMODELL</small><b>Dieses Gerät</b></div></div>
+ <div class="mfit-system-actions"><button type="button" class="secondary" onclick="mfitCheckStorage()">Speicher prüfen</button><button type="button" class="danger" onclick="mfitClearLocalData()">Alle lokalen MFit-Daten löschen</button></div>
+ <p class="muted">Vor dem Löschen ein Backup herunterladen. Das Löschen betrifft nur MFit-Daten in diesem Browser auf diesem Gerät. Es gibt derzeit kein MFit-Konto und keine automatische Cloud-Synchronisierung.</p>
+ <div id="mfitDataToolsStatus" class="muted" aria-live="polite"></div>
+</div>
+<div class="card" id="mfitAboutSettings"><h2>ⓘ Über MFit Performance</h2><div class="privacy-info-list"><div><b>Version 99</b><p>Deine persönliche Fitness- und Ernährungsbegleitung.</p></div><div><b>Deine Daten</b><p>Die aktuelle Version speichert deine Einträge lokal auf diesem Gerät. Eine automatische Cloud-Synchronisierung und ein MFit-Nutzerkonto sind derzeit nicht enthalten.</p></div></div></div>
 </section>
 <section id="profile" class="hidden">
 <div class="card settings-hub profile-intro" id="profileIntro"><div class="settings-hub-top"><div><span class="settings-kicker">MFIT PERSONAL</span><h2>Dein Profil</h2><p class="muted">Deine persönlichen Angaben, Ziele und dein eigener Fortschritt.</p></div><span class="settings-hub-icon">👤</span></div></div>
@@ -214,6 +229,6 @@
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="./app-core.js?v=98"></script><script src="./app.js?v=98"></script><script src="./workout-planner.js?v=98"></script>
+<script src="./app-core.js?v=99"></script><script src="./app.js?v=99"></script><script src="./workout-planner.js?v=99"></script>
 <script src="./i18n.js?v=79"></script>
 </body></html>
