@@ -1,4 +1,4 @@
-/* MFit Performance v95 — resilient weekly planner and polished training UI */
+/* MFit Performance v97 — reliable weekly planner and polished training UI */
 (function(){
 'use strict';
 const $=id=>document.getElementById(id);
@@ -60,8 +60,9 @@ function build(){
   plan.push({day:dayNames[i],rest:false,title:pair[0],type,method:methodsForDay(type,slot),exercises:chosen.map((e,j)=>({name:e[0],muscle:e[1],equipment:e[2],sets:rx.sets,reps:rx.reps,rest:rx.rest}))});
  }
  const data={type,goal,horizon,count,split,equip,plan,created:new Date().toISOString()};
- render(data);try{localStorage.setItem(storeKey,JSON.stringify(data));}catch(e){}
+ render(data);try{localStorage.setItem(storeKey,JSON.stringify(data));}catch(e){} const out=$('mfitTrainingPlanOutput');if(out){out.setAttribute('data-generated','true');out.scrollIntoView({behavior:'smooth',block:'start'});}
 }
+window.mfitBuildTrainingPlan=function(){const out=$('mfitTrainingPlanOutput');try{build();if(!out||!out.innerHTML.trim())throw new Error('Der Plan konnte nicht dargestellt werden.');}catch(error){if(out)out.innerHTML='<div class="notice" role="alert"><b>Der Trainingsplan konnte nicht erstellt werden.</b><p>Bitte prüfe deine Auswahl und versuche es erneut. Deine gespeicherten Trainingsdaten bleiben erhalten.</p></div>';console.error('MFit training plan:',error);}};
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function normalizePlan(data){
  const source=Array.isArray(data?.plan)?data.plan:[];
@@ -87,12 +88,22 @@ function render(data){
   const title=esc(d.day)+(d.rest?' · Regeneration':' · '+esc(d.title));
   const badge=d.rest?'ERHOLUNG':'TRAINING';
   const count=d.rest?'Pause':d.exercises.length+' Übungen';
-  const content=d.rest?'<div class="workout-day-content"><p class="workout-rest-note">'+esc(d.note)+'</p></div>':'<div class="workout-day-content"><div class="workout-method-line">'+esc(type.name)+' · '+esc(d.method)+'</div>'+d.exercises.map((e,ei)=>'<div class="workout-exercise-item mfit-exercise-card"><div class="workout-exercise-copy"><b>'+esc(e.name)+'</b><small>'+esc(e.muscle)+' · '+esc(e.equipment)+' · '+e.sets+' Sätze × '+esc(e.reps)+' Wdh. · Pause '+esc(e.rest)+(e.kneeCare?' · Knie/Kreuzband beachten':'')+'</small></div><div class="workout-exercise-actions"><button type="button" class="secondary smallbtn" onclick="mfitLoadPlanExercise('+di+','+ei+')">Tracken</button><button type="button" class="secondary exercise-detail-toggle" data-name="'+esc(e.name)+'" data-muscle="'+esc(e.muscle)+'" data-secondary="'+esc((e.secondary||exerciseCatalog.find(x=>x.name.toLowerCase()===e.name.toLowerCase())?.secondary||secondaryForExercise(e.name)).join('|'))+'" onclick="mfitToggleExerciseDetail(this)">Details</button></div></div>').join('')}</div>';
+  let content='';
+  if(d.rest){
+   content='<div class="workout-day-content"><p class="workout-rest-note">'+esc(d.note)+'</p></div>';
+  }else{
+   const exerciseHtml=d.exercises.map((e,ei)=>{
+    const secondary=esc((e.secondary||secondaryForExercise(e.name)).join('|'));
+    return '<div class="workout-exercise-item mfit-exercise-card"><div class="workout-exercise-copy"><b>'+esc(e.name)+'</b><small>'+esc(e.muscle)+' · '+esc(e.equipment)+' · '+e.sets+' Sätze × '+esc(e.reps)+' Wdh. · Pause '+esc(e.rest)+(e.kneeCare?' · Knie/Kreuzband beachten':'')+'</small></div><div class="workout-exercise-actions"><button type="button" class="secondary smallbtn" onclick="mfitLoadPlanExercise('+di+','+ei+')">Tracken</button><button type="button" class="secondary exercise-detail-toggle" data-name="'+esc(e.name)+'" data-muscle="'+esc(e.muscle)+'" data-secondary="'+secondary+'" onclick="mfitToggleExerciseDetail(this)">Details</button></div></div>';
+   }).join('');
+   content='<div class="workout-day-content"><div class="workout-method-line">'+esc(type.name)+' · '+esc(d.method)+'</div>'+exerciseHtml+'</div>';
+  }
   return '<details class="workout-day-card'+(d.rest?' is-rest':'')+'"><summary class="workout-day-summary"><span class="workout-day-name"><b>'+title+'</b><small>'+count+'</small></span><span class="workout-day-meta"><em>'+badge+'</em><i aria-hidden="true">⌄</i></span></summary>'+content+'</details>';
  }).join('');
  out.innerHTML='<div class="workout-goal-card"><div class="workout-goal-heading"><div><span class="workout-kicker">DEIN TRAININGSFOKUS</span><h3>'+esc(goalNames[data.goal]||goalNames.muscle)+'</h3></div><span class="workout-goal-period">'+esc(horizon)+'</span></div><p><b>'+esc(type.name)+'</b> · '+esc(type.hint)+'</p>'+phaseHtml+'</div><div class="workout-week-head"><div><span class="workout-kicker">DEINE WOCHE</span><h3>7-Tage-Trainingsplan</h3></div><span class="pill">'+data.count+' Trainingstage</span></div><p class="workout-week-hint">Tippe auf einen Wochentag, um Übungen und Details zu öffnen.</p><div class="workout-week-list">'+daysHtml+'</div><div class="workout-plan-actions"><button type="button" class="secondary" onclick="mfitSavePlan()">Plan speichern</button><button type="button" class="secondary" onclick="mfitBuildTrainingPlan()">Neue Variante</button></div><p class="muted" style="font-size:10px;margin-top:9px">Passe Umfang und Intensität an dein tatsächliches Sportpensum und deine Erholung an.</p>';
  window.mfitCurrentTrainingPlan=data;
 }
+
 
 const exerciseCatalog=[
 {name:'Kniebeuge (Körpergewicht)',muscle:'Quadrizeps',secondary:['Gesäß','Rumpf'],id:'bodyweight-squat',equipment:'Körpergewicht',note:'Füße etwa schulterbreit, Fußspitzen leicht nach außen. Hüfte und Knie kontrolliert beugen, Knie folgen der Richtung der Zehen. Fersen bleiben am Boden; nur so tief gehen, wie du stabil bleibst.'},
@@ -305,8 +316,7 @@ window.mfitAddCustomExercise=function(){const name=$('mfitCustomExerciseName')?.
 window.mfitRenderCustomExercises=function(){const host=$('mfitCustomExerciseList');if(!host)return;const items=readCustomExercises();host.innerHTML=items.length?'<p class="muted">Deine eigenen Übungen findest du auch oben in der Übungsbibliothek.</p>':'';};
 window.mfitLoadCustomExercise=function(i){const e=readCustomExercises()[i];if(e)loadExerciseToTracker(e.name,e.muscle,e.sets,e.reps);};
 
-window.mfitBuildTrainingPlan=build;
-window.generateWorkoutPlan=build;
+window.generateWorkoutPlan=window.mfitBuildTrainingPlan;
 window.mfitLoadPlanExercise=function(dayIndex,exerciseIndex){
  const d=window.mfitCurrentTrainingPlan?.plan?.[dayIndex],e=d?.exercises?.[exerciseIndex];if(!e)return;
  const set=(id,v)=>{const el=$(id);if(el)el.value=v;};
