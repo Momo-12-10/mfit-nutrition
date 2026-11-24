@@ -1,7 +1,7 @@
 {
   "name": "MFit Performance",
   "short_name": "MFit",
-  "start_url": "./?v=100",
+  "start_url": "./?v=101",
   "display": "standalone",
   "background_color": "#090c11",
   "theme_color": "#090c11",
