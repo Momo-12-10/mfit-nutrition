@@ -1776,3 +1776,116 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .mfit-scan-history{display:grid;gap:3px;margin:8px 0}.mfit-scan-row{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left;padding:10px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025);color:var(--text)}.mfit-scan-row span,.mfit-scan-row small{display:block}.mfit-scan-row small{font-size:10px;color:var(--muted);margin-top:3px}.mfit-scan-row strong{font-size:18px;color:var(--accent)}
 .mfit-theme-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.mfit-theme-grid button{display:flex;align-items:center;gap:8px;justify-content:flex-start;padding:10px 8px;min-height:44px;font-size:11px;background:rgba(255,255,255,.035);border:1px solid var(--line);color:var(--text);border-radius:12px}.mfit-theme-grid button i{width:18px;height:18px;flex:none;border-radius:50%;background:var(--swatch);box-shadow:0 0 0 3px color-mix(in srgb,var(--swatch) 18%,transparent)}.mfit-theme-grid button.is-selected{border-color:var(--accent);background:var(--accent-soft)}
 .mfit-achievement-rows{display:grid;gap:8px}.mfit-achievement{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:12px;opacity:.62}.mfit-achievement.is-earned{opacity:1;border-color:var(--accent-border);background:var(--accent-soft)}.mfit-achievement>span{font-size:20px}.mfit-achievement>div{flex:1;min-width:0}.mfit-achievement b,.mfit-achievement small{display:block}.mfit-achievement b{font-size:12px}.mfit-achievement small{font-size:10px;color:var(--muted);margin-top:3px}.mfit-achievement strong{font-size:13px;color:var(--accent)}
+
+
+/* MFit v115 — lesbare Typografie, konsistente Abstände und sichere Icon-Navigation */
+:root{
+ --mfit-font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ --mfit-text-size:16px;
+ --mfit-line-height:1.55;
+}
+html{font-size:16px;text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{
+ font-family:var(--mfit-font);
+ font-size:var(--mfit-text-size);
+ line-height:var(--mfit-line-height);
+ letter-spacing:0;
+ font-kerning:normal;
+}
+p{line-height:1.6}
+h1,h2,h3,h4{line-height:1.28;text-wrap:pretty;overflow-wrap:anywhere}
+h1{font-size:clamp(25px,6vw,30px);letter-spacing:-.65px}
+h2,.card h2{font-size:clamp(18px,4.4vw,20px);line-height:1.32;letter-spacing:-.25px;font-weight:780}
+h3,.card h3{font-size:16px;line-height:1.4;font-weight:740}
+.card p,.card .muted,.card small,.card li{font-size:max(12px,1em);line-height:1.55}
+.card .muted{color:#aab7c6}
+label{font-size:12px;line-height:1.45;letter-spacing:.25px;text-transform:none;font-weight:650}
+input,select,textarea{
+ font-family:var(--mfit-font);
+ font-size:16px;
+ line-height:1.4;
+ min-height:48px;
+}
+input::placeholder,textarea::placeholder{font-size:14px;opacity:1}
+button{
+ font-family:var(--mfit-font);
+ font-size:14px;
+ line-height:1.35;
+ font-weight:700;
+ min-height:44px;
+}
+button:disabled{opacity:.55}
+.card,.mfit-ultimate-card,.mfit-extras-card{overflow-wrap:anywhere}
+.card>*{min-width:0}
+.row,.mfit-ultimate-head,.mfit-extras-head,.mfit-pro-head{min-width:0}
+.row>*,.mfit-ultimate-head>*,.mfit-extras-head>*,.mfit-pro-head>*{min-width:0}
+.mfit-app-header{padding-top:clamp(20px,5vw,28px);padding-bottom:18px}
+.mfit-app-header .brand-eyebrow,.mfit-header-status,.mfit-header-edition{font-size:11px;line-height:1.4;letter-spacing:.8px}
+.mfit-app-header p{font-size:14px;line-height:1.45}
+.mfit-header-profile,.mfit-app-header .header-settings,.mfit-menu-close{
+ width:44px;min-width:44px;min-height:44px;padding:0;display:inline-grid;place-items:center;flex:0 0 44px;
+}
+nav.mfit-nav{
+ display:grid;
+ grid-template-columns:repeat(6,minmax(0,1fr));
+ align-items:stretch;
+ gap:4px;
+ padding:7px 6px calc(7px + env(safe-area-inset-bottom));
+}
+nav.mfit-nav button{
+ min-width:0;width:100%;min-height:58px;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;
+ gap:3px;padding:6px 2px;
+ font-size:11px;line-height:1.2;font-weight:700;
+ white-space:normal;overflow-wrap:anywhere;
+}
+nav.mfit-nav .nav-icon{display:block;font-size:19px;line-height:1.1;min-height:21px}
+nav.mfit-nav .nav-label{display:block;font-size:11px;line-height:1.15;max-width:100%}
+section:not(.hidden)::before{
+ display:block;
+ margin:7px 4px 15px;
+ font-size:11px;
+ line-height:1.4;
+ letter-spacing:1.1px;
+ font-weight:800;
+ overflow-wrap:anywhere;
+}
+#track::before{content:"ERNÄHRUNG  /  LEBENSMITTEL ERFASSEN"}
+#recipes::before{content:"REZEPTE  /  IDEEN UND INSPIRATION"}
+#shop::before{content:"EINKAUFEN  /  LISTE UND WOCHENPLAN"}
+#fitness::before{content:"TRAINING  /  PLANUNG UND FORTSCHRITT"}
+#profile::before{content:"PROFIL  /  ZIELE UND PERSÖNLICHE DATEN"}
+#settings::before{content:"APP  /  EINSTELLUNGEN UND DATEN"}
+/* Kleine Kennzahlen bleiben kompakt, werden aber nicht mehr winzig dargestellt. */
+.mfit-pro-kpis small,.mfit-analytics-kpis small,.mfit-analytics-note,
+.mfit-bar-col small,.mfit-bar-value,.mfit-xp-progress small,
+.mfit-quick-meal small,.mfit-achievement small,.mfit-theme-preview small{
+ font-size:11px;line-height:1.35;
+}
+.mfit-pro-kpis b,.mfit-analytics-kpis b,.mfit-body-kpis b,.mfit-nutrition-kpis b{
+ line-height:1.25;font-variant-numeric:tabular-nums;
+}
+.mfit-live-row,.mfit-pr-row,.mfit-mini-row,.mfit-shop-row{font-size:14px;line-height:1.45}
+.mfit-live-row span,.mfit-pr-row span,.mfit-mini-row span{font-size:13px}
+.mfit-rest-panel b{line-height:1.15}
+.mfit-pro-item p,.mfit-pro-strength-row small,.mfit-ultimate-note,.mfit-extras-note{font-size:12px;line-height:1.55}
+.mfit-pro-symbol,.mfit-ultimate-mark,.mfit-extras-icon{flex:0 0 36px;width:36px;height:36px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+ outline:3px solid var(--accent,#8fe39e);outline-offset:3px;
+}
+@media(max-width:390px){
+ body{font-size:15.5px}
+ main{padding-inline:10px}
+ .card{padding:14px}
+ nav.mfit-nav{left:5px;right:5px;bottom:5px;gap:2px;padding:5px 4px calc(5px + env(safe-area-inset-bottom));border-radius:17px}
+ nav.mfit-nav button{min-height:56px;padding:5px 1px}
+ nav.mfit-nav .nav-icon{font-size:18px}
+ nav.mfit-nav .nav-label{font-size:10.5px}
+ .mfit-progress-kpi small,.mfit-pro-kpis small{font-size:10.5px}
+}
+@media(min-width:600px){
+ nav.mfit-nav{grid-template-columns:repeat(6,minmax(0,1fr))}
+ nav.mfit-nav button{min-height:60px;font-size:12px}
+ nav.mfit-nav .nav-icon{font-size:20px}
+ nav.mfit-nav .nav-label{font-size:12px}
+}
