@@ -1238,3 +1238,67 @@ hr{opacity:.7}
 #fitness .mfit-compact-accordion .mfit-body-overview{margin:0}
 #fitness .mfit-compact-accordion .workout-library-card{margin:0!important}
 @media(max-width:480px){.mfit-compact-accordion{margin-bottom:7px;border-radius:13px}.mfit-compact-accordion>summary{min-height:53px;padding:9px 11px}.mfit-accordion-content{padding:6px}.mfit-accordion-inner{padding:5px!important}}
+
+
+/* v94 — kompakte Trainingswoche und klarer Anatomieatlas */
+.workout-planner-card,.workout-library-card{max-width:100%;margin-left:auto;margin-right:auto}
+.workout-planner-hero{padding:15px 16px;margin-bottom:13px}
+.workout-planner-hero h2{font-size:19px}
+.workout-planner-controls{max-width:720px;margin:0 auto}
+.workout-goal-card{padding:12px 13px;margin-top:13px}
+.workout-goal-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.workout-goal-heading h3{font-size:15px;margin:4px 0 0}
+.workout-goal-period{flex:0 0 auto;padding:6px 9px;border-radius:20px;background:rgba(166,255,63,.1);color:#c5ff8c;font-size:10px;font-weight:800}
+.workout-goal-card>p{font-size:10px;line-height:1.45;margin:8px 0 0}
+.workout-phases-details{margin-top:9px;border-top:1px solid var(--line);padding-top:8px}
+.workout-phases-details summary{font-size:10px;color:var(--muted);cursor:pointer;list-style:none}
+.workout-phases-details summary::-webkit-details-marker,.workout-day-summary::-webkit-details-marker{display:none}
+.workout-phases-details summary:after{content:"＋";float:right;color:#baff78}
+.workout-phases-details[open] summary:after{content:"−"}
+.workout-phase-list{gap:5px;margin-top:8px}
+.workout-phase{padding:7px 9px;font-size:10px}
+.workout-week-head{margin:16px 0 3px}
+.workout-week-head h3{font-size:15px;margin:3px 0 0}
+.workout-week-hint{font-size:10px;color:var(--muted);margin:0 0 8px}
+.workout-week-list{display:grid;gap:7px}
+.workout-day-card{margin:0;padding:0;overflow:hidden;border-radius:12px;background:rgba(255,255,255,.025);transition:border-color .18s ease}
+.workout-day-card[open]{border-color:rgba(166,255,63,.32);background:rgba(255,255,255,.035)}
+.workout-day-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 12px;cursor:pointer;list-style:none;min-height:54px}
+.workout-day-name{display:grid;gap:3px;min-width:0}
+.workout-day-name b{font-size:12px;line-height:1.25}
+.workout-day-name small{font-size:9px;color:var(--muted)}
+.workout-day-meta{display:flex;align-items:center;gap:9px;flex:0 0 auto}
+.workout-day-meta em{font-style:normal;font-size:8px;letter-spacing:.45px;font-weight:850;padding:5px 7px;border-radius:20px;background:rgba(166,255,63,.1);color:#c5ff8c}
+.workout-day-card.is-rest .workout-day-meta em{background:rgba(160,180,200,.1);color:#b8c5d1}
+.workout-day-meta i{font-style:normal;color:var(--muted);font-size:15px;transition:transform .18s ease}
+.workout-day-card[open] .workout-day-meta i{transform:rotate(180deg)}
+.workout-day-content{padding:0 12px 11px}
+.workout-method-line{font-size:9px;margin:0 0 5px}
+.workout-rest-note{font-size:10px;color:var(--muted);margin:0;line-height:1.45}
+.workout-exercise-item{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:9px 0}
+.workout-exercise-copy{min-width:0}
+.workout-exercise-item b{font-size:10px}
+.workout-exercise-item small{font-size:8px;line-height:1.4}
+.workout-exercise-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px}
+.workout-exercise-actions button{font-size:9px!important;padding:6px 8px!important;min-height:30px}
+.workout-plan-actions{max-width:520px;margin:11px auto 0}
+.mfit-body-overview{background:transparent!important;border:0!important;box-shadow:none!important;color:var(--text)!important;padding:0!important;border-radius:0!important;overflow:visible}
+.mfit-body-overview .mfit-anatomy-graphic{background:transparent!important;box-shadow:none!important;border:0!important;border-radius:0!important;padding:3px 0 5px!important}
+.mfit-body-overview .mfit-anatomy-legend{color:var(--muted)!important;font-size:9px;margin-bottom:4px}
+.mfit-body-overview .mfit-anatomy-viewlabel{fill:#d7e0e8!important;font-size:11px;font-weight:850}
+.mfit-body-overview .anatomy-body-svg{display:block;width:100%;max-width:760px;max-height:none;height:auto;margin:0 auto;overflow:visible}
+.mfit-body-overview .mfit-muscle-hit{stroke:#242a30!important;stroke-width:1.35;stroke-opacity:1}
+.mfit-body-overview .mfit-muscle-hit:hover,.mfit-body-overview .mfit-muscle-hit:focus-visible,.mfit-body-overview .mfit-muscle-hit.is-selected{stroke:#fff!important;stroke-width:2.5!important;filter:drop-shadow(0 0 3px rgba(255,255,255,.25))}
+.mfit-body-overview .anatomy-muscle-key{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:7px}
+.mfit-body-overview .anatomy-key-item{padding:6px 7px;background:rgba(255,255,255,.035);border-color:var(--line);border-radius:9px}
+.mfit-body-overview .anatomy-key-item b{font-size:9px;color:var(--text)}
+.mfit-body-overview .anatomy-key-item small{font-size:8px;color:var(--muted)}
+.workout-library-card .row{align-items:center}
+.workout-library-card .mfit-body-overview{margin:7px -2px 0}
+@media(max-width:480px){
+ .mfit-body-overview .anatomy-muscle-key{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .workout-day-summary{padding:10px}
+ .workout-exercise-item{grid-template-columns:minmax(0,1fr)}
+ .workout-exercise-actions{justify-content:flex-start}
+ .workout-exercise-actions button{flex:0 0 auto}
+}
