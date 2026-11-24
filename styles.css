@@ -1700,3 +1700,28 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 #mfitCloudStatus{padding:10px 12px;border-radius:10px;background:rgba(120,150,130,.08);overflow-wrap:anywhere}
 .mfit-cloud-card button:disabled{opacity:.55;cursor:wait}
 @media(max-width:420px){.mfit-cloud-actions{grid-template-columns:1fr}}
+
+
+/* MFit Performance v108 — compact Pro insight cards */
+.mfit-pro-card{border-color:rgba(111,205,151,.22);background:linear-gradient(150deg,rgba(70,150,105,.055),var(--panel))}
+.mfit-pro-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.mfit-pro-head h2{margin:4px 0 0;font-size:19px}
+.mfit-pro-symbol{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:rgba(111,205,151,.12);color:var(--accent,#75d69b)}
+.mfit-pro-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mfit-pro-kpis>div{min-width:0;padding:11px 9px;border:1px solid var(--line);border-radius:12px;background:rgba(120,140,130,.045)}
+.mfit-pro-kpis small,.mfit-pro-kpis b{display:block}
+.mfit-pro-kpis small{font-size:9px;letter-spacing:.07em;color:var(--muted);line-height:1.4}
+.mfit-pro-kpis b{font-size:19px;margin-top:5px;overflow-wrap:anywhere}
+.mfit-pro-note{margin:12px 0 0;padding:11px 12px;border-radius:11px;background:rgba(120,140,130,.07);color:var(--muted);font-size:12px;line-height:1.55}
+.mfit-pro-list{display:grid;gap:9px}
+.mfit-pro-item{display:flex;gap:10px;align-items:flex-start;padding:11px;border:1px solid var(--line);border-radius:12px}
+.mfit-pro-item>span{flex:0 0 25px;width:25px;height:25px;display:grid;place-items:center;border-radius:8px;background:rgba(111,205,151,.12);font-size:12px;font-weight:800}
+.mfit-pro-item b{font-size:13px}
+.mfit-pro-item p{margin:4px 0 0;color:var(--muted);font-size:12px;line-height:1.5}
+.mfit-pro-strength-list{display:grid;gap:7px}
+.mfit-pro-strength-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 11px;border:1px solid var(--line);border-radius:11px}
+.mfit-pro-strength-row b,.mfit-pro-strength-row small{display:block}
+.mfit-pro-strength-row b{font-size:13px}
+.mfit-pro-strength-row small{font-size:11px;color:var(--muted);margin-top:3px}
+.mfit-pro-strength-row strong{white-space:nowrap;font-size:14px}
+@media(max-width:420px){.mfit-pro-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.mfit-pro-head h2{font-size:17px}}
