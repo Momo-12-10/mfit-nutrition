@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a0d12"><meta name="description" content="MFit Performance – Ernährung, Fitness und Alltag in einer App">
-<link rel="manifest" href="manifest.webmanifest?v=99">
+<link rel="manifest" href="manifest.webmanifest?v=100">
 <link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=76">
 <link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=76">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=99">
+<link rel="stylesheet" href="./styles.css?v=100">
 </head>
 <body>
 <header class="brand-header"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR FITNESS COMPANION</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Eat smart. Train hard. Become more.</p></div><span class="pill brand-pill">PERFORMANCE OS</span><button type="button" class="header-settings" onclick="mfitToggleSettingsMenu()" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mfitSettingsMenu" title="Menü">⚙</button></div></header>
@@ -22,6 +22,21 @@
 <section id="home">
 <div class="card tracking-history-card"><div class="row"><div><h2>📅 Tracking-Verlauf</h2><p class="muted">Sieh dir jeden Tag einzeln an und blättere zurück.</p></div><span class="pill">HISTORY</span></div><div class="history-periods"><button class="active" data-history-mode="day" onclick="setHistoryMode('day')">Tag</button><button data-history-mode="week" onclick="setHistoryMode('week')">Woche</button><button data-history-mode="month" onclick="setHistoryMode('month')">Monat</button><button data-history-mode="year" onclick="setHistoryMode('year')">Jahr</button></div><div class="history-navigation"><button id="historyPrev" class="secondary" onclick="mfitShiftHistory(-1)">‹ Tag</button><div><b id="trackingHistoryTitle">Heute</b><div class="muted" id="trackingHistoryCount">0 von 1 Tagen getrackt</div></div><button id="historyNext" class="secondary" onclick="mfitShiftHistory(1)">Tag ›</button></div><div id="trackingHistoryList" class="tracking-history-list"></div></div>
 <div class="daily-motivation"><span class="motivation-mark">✦</span><div><small>DAILY MINDSET</small><b id="dailyQuote">Small steps. Big changes.</b></div><span class="motivation-spark">↗</span></div>
+<div class="card mfit-progress-dashboard" id="mfitProgressDashboard">
+ <div class="mfit-progress-head"><div><span class="settings-kicker">MFIT PERFORMANCE OVERVIEW</span><h2>Dein Fortschritt</h2><p class="muted">Training, Ernährung und Regeneration – gemeinsam im Blick.</p></div><span class="mfit-progress-emblem">↗</span></div>
+ <div class="mfit-progress-kpis">
+  <div class="mfit-progress-kpi"><small>WORKOUTS · 7 TAGE</small><b id="mfitDashWorkouts">0</b><span id="mfitDashWorkoutHint">Trainingstage</span></div>
+  <div class="mfit-progress-kpi"><small>TRACKING · 7 TAGE</small><b id="mfitDashTracked">0/7</b><span id="mfitDashTrackedHint">Tage dokumentiert</span></div>
+  <div class="mfit-progress-kpi"><small>Ø PROTEIN</small><b id="mfitDashProtein">–</b><span>getrackte Tage</span></div>
+  <div class="mfit-progress-kpi"><small>Ø KALORIEN</small><b id="mfitDashCalories">–</b><span>getrackte Tage</span></div>
+ </div>
+ <div class="mfit-dash-section"><div class="row"><b>Deine letzten 7 Tage</b><span class="muted" id="mfitDashRange">Diese Woche</span></div><div class="mfit-dash-chart" id="mfitDashChart" aria-label="Ernährungs- und Trainingsaktivität der letzten sieben Tage"></div><div class="mfit-dash-legend"><span><i class="mfit-legend-food"></i> Ernährung getrackt</span><span><i class="mfit-legend-workout"></i> Training</span></div></div>
+ <div class="mfit-dash-bottom">
+  <div class="mfit-dash-insight"><small>KÖRPERGEWICHT</small><b id="mfitDashWeight">Noch keine Daten</b><span id="mfitDashWeightHint">Gewichtsverlauf im Profil</span></div>
+  <div class="mfit-dash-insight"><small>REGENERATION</small><b id="mfitDashRecovery">Noch kein Check-in</b><span id="mfitDashRecoveryHint">Schlaf, Energie & Muskelkater</span></div>
+ </div>
+ <div class="mfit-dash-footer"><span id="mfitDashInsight">Deine Daten erscheinen hier, sobald du sie einträgst.</span><button type="button" class="secondary" onclick="showTab('fitness');document.getElementById('workoutHistoryCard')?.scrollIntoView({behavior:'smooth',block:'start'})">Details ansehen ↗</button></div>
+</div>
 <div class="card weekly-momentum-card">
  <div class="row weekly-heading"><div><div class="muted">DEIN RÜCKBLICK</div><h2>Deine Woche</h2></div><span class="pill">7 TAGE</span></div>
  <div class="weekly-summary-row"><b id="weeklyTrackedCount">0 / 7 Tage</b><span id="weeklyEntryCount" class="muted">0 Einträge</span></div>
@@ -197,7 +212,7 @@
  <p class="muted">Vor dem Löschen ein Backup herunterladen. Das Löschen betrifft nur MFit-Daten in diesem Browser auf diesem Gerät. Es gibt derzeit kein MFit-Konto und keine automatische Cloud-Synchronisierung.</p>
  <div id="mfitDataToolsStatus" class="muted" aria-live="polite"></div>
 </div>
-<div class="card" id="mfitAboutSettings"><h2>ⓘ Über MFit Performance</h2><div class="privacy-info-list"><div><b>Version 99</b><p>Deine persönliche Fitness- und Ernährungsbegleitung.</p></div><div><b>Deine Daten</b><p>Die aktuelle Version speichert deine Einträge lokal auf diesem Gerät. Eine automatische Cloud-Synchronisierung und ein MFit-Nutzerkonto sind derzeit nicht enthalten.</p></div></div></div>
+<div class="card" id="mfitAboutSettings"><h2>ⓘ Über MFit Performance</h2><div class="privacy-info-list"><div><b>Version 100</b><p>Deine persönliche Fitness- und Ernährungsbegleitung.</p></div><div><b>Deine Daten</b><p>Die aktuelle Version speichert deine Einträge lokal auf diesem Gerät. Eine automatische Cloud-Synchronisierung und ein MFit-Nutzerkonto sind derzeit nicht enthalten.</p></div></div></div>
 </section>
 <section id="profile" class="hidden">
 <div class="card settings-hub profile-intro" id="profileIntro"><div class="settings-hub-top"><div><span class="settings-kicker">MFIT PERSONAL</span><h2>Dein Profil</h2><p class="muted">Deine persönlichen Angaben, Ziele und dein eigener Fortschritt.</p></div><span class="settings-hub-icon">👤</span></div></div>
@@ -229,6 +244,6 @@
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="./app-core.js?v=99"></script><script src="./app.js?v=99"></script><script src="./workout-planner.js?v=99"></script>
+<script src="./app-core.js?v=100"></script><script src="./app.js?v=100"></script><script src="./workout-planner.js?v=100"></script>
 <script src="./i18n.js?v=79"></script>
 </body></html>
