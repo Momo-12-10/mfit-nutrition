@@ -43,3 +43,13 @@ Bei der Barcode-Produktsuche wird die EAN an Open Food Facts übermittelt. Für 
 - Alle neuen Pro-Daten werden lokal auf dem Gerät gespeichert. Die bestehenden Ernährungs-, Trainings-, Profil- und Cloud-Backup-Daten werden nicht zurückgesetzt.
 
 Hinweis: Mahlzeitenideen und Coach-Hinweise sind regelbasiert und keine generative KI. Die Pro-Erweiterung benötigt keinen zusätzlichen API-Schlüssel.
+
+
+## Version 112 — weitere Performance-Extras
+
+- Ernährungs-Assistent mit kontextbezogenen Antworten aus den heute gespeicherten Einträgen und flexiblen Mahlzeiten-/Regenerationsideen. Die Antworten sind regelbasiert, keine generative KI und keine medizinische Beratung.
+- Muskelgruppen-Balance mit dokumentierten Arbeitssätzen der letzten sieben Tage.
+- Lokaler Verlauf der letzten erfolgreichen Barcode-Scans mit schneller Wiederverwendung des Produktnamens.
+- Trainings-Meilensteine für dokumentierte Aktivität; keine Belohnungen für Kaloriendefizite oder Gewichtsverlust.
+- Theme Studio mit sechs Akzentfarben.
+- Der Barcode-Scan nutzt weiterhin Open Food Facts und die bereits vorhandene Kamerafunktion. Produkt- und Nährwertangaben sollten mit der Verpackung abgeglichen werden.
