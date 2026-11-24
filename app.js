@@ -316,7 +316,7 @@ renderShopCatalog();renderShopItems();
    else {groups.push({title:'Weitere Trainingsdaten',sub:'Zusätzliche Informationen',items:[el]});}
    i++;
   }
-  groups.forEach(g=>{const wrap=makeAccordion(g.title,g.sub,g.items,false);section.appendChild(wrap);});
+  groups.forEach(g=>{const wrap=makeAccordion(g.title,g.sub,g.items,g.title==='Trainingsplan erstellen');section.appendChild(wrap);});
  }
  function openMfitAccordionTarget(id){
   const target=document.getElementById(id);if(!target)return;
