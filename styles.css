@@ -1528,3 +1528,20 @@ hr{opacity:.7}
 :focus-visible{outline:2px solid var(--accent,#65d58b)!important;outline-offset:3px}
 button,input,select,textarea{touch-action:manipulation}
 @media(max-width:360px){.mfit-achievement-list{gap:5px}.mfit-achievement{padding:8px 4px}.mfit-smart-footer{align-items:flex-start;flex-direction:column}.mfit-smart-footer button{width:100%}}
+
+
+/* v102 — einheitlich einklappbare Inhaltskarten in allen App-Bereichen */
+.mfit-collapsible-card{position:relative;min-width:0}
+.mfit-card-collapse-head{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:28px;margin:0 0 8px}
+.mfit-card-collapse-title{min-width:0;flex:1;display:flex;align-items:center;gap:8px}
+.mfit-card-collapse-title>h2,.mfit-card-collapse-title>h3{margin:0!important}
+.mfit-card-collapse-title>.row{width:100%;margin:0!important}
+.mfit-card-collapse-toggle{flex:0 0 32px;width:32px;height:32px;min-height:32px;padding:0!important;display:grid;place-items:center;border-radius:10px!important;background:rgba(255,255,255,.065)!important;border:1px solid var(--line)!important;color:var(--green)!important;font-size:20px!important;line-height:1;transition:transform .18s ease,background .18s ease}
+.mfit-card-collapse-toggle span{display:block;transform:translateY(-1px);font-weight:700}
+.mfit-card-collapse-toggle:hover{background:rgba(255,255,255,.11)!important}
+.mfit-card-collapse-body{min-width:0}
+.mfit-card-collapsed{padding-bottom:12px!important}
+.mfit-card-collapsed>.mfit-card-collapse-head{margin-bottom:0}
+.mfit-card-collapsed>.mfit-card-collapse-body{display:none!important}
+.mfit-card-collapsed .mfit-card-collapse-toggle{background:rgba(101,213,139,.1)!important}
+@media(prefers-reduced-motion:reduce){.mfit-card-collapse-toggle{transition:none}}
