@@ -63,3 +63,6 @@ Hinweis: Mahlzeitenideen und Coach-Hinweise sind regelbasiert und keine generati
 - Wiederhergestellte Daten werden vor dem Ersetzen validiert und nach dem Schreiben überprüft; bei Fehlern wird ein Rollback versucht.
 - Ein lokales Sicherheitsbackup kann über den Bereich Datensicherung zurückgespielt werden.
 - Die Supabase-RLS-Konfiguration muss weiterhin im Supabase-Projekt überprüft und aktiviert werden; sie kann nicht aus dem Frontend bestätigt werden.
+
+
+Supabase-RLS-Prüfung und Einrichtung: [SUPABASE_SECURITY_SETUP.md](./SUPABASE_SECURITY_SETUP.md).
