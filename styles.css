@@ -1374,3 +1374,20 @@ hr{opacity:.7}
 #privacyCenter,#dataBackup,#weightHistoryList{scroll-margin-top:16px}
 #fitness .workout-science-note{margin-top:8px}
 @media(min-width:600px){.settings-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}.privacy-danger-zone{display:flex;align-items:center;justify-content:space-between;gap:14px}.privacy-danger-zone button{width:auto;flex:0 0 auto;margin:0}}
+
+/* v97 — dedicated settings center and accessibility preferences */
+#settings:not(.hidden){display:block}
+#settings.hidden{display:none!important}
+#settings .settings-hub{margin-bottom:14px}
+#settings .settings-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:16px}
+#settings .settings-shortcuts button{min-width:0;min-height:86px;text-align:left;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;padding:12px}
+#settings .settings-shortcuts button>span{font-size:19px}
+#settings .settings-shortcuts button b{font-size:13px}
+#settings .settings-shortcuts button small{font-size:10px;color:var(--muted)}
+#settings .mfit-compact-accordion{margin:10px 0}
+#settings .reminder-toggle{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+#settings .reminder-toggle input{width:20px;min-width:20px;margin-top:3px}
+#settings .reminder-toggle span{display:flex;flex-direction:column;gap:4px}
+#settings .reminder-toggle small{color:var(--muted);line-height:1.45}
+.mfit-reduced-motion *, .mfit-reduced-motion *::before, .mfit-reduced-motion *::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+@media(max-width:420px){#settings .settings-shortcuts{gap:7px}#settings .settings-shortcuts button{padding:10px;min-height:82px}}
