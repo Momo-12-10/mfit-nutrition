@@ -30,3 +30,16 @@ Bei der Barcode-Produktsuche wird die EAN an Open Food Facts übermittelt. Für 
 - Österreichische Lebensmittelauswahl und Wochenreport/CSV-Export sind dadurch verfügbar.
 - Neue Regenerationsübersicht mit durchschnittlichem Schlaf, Energie, Muskelkater und Anzahl dokumentierter Check-ins der letzten sieben Tage.
 - Service-Worker-Cache und PWA-Version aktualisiert.
+
+
+## Version 111 — Performance Pro Suite
+
+- Live-Workout mit mehreren Übungen, Sätzen, Gewichten und integriertem Pausentimer; abgeschlossene Einheiten werden in den bestehenden Trainingsverlauf übernommen.
+- Personal-Records-Übersicht auf Basis der dokumentierten Trainingsdaten.
+- Nutrition Pro mit Tagesübersicht der erfassten Makros, flexiblen Mahlzeitenideen und einer persistenten Einkaufsliste.
+- Body Analytics mit Gewichtsverlauf und Verknüpfung zu den gespeicherten Körpermaßen.
+- Recovery Pro mit zusätzlichem Stress- und Tagesform-Check-in.
+- Personalisierbares Home-Dashboard sowie CSV-Monatsbericht und JSON-Export der Pro-Daten.
+- Alle neuen Pro-Daten werden lokal auf dem Gerät gespeichert. Die bestehenden Ernährungs-, Trainings-, Profil- und Cloud-Backup-Daten werden nicht zurückgesetzt.
+
+Hinweis: Mahlzeitenideen und Coach-Hinweise sind regelbasiert und keine generative KI. Die Pro-Erweiterung benötigt keinen zusätzlichen API-Schlüssel.
