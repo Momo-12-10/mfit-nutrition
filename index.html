@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a0d12"><meta name="description" content="MFit Performance – Ernährung, Fitness und Alltag in einer App">
-<link rel="manifest" href="manifest.webmanifest?v=102">
+<link rel="manifest" href="manifest.webmanifest?v=103">
 <link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=76">
 <link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=76">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=102">
+<link rel="stylesheet" href="./styles.css?v=103">
 </head>
 <body>
-<header class="brand-header"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR FITNESS COMPANION</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Eat smart. Train hard. Become more.</p></div><span class="pill brand-pill">PERFORMANCE OS</span><button type="button" class="header-settings" onclick="mfitToggleSettingsMenu()" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mfitSettingsMenu" title="Menü">⚙</button></div></header>
+<header class="brand-header mfit-app-header"><div class="mfit-header-inner"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR PERSONAL PERFORMANCE SPACE</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Ernährung · Training · Fortschritt</p></div></div><div class="mfit-header-actions"><button type="button" class="mfit-header-profile" onclick="showTab('profile')" aria-label="Profil öffnen" title="Mein Profil"><span>↗</span></button><button type="button" class="header-settings" onclick="mfitToggleSettingsMenu()" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mfitSettingsMenu" title="Menü">⚙</button></div></div><div class="mfit-header-foot"><span class="mfit-header-status"><i></i> DEIN FITNESS & NUTRITION HUB</span><span class="mfit-header-edition">MFIT PERFORMANCE</span></div></header>
 <div id="mfitSettingsMenu" class="mfit-settings-menu hidden" onclick="mfitCloseSettingsMenu()" aria-hidden="true">
  <div class="mfit-settings-popover" role="dialog" aria-modal="true" aria-labelledby="mfitMenuTitle" onclick="event.stopPropagation()">
   <div class="mfit-settings-popover-head"><div><span class="settings-kicker">MFIT QUICK MENU</span><h2 id="mfitMenuTitle">Dein Menü</h2></div><button type="button" class="mfit-menu-close" onclick="mfitCloseSettingsMenu()" aria-label="Menü schließen">×</button></div>
@@ -268,12 +268,12 @@
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="./app-core.js?v=102"></script><script src="./app.js?v=102"></script><script src="./mfit-plus.js?v=102"></script><script src="./workout-planner.js?v=102"></script>
+<script src="./app-core.js?v=103"></script><script src="./app.js?v=103"></script><script src="./mfit-plus.js?v=103"></script><script src="./workout-planner.js?v=103"></script>
 <script src="./i18n.js?v=79"></script>
 
 <script>
 (function(){
- const STORAGE_KEY='mfit_collapsed_sections_v1';
+ const STORAGE_KEY='mfit_collapsed_sections_v2';
  function safeRead(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')}catch(e){return {}}}
  function safeWrite(state){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
  function slug(value){return String(value||'bereich').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,48)||'bereich'}
@@ -285,7 +285,7 @@
   if(!children.length)return;
   const heading=children.find(el=>el.matches('h2,h3')||el.querySelector(':scope > h2,:scope > h3'));
   const headingText=heading?(heading.matches('h2,h3')?heading.textContent:heading.querySelector('h2,h3')?.textContent):'';
-  const title=(headingText||card.getAttribute('aria-label')||card.dataset.sectionTitle||'Bereich').trim();
+  const title=(headingText||card.getAttribute('aria-label')||card.dataset.sectionTitle||card.querySelector('label')?.textContent||'Dein Bereich').trim();
   const section=card.closest('section[id]');
   const siblingCards=section?[...section.querySelectorAll('.card')]:[];
   const index=Math.max(0,siblingCards.indexOf(card));
@@ -296,13 +296,13 @@
   const titleEl=document.createElement('div');titleEl.className='mfit-card-collapse-title';
   if(heading){titleEl.appendChild(heading);heading.classList.add('mfit-card-original-heading')}
   else{titleEl.textContent=title}
-  const toggle=document.createElement('button');toggle.type='button';toggle.className='mfit-card-collapse-toggle';toggle.setAttribute('aria-label','Bereich einklappen');toggle.setAttribute('aria-expanded','true');toggle.innerHTML='<span aria-hidden="true">⌄</span>';
+  const toggle=document.createElement('button');toggle.type='button';toggle.className='mfit-card-collapse-toggle';toggle.setAttribute('aria-label','Bereich einklappen');toggle.setAttribute('aria-expanded','true');toggle.innerHTML='<span aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="m5 7.5 5 5 5-5"/></svg></span>'; 
   head.append(titleEl,toggle);
   const body=document.createElement('div');body.className='mfit-card-collapse-body';
   Array.from(card.children).forEach(el=>{if(el!==head&&el!==body)body.appendChild(el)});
-  card.prepend(head,body);
+  body.id='mfit-card-body-'+Math.random().toString(36).slice(2,10);toggle.setAttribute('aria-controls',body.id);card.prepend(head,body);
   const state=safeRead();if(state[key]===true)card.classList.add('mfit-card-collapsed');
-  function sync(){const collapsed=card.classList.contains('mfit-card-collapsed');toggle.setAttribute('aria-expanded',String(!collapsed));toggle.setAttribute('aria-label',collapsed?'Bereich ausklappen':'Bereich einklappen');toggle.title=collapsed?'Bereich ausklappen':'Bereich einklappen';toggle.querySelector('span').textContent=collapsed?'›':'⌄';}
+  function sync(){const collapsed=card.classList.contains('mfit-card-collapsed');toggle.setAttribute('aria-expanded',String(!collapsed));toggle.setAttribute('aria-label',collapsed?'Bereich ausklappen':'Bereich einklappen');toggle.title=collapsed?'Bereich ausklappen':'Bereich einklappen';toggle.querySelector('svg').style.transform=collapsed?'rotate(-90deg)':'rotate(0deg)';}
   toggle.addEventListener('click',()=>{card.classList.toggle('mfit-card-collapsed');const next=safeRead();next[key]=card.classList.contains('mfit-card-collapsed');safeWrite(next);sync()});
   sync();
  }
