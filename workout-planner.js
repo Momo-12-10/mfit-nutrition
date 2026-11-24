@@ -262,7 +262,7 @@ function detailHtml(name,muscle,secondary,id){
  const latin=group.subs.find(x=>ids.includes(x[0]))?.[2]||group.subs[0][2];
  return '<div class="exercise-detail-panel"><div class="anatomy-detail-visual"><div class="muscle-map-title">MUSKELATLAS · '+esc(muscle)+' <small>'+esc(latin)+'</small></div>'+anatomyMuscleSvg(ids,secondaryIds)+'<div class="anatomy-legend"><span><i class="primary-dot"></i>Hauptbeanspruchung</span><span><i class="secondary-dot"></i>Unterstützend</span></div></div><div class="exercise-demo-frames">'+exerciseIllustrationSvg(name)+'<small>Originale MFit-Bewegungsskizze · schematische Orientierung</small></div><div class="exercise-detail-copy"><b>Ausführung</b><br>'+esc(note)+'<br><br>Die Muskelkarte zeigt die ungefähre Beteiligung. Sie ist eine Lernhilfe, keine medizinische oder biomechanische Messung.</div></div>';
 }
-window.mfitToggleExerciseDetail=function(btn){const card=btn.closest('.mfit-exercise-card,.workout-exercise-item');if(!card)return;let panel=card.querySelector('.workout-exercise-detail');if(panel){panel.remove();btn.textContent='Muskeln & Ausführung';return;}panel=document.createElement('div');panel.className='workout-exercise-detail';panel.innerHTML=detailHtml(btn.dataset.name||'',btn.dataset.muscle||'Ganzkörper',(btn.dataset.secondary||'').split('|').filter(Boolean),btn.dataset.image||'');card.appendChild(panel);btn.textContent='Details schließen';};
+window.mfitToggleExerciseDetail=function(btn){const card=btn.closest('.mfit-exercise-card,.workout-exercise-item');if(!card)return;let panel=card.querySelector('.workout-exercise-detail');if(panel){panel.remove();btn.textContent='Details';return;}panel=document.createElement('div');panel.className='workout-exercise-detail';panel.innerHTML=detailHtml(btn.dataset.name||'',btn.dataset.muscle||'Ganzkörper',(btn.dataset.secondary||'').split('|').filter(Boolean),btn.dataset.image||'');card.appendChild(panel);btn.textContent='Schließen';};
 function allLibraryExercises(){return exerciseCatalog.concat(readCustomExercises().map(e=>({...e,id:'custom',secondary:e.secondary||[]})));}
 let selectedAnatomyGroup='lower',selectedAnatomySub='all';
 const anatomyMuscleTargets={
@@ -294,9 +294,9 @@ window.mfitSelectAnatomyGroup=function(id){selectedAnatomyGroup=id;selectedAnato
 window.mfitSelectAnatomySub=function(id){selectedAnatomySub=id;renderAnatomyFilters();window.mfitRenderExerciseLibrary();};
 window.mfitRenderExerciseLibrary=function(){
  const host=$('mfitExerciseCatalog');if(!host)return;
- const q=($('mfitExerciseSearch')?.value||'').toLowerCase(),group=anatomyGroups.find(g=>g.id===selectedAnatomyGroup)||anatomyGroups[0];
+ const q=($('mfitExerciseSearch')?.value||'').toLowerCase(),group=anatomyGroups.find(g=>g.id===selectedAnatomyGroup)||anatomyGroups[0],all=allLibraryExercises();
  const groupNames={lower:['Beine','Quadrizeps','Beinrückseite','Gesäß','Waden'],chest:['Brust'],back:['Rücken','unterer Rücken','oberer Rücken'],shoulders:['Schultern','hintere Schulter'],arms:['Bizeps','Trizeps','Unterarme'],core:['Bauch','Rumpf','unterer Rücken']};
- let list=allLibraryExercises().filter(e=>{
+ let list=all.filter(e=>{
   const txt=(e.name+' '+e.muscle+' '+(e.secondary||[]).join(' ')+' '+e.equipment).toLowerCase();
   if(q&&!txt.includes(q))return false;
   const names=groupNames[group.id]||[];
@@ -304,7 +304,7 @@ window.mfitRenderExerciseLibrary=function(){
   if(!groupMatch)return false;
   return exerciseMatchesSub(e,selectedAnatomySub);
  });
- host.innerHTML=list.map(e=>{const i=allLibraryExercises().indexOf(e);return '<div class="mfit-exercise-card"><div class="mfit-exercise-card-head"><div><b>'+esc(e.name)+'</b><small>'+esc(e.muscle)+' · '+esc(e.equipment)+(e.custom?' · Eigene Übung':'')+'</small></div><button type="button" class="secondary" onclick="mfitLoadCatalogExercise('+i+')">Tracken</button><button type="button" class="secondary" onclick="mfitAddCatalogToPlan('+i+')">Zum Plan</button><button type="button" class="secondary" data-name="'+esc(e.name)+'" data-muscle="'+esc(e.muscle)+'" data-secondary="'+esc((e.secondary||[]).join('|'))+'" onclick="mfitToggleExerciseDetail(this)">Muskeln & Technik</button></div></div>';}).join('')||'<p class="muted">In diesem Bereich wurden keine passenden Übungen gefunden. Wähle „Alle“ oder nutze die Suche.</p>';
+ host.innerHTML=list.map(e=>{const i=all.indexOf(e);return '<article class="mfit-exercise-card"><div class="mfit-exercise-card-head"><div class="mfit-exercise-copy"><b>'+esc(e.name)+'</b><small>'+esc(e.muscle)+' · '+esc(e.equipment)+(e.custom?' · Eigene Übung':'')+'</small></div><div class="mfit-exercise-actions"><button type="button" class="secondary" aria-label="Übung tracken" title="Tracken" onclick="mfitLoadCatalogExercise('+i+')">Tracken</button><button type="button" class="secondary" aria-label="Zum Trainingsplan hinzufügen" title="Zum Plan" onclick="mfitAddCatalogToPlan('+i+')">＋ Plan</button><button type="button" class="secondary exercise-detail-toggle" data-name="'+esc(e.name)+'" data-muscle="'+esc(e.muscle)+'" data-secondary="'+esc((e.secondary||[]).join('|'))+'" onclick="mfitToggleExerciseDetail(this)">Details</button></div></div></article>';}).join('')||'<p class="muted">Keine passenden Übungen gefunden. Wähle eine andere Muskelgruppe oder ändere die Suche.</p>';
 };
 
 function loadExerciseToTracker(name,muscle,sets,reps){const set=(id,v)=>{const el=$(id);if(el)el.value=v;};set('workoutExercise',name);set('workoutMuscle',muscle==='Beinrückseite'||muscle==='Quadrizeps'?'Beine':muscle==='Rumpf'?'Bauch':muscle);set('workoutSets',sets||3);set('workoutReps',reps||10);set('workoutWeight',0);const status=$('workoutStatus');if(status)status.textContent='Übung übernommen: '+name+'. Gewicht passend zu deiner Technik eintragen.';$('workoutTrackerCard')?.scrollIntoView({behavior:'smooth',block:'start'});}
