@@ -53,3 +53,13 @@ Hinweis: Mahlzeitenideen und Coach-Hinweise sind regelbasiert und keine generati
 - Trainings-Meilensteine für dokumentierte Aktivität; keine Belohnungen für Kaloriendefizite oder Gewichtsverlust.
 - Theme Studio mit sechs Akzentfarben.
 - Der Barcode-Scan nutzt weiterhin Open Food Facts und die bereits vorhandene Kamerafunktion. Produkt- und Nährwertangaben sollten mit der Verpackung abgeglichen werden.
+
+
+## Version 113 — Sicherheitsverbesserungen
+
+- Cloud-Authentifizierung und Backup-Logik auf eine zentrale Implementierung reduziert.
+- Lokale MFit-Daten werden auf diesem Gerät einem Cloud-Konto zugeordnet; Uploads in ein anderes Konto werden blockiert.
+- Vor Cloud- und Datei-Wiederherstellungen wird ein lokales Sicherheitsbackup erstellt.
+- Wiederhergestellte Daten werden vor dem Ersetzen validiert und nach dem Schreiben überprüft; bei Fehlern wird ein Rollback versucht.
+- Ein lokales Sicherheitsbackup kann über den Bereich Datensicherung zurückgespielt werden.
+- Die Supabase-RLS-Konfiguration muss weiterhin im Supabase-Projekt überprüft und aktiviert werden; sie kann nicht aus dem Frontend bestätigt werden.
