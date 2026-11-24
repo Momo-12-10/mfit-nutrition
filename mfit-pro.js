@@ -40,6 +40,48 @@ const last=w.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)))[0
 if($('mfitProProgression'))$('mfitProProgression').textContent=last?(prev&&Number(last.weight)>Number(prev.weight)?'Bei '+last.exercise+' ist dein dokumentiertes Gewicht gegenüber dem vorherigen Eintrag gestiegen. Achte weiterhin auf saubere Technik.':'Letzte erfasste Übung: '+last.exercise+'. Vergleiche Gewicht und Wiederholungen über mehrere Einheiten und steigere nur bei stabiler Technik.'):'Deine Trainingshistorie erscheint nach dem ersten Workout.';
 }
 function hook(name){const fn=window[name];if(typeof fn!=='function'||fn.__mfitProHook)return;const wrapped=function(){const result=fn.apply(this,arguments);try{refresh();}catch(e){console.warn(e);}return result;};wrapped.__mfitProHook=true;window[name]=wrapped;}
-function boot(){install();refresh();['render','renderFitness','saveRecovery','addWorkout','removeWorkout'].forEach(hook);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();window.mfitProRefresh=refresh;
+
+const austrianFoods=[
+{name:'Semmel',kcal:270,protein:9,carbs:53,fat:2.2,fiber:2.7},
+{name:'Vollkornbrot',kcal:235,protein:9,carbs:41,fat:3.5,fiber:7},
+{name:'Erdäpfel, gekocht',kcal:77,protein:2,carbs:17,fat:.1,fiber:2.2},
+{name:'Topfen mager',kcal:67,protein:12,carbs:4,fat:.2,fiber:0},
+{name:'Gouda',kcal:356,protein:25,fat:27,carbs:2.2,fiber:0},
+{name:'Milch 1,5 %',kcal:47,protein:3.4,carbs:4.8,fat:1.5,fiber:0},
+{name:'Apfel',kcal:52,protein:.3,carbs:14,fat:.2,fiber:2.4},
+{name:'Reis, gekocht',kcal:130,protein:2.7,carbs:28,fat:.3,fiber:.4},
+{name:'Nudeln, gekocht',kcal:158,protein:5.8,carbs:30.9,fat:.9,fiber:1.8},
+{name:'Linsen, gekocht',kcal:116,protein:9,carbs:20,fat:.4,fiber:7.9},
+{name:'Putenbrust, gegart',kcal:135,protein:29,carbs:0,fat:1.5,fiber:0},
+{name:'Käferbohnen, gekocht',kcal:127,protein:8.7,carbs:23,fat:.5,fiber:6.4}
+];
+function installExtra(){
+ const track=$('track');
+ if(track&&!$('mfitAustrianFood')){
+  const n=document.createElement('div');n.className='card mfit-pro-card';n.id='mfitAustrianFood';
+  n.innerHTML='<div class="mfit-pro-head"><div><span class="settings-kicker">QUICK FOOD DATABASE</span><h2>Österreichische Lebensmittel</h2></div><span class="mfit-pro-symbol">🥨</span></div><p class="muted">Schnellauswahl mit ungefähren Durchschnittswerten pro 100 g. Produktetikett hat immer Vorrang.</p><div class="mfit-austrian-food-grid">'+austrianFoods.map((f,i)=>'<button type="button" class="secondary" onclick="mfitUseAustrianFood('+i+')"><b>'+esc(f.name)+'</b><small>'+f.kcal+' kcal · '+f.protein+' g Protein / 100 g</small></button>').join('')+'</div>';
+  const anchor=$('mfitQuickMeals'); if(anchor)anchor.insertAdjacentElement('afterend',n);else track.appendChild(n);
+ }
+ const week=$('mfitProWeek');
+ if(week&&!$('mfitExportWeek')){const b=document.createElement('button');b.id='mfitExportWeek';b.type='button';b.className='secondary mfit-export-button';b.textContent='Wochenreport als CSV exportieren ↓';b.addEventListener('click',exportWeek);week.appendChild(b);}
+}
+window.mfitUseAustrianFood=function(i){
+ const f=austrianFoods[Number(i)];if(!f)return;
+ const set=(id,v)=>{const e=$(id);if(e)e.value=String(v??0)};
+ set('foodName',f.name);set('amount',100);set('unit','g');set('meal','Snack');
+ if(typeof nutritionBase!=='undefined'){nutritionBase={...nutritionBase,kcal:f.kcal,protein:f.protein,carbs:f.carbs||0,fat:f.fat||0,fiber:f.fiber||0,sugar:0,addedSugar:0,freeSugar:0};}
+ if(typeof recalculateNutrition==='function')recalculateNutrition();
+ $('foodName')?.scrollIntoView({behavior:'smooth',block:'center'});
+ const status=$('barcodeStatus');if(status)status.textContent='Vorlage geladen. Menge und Mahlzeit anpassen und anschließend „Eintrag speichern“ drücken.';
+};
+function exportWeek(){
+ const ds=days(),f=foods(),w=workouts();
+ const rows=[['Datum','Lebensmittel-Einträge','Kalorien_kcal','Protein_g','Kohlenhydrate_g','Fett_g','Trainingseinträge','Trainingsvolumen_kg']];
+ ds.forEach(d=>{const fd=f.filter(x=>(x.date||today())===d),wd=w.filter(x=>x.date===d);const sum=k=>fd.reduce((s,x)=>s+(Number(x[k])||0),0);rows.push([d,fd.length,Math.round(sum('kcal')),Math.round(sum('protein')*10)/10,Math.round(sum('carbs')*10)/10,Math.round(sum('fat')*10)/10,wd.length,Math.round(wd.reduce((s,x)=>s+(Number(x.sets)||0)*(Number(x.reps)||0)*(Number(x.weight)||0),0))]);});
+ const csv='\\uFEFF'+rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\\r\\n');
+ const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='mfit-wochenreport-'+today()+'.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+
+function boot(){install();installExtra();refresh();['render','renderFitness','saveRecovery','addWorkout','removeWorkout'].forEach(hook);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();window.mfitProRefresh=refresh;window.mfitExportWeek=exportWeek;
 })();
