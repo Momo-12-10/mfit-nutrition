@@ -272,8 +272,8 @@ renderShopCatalog();renderShopItems();
  function initSettings(){
   const section=document.getElementById('settings');if(!section||section.dataset.settingsReady)return;
   section.dataset.settingsReady='1';
-  const ids=['appAppearance','appReminders','privacyCenter','dataBackup'];
-  ids.forEach(id=>{const card=document.getElementById(id);if(!card)return;const title=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';const subtitle=id==='appAppearance'?'Farben und Darstellung':id==='appReminders'?'Mitteilungen und Erinnerungen':id==='privacyCenter'?'Datenschutz und Datenkontrolle':'Daten sichern und wiederherstellen';section.appendChild(makeAccordion(title,subtitle,[card],false));card.classList.add('mfit-accordion-inner');});
+  const ids=['appAppearance','appReminders','privacyCenter','dataBackup','mfitAppStatus','mfitDataTools'];
+  ids.forEach(id=>{const card=document.getElementById(id);if(!card)return;const title=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';const subtitle=id==='appAppearance'?'Farben und Darstellung':id==='appReminders'?'Mitteilungen und Erinnerungen':id==='privacyCenter'?'Datenschutz und Datenkontrolle':id==='dataBackup'?'Daten sichern und wiederherstellen':id==='mfitAppStatus'?'Installation, Offline-Funktion und Systemcheck':'Speicher und lokale Daten verwalten';section.appendChild(makeAccordion(title,subtitle,[card],false));card.classList.add('mfit-accordion-inner');});
   ['mfitAppPreferences','mfitLanguageSettings','mfitAboutSettings'].forEach(id=>{const card=document.getElementById(id);if(!card)return;const title=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';const subtitle=id==='mfitAppPreferences'?'Vibration und Animationen':id==='mfitLanguageSettings'?'Sprache der App':'Versionsinformationen';section.appendChild(makeAccordion(title,subtitle,[card],false));card.classList.add('mfit-accordion-inner');});
   const vibration=document.getElementById('mfitVibrationEnabled'),motion=document.getElementById('mfitReducedMotion');
   if(vibration)vibration.checked=localStorage.getItem('mfit_vibration_enabled')!=='false';
