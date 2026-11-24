@@ -6,7 +6,7 @@
  const fields=[['waist','Taille'],['chest','Brust'],['arm','Oberarm'],['thigh','Oberschenkel']];
  const safe=n=>String(n??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  window.mfitSaveMeasurements=function(){
-  const date=$m('mfitMeasureDate')?.value||new Date().toISOString().slice(0,10),entry={date};let count=0;
+  const date=$m('mfitMeasureDate')?.value||(typeof localDate==='function'?localDate():new Date().toISOString().slice(0,10)),entry={date};let count=0;
   for(const [key] of fields){const el=$m('mfitMeasure'+key[0].toUpperCase()+key.slice(1)),raw=el?.value;if(raw==='')continue;const value=Number(raw);if(!Number.isFinite(value)||value<=0||value>250){$m('mfitMeasurementStatus').textContent='Bitte prüfe die eingetragenen Werte.';return;}entry[key]=Math.round(value*10)/10;count++;}
   if(!count){$m('mfitMeasurementStatus').textContent='Trage mindestens ein Körpermaß ein.';return;}
   measurements=measurements.filter(x=>x.date!==date);measurements.push(entry);measurements.sort((a,b)=>a.date.localeCompare(b.date));measurements=measurements.slice(-120);
@@ -22,7 +22,7 @@
  window.mfitExportCsv=function(){
   const headers=['Datum','Taille_cm','Brust_cm','Oberarm_cm','Oberschenkel_cm'],rows=measurements.map(x=>[x.date,...fields.map(([k])=>x[k]??'')]);
   const csv=[headers,...rows].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n');
-  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='mfit-koerpermasse-'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='mfit-koerpermasse-'+(typeof localDate==='function'?localDate():new Date().toISOString().slice(0,10))+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
  };
  window.mfitRenderSmartCoach=function(){
   const insight=$m('mfitCoachInsights'),ach=$m('mfitAchievementList');if(!insight||!ach||typeof data==='undefined'||typeof workoutLogs==='undefined')return;
@@ -44,7 +44,7 @@
  };
  const banner=$m('mfitOfflineBanner'),updateNetwork=()=>{if(banner)banner.hidden=!!navigator.onLine;};
  window.addEventListener('online',updateNetwork);window.addEventListener('offline',updateNetwork);updateNetwork();
- const date=$m('mfitMeasureDate');if(date)date.value=new Date().toISOString().slice(0,10);
+ const date=$m('mfitMeasureDate');if(date)date.value=typeof localDate==='function'?localDate():new Date().toISOString().slice(0,10);
  window.mfitRenderBodyMeasurements();window.mfitRenderSmartCoach();
  if(typeof render==='function')render();
 })();
