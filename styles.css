@@ -1302,3 +1302,51 @@ hr{opacity:.7}
  .workout-exercise-actions{justify-content:flex-start}
  .workout-exercise-actions button{flex:0 0 auto}
 }
+
+/* v95 — premium training planner polish */
+.workout-planner-card{padding:0!important;overflow:hidden;border:1px solid rgba(166,255,63,.18)!important;background:linear-gradient(160deg,rgba(21,34,43,.98),rgba(11,18,26,.98))!important}
+.workout-planner-hero{position:relative;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:22px 19px 19px!important;margin:0!important;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 95% 0%,rgba(166,255,63,.13),transparent 48%),linear-gradient(135deg,rgba(255,255,255,.035),transparent)}
+.workout-planner-hero h2{font-size:clamp(20px,5vw,25px)!important;letter-spacing:-.7px;margin:7px 0 6px!important}
+.workout-planner-hero p{max-width:440px;font-size:12px;line-height:1.55;color:#aab8c6;margin:0 0 13px}
+.workout-hero-icon{display:grid;place-items:center;flex:0 0 48px;width:48px;height:48px;border-radius:16px;background:rgba(166,255,63,.11);border:1px solid rgba(166,255,63,.18);font-size:22px;color:#c7ff8e}
+.workout-hero-cta{display:inline-flex;align-items:center;gap:18px;width:auto!important;min-height:39px;padding:0 14px!important;border-radius:12px!important;font-size:11px!important;font-weight:800!important}
+.workout-hero-cta span{font-size:15px}
+.fitness-shortcuts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:13px 14px 4px}
+.fitness-shortcuts button{min-width:0;min-height:65px;padding:9px 5px!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:1px solid var(--line)!important;background:rgba(255,255,255,.025)!important;border-radius:13px!important}
+.fitness-shortcuts button span{font-size:15px;color:var(--accent)}
+.fitness-shortcuts button b{font-size:9px;white-space:nowrap}
+.fitness-shortcuts button small{font-size:8px;color:var(--muted);white-space:nowrap}
+.workout-planner-controls{margin:13px 14px 12px!important;padding:15px!important;border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.025)}
+.workout-planner-controls>label{display:block;margin:10px 0 6px;font-size:10px;font-weight:800;color:#d9e3eb}
+.workout-planner-controls>label:first-child{margin-top:0}
+.workout-planner-controls select{min-height:42px;border-radius:11px!important;background-color:#111c27!important;border-color:rgba(180,199,217,.17)!important;font-size:12px}
+.workout-planner-controls .grid{gap:9px}
+.workout-create-btn{min-height:46px!important;margin-top:15px!important;border-radius:13px!important;font-size:12px!important;font-weight:850!important;letter-spacing:.1px;box-shadow:0 7px 20px rgba(166,255,63,.12)}
+.workout-control-footnote{text-align:center;color:var(--muted);font-size:9px;margin:8px 0 0}
+#mfitTrainingPlanOutput{padding:0 14px 14px;scroll-margin-top:18px}
+.workout-goal-card{border:1px solid rgba(166,255,63,.16);border-radius:15px;background:linear-gradient(135deg,rgba(166,255,63,.075),rgba(255,255,255,.025));padding:13px!important}
+.workout-goal-card>p{color:#b8c5d0!important;font-size:10px!important}
+.workout-week-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:17px 1px 4px!important}
+.workout-week-head h3{font-size:16px!important;letter-spacing:-.3px}
+.workout-week-list{gap:8px!important}
+.workout-day-card{border:1px solid rgba(180,199,217,.13)!important;border-radius:14px!important;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018))!important}
+.workout-day-card[open]{border-color:rgba(166,255,63,.38)!important;background:rgba(166,255,63,.035)!important}
+.workout-day-summary{min-height:61px!important;padding:11px 13px!important;gap:8px}
+.workout-day-name b{font-size:12px!important;font-weight:800}
+.workout-day-name small{font-size:9px!important}
+.workout-day-meta em{font-size:8px!important;padding:6px 8px!important}
+.workout-day-content{padding:0 13px 12px!important}
+.workout-exercise-item{border-top:1px solid rgba(180,199,217,.09);padding:11px 0!important}
+.workout-exercise-item b{font-size:11px!important}
+.workout-exercise-item small{display:block;color:#9eafbd;font-size:9px!important;margin-top:4px}
+.workout-exercise-actions button{border-radius:9px!important}
+.workout-plan-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:none!important}
+.workout-plan-actions button{min-height:39px;border-radius:11px!important;font-size:10px!important}
+.workout-load-error{padding:14px;border:1px solid rgba(255,170,90,.3);border-radius:13px;background:rgba(255,170,90,.07)}
+.workout-load-error b{font-size:12px}
+.workout-load-error p{font-size:10px;color:var(--muted);margin:6px 0 0}
+.workout-science-note{margin:0 14px 14px!important;padding:12px 14px;border-radius:13px;background:rgba(255,255,255,.025);border:1px solid var(--line)}
+.workout-science-note p{font-size:9px!important;line-height:1.5;color:var(--muted)}
+#mfitTrainingPlanControls,#mfitExerciseLibrary,#workoutTrackerCard,#workoutHistoryCard{scroll-margin-top:16px}
+@media(max-width:390px){.workout-planner-hero{padding:18px 14px 15px!important}.workout-hero-icon{width:40px;height:40px;flex-basis:40px}.fitness-shortcuts{padding:10px 10px 3px;gap:5px}.fitness-shortcuts button{min-height:60px}.fitness-shortcuts button b{font-size:8px}.fitness-shortcuts button small{font-size:7px}.workout-planner-controls{margin:10px!important;padding:12px!important}#mfitTrainingPlanOutput{padding:0 10px 10px}.workout-day-summary{padding:10px!important}.workout-day-meta{gap:6px}}
+@media(min-width:600px){.workout-planner-card{max-width:860px}.workout-planner-controls{max-width:none!important}.fitness-shortcuts{max-width:720px;margin:0 auto}.workout-week-list{grid-template-columns:repeat(2,minmax(0,1fr));display:grid}.workout-day-card[open]{grid-column:span 2}}
