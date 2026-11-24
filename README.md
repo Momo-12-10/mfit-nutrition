@@ -2,47 +2,31 @@
 
 Installierbare Fitness- und Ernährungs-Web-App (PWA), gehostet über GitHub Pages.
 
-## Aktueller Stand
-- Responsives Interface mit Home, Tracking, Rezepten, Einkaufsliste, Fitness, Profil und Einstellungen.
-- Ernährungstagebuch, Makros, Wasser, Schritte (Device-Motion, nur solange die App aktiv ist), Barcode-Suche über Open Food Facts.
-- Trainingspläne, Übungsbibliothek, Workout-Logs, Regeneration, Körpermaße und CSV-Export.
-- Lokale Datenspeicherung, Backup/Restore und Service Worker mit Offline-Grundfunktionen.
-- Installierbar über Safari (Zum Home-Bildschirm) beziehungsweise unterstützte Android-Browser.
+## Funktionen
+- Dashboard, Ernährungstagebuch, Makros, Wasser- und Schrittetracking.
+- Barcode-Produktsuche über Open Food Facts sowie Lebensmittelauswahl mit ungefähren österreichischen Durchschnittswerten.
+- Rezepte, Mahlzeiten-Favoriten, Wochenmenü und Einkaufsliste.
+- Trainingsplanung, Übungsbibliothek, Workout-Logs, Trainingsanalyse und geschätzte Kraftwerte.
+- Regenerations-Check-ins mit Wochenübersicht für Schlaf, Energie und Muskelkater.
+- Körpermaße, lokale Datenspeicherung, CSV-Export und Backup/Wiederherstellung.
+- Supabase-Konto mit bewusst manueller Cloud-Sicherung und Wiederherstellung.
+- PWA-Installation und Offline-Grundfunktionen.
 
-## Lokale Daten und externe Dienste
-MFit verwendet derzeit keinen eigenen Server, kein Benutzerkonto und keine Cloud-Synchronisierung. Einträge bleiben im Browser-Speicher des jeweiligen Geräts. Nutzer können Daten exportieren und lokal löschen.
+## Daten und externe Dienste
+Einträge werden lokal im Browser gespeichert. Nach Anmeldung können MFit-Daten auf ausdrückliche Aktion in das private Supabase-Konto gesichert oder von dort wiederhergestellt werden. Es gibt derzeit keine automatische Hintergrund-Synchronisierung.
 
-Bei der Barcode-Produktsuche wird die EAN an Open Food Facts übermittelt. Für den Kamera-Barcode-Scan wird bei Bedarf die Bibliothek html5-qrcode von unpkg.com geladen. Rezeptbilder werden teilweise von externen Bildservern bezogen. Diese Dienste haben eigene Datenschutz- und Verfügbarkeitsbedingungen.
+Bei der Barcode-Produktsuche wird die EAN an Open Food Facts übermittelt. Für den Kamera-Barcode-Scan kann html5-qrcode von unpkg.com geladen werden. Rezeptbilder können von externen Bildservern bezogen werden.
 
-## Was vor einer öffentlichen Veröffentlichung noch erforderlich ist
-- Vollständige und geprüfte Datenschutzerklärung, Impressum und Nutzungsbedingungen mit den tatsächlichen Anbieter- und Kontaktdaten.
-- Manuelle Tests auf realen iOS- und Android-Geräten sowie automatisierte Tests zentraler Abläufe.
-- Prüfung von Barrierefreiheit, Datenlöschung, Backup/Restore und Offline-Verhalten.
-- Falls Nutzerkonten, Synchronisierung oder zuverlässige Push-Mitteilungen gewünscht sind: Backend, Authentifizierung, Datenbank, Zugriffskontrollen, Datenschutzprozesse und Push-Infrastruktur auswählen und sicher konfigurieren.
-- Externe Datenquellen, Bildrechte, Lizenzen und rechtliche Anforderungen prüfen.
+## Grenzen und Veröffentlichung
+- Lebensmitteldaten und Nährwerte sind Schätzwerte; Verpackungsangaben haben Vorrang.
+- Smart-Coach-Hinweise sind regelbasiert und keine generative KI oder medizinische Beratung.
+- Geschätzte 1RM-Werte sind keine tatsächlichen Maximaltests.
+- Browser-Erinnerungen und Schrittzählung über Gerätesensoren sind abhängig von Browser und Gerät.
+- Vor einer öffentlichen Veröffentlichung müssen Datenschutzinformationen, Impressum, Nutzungsbedingungen, Rechte an Bildern und externen Daten sowie Tests auf iOS und Android geprüft werden.
+- MFit ist derzeit eine Web-App/PWA und wurde nicht im App Store oder Google Play Store veröffentlicht.
 
-## Wichtige Grenzen
-- Es gibt noch keine eigene MFit-API, kein Backend, keine Nutzerkonten und keine Cloud-Synchronisierung.
-- Browser-Erinnerungen sind nicht garantiert, wenn die App geschlossen ist.
-- Schrittzählung über Device Motion ist nur eine Näherung und kein Ersatz für Apple Health oder Google Fit.
-- Open Food Facts-Daten können unvollständig sein und sollten mit der Produktverpackung abgeglichen werden.
-- Die GitHub-Pages-Version ist eine Web-App/PWA, keine native App-Store-/Play-Store-Veröffentlichung.
-
-
-## Supabase Cloud (Version 106)
-- Supabase Authentication for email/password sign-up, sign-in, sign-out and password reset.
-- Explicit manual cloud backup and restore through the private `mfit_user_data` row protected by user-scoped RLS policies.
-- No automatic/background sync: users must explicitly upload or restore. Restoring replaces local `mfit_*` keys after confirmation.
-- Browser frontend uses the Supabase publishable key; never place a secret/service-role key in client code.
-- Supabase project must have the `mfit_user_data` table and the documented RLS policies created before cloud backup works.
-
-
-## MFit Performance v108
-
-- Smart Coach mit Hinweisen aus den letzten sieben Tagen.
-- Wochenreport für dokumentierte Trainings- und Ernährungstage.
-- Kraftentwicklungsübersicht mit geschätzten 1RM-Werten aus dokumentierten Sätzen.
-- Responsive Pro-Karten und aktualisierte PWA-/Service-Worker-Version.
-- Supabase-Konto mit manuellem Cloud-Backup und Wiederherstellung bleibt erhalten.
-
-Die Auswertungen beruhen ausschließlich auf lokal dokumentierten Daten; nicht erfasste Tage werden nicht als Nullwerte interpretiert. Geschätzte Kraftwerte sind keine Maximaltests oder medizinischen Empfehlungen.
+## Version 110
+- Korrigiert: Das bereits vorhandene Pro-Modul wird jetzt tatsächlich in der App geladen.
+- Österreichische Lebensmittelauswahl und Wochenreport/CSV-Export sind dadurch verfügbar.
+- Neue Regenerationsübersicht mit durchschnittlichem Schlaf, Energie, Muskelkater und Anzahl dokumentierter Check-ins der letzten sieben Tage.
+- Service-Worker-Cache und PWA-Version aktualisiert.
