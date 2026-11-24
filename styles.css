@@ -1746,7 +1746,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .mfit-ultimate-head h2{margin:4px 0 0;font-size:18px;letter-spacing:-.3px}
 .mfit-ultimate-mark{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:rgba(101,213,139,.12);color:var(--green)}
 .mfit-ultimate-note{font-size:12px;color:var(--muted);line-height:1.5;margin:12px 0 0}
-.mfit-live-status{border:1px solid var(--line);background:rgba(101,213,139,.07);padding:11px;border-radius:12px;font-size:13px;margin:10px 0}
+.mfit-live-status{border:1px solid var(--line);background:rgba(101,213,139,.07);padding:11px;border-radius:12px;font-size:13px;margin:10px 0}.mfit-live-previous{margin:8px 0 12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025);font-size:12px;color:var(--muted)}.mfit-live-previous:empty{display:none}.mfit-live-previous b{display:block;color:var(--text);margin-bottom:5px}.mfit-live-previous span{display:inline-block;margin:2px 8px 2px 0}.mfit-live-exercise-group{padding:9px 0;border-bottom:1px solid var(--line)}.mfit-live-exercise-title{display:flex;justify-content:space-between;gap:8px;margin-bottom:4px}.mfit-live-exercise-title small{color:var(--muted)}
 .mfit-live-form{margin-top:12px}.mfit-live-set-list{margin-top:12px}
 .mfit-live-row,.mfit-pr-row,.mfit-mini-row,.mfit-shop-row{display:flex;align-items:center;justify-content:space-between;gap:9px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
 .mfit-live-row span,.mfit-pr-row span,.mfit-mini-row span{color:var(--muted);font-size:12px}.mfit-live-row button{margin-left:auto}
