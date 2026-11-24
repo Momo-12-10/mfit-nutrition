@@ -1454,3 +1454,36 @@ hr{opacity:.7}
 #mfitDataTools .danger{background:#482b32!important;color:#ffdfe3!important;border:1px solid rgba(255,130,145,.2)!important}
 @media(max-width:360px){.mfit-system-actions{grid-template-columns:1fr}.mfit-status-grid{gap:6px}.mfit-status-tile{padding:9px}}
 @media(prefers-reduced-motion:reduce){.mfit-system-card,.mfit-system-card *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* v100 — premium combined progress dashboard */
+.mfit-progress-dashboard{position:relative;overflow:hidden;border:1px solid rgba(111,218,159,.2);background:linear-gradient(145deg,rgba(26,65,52,.38),rgba(20,28,35,.96) 58%)}
+.mfit-progress-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.mfit-progress-head h2{margin:5px 0 4px;font-size:21px;letter-spacing:-.5px}
+.mfit-progress-head p{margin:0;font-size:11px;line-height:1.5}
+.mfit-progress-emblem{width:39px;height:39px;display:grid;place-items:center;border-radius:13px;background:rgba(106,220,157,.13);color:#8ce8b2;font-size:23px}
+.mfit-progress-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:16px 0}
+.mfit-progress-kpi{min-width:0;padding:12px;border:1px solid rgba(255,255,255,.075);border-radius:14px;background:rgba(255,255,255,.035)}
+.mfit-progress-kpi small,.mfit-dash-insight small{display:block;color:#93a79d;font-size:8px;font-weight:850;letter-spacing:1px}
+.mfit-progress-kpi b{display:block;margin:5px 0 2px;color:#f3fbf6;font-size:22px;letter-spacing:-.5px}
+.mfit-progress-kpi span{font-size:9px;color:#9daeb0}
+.mfit-dash-section{padding:13px 0;border-top:1px solid rgba(255,255,255,.08)}
+.mfit-dash-section>.row{align-items:center;font-size:11px}
+.mfit-dash-chart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;align-items:end;min-height:76px;padding:8px 2px 0}
+.mfit-dash-day{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}
+.mfit-dash-bars{height:55px;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:3px}
+.mfit-dash-foodbar{width:9px;min-height:3px;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,#8be9b4,#3b9d70)}
+.mfit-dash-workoutdot{width:7px;height:7px;margin-bottom:0;border-radius:50%;background:#47545a;border:1px solid rgba(255,255,255,.15)}
+.mfit-dash-workoutdot.is-active{background:#82cfff;box-shadow:0 0 9px rgba(130,207,255,.35)}
+.mfit-dash-day small{font-size:8px;color:#9eada8;text-transform:uppercase}
+.mfit-dash-legend{display:flex;gap:14px;flex-wrap:wrap;color:#9eada8;font-size:9px;margin-top:7px}
+.mfit-dash-legend span{display:flex;align-items:center;gap:5px}
+.mfit-dash-legend i{width:7px;height:7px;border-radius:3px;background:#64c994}
+.mfit-dash-legend .mfit-legend-workout{background:#82cfff;border-radius:50%}
+.mfit-dash-bottom{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mfit-dash-insight{min-width:0;padding:11px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.025)}
+.mfit-dash-insight b{display:block;margin:6px 0 3px;font-size:14px;color:#eff8f2;overflow-wrap:anywhere}
+.mfit-dash-insight span{display:block;color:#9eada8;font-size:9px;line-height:1.4}
+.mfit-dash-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;padding-top:11px;border-top:1px solid rgba(255,255,255,.08)}
+.mfit-dash-footer>span{font-size:9px;line-height:1.45;color:#a8b7b0;flex:1}
+.mfit-dash-footer button{white-space:nowrap;min-height:34px;padding:7px 10px!important;font-size:9px!important}
+@media(max-width:360px){.mfit-progress-kpi{padding:10px}.mfit-progress-kpi b{font-size:19px}.mfit-dash-footer{align-items:flex-start;flex-direction:column}.mfit-dash-footer button{width:100%}}
