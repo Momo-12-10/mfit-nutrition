@@ -437,3 +437,4 @@ window.mfitRenderProgressDashboard=function(){
  else if(tracked.length)insight='Ernährung ist erfasst. Ergänze deine Trainingseinheiten, um beide Bereiche zu vergleichen.';
  set('mfitDashInsight',insight);
 };
+window.mfitRenderProgressDashboard();
