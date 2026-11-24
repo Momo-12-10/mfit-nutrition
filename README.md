@@ -35,3 +35,14 @@ Bei der Barcode-Produktsuche wird die EAN an Open Food Facts übermittelt. Für 
 - No automatic/background sync: users must explicitly upload or restore. Restoring replaces local `mfit_*` keys after confirmation.
 - Browser frontend uses the Supabase publishable key; never place a secret/service-role key in client code.
 - Supabase project must have the `mfit_user_data` table and the documented RLS policies created before cloud backup works.
+
+
+## MFit Performance v108
+
+- Smart Coach mit Hinweisen aus den letzten sieben Tagen.
+- Wochenreport für dokumentierte Trainings- und Ernährungstage.
+- Kraftentwicklungsübersicht mit geschätzten 1RM-Werten aus dokumentierten Sätzen.
+- Responsive Pro-Karten und aktualisierte PWA-/Service-Worker-Version.
+- Supabase-Konto mit manuellem Cloud-Backup und Wiederherstellung bleibt erhalten.
+
+Die Auswertungen beruhen ausschließlich auf lokal dokumentierten Daten; nicht erfasste Tage werden nicht als Nullwerte interpretiert. Geschätzte Kraftwerte sind keine Maximaltests oder medizinischen Empfehlungen.
