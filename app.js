@@ -258,6 +258,17 @@ renderShopCatalog();renderShopItems();
   items.forEach(node=>content.appendChild(node));
   details.appendChild(content);return details;
  }
+ window.mfitToggleSettingsMenu=function(){
+  const menu=document.getElementById('mfitSettingsMenu'),button=document.querySelector('.header-settings');if(!menu)return;
+  const opening=menu.classList.contains('hidden');menu.classList.toggle('hidden',!opening);menu.setAttribute('aria-hidden',String(!opening));button?.setAttribute('aria-expanded',String(opening));
+  if(opening)menu.querySelector('.mfit-menu-main-action')?.focus();
+ };
+ window.mfitCloseSettingsMenu=function(){
+  const menu=document.getElementById('mfitSettingsMenu'),button=document.querySelector('.header-settings');if(!menu)return;
+  menu.classList.add('hidden');menu.setAttribute('aria-hidden','true');button?.setAttribute('aria-expanded','false');
+ };
+ window.mfitOpenFullSettings=function(){window.mfitCloseSettingsMenu();if(typeof showTab==='function')showTab('settings');};
+ document.addEventListener('keydown',event=>{if(event.key==='Escape')window.mfitCloseSettingsMenu?.();});
  function initSettings(){
   const section=document.getElementById('settings');if(!section||section.dataset.settingsReady)return;
   section.dataset.settingsReady='1';
