@@ -438,37 +438,3 @@ window.mfitRenderProgressDashboard=function(){
  set('mfitDashInsight',insight);
 };
 window.mfitRenderProgressDashboard();
-
-
-/* v106 — Supabase authentication and explicit private cloud backup */
-(function(){
- 'use strict';
- const SUPABASE_URL="https://pxakmojxstpkmfuldxlx.supabase.co";
- const SUPABASE_PUBLISHABLE_KEY="sb_publishable_FxKsCX9D9SiNN1cgwDt2DA_GPs8SkW7";
- let client=null, currentUser=null, busy=false;
- const el=id=>document.getElementById(id);
- const status=(message)=>{const n=el('mfitCloudStatus');if(n)n.textContent=message;};
- function setBusy(value){busy=value;document.querySelectorAll('#mfitCloudAccount button').forEach(b=>b.disabled=value);}
- function renderSession(session){
-  currentUser=session?.user||null;
-  if(el('mfitCloudSignedOut'))el('mfitCloudSignedOut').hidden=!!currentUser;
-  if(el('mfitCloudSignedIn'))el('mfitCloudSignedIn').hidden=!currentUser;
-  if(el('mfitCloudUserEmail'))el('mfitCloudUserEmail').textContent=currentUser?.email||'Angemeldet';
-  if(currentUser)status('Angemeldet als '+(currentUser.email||'MFit-Nutzer')+'. Deine lokalen Daten wurden noch nicht automatisch hochgeladen.');
- }
- function getClient(){
-  if(client)return client;
-  if(!window.supabase?.createClient)throw new Error('Supabase-Bibliothek konnte nicht geladen werden. Bitte Internetverbindung prüfen.');
-  client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-  client.auth.onAuthStateChange((_event,session)=>renderSession(session));
-  return client;
- }
- function localSnapshot(){const data={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('mfit_'))data[k]=localStorage.getItem(k);}return data;}
- window.mfitCloudSignUp=async function(){if(busy)return;try{setBusy(true);const email=el('mfitCloudEmail')?.value.trim(),password=el('mfitCloudPassword')?.value||'';if(!email||password.length<8)throw new Error('Bitte E-Mail und ein Passwort mit mindestens 8 Zeichen eingeben.');const {data,error}=await getClient().auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}});if(error)throw error;if(data.session)renderSession(data.session);status(data.session?'Konto erstellt und angemeldet.':'Bestätige bitte zuerst den Link in deiner E-Mail. Danach kannst du dich anmelden.');}catch(e){status('Konto konnte nicht erstellt werden: '+e.message);}finally{setBusy(false);}};
- window.mfitCloudSignIn=async function(){if(busy)return;try{setBusy(true);const email=el('mfitCloudEmail')?.value.trim(),password=el('mfitCloudPassword')?.value||'';if(!email||!password)throw new Error('Bitte E-Mail und Passwort eingeben.');const {data,error}=await getClient().auth.signInWithPassword({email,password});if(error)throw error;renderSession(data.session);status('Erfolgreich angemeldet. Deine lokalen Daten wurden nicht verändert.');}catch(e){status('Anmeldung fehlgeschlagen: '+e.message);}finally{setBusy(false);}};
- window.mfitCloudResetPassword=async function(){try{const email=el('mfitCloudEmail')?.value.trim();if(!email)throw new Error('Bitte zuerst deine E-Mail-Adresse eingeben.');const {error}=await getClient().auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;status('Wenn für diese Adresse ein Konto besteht, wurde ein Link zum Zurücksetzen gesendet.');}catch(e){status('Passwort-Link konnte nicht angefordert werden: '+e.message);}};
- window.mfitCloudSignOut=async function(){try{const {error}=await getClient().auth.signOut();if(error)throw error;renderSession(null);status('Du wurdest abgemeldet. Deine lokalen Daten bleiben erhalten.');}catch(e){status('Abmelden fehlgeschlagen: '+e.message);}};
- window.mfitCloudUpload=async function(){if(busy||!currentUser)return;try{setBusy(true);const snapshot=localSnapshot();const {error}=await getClient().from('mfit_user_data').upsert({user_id:currentUser.id,data:snapshot,updated_at:new Date().toISOString()},{onConflict:'user_id'});if(error)throw error;status('Cloud-Backup erfolgreich gespeichert ('+Object.keys(snapshot).length+' lokale Einstellungen und Datensätze).');}catch(e){status('Cloud-Backup fehlgeschlagen: '+e.message);}finally{setBusy(false);}};
- window.mfitCloudDownload=async function(){if(busy||!currentUser)return;if(!confirm('Cloud-Daten auf dieses Gerät laden? Dabei werden alle derzeit lokal gespeicherten MFit-Daten auf diesem Gerät ersetzt. Erstelle vorher bei Bedarf ein Backup.'))return;try{setBusy(true);const {data,error}=await getClient().from('mfit_user_data').select('data,updated_at').eq('user_id',currentUser.id).maybeSingle();if(error)throw error;if(!data?.data)throw new Error('Für dein Konto wurde noch kein Cloud-Backup gefunden.');const payload=data.data;if(!payload||typeof payload!=='object'||Array.isArray(payload))throw new Error('Das Cloud-Backup hat ein ungültiges Format.');const keys=Object.keys(payload).filter(k=>k.startsWith('mfit_')&&typeof payload[k]==='string');if(!keys.length)throw new Error('Das Cloud-Backup enthält keine MFit-Daten.');const old=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('mfit_'))old.push(k);}old.forEach(k=>localStorage.removeItem(k));keys.forEach(k=>localStorage.setItem(k,payload[k]));status('Cloud-Backup vom '+new Date(data.updated_at).toLocaleString('de-AT')+' geladen. MFit wird neu geladen …');setTimeout(()=>location.reload(),700);}catch(e){status('Cloud-Wiederherstellung fehlgeschlagen: '+e.message);setBusy(false);}};
- document.addEventListener('DOMContentLoaded',async()=>{try{const {data,error}=await getClient().auth.getSession();if(error)throw error;renderSession(data.session);}catch(e){status('Cloud-Funktionen nicht verfügbar: '+e.message);}});
-})();
