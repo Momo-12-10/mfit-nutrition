@@ -277,13 +277,13 @@ renderShopCatalog();renderShopItems();
   ['mfitAppPreferences','mfitLanguageSettings','mfitAboutSettings'].forEach(id=>{const card=document.getElementById(id);if(!card)return;const title=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';const subtitle=id==='mfitAppPreferences'?'Vibration und Animationen':id==='mfitLanguageSettings'?'Sprache der App':'Versionsinformationen';section.appendChild(makeAccordion(title,subtitle,[card],false));card.classList.add('mfit-accordion-inner');});
   const vibration=document.getElementById('mfitVibrationEnabled'),motion=document.getElementById('mfitReducedMotion');
   if(vibration)vibration.checked=localStorage.getItem('mfit_vibration_enabled')!=='false';
-  if(motion){motion.checked=localStorage.getItem('mfit_reduced_motion')==='true';document.documentElement.classList.toggle('mfit-reduced-motion',motion.checked);}
+  if(motion){motion.checked=localStorage.getItem('mfit_reduced_motion')==='true';document.documentElement.classList.toggle('mfit-reduced-motion',motion.checked);}const contrast=document.getElementById('mfitHighContrast'),large=document.getElementById('mfitLargeText');if(contrast){contrast.checked=localStorage.getItem('mfit_high_contrast')==='true';document.documentElement.classList.toggle('mfit-high-contrast',contrast.checked);}if(large){large.checked=localStorage.getItem('mfit_large_text')==='true';document.documentElement.classList.toggle('mfit-large-text',large.checked);}
  }
  window.mfitInitSettings=initSettings;
  window.saveMfitAppPreferences=function(){
-  const vibration=document.getElementById('mfitVibrationEnabled'),motion=document.getElementById('mfitReducedMotion');
-  try{localStorage.setItem('mfit_vibration_enabled',String(!!vibration?.checked));localStorage.setItem('mfit_reduced_motion',String(!!motion?.checked));}catch(e){}
-  document.documentElement.classList.toggle('mfit-reduced-motion',!!motion?.checked);
+  const vibration=document.getElementById('mfitVibrationEnabled'),motion=document.getElementById('mfitReducedMotion'),contrast=document.getElementById('mfitHighContrast'),large=document.getElementById('mfitLargeText');
+  try{localStorage.setItem('mfit_vibration_enabled',String(!!vibration?.checked));localStorage.setItem('mfit_reduced_motion',String(!!motion?.checked));localStorage.setItem('mfit_high_contrast',String(!!contrast?.checked));localStorage.setItem('mfit_large_text',String(!!large?.checked));}catch(e){}
+  document.documentElement.classList.toggle('mfit-reduced-motion',!!motion?.checked);document.documentElement.classList.toggle('mfit-high-contrast',!!contrast?.checked);document.documentElement.classList.toggle('mfit-large-text',!!large?.checked);
   const status=document.getElementById('mfitPreferencesStatus');if(status)status.textContent='Einstellungen gespeichert.';
  };
  window.mfitOpenSettingsSection=function(id){initSettings();const target=document.getElementById(id);if(!target)return;const accordion=target.closest('details.mfit-compact-accordion');if(accordion)accordion.open=true;target.scrollIntoView({behavior:'smooth',block:'start'});};
