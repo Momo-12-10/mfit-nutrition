@@ -182,7 +182,7 @@ function renderWeeklyMomentum(){
  const hint=tracked===7?'Eine lückenlose Woche – stark dokumentiert.':tracked===0?'Noch kein Eintrag diese Woche. Fang einfach mit dem nächsten an.':tracked+' von 7 Tagen erfasst. Es geht um Orientierung, nicht um Perfektion.';
  if($('weeklyMomentumHint'))$('weeklyMomentumHint').textContent=hint;
 }
- renderWaterQuickHistory();renderHistory();renderWeeklyMomentum();window.mfitRenderProgressDashboard?.();
+ renderWaterQuickHistory();renderHistory();renderWeeklyMomentum();window.mfitRenderProgressDashboard?.();window.mfitRenderSmartCoach?.();
 }
 function mfitParseDate(key){const [y,m,d]=String(key).split('-').map(Number);return new Date(y,m-1,d,12)}
 function mfitAddDays(date,n){const d=mfitParseDate(date);d.setDate(d.getDate()+n);return mfitDateKey(d)}
