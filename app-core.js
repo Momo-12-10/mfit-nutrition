@@ -670,7 +670,7 @@ function mfitApplyDataSnapshot(entries,options={}){
  return Object.keys(clean).length;
 }
 function downloadMfitBackup(){
- const payload={app:'MFit Performance',formatVersion:1,exportedAt:new Date().toISOString(),data:mfitCaptureLocalData()};
+ const payload={app:'MFit Performance',formatVersion:1,exportedAt:new Date().toISOString(),ownerId:localStorage.getItem(MFIT_CLOUD_OWNER_KEY),data:mfitCaptureLocalData()};
  try{
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');
@@ -690,7 +690,7 @@ function restoreMfitBackup(event){
    if(!payload||payload.app!=='MFit Performance'||payload.formatVersion!==1||!payload.data||typeof payload.data!=='object'||Array.isArray(payload.data))throw new Error('Ungültiges MFit-Backup');
    const entries=mfitValidateDataSnapshot(payload.data);
    if(!confirm('Backup vom '+(payload.exportedAt?new Date(payload.exportedAt).toLocaleString('de-AT'):'unbekannten Datum')+' wiederherstellen? Vorher wird ein Sicherheitsbackup deiner aktuellen Daten erstellt.')){input.value='';return;}
-   mfitApplyDataSnapshot(entries,{ownerId:localStorage.getItem(MFIT_CLOUD_OWNER_KEY),saveSafety:true});
+   mfitApplyDataSnapshot(entries,{ownerId:Object.prototype.hasOwnProperty.call(payload,'ownerId')?payload.ownerId:localStorage.getItem(MFIT_CLOUD_OWNER_KEY),saveSafety:true});
    if($('backupStatus'))$('backupStatus').textContent='Backup sicher wiederhergestellt. Ein Sicherheitsbackup deiner vorherigen Daten liegt lokal bereit. MFit wird neu geladen …';
    setTimeout(()=>location.reload(),500);
   }catch(e){if($('backupStatus'))$('backupStatus').textContent='Backup konnte nicht wiederhergestellt werden: '+e.message+'.';}
