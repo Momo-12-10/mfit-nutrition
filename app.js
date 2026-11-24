@@ -347,3 +347,67 @@ function clearMfitLocalData(){
   location.reload();
  }catch(e){const status=document.getElementById('backupStatus');if(status)status.textContent='Die Daten konnten nicht vollständig gelöscht werden. Bitte prüfe die Browser-Speichereinstellungen.';}
 }
+
+
+/* v99 — PWA install, app health and local data controls */
+(function(){
+ let mfitInstallPrompt=null;
+ window.addEventListener('beforeinstallprompt',event=>{
+  event.preventDefault();mfitInstallPrompt=event;
+  const button=document.getElementById('mfitInstallButton');
+  if(button){button.disabled=false;button.textContent='App installieren';}
+  const status=document.getElementById('mfitInstallStatus');if(status)status.textContent='Bereit';
+ });
+ window.addEventListener('appinstalled',()=>{
+  mfitInstallPrompt=null;
+  const status=document.getElementById('mfitInstallStatus');if(status)status.textContent='Installiert';
+  const help=document.getElementById('mfitInstallHelp');if(help)help.textContent='MFit wurde als Web-App installiert.';
+ });
+ window.addEventListener('online',()=>window.mfitRefreshSystemCheck?.());
+ window.addEventListener('offline',()=>window.mfitRefreshSystemCheck?.());
+ window.mfitInstallApp=async function(){
+  if(mfitInstallPrompt){
+   try{await mfitInstallPrompt.prompt();const choice=await mfitInstallPrompt.userChoice;
+    const help=document.getElementById('mfitInstallHelp');
+    if(help)help.textContent=choice?.outcome==='accepted'?'Installation gestartet.':'Installation wurde nicht gestartet.';
+    mfitInstallPrompt=null;
+   }catch(e){const help=document.getElementById('mfitInstallHelp');if(help)help.textContent='Installation ist in diesem Browser gerade nicht verfügbar.';}
+   return;
+  }
+  const help=document.getElementById('mfitInstallHelp');
+  if(help)help.textContent=/iphone|ipad|ipod/i.test(navigator.userAgent)
+   ?'Auf iPhone/iPad: In Safari auf „Teilen“ tippen und „Zum Home-Bildschirm“ wählen. Falls Safari nicht angeboten wird, öffne diese Seite direkt in Safari.'
+   :'Öffne das Browser-Menü (⋮ oder Teilen) und wähle „Installieren“ oder „Zum Startbildschirm hinzufügen“, sofern angeboten.';
+ };
+ window.mfitRefreshSystemCheck=async function(){
+  const network=document.getElementById('mfitNetworkStatus'),offline=document.getElementById('mfitOfflineStatus'),install=document.getElementById('mfitInstallStatus'),check=document.getElementById('mfitSystemCheck');
+  if(network)network.textContent=navigator.onLine?'Online':'Offline';
+  if(offline)offline.textContent=('serviceWorker'in navigator)?'Service Worker verfügbar':'Nicht unterstützt';
+  if(install&&!window.matchMedia('(display-mode: standalone)').matches&& !navigator.standalone&& !mfitInstallPrompt)install.textContent='Im Browser';
+  let swText='Service Worker: nicht verfügbar';
+  if('serviceWorker'in navigator){
+   try{const reg=await navigator.serviceWorker.getRegistration();swText=reg?.active?'Service Worker aktiv':reg?.installing?'Service Worker wird installiert':'Noch nicht aktiv';}
+   catch(e){swText='Service Worker konnte nicht geprüft werden';}
+  }
+  if(check){
+   const secure=window.isSecureContext?'Sichere Verbindung':'Keine sichere Browser-Umgebung';
+   const conn=navigator.onLine?'Internetverbindung vorhanden':'Keine Internetverbindung';
+   check.innerHTML='<div>✓ '+secure+'</div><div>'+( 'serviceWorker' in navigator?'✓ ':'• ')+swText+'</div><div>'+(navigator.onLine?'✓ ':'! ')+conn+'</div><div>ℹ Daten werden lokal in diesem Browser gespeichert</div>';
+  }
+  window.mfitCheckStorage?.();
+ };
+ window.mfitCheckStorage=async function(){
+  const el=document.getElementById('mfitStorageUsage');if(!el)return;
+  try{
+   if(navigator.storage?.estimate){const e=await navigator.storage.estimate();const used=Number(e.usage)||0;el.textContent=used<1024*1024?Math.round(used/1024)+' KB':(used/1024/1024).toFixed(1)+' MB';}
+   else{let bytes=0;for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);bytes+=(k?.length||0)+(localStorage.getItem(k)?.length||0);}el.textContent=(bytes/1024).toFixed(1)+' KB';}
+  }catch(e){el.textContent='Nicht verfügbar';}
+ };
+ window.mfitClearLocalData=function(){
+  if(!confirm('Wirklich alle lokalen MFit-Daten und Einstellungen in diesem Browser löschen? Diese Aktion kann nicht rückgängig gemacht werden. Lade vorher ein Backup herunter, wenn du Daten behalten möchtest.'))return;
+  try{const keys=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('mfit_'))keys.push(k);}keys.forEach(k=>localStorage.removeItem(k));
+   const status=document.getElementById('mfitDataToolsStatus');if(status)status.textContent='Lokale MFit-Daten gelöscht. Die App wird neu geladen …';setTimeout(()=>location.reload(),500);
+  }catch(e){const status=document.getElementById('mfitDataToolsStatus');if(status)status.textContent='Daten konnten nicht vollständig gelöscht werden. Bitte Browser-Speicher prüfen.';}
+ };
+ document.addEventListener('DOMContentLoaded',()=>{window.mfitRefreshSystemCheck?.();});
+})();
