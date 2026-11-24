@@ -113,26 +113,33 @@ function mealRecipeCost(meal){
  },0);
 }
 function generateMealWeek(){
- const f=$('mealPlanFocus').value,n=Number($('mealPlanMeals').value)||3,excluded=selectedMealExclusions();
- const custom=($('mealPlanAvoidCustom')?.value||'').toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
- let pool=weekMeals.filter(x=>x.focus.includes(f)&&mealAllowed(x,excluded,custom));
- if(!pool.length){$('mealWeek').innerHTML='<div class="notice">Mit diesen Ausschlüssen gibt es gerade keine passenden Gerichte. Entferne einzelne Ausschlüsse oder wähle einen anderen Schwerpunkt.</div>';$('addWeekShopBtn').disabled=true;mealWeekData=[];return}
- const amount=Number($('mealBudgetAmount')?.value)||0,period=$('mealBudgetPeriod')?.value||'day';
- pool=pool.slice().sort((a,b)=>mealRecipeCost(a)-mealRecipeCost(b));
- const needed=7*n,selected=[];
- for(let i=0;i<needed;i++){
-  if(amount>0){
+ const output=$('mealWeek'),addButton=$('addWeekShopBtn');
+ try{
+  const f=$('mealPlanFocus')?.value||'balanced',n=Math.min(4,Math.max(2,Number($('mealPlanMeals')?.value)||3)),excluded=selectedMealExclusions();
+  const custom=($('mealPlanAvoidCustom')?.value||'').toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
+  let pool=weekMeals.filter(x=>Array.isArray(x.focus)&&x.focus.includes(f)&&mealAllowed(x,excluded,custom));
+  if(!pool.length){if(output)output.innerHTML='<div class="notice">Mit diesen Ausschlüssen gibt es gerade keine passenden Gerichte. Entferne einzelne Ausschlüsse oder wähle einen anderen Schwerpunkt.</div>';if(addButton)addButton.disabled=true;mealWeekData=[];return;}
+  const amount=Number($('mealBudgetAmount')?.value)||0,period=$('mealBudgetPeriod')?.value||'day';
+  const cost=meal=>{try{return mealRecipeCost(meal)||0;}catch(e){return 0;}};
+  pool=pool.slice().sort((a,b)=>cost(a)-cost(b));
+  const needed=7*n,selected=[];
+  for(let i=0;i<needed;i++){
    const dayIndex=Math.floor(i/n),dayMeals=selected.slice(dayIndex*n,i);
-   const current=dayMeals.reduce((s,m)=>s+mealRecipeCost(m),0);
-   const cap=period==='day'?amount:amount/7;
-   const affordable=pool.filter(m=>mealRecipeCost(m)+current<=cap+0.001);
+   const current=dayMeals.reduce((s,m)=>s+cost(m),0),cap=period==='day'?amount:amount/7;
+   const affordable=amount>0?pool.filter(m=>cost(m)+current<=cap+0.001):pool;
    const choices=affordable.length?affordable:pool;
-   selected.push(choices[i%choices.length]);
-  }else selected.push(pool[Math.floor(Math.random()*pool.length)]);
+   selected.push(choices[(i+dayIndex)%choices.length]);
+  }
+  mealWeekData=Array.from({length:7},(_,d)=>({day:['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'][d],meals:selected.slice(d*n,(d+1)*n)}));
+  renderMealWeek();
+  if(output){output.dataset.generated='true';output.scrollIntoView({behavior:'smooth',block:'start'});}
+ }catch(error){
+  mealWeekData=[];if(addButton)addButton.disabled=true;
+  if(output)output.innerHTML='<div class="notice" role="alert"><b>Dein 7-Tage-Ernährungsplan konnte nicht erstellt werden.</b><p>Bitte versuche es erneut. Deine bisherigen Einträge bleiben gespeichert.</p></div>';
+  console.error('MFit meal week:',error);
  }
- mealWeekData=Array.from({length:7},(_,d)=>({day:['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'][d],meals:selected.slice(d*n,(d+1)*n)}));
- renderMealWeek();
 }
+window.generateMealWeek=generateMealWeek;
 function renderMealWeek(){
  const el=$('mealWeek');if(!el)return;
  const diabetes=$('mealPlanDiabetes')?.checked;
