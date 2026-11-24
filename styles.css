@@ -1487,3 +1487,44 @@ hr{opacity:.7}
 .mfit-dash-footer>span{font-size:9px;line-height:1.45;color:#a8b7b0;flex:1}
 .mfit-dash-footer button{white-space:nowrap;min-height:34px;padding:7px 10px!important;font-size:9px!important}
 @media(max-width:360px){.mfit-progress-kpi{padding:10px}.mfit-progress-kpi b{font-size:19px}.mfit-dash-footer{align-items:flex-start;flex-direction:column}.mfit-dash-footer button{width:100%}}
+
+/* v101 — performance coach, body measurements, accessibility and offline status */
+.mfit-smart-coach{border:1px solid rgba(111,218,159,.2);background:linear-gradient(145deg,rgba(24,54,45,.34),rgba(20,28,35,.97) 62%)}
+.mfit-smart-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.mfit-smart-head h2{font-size:20px;margin:5px 0 4px;letter-spacing:-.45px}
+.mfit-smart-head p{font-size:10px;margin:0;line-height:1.5}
+.mfit-smart-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:13px;background:rgba(128,226,171,.12);color:#9af0bc;font-size:21px}
+.mfit-coach-insights{display:grid;gap:7px;margin:14px 0}
+.mfit-coach-item{padding:11px 12px;border:1px solid rgba(255,255,255,.075);border-radius:12px;background:rgba(255,255,255,.025)}
+.mfit-coach-item b{display:block;font-size:11px;color:#eaf5ed}
+.mfit-coach-item small{display:block;margin-top:4px;color:#aab9b1;font-size:9px;line-height:1.5}
+.mfit-achievement-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:11px;border-top:1px solid rgba(255,255,255,.08);font-size:11px}
+.mfit-achievement-head .muted{font-size:9px}
+.mfit-achievement-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:9px}
+.mfit-achievement{min-width:0;padding:10px 7px;text-align:center;border:1px solid rgba(255,255,255,.08);border-radius:11px;background:rgba(255,255,255,.025)}
+.mfit-achievement span{display:block;font-size:17px}
+.mfit-achievement b{display:block;margin-top:4px;font-size:9px}
+.mfit-achievement small{display:block;margin-top:3px;color:#9eada8;font-size:8px;line-height:1.3}
+.mfit-achievement.is-earned{border-color:rgba(126,221,165,.3);background:rgba(100,190,132,.08)}
+.mfit-smart-footer{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07)}
+.mfit-smart-footer span{font-size:9px;line-height:1.45;color:#aab9b1;flex:1}
+.mfit-smart-footer button{min-height:33px;padding:7px 10px!important;font-size:9px!important;white-space:nowrap}
+.mfit-measurement-card{border-color:rgba(111,218,159,.16)}
+.mfit-measurement-grid{gap:9px}
+.mfit-measurement-grid label{font-size:10px}
+.mfit-measurement-grid input{min-width:0}
+.mfit-measurement-history-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:15px 0 7px;font-size:11px}
+.mfit-measurement-history{display:grid;gap:6px}
+.mfit-measurement-entry{padding:10px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.025)}
+.mfit-measurement-entry>div:first-child{display:flex;justify-content:space-between;gap:8px;font-size:10px}
+.mfit-measurement-values{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.mfit-measurement-values span{font-size:9px;color:#b8c8bd;padding:4px 7px;border-radius:7px;background:rgba(255,255,255,.045)}
+.mfit-offline-banner{margin:0 0 10px;padding:11px 13px;border:1px solid rgba(255,181,92,.32);border-radius:12px;background:rgba(126,76,25,.2);color:#ffe0b8;font-size:11px;line-height:1.45}
+.mfit-offline-banner[hidden]{display:none!important}
+.mfit-high-contrast{--muted:#d0ddd4;--line:#62766a}
+.mfit-high-contrast .muted,.mfit-high-contrast small{color:#d0ddd4}
+.mfit-large-text{font-size:17px}
+.mfit-large-text .muted,.mfit-large-text small,.mfit-large-text label{font-size:calc(1em + 1px)}
+:focus-visible{outline:2px solid var(--accent,#65d58b)!important;outline-offset:3px}
+button,input,select,textarea{touch-action:manipulation}
+@media(max-width:360px){.mfit-achievement-list{gap:5px}.mfit-achievement{padding:8px 4px}.mfit-smart-footer{align-items:flex-start;flex-direction:column}.mfit-smart-footer button{width:100%}}
