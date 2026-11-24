@@ -27,3 +27,11 @@ Bei der Barcode-Produktsuche wird die EAN an Open Food Facts übermittelt. Für 
 - Schrittzählung über Device Motion ist nur eine Näherung und kein Ersatz für Apple Health oder Google Fit.
 - Open Food Facts-Daten können unvollständig sein und sollten mit der Produktverpackung abgeglichen werden.
 - Die GitHub-Pages-Version ist eine Web-App/PWA, keine native App-Store-/Play-Store-Veröffentlichung.
+
+
+## Supabase Cloud (Version 106)
+- Supabase Authentication for email/password sign-up, sign-in, sign-out and password reset.
+- Explicit manual cloud backup and restore through the private `mfit_user_data` row protected by user-scoped RLS policies.
+- No automatic/background sync: users must explicitly upload or restore. Restoring replaces local `mfit_*` keys after confirmation.
+- Browser frontend uses the Supabase publishable key; never place a secret/service-role key in client code.
+- Supabase project must have the `mfit_user_data` table and the documented RLS policies created before cloud backup works.
