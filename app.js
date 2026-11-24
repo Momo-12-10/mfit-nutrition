@@ -42,7 +42,7 @@ function renderFitness(){
  const prs={};workoutLogs.forEach(x=>{const key=String(x.exercise||'');if(key&&(!prs[key]||Number(x.weight)>prs[key].weight))prs[key]={weight:Number(x.weight)||0,reps:Number(x.reps)||0,date:x.date}});
  if($('personalRecords'))$('personalRecords').innerHTML=Object.keys(prs).length?Object.entries(prs).sort((a,b)=>b[1].weight-a[1].weight).slice(0,8).map(([name,p])=>{const est=p.weight>0?Math.round(p.weight*(1+p.reps/30)*10)/10:0;return '<div class="item row"><div><b>'+esc(name)+'</b><div class="muted">'+esc(p.date)+' · '+p.reps+' Wdh. · geschätztes 1RM: '+est.toLocaleString('de-AT')+' kg</div></div><b>'+p.weight.toLocaleString('de-AT')+' kg</b></div>'}).join(''):'Noch keine Übungen gespeichert.';
  const wh=weightHistory.slice(-7);if($('weightProgress'))$('weightProgress').innerHTML=wh.length?'<div class="grid">'+wh.map(x=>'<div class="item"><div class="muted">'+esc(x.date)+'</div><b>'+Number(x.weight).toFixed(1)+' kg</b></div>').join('')+'</div>':'Noch keine Gewichtsdaten. Trage dein Gewicht im Profil ein.';
- renderRecovery();
+ renderRecovery();window.mfitRenderProgressDashboard?.();
 }
 function saveRecovery(){
  const sleep=Number($('recoverySleep').value),soreness=Number($('recoverySoreness').value),energy=Number($('recoveryEnergy').value);
@@ -411,3 +411,29 @@ function clearMfitLocalData(){
  };
  document.addEventListener('DOMContentLoaded',()=>{window.mfitRefreshSystemCheck?.();});
 })();
+
+/* v100 — combined progress dashboard */
+window.mfitRenderProgressDashboard=function(){
+ const el=id=>document.getElementById(id),today=new Date(),days=[];
+ for(let i=6;i>=0;i--){const d=new Date(today);d.setDate(today.getDate()-i);const key=localDate(d);const foods=data.filter(x=>(x.date||localDate())===key);const workouts=workoutLogs.filter(x=>x.date===key);days.push({key,foods,workouts,kcal:foods.reduce((s,x)=>s+(Number(x.kcal)||0),0),protein:foods.reduce((s,x)=>s+(Number(x.protein)||0),0)});}
+ const tracked=days.filter(x=>x.foods.length),workoutDays=days.filter(x=>x.workouts.length),avg=key=>tracked.length?tracked.reduce((s,x)=>s+x[key],0)/tracked.length:null;
+ const set=(id,value)=>{const node=el(id);if(node)node.textContent=value;};
+ set('mfitDashWorkouts',String(workoutDays.length));set('mfitDashWorkoutHint',workoutDays.reduce((s,x)=>s+x.workouts.length,0)+' Trainingseinträge');
+ set('mfitDashTracked',tracked.length+'/7');set('mfitDashTrackedHint',tracked.length===1?'1 Tag dokumentiert':tracked.length+' Tage dokumentiert');
+ set('mfitDashProtein',avg('protein')===null?'–':Math.round(avg('protein'))+' g');
+ set('mfitDashCalories',avg('kcal')===null?'–':Math.round(avg('kcal')).toLocaleString('de-AT'));
+ const range=el('mfitDashRange');if(range)range.textContent=days[0].key.slice(8,10)+'.–'+days[6].key.slice(8,10)+'.';
+ const chart=el('mfitDashChart');if(chart){
+  const maxKcal=Math.max(1,...days.map(x=>x.kcal));
+  chart.innerHTML=days.map(x=>{const height=x.foods.length?Math.max(8,Math.round(x.kcal/maxKcal*46)):3;const label=new Date(x.key+'T12:00:00').toLocaleDateString('de-AT',{weekday:'short'});return '<div class="mfit-dash-day"><div class="mfit-dash-bars"><span class="mfit-dash-foodbar" style="height:'+height+'px" title="'+(x.foods.length?Math.round(x.kcal)+' kcal':'Keine Ernährungseinträge')+'"></span><span class="mfit-dash-workoutdot '+(x.workouts.length?'is-active':'')+'" title="'+(x.workouts.length?'Training erfasst':'Kein Training')+'"></span></div><small>'+label+'</small></div>';}).join('');
+ }
+ const wh=Array.isArray(weightHistory)?weightHistory.filter(x=>Number(x.weight)>0).sort((a,b)=>String(a.date).localeCompare(String(b.date))):[];
+ if(wh.length){const last=wh[wh.length-1],prior=wh.length>1?wh[wh.length-2]:null;set('mfitDashWeight',Number(last.weight).toLocaleString('de-AT',{maximumFractionDigits:1})+' kg');set('mfitDashWeightHint',prior?'Letzte Änderung: '+(Number(last.weight)-Number(prior.weight)>0?'+':'')+(Number(last.weight)-Number(prior.weight)).toLocaleString('de-AT',{maximumFractionDigits:1})+' kg':'Erster gespeicherter Wert');}
+ const rec=Array.isArray(recoveryLogs)?recoveryLogs.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)))[0]:null;
+ if(rec){set('mfitDashRecovery',Number(rec.sleep).toLocaleString('de-AT')+' h Schlaf');set('mfitDashRecoveryHint','Energie '+rec.energy+'/10 · Muskelkater '+rec.soreness+'/10');}
+ let insight='Trage Training, Ernährung und Erholung ein – MFit verbindet deine Daten hier.';
+ if(tracked.length&&workoutDays.length)insight='Du hast '+tracked.length+' Ernährungstage und '+workoutDays.length+' Trainingstage dokumentiert. Bleib bei einem Rhythmus, der zu deiner Erholung passt.';
+ else if(workoutDays.length)insight='Training ist erfasst. Ergänze bei Gelegenheit Ernährungseinträge für einen vollständigeren Überblick.';
+ else if(tracked.length)insight='Ernährung ist erfasst. Ergänze deine Trainingseinheiten, um beide Bereiche zu vergleichen.';
+ set('mfitDashInsight',insight);
+};
