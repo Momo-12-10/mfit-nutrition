@@ -13,11 +13,19 @@ const home=$('home');
 card(home,'mfitProCoach','Dein nächster sinnvoller Schritt','MFIT SMART COACH','<p class="muted">Konkrete Hinweise aus deinen Einträgen – keine medizinische Diagnose.</p><div id="mfitProCoachItems" class="mfit-pro-list" aria-live="polite"></div><p id="mfitProCoachFoot" class="mfit-pro-note">Deine Einträge werden lokal ausgewertet.</p>',$('mfitNutritionAnalytics')||$('mfitProgressDashboard'));
 card(home,'mfitProWeek','Dein Wochenreport','7-TAGE-REPORT','<div class="mfit-pro-kpis"><div><small>TRAINING</small><b id="mfitProWeekWorkouts">0</b></div><div><small>TRACKING-TAGE</small><b id="mfitProWeekFood">0/7</b></div><div><small>Ø PROTEIN</small><b id="mfitProWeekProtein">–</b></div><div><small>Ø KALORIEN</small><b id="mfitProWeekKcal">–</b></div></div><p id="mfitProWeekInsight" class="mfit-pro-note">Deine Wochenwerte erscheinen nach den ersten Einträgen.</p>',$('weekly-momentum-card')||$('mfitSmartCoach'));
 card($('fitness'),'mfitProStrength','Kraftentwicklung & Progression','STRENGTH LAB','<p class="muted">Geschätzte Kraftwerte aus dokumentierten Sätzen. Kein echter Maximaltest.</p><div id="mfitProStrengthList" class="mfit-pro-strength-list"></div><p id="mfitProProgression" class="mfit-pro-note">Speichere mehrere Einheiten derselben Übung, um Trends zu erkennen.</p>',$('mfitTrainingAnalytics')||$('workoutTrackerCard'));
+card($('fitness'),'mfitProRecovery','Regeneration im Überblick','RECOVERY CHECK','<div class="mfit-pro-kpis"><div><small>Ø SCHLAF</small><b id="mfitProSleepAvg">–</b></div><div><small>Ø ENERGIE</small><b id="mfitProEnergyAvg">–</b></div><div><small>Ø MUSKELKATER</small><b id="mfitProSorenessAvg">–</b></div><div><small>CHECK-INS</small><b id="mfitProRecoveryDays">0/7</b></div></div><p id="mfitProRecoveryInsight" class="mfit-pro-note">Erfasse regelmäßig deinen Schlaf, deine Energie und deinen Muskelkater.</p>',$('mfitProStrength')||$('mfitTrainingAnalytics')||$('workoutTrackerCard'));
 }
 function refresh(){
 const ds=days(),f=foods(),w=workouts(),r=recovery(),tracked=ds.filter(d=>f.some(x=>(x.date||today())===d)),recent=f.filter(x=>ds.includes(x.date||today()));
 const perDay=field=>tracked.length?tracked.reduce((sum,d)=>sum+f.filter(x=>(x.date||today())===d).reduce((s,x)=>s+(Number(x[field])||0),0),0)/tracked.length:0;
 const trainDays=new Set(w.filter(x=>ds.includes(x.date)).map(x=>x.date)).size;
+const recoveryWeek=r.filter(x=>ds.includes(x.date)),avgRecovery=k=>recoveryWeek.length?recoveryWeek.reduce((s,x)=>s+(Number(x[k])||0),0)/recoveryWeek.length:null;
+const sleepAvg=avgRecovery('sleep'),energyAvg=avgRecovery('energy'),sorenessAvg=avgRecovery('soreness');
+if($('mfitProSleepAvg'))$('mfitProSleepAvg').textContent=sleepAvg===null?'–':sleepAvg.toFixed(1).replace('.',',')+' h';
+if($('mfitProEnergyAvg'))$('mfitProEnergyAvg').textContent=energyAvg===null?'–':energyAvg.toFixed(1).replace('.',',')+'/10';
+if($('mfitProSorenessAvg'))$('mfitProSorenessAvg').textContent=sorenessAvg===null?'–':sorenessAvg.toFixed(1).replace('.',',')+'/10';
+if($('mfitProRecoveryDays'))$('mfitProRecoveryDays').textContent=recoveryWeek.length+'/7';
+if($('mfitProRecoveryInsight'))$('mfitProRecoveryInsight').textContent=!recoveryWeek.length?'Noch keine Check-ins in den letzten sieben Tagen. Ein kurzer Eintrag hilft dir, Veränderungen wahrzunehmen.':(sleepAvg<7||energyAvg<5||sorenessAvg>=7?'Deine letzten Einträge können auf zusätzlichen Erholungsbedarf hindeuten. Achte auf dein Wohlbefinden und passe die Belastung bei Bedarf an.':'Deine dokumentierten Werte geben dir einen Überblick. Behalte Schlaf, Energie und Muskelkater über mehrere Wochen im Blick.');
 if($('mfitProWeekWorkouts'))$('mfitProWeekWorkouts').textContent=trainDays;
 if($('mfitProWeekFood'))$('mfitProWeekFood').textContent=tracked.length+'/7';
 if($('mfitProWeekProtein'))$('mfitProWeekProtein').textContent=tracked.length?Math.round(perDay('protein'))+' g':'–';
