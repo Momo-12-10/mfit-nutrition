@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a0d12"><meta name="description" content="MFit Performance – Ernährung, Fitness und Alltag in einer App">
-<link rel="manifest" href="manifest.webmanifest?v=78">
+<link rel="manifest" href="manifest.webmanifest?v=96">
 <link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=76">
 <link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=76">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=95">
+<link rel="stylesheet" href="./styles.css?v=96">
 </head>
 <body>
 <header class="brand-header"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR FITNESS COMPANION</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Eat smart. Train hard. Become more.</p></div><span class="pill brand-pill">PERFORMANCE OS</span><button type="button" class="header-settings" onclick="showTab('profile');setTimeout(()=>document.getElementById('settingsHub')?.scrollIntoView({behavior:'smooth',block:'start'}),90)" aria-label="Einstellungen öffnen" title="Einstellungen">⚙</button></div></header>
@@ -97,10 +97,10 @@
 <div class="card workout-planner-card">
  <div class="workout-planner-hero"><div><span class="workout-kicker">MFIT TRAINING LAB</span><h2>Dein Training. Klar geplant.</h2><p>Erstelle deinen persönlichen Wochenplan, entdecke passende Übungen und behalte deine Fortschritte im Blick.</p><button type="button" class="workout-hero-cta" onclick="document.getElementById(&quot;mfitTrainingPlanControls&quot;)?.scrollIntoView({behavior:&quot;smooth&quot;,block:&quot;center&quot;})">Wochenplan erstellen <span>↗</span></button></div><span class="workout-hero-icon">⚡</span></div>
  <div class="fitness-shortcuts" aria-label="Fitness Schnellzugriff">
- <button type="button" onclick="document.getElementById('mfitTrainingPlanControls')?.scrollIntoView({behavior:'smooth',block:'start'})"><span>⚡</span><b>Trainingsplan</b><small>Wochenplan ansehen</small></button>
- <button type="button" onclick="document.getElementById('mfitExerciseLibrary')?.scrollIntoView({behavior:'smooth',block:'start'})"><span>＋</span><b>Übung hinzufügen</b><small>Eigene Übung speichern</small></button>
- <button type="button" onclick="document.getElementById('workoutTrackerCard')?.scrollIntoView({behavior:'smooth',block:'start'})"><span>✓</span><b>Tracken</b><small>Training eintragen</small></button>
- <button type="button" onclick="document.getElementById('workoutHistoryCard')?.scrollIntoView({behavior:'smooth',block:'start'})"><span>↗</span><b>Fortschritt</b><small>Verlauf ansehen</small></button>
+ <button type="button" onclick="mfitOpenFitnessSection('mfitTrainingPlanControls')"><span>⚡</span><b>Trainingsplan</b><small>Wochenplan ansehen</small></button>
+ <button type="button" onclick="mfitOpenFitnessSection('mfitExerciseLibrary')"><span>＋</span><b>Übung hinzufügen</b><small>Eigene Übung speichern</small></button>
+ <button type="button" onclick="mfitOpenFitnessSection('workoutTrackerCard')"><span>✓</span><b>Tracken</b><small>Training eintragen</small></button>
+ <button type="button" onclick="mfitOpenFitnessSection('workoutHistoryCard')"><span>↗</span><b>Fortschritt</b><small>Verlauf ansehen</small></button>
 </div>
  <div class="workout-planner-controls" id="mfitTrainingPlanControls">
   <label for="mfitTrainingType">Welche Trainingsart möchtest du trainieren?</label>
@@ -155,17 +155,17 @@
 <div class="card"><h2>📈 Fortschrittsanalyse</h2><p class="muted">Deine letzten Gewichtseinträge und persönlichen Bestleistungen.</p><div id="weightProgress" class="muted">Noch keine Gewichtsdaten.</div><h3 style="margin-top:16px">Persönliche Bestleistungen</h3><div id="personalRecords" class="muted">Noch keine Übungen gespeichert.</div></div>
 <div class="card"><h2>💪 Muskelgruppen-Tracker</h2><p class="muted">Arbeitssätze der letzten 7 Tage, basierend auf deinen gespeicherten Trainingseinträgen.</p><div id="muscleTracker" class="muted">Noch keine Trainingsdaten.</div></div>
 <div class="card"><h2>😴 Regeneration</h2><p class="muted">Schlaf und subjektives Erholungsgefühl dokumentieren. Dies ist eine Orientierung, keine medizinische Bewertung.</p><div class="grid"><div><label>Schlaf letzte Nacht (Stunden)</label><input id="recoverySleep" type="number" min="0" max="24" step="0.5" placeholder="z. B. 8"></div><div><label>Muskelkater (1–10)</label><input id="recoverySoreness" type="number" min="1" max="10" value="3"></div><div><label>Energiegefühl (1–10)</label><input id="recoveryEnergy" type="number" min="1" max="10" value="7"></div></div><button style="width:100%;margin-top:12px" onclick="saveRecovery()">Erholung speichern</button><div id="recoverySummary" class="notice" style="margin-top:12px">Noch keine Erholungsdaten eingetragen.</div><div id="recoveryHistory" class="muted" style="margin-top:10px"></div></div>
-</section>
+<div class="card" id="trainingNutrition"><h2>Trainingsernährung</h2><p class="muted">Vor dem Training (ca. 1–3 Stunden): leicht verdauliche Kohlenhydrate plus etwas Protein. Danach: eine normale Mahlzeit mit Protein und Kohlenhydraten. Timing und Menge an Hunger, Trainingsdauer und Verträglichkeit anpassen.</p><button class="secondary" onclick="alert('Pre-Workout: Banane + Skyr oder Brot + Topfen. Post-Workout: Reis mit Ei/Huhn/Tofu oder Skyr-Bowl. Passe Portionen an deinen Hunger und Tagesbedarf an.')">Ideen anzeigen</button></div></section>
 <section id="profile" class="hidden">
 <div class="card settings-hub" id="settingsHub">
- <div class="settings-hub-top"><div><span class="settings-kicker">MFIT PERSONAL</span><h2>Deine Einstellungen</h2><p class="muted">Alles Wichtige an einem Ort – übersichtlich und schnell erreichbar.</p></div><span class="settings-hub-icon">⚙</span></div>
+ <div class="settings-hub-top"><div><span class="settings-kicker">MFIT PERSONAL</span><h2>Dein Profil</h2><p class="muted">Persönliche Angaben, App-Einstellungen und Datenschutz – übersichtlich getrennt.</p></div><span class="settings-hub-icon">⚙</span></div>
  <div class="settings-shortcuts">
   <button type="button" class="secondary" onclick="mfitOpenProfileSection('profileGoals')"><span>👤</span><b>Profil & Ziele</b><small>Persönliche Angaben</small></button>
   <button type="button" class="secondary" onclick="mfitOpenProfileSection('appAppearance')"><span>🎨</span><b>Darstellung</b><small>Farben & Design</small></button>
   <button type="button" class="secondary" onclick="mfitOpenProfileSection('appReminders')"><span>🔔</span><b>Erinnerungen</b><small>Deine Check-ins</small></button>
   <button type="button" class="secondary" onclick="mfitOpenProfileSection('weightHistory')"><span>⚖️</span><b>Verlauf</b><small>Körpergewicht</small></button>
+  <button type="button" class="secondary" onclick="mfitOpenProfileSection('privacyCenter')"><span>🔒</span><b>Datenschutz</b><small>Deine Daten & Kontrolle</small></button>
   <button type="button" class="secondary" onclick="mfitOpenProfileSection('dataBackup')"><span>🛡️</span><b>Daten & Backup</b><small>Sichern & wiederherstellen</small></button>
-  <button type="button" class="secondary" onclick="mfitOpenProfileSection('trainingNutrition')"><span>⚡</span><b>Training</b><small>Ernährungstipps</small></button>
  </div>
  <div class="settings-language"><div><b>🌐 App-Sprache</b><p class="muted">Wähle die Sprache für die gesamte App. Deine Auswahl wird auf diesem Gerät gespeichert.</p></div><select id="appLanguage" aria-label="App-Sprache"><option value="de-AT">Deutsch (Österreich)</option><option value="en">English</option><option value="ru">Русский</option></select></div>
  <div class="settings-local-note"><span>🔒</span><p><b>Deine Daten bleiben privat.</b><br>Deine Einträge werden auf diesem Gerät gespeichert. Mit dem Backup kannst du sie manuell sichern.</p></div>
@@ -176,17 +176,28 @@
 <div class="reminder-setting"><label class="reminder-toggle"><input id="reminderWaterEnabled" type="checkbox" checked onchange="saveReminderSettings()"> <span><b>💧 Trink-Erinnerung</b><small>Erinnert dich, wenn du bis dahin weniger getrunken hast als dein Zwischenziel.</small></span></label><div class="grid"><div><label>Uhrzeit</label><input id="reminderWaterTime" type="time" value="12:30" onchange="saveReminderSettings()"></div><div><label>Bis dahin mindestens (ml)</label><input id="reminderWaterMin" type="number" min="100" max="5000" step="100" value="750" onchange="saveReminderSettings()"></div></div></div>
 <div class="reminder-setting"><label class="reminder-toggle"><input id="reminderMealEnabled" type="checkbox" checked onchange="saveReminderSettings()"> <span><b>🍽️ Fehlende Mahlzeit</b><small>Erinnert dich, wenn die ausgewählte Mahlzeit noch nicht eingetragen ist.</small></span></label><div class="grid"><div><label>Mahlzeit</label><select id="reminderMealName" onchange="saveReminderSettings()"><option>Frühstück</option><option selected>Mittagessen</option><option>Abendessen</option></select></div><div><label>Prüfzeit</label><input id="reminderMealTime" type="time" value="14:00" onchange="saveReminderSettings()"></div></div></div>
 <button style="width:100%;margin-top:12px" onclick="enableReminder()">iPhone-Mitteilungen erlauben</button><div id="reminderStatus" class="muted" style="margin-top:9px"></div><div id="reminderNotice" class="notice reminder-notice" hidden></div><p class="muted">Die Erinnerungen werden nur ausgelöst, solange MFit geöffnet ist. iOS stoppt normale Webseiten-Timer im Hintergrund. Für echte Push-Mitteilungen bei geschlossener App wäre ein zusätzlicher Push-Dienst nötig.</p></div>
-<div class="card" id="weightHistory"><h2>Körpergewicht-Verlauf</h2><p class="muted">Trage dein Gewicht gelegentlich ein und verfolge den Verlauf.</p><label>Aktuelles Gewicht (kg)</label><input id="weightLogInput" type="number" step="0.1" placeholder="z. B. 78,0"><button style="width:100%;margin-top:8px" onclick="saveWeightLog()">Gewicht speichern</button><div id="weightHistory" class="muted" style="margin-top:10px"></div></div>
+<div class="card" id="weightHistory"><h2>Körpergewicht-Verlauf</h2><p class="muted">Trage dein Gewicht gelegentlich ein und verfolge den Verlauf.</p><label>Aktuelles Gewicht (kg)</label><input id="weightLogInput" type="number" step="0.1" placeholder="z. B. 78,0"><button style="width:100%;margin-top:8px" onclick="saveWeightLog()">Gewicht speichern</button><div id="weightHistoryList" class="muted" style="margin-top:10px"></div></div>
+<div class="card privacy-card" id="privacyCenter">
+ <div class="row"><div><span class="settings-kicker">PRIVACY CENTER</span><h2>🔒 Datenschutz & Daten</h2><p class="muted">Transparenz und Kontrolle über deine MFit-Daten.</p></div><span class="pill">PRIVAT</span></div>
+ <div class="privacy-status"><span>●</span><div><b>Lokale Speicherung</b><small>Deine Profil-, Ernährungs-, Wasser- und Trainingsdaten werden derzeit in diesem Browser auf diesem Gerät gespeichert.</small></div></div>
+ <div class="privacy-info-list">
+  <div><b>Kein MFit-Nutzerkonto</b><p>Die aktuelle App-Version hat keine Anmeldung und keine automatische Cloud-Synchronisierung. Deine persönlichen Einträge werden nicht an einen MFit-Server übertragen.</p></div>
+  <div><b>Externe Dienste</b><p>Wenn du einen Barcode suchst, wird die EAN zur Produktsuche an Open Food Facts übermittelt. Rezeptbilder können von externen Bildservern geladen werden.</p></div>
+  <div><b>Deine Kontrolle</b><p>Du kannst deine Daten als Datei sichern, auf diesem Gerät wiederherstellen oder alle lokal gespeicherten MFit-Daten löschen.</p></div>
+ </div>
+ <div class="privacy-danger-zone"><div><b>Lokale MFit-Daten löschen</b><p>Entfernt deine gespeicherten MFit-Einträge und Einstellungen aus diesem Browser. Ein zuvor exportiertes Backup bleibt davon unberührt.</p></div><button type="button" class="danger" onclick="clearMfitLocalData()">Alle lokalen MFit-Daten löschen</button></div>
+ <p class="muted privacy-footnote">Hinweis: Dies ist die aktuelle technische Datenübersicht der App und keine Rechtsberatung oder vollständige Datenschutzerklärung.</p>
+</div>
 <div class="card backup-card" id="dataBackup">
  <div class="row"><div><h2>🛡️ Datensicherung</h2><p class="muted">Deine Einträge bleiben auf diesem Gerät. Sichere sie regelmäßig, damit sie bei Geräte- oder Browserwechsel nicht verloren gehen.</p></div><span class="pill">DEINE DATEN</span></div>
  <div class="backup-actions"><button type="button" onclick="downloadMfitBackup()">Backup herunterladen</button><button type="button" class="secondary" onclick="document.getElementById('mfitBackupFile').click()">Backup wiederherstellen</button></div>
  <input id="mfitBackupFile" type="file" accept=".json,application/json" hidden onchange="restoreMfitBackup(event)">
  <p id="backupStatus" class="muted backup-status" aria-live="polite">Das Backup enthält deine Ernährungs-, Wasser-, Trainings-, Profil- und Einkaufseinträge. Es wird nicht an einen Server gesendet.</p>
 </div>
-<div class="card" id="trainingNutrition"><h2>Trainingsernährung</h2><p class="muted">Vor dem Training (ca. 1–3 Stunden): leicht verdauliche Kohlenhydrate plus etwas Protein. Danach: eine normale Mahlzeit mit Protein und Kohlenhydraten. Timing und Menge an Hunger, Trainingsdauer und Verträglichkeit anpassen.</p><button class="secondary" onclick="alert('Pre-Workout: Banane + Skyr oder Brot + Topfen. Post-Workout: Reis mit Ei/Huhn/Tofu oder Skyr-Bowl. Passe Portionen an deinen Hunger und Tagesbedarf an.')">Ideen anzeigen</button></div>
+
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="./app-core.js?v=77"></script><script src="./app.js?v=83"></script><script src="./workout-planner.js?v=95"></script>
+<script src="./app-core.js?v=96"></script><script src="./app.js?v=96"></script><script src="./workout-planner.js?v=95"></script>
 <script src="./i18n.js?v=79"></script>
 </body></html>
