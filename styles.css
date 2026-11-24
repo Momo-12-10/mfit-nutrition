@@ -1665,7 +1665,7 @@ main>section{width:100%;min-width:0}
 .card img,.card svg,.card video{max-width:100%}
 .grid,.row,.mfit-progress-kpis,.settings-shortcuts{min-width:0}
 .grid>*,.row>*{min-width:0}
-input,select,textarea,button{max-width:100%;font:inherit}
+input,select,textarea,button{max-width:100%;font-family:inherit}
 button{min-height:44px;white-space:normal;overflow-wrap:anywhere}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--accent,#8fe39e);outline-offset:3px}
 .mfit-release-card ul{padding-left:19px;margin:9px 0 0}
