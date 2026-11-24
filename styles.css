@@ -1686,3 +1686,17 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
  html{scroll-behavior:auto}
  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+
+/* v106 — Supabase account and cloud backup panel */
+.mfit-cloud-card{border-color:rgba(111,205,151,.24);background:linear-gradient(145deg,rgba(84,173,121,.07),var(--panel))}
+.mfit-cloud-card input{width:100%;margin:6px 0 12px}
+.mfit-cloud-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
+.mfit-cloud-actions button{width:100%;font-size:12px}
+.mfit-cloud-user{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:12px;margin:12px 0}
+.mfit-cloud-user>span{color:#69d99a;font-size:20px}
+.mfit-cloud-user b,.mfit-cloud-user small{display:block;overflow-wrap:anywhere}
+.mfit-cloud-user small{color:var(--muted);font-size:11px;margin-top:3px}
+#mfitCloudStatus{padding:10px 12px;border-radius:10px;background:rgba(120,150,130,.08);overflow-wrap:anywhere}
+.mfit-cloud-card button:disabled{opacity:.55;cursor:wait}
+@media(max-width:420px){.mfit-cloud-actions{grid-template-columns:1fr}}
