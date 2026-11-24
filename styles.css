@@ -1591,3 +1591,65 @@ main>section{min-width:0}
 @media(min-width:760px){.mfit-app-header{padding-left:28px;padding-right:28px}.mfit-app-header .brand-logo{width:54px;height:54px;flex-basis:54px}.mfit-app-header h1{font-size:27px}main{padding:22px 24px 42px}.card{padding:19px;margin:12px 0}}
 @media(max-width:390px){.mfit-app-header{padding-left:13px;padding-right:13px}.mfit-app-header .brand-logo{width:42px;height:42px;flex-basis:42px}.mfit-app-header h1{font-size:21px}.mfit-app-header h1 small{font-size:8px}.mfit-app-header p{font-size:9px}.mfit-header-actions{gap:5px}.mfit-header-profile,.mfit-app-header .header-settings{width:35px;height:35px;min-height:35px}.mfit-header-status{font-size:7px;letter-spacing:.8px}}
 @media(prefers-reduced-motion:reduce){.mfit-card-collapse-toggle svg{transition:none}}
+
+
+/* v104 — analytics, saved meals, weekly goals and adaptive theme */
+.mfit-advanced-card{border-color:rgba(123,220,165,.17);background:linear-gradient(145deg,rgba(25,42,49,.97),rgba(15,23,32,.99))}
+.mfit-advanced-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}
+.mfit-advanced-heading h2{margin:4px 0 0;font-size:16px}
+.mfit-advanced-mark{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:rgba(122,224,163,.1);color:#9cebbb}
+.mfit-analytics-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:13px 0}
+.mfit-analytics-kpis>div{min-width:0;padding:11px 9px;border:1px solid rgba(255,255,255,.075);border-radius:12px;background:rgba(255,255,255,.025)}
+.mfit-analytics-kpis small{display:block;font-size:8px;letter-spacing:.7px;color:#9eafa8}
+.mfit-analytics-kpis b{display:block;font-size:19px;margin-top:5px;letter-spacing:-.5px}
+.mfit-chart-title{display:flex;justify-content:space-between;align-items:center;margin:14px 0 7px;font-size:11px}
+.mfit-chart-title small{color:var(--muted)}
+.mfit-bars{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end;min-height:112px;padding:8px 4px 0;border-bottom:1px solid rgba(255,255,255,.09)}
+.mfit-bar-col{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:105px}
+.mfit-bar-value{height:11px;font-size:8px;color:#b8c8c0}
+.mfit-bar-track{width:min(100%,22px);height:72px;border-radius:7px 7px 3px 3px;background:rgba(255,255,255,.055);display:flex;align-items:flex-end;overflow:hidden}
+.mfit-bar-track i{display:block;width:100%;min-height:0;border-radius:7px 7px 2px 2px;background:linear-gradient(180deg,#a0efbd,#4ba978)}
+.mfit-bar-col small{font-size:8px;color:#9eafa8}
+.mfit-analytics-note{margin-top:12px;padding:10px 11px;border-radius:10px;background:rgba(255,255,255,.035);font-size:9px;line-height:1.5;color:#aab9b1}
+.mfit-quick-meal-form{display:grid;gap:7px}
+.mfit-quick-meal-list{display:grid;gap:7px;margin-top:12px}
+.mfit-quick-meal{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:7px;padding:10px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.025)}
+.mfit-quick-meal>div{min-width:0}
+.mfit-quick-meal b,.mfit-quick-meal small{display:block}
+.mfit-quick-meal b{font-size:11px;overflow-wrap:anywhere}
+.mfit-quick-meal small{font-size:9px;color:var(--muted);margin-top:3px}
+.mfit-quick-meal button{padding:7px 9px!important;font-size:9px!important;white-space:nowrap}
+.mfit-pr-highlights{margin-top:12px}
+.mfit-pr-highlights>b{display:block;font-size:11px;margin-bottom:6px}
+.mfit-pr-highlights>div{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:10px}
+.mfit-pr-highlights strong{white-space:nowrap;color:#a4e9bc}
+.mfit-challenge-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mfit-challenge-progress{display:grid;gap:12px;margin-top:15px}
+.mfit-goal-line>div:first-child{display:flex;justify-content:space-between;gap:8px;font-size:10px;margin-bottom:6px}
+.mfit-goal-line span{color:var(--muted)}
+.mfit-goal-track{height:8px;border-radius:20px;overflow:hidden;background:rgba(255,255,255,.09)}
+.mfit-goal-track i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#59b982,#a1edba)}
+.mfit-xp-progress{margin-top:15px;padding:12px;border:1px solid rgba(129,220,164,.16);border-radius:12px;background:rgba(110,204,146,.055)}
+.mfit-level-head{display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:8px}
+.mfit-level-head span{font-weight:900;letter-spacing:1px;color:#a5e9bd}
+.mfit-xp-progress small{display:block;margin-top:7px;font-size:9px;color:var(--muted)}
+.mfit-theme-preview{display:flex;align-items:center;gap:10px;padding:12px;margin-top:12px;border:1px solid var(--line);border-radius:12px}
+.mfit-theme-preview>span{width:32px;height:32px;border-radius:10px;background:var(--green,#65d58b);box-shadow:0 0 18px color-mix(in srgb,var(--green,#65d58b) 25%,transparent)}
+.mfit-theme-preview b,.mfit-theme-preview small{display:block}
+.mfit-theme-preview b{font-size:11px}
+.mfit-theme-preview small{font-size:9px;color:var(--muted);margin-top:3px}
+html[data-mfit-theme="light"]{--panel:#fff;--line:#dce5e0;--muted:#65756d;color-scheme:light}
+html[data-mfit-theme="light"] body{background:#f1f5f3;color:#17231d}
+html[data-mfit-theme="light"] .card{background:linear-gradient(145deg,#fff,#f8fbf9);border-color:#dce7e1;box-shadow:0 7px 22px rgba(24,54,38,.07)}
+html[data-mfit-theme="light"] .mfit-app-header{background:linear-gradient(118deg,#eaf2f6,#e7f3eb);border-bottom-color:#d6e5dc}
+html[data-mfit-theme="light"] .mfit-app-header h1,html[data-mfit-theme="light"] .mfit-header-status{color:#20372b}
+html[data-mfit-theme="light"] .mfit-app-header p,html[data-mfit-theme="light"] .mfit-app-header h1 small,html[data-mfit-theme="light"] .mfit-header-edition,html[data-mfit-theme="light"] .mfit-app-header .brand-eyebrow{color:#5c7167}
+html[data-mfit-theme="light"] .mfit-header-profile,html[data-mfit-theme="light"] .mfit-app-header .header-settings{color:#20372b!important;background:rgba(255,255,255,.65)!important;border-color:#d2e1d8!important}
+html[data-mfit-theme="light"] .mfit-advanced-card{background:linear-gradient(145deg,#fff,#f5faf7);border-color:#d5e7dc}
+html[data-mfit-theme="light"] .mfit-analytics-kpis>div,html[data-mfit-theme="light"] .mfit-quick-meal,html[data-mfit-theme="light"] .mfit-theme-preview{background:#f6faf7;border-color:#e0e9e4}
+html[data-mfit-theme="light"] .mfit-analytics-note{background:#f1f6f3;color:#53645b}
+html[data-mfit-theme="light"] .mfit-analytics-kpis small,html[data-mfit-theme="light"] .mfit-bar-col small,html[data-mfit-theme="light"] .mfit-bar-value{color:#65756d}
+html[data-mfit-theme="light"] .mfit-bar-track{background:#e7efea}
+html[data-mfit-theme="light"] .mfit-pr-highlights strong,html[data-mfit-theme="light"] .mfit-level-head span{color:#28794a}
+html[data-mfit-theme="light"] input,html[data-mfit-theme="light"] select,html[data-mfit-theme="light"] textarea{background:#fff;color:#17231d;border-color:#d5e1da}
+@media(max-width:390px){.mfit-quick-meal{grid-template-columns:minmax(0,1fr) auto}.mfit-quick-meal button:last-child{grid-column:2}.mfit-analytics-kpis b{font-size:16px}.mfit-bars{gap:5px}}
