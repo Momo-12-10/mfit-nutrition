@@ -1230,7 +1230,7 @@ hr{opacity:.7}
 .mfit-compact-accordion[open] .mfit-accordion-chevron{transform:rotate(180deg)}
 .mfit-accordion-content{padding:8px}
 .mfit-accordion-inner{margin:0!important;border:0!important;box-shadow:none!important;background:transparent!important;padding:8px!important}
-#profile,#fitness{display:block}
+#profile:not(.hidden),#fitness:not(.hidden){display:block}#profile.hidden,#fitness.hidden{display:none!important}
 #profile>.mfit-compact-accordion,#fitness>.mfit-compact-accordion{scroll-margin-top:12px}
 #fitness .mfit-compact-accordion .mfit-body-card{padding:8px!important}
 #fitness .mfit-compact-accordion .workout-planner-card{padding:10px!important}
