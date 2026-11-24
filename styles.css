@@ -1391,3 +1391,49 @@ hr{opacity:.7}
 #settings .reminder-toggle small{color:var(--muted);line-height:1.45}
 .mfit-reduced-motion *, .mfit-reduced-motion *::before, .mfit-reduced-motion *::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 @media(max-width:420px){#settings .settings-shortcuts{gap:7px}#settings .settings-shortcuts button{padding:10px;min-height:82px}}
+
+
+/* v98 — compact gear popover and space-saving exercise library */
+.mfit-settings-menu{position:fixed;inset:0;z-index:1200;display:flex;align-items:flex-start;justify-content:flex-end;padding:calc(env(safe-area-inset-top,0px) + 72px) 14px 20px;background:rgba(3,8,14,.58);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+.mfit-settings-menu.hidden{display:none!important}
+.mfit-settings-popover{width:min(360px,100%);padding:16px;border:1px solid rgba(195,220,240,.18);border-radius:20px;background:linear-gradient(150deg,#1c2a38,#101923 78%);box-shadow:0 22px 70px rgba(0,0,0,.48);animation:mfitMenuIn .18s ease-out}
+@keyframes mfitMenuIn{from{opacity:0;transform:translateY(-8px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.mfit-settings-popover-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
+.mfit-settings-popover-head h2{font-size:18px;margin:4px 0 0}
+.mfit-menu-close{width:34px;min-height:34px;height:34px;padding:0!important;border-radius:50%!important;background:rgba(255,255,255,.08)!important;color:#fff!important;font-size:23px!important}
+.mfit-menu-main-action,.mfit-menu-secondary-action{width:100%;display:grid;grid-template-columns:36px minmax(0,1fr) 16px;align-items:center;gap:10px;text-align:left;padding:12px!important;margin-top:8px;border-radius:13px!important;border:1px solid rgba(190,220,240,.13)!important;background:rgba(255,255,255,.045)!important;color:#f1f6fa!important}
+.mfit-menu-main-action{background:rgba(166,255,63,.10)!important;border-color:rgba(166,255,63,.28)!important}
+.mfit-menu-main-action>span:first-child,.mfit-menu-secondary-action>span:first-child{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:rgba(255,255,255,.07);font-size:18px}
+.mfit-menu-main-action b,.mfit-menu-secondary-action b{display:block;font-size:12px}
+.mfit-menu-main-action small,.mfit-menu-secondary-action small{display:block;margin-top:3px;font-size:9px;line-height:1.35;color:#aab9c8}
+.mfit-menu-main-action i,.mfit-menu-secondary-action i{font-style:normal;font-size:20px;color:#b8ff75}
+.mfit-exercise-catalog{gap:5px}
+.mfit-exercise-card{padding:7px 9px;border-radius:10px;background:rgba(255,255,255,.018)}
+.mfit-exercise-card-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px}
+.mfit-exercise-card-head>div{min-width:0}
+.mfit-exercise-copy b{display:block;font-size:11px;line-height:1.25;overflow-wrap:anywhere}
+.mfit-exercise-copy small{display:block;font-size:8px;line-height:1.25;margin-top:2px;color:var(--muted)}
+.mfit-exercise-actions{display:flex;justify-content:flex-end;align-items:center;gap:4px}
+.mfit-exercise-actions button{min-height:27px!important;padding:5px 7px!important;font-size:8px!important;line-height:1.1;border-radius:8px!important;white-space:nowrap}
+.anatomy-browser{margin:9px 0;padding:9px;border-radius:12px}
+.anatomy-browser-heading p{margin:3px 0 7px;font-size:9px}
+.anatomy-filter-groups,.anatomy-filter-subgroups{gap:5px}
+.anatomy-filter-chip,.anatomy-sub-chip{padding:6px 8px!important;font-size:9px!important}
+.anatomy-sub-chip{display:flex;align-items:center;gap:4px}
+.anatomy-sub-chip small{display:none}
+.anatomy-filter-subgroups{padding-top:7px;margin-top:7px}
+.mfit-body-overview-library{margin:4px auto 6px!important;padding:0!important;max-width:320px}
+.mfit-body-overview-library .mfit-muscle-atlas{max-height:165px!important}
+.mfit-body-overview-library .anatomy-muscle-key{display:none!important}
+.workout-library-card .row p{font-size:10px;margin:3px 0 0}
+.exercise-library-search{margin:8px 0}
+.exercise-library-search label{font-size:10px}
+.exercise-library-search input{min-height:40px}
+@media(max-width:420px){
+ .mfit-settings-menu{padding-left:10px;padding-right:10px}
+ .mfit-settings-popover{width:100%}
+ .mfit-exercise-card-head{grid-template-columns:minmax(0,1fr)}
+ .mfit-exercise-actions{justify-content:flex-start}
+ .mfit-exercise-actions button{flex:0 0 auto}
+ .mfit-body-overview-library .mfit-muscle-atlas{max-height:145px!important}
+}
