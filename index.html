@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=76">
 <link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=76">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=94">
+<link rel="stylesheet" href="./styles.css?v=95">
 </head>
 <body>
 <header class="brand-header"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR FITNESS COMPANION</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Eat smart. Train hard. Become more.</p></div><span class="pill brand-pill">PERFORMANCE OS</span><button type="button" class="header-settings" onclick="showTab('profile');setTimeout(()=>document.getElementById('settingsHub')?.scrollIntoView({behavior:'smooth',block:'start'}),90)" aria-label="Einstellungen öffnen" title="Einstellungen">⚙</button></div></header>
@@ -95,14 +95,14 @@
 </section>
 <section id="fitness" class="hidden">
 <div class="card workout-planner-card">
- <div class="workout-planner-hero"><div><span class="workout-kicker">MFIT TRAINING LAB</span><h2>Dein Trainingsplan. Dein Fortschritt.</h2><p>Wähle Trainingsart, Ziel und Zeitraum. MFit erstellt dir eine abwechslungsreiche 7-Tage-Woche mit Training und sinnvoller Regeneration.</p></div><span class="workout-hero-icon">⚡</span></div>
+ <div class="workout-planner-hero"><div><span class="workout-kicker">MFIT TRAINING LAB</span><h2>Dein Training. Klar geplant.</h2><p>Erstelle deinen persönlichen Wochenplan, entdecke passende Übungen und behalte deine Fortschritte im Blick.</p><button type="button" class="workout-hero-cta" onclick="document.getElementById(&quot;mfitTrainingPlanControls&quot;)?.scrollIntoView({behavior:&quot;smooth&quot;,block:&quot;center&quot;})">Wochenplan erstellen <span>↗</span></button></div><span class="workout-hero-icon">⚡</span></div>
  <div class="fitness-shortcuts" aria-label="Fitness Schnellzugriff">
- <button type="button" onclick="document.getElementById('mfitTrainingPlanOutput')?.scrollIntoView({behavior:'smooth',block:'start'})"><span>⚡</span><b>Trainingsplan</b><small>Wochenplan ansehen</small></button>
+ <button type="button" onclick="document.getElementById('mfitTrainingPlanControls')?.scrollIntoView({behavior:'smooth',block:'start'})"><span>⚡</span><b>Trainingsplan</b><small>Wochenplan ansehen</small></button>
  <button type="button" onclick="document.getElementById('mfitExerciseLibrary')?.scrollIntoView({behavior:'smooth',block:'start'})"><span>＋</span><b>Übung hinzufügen</b><small>Eigene Übung speichern</small></button>
  <button type="button" onclick="document.getElementById('workoutTrackerCard')?.scrollIntoView({behavior:'smooth',block:'start'})"><span>✓</span><b>Tracken</b><small>Training eintragen</small></button>
  <button type="button" onclick="document.getElementById('workoutHistoryCard')?.scrollIntoView({behavior:'smooth',block:'start'})"><span>↗</span><b>Fortschritt</b><small>Verlauf ansehen</small></button>
 </div>
- <div class="workout-planner-controls">
+ <div class="workout-planner-controls" id="mfitTrainingPlanControls">
   <label for="mfitTrainingType">Welche Trainingsart möchtest du trainieren?</label>
   <select id="mfitTrainingType">
    <option value="hypertrophy">Hypertrophietraining · Muskelaufbau</option>
@@ -124,7 +124,7 @@
    <div><label for="mfitTrainingSplit">Trainingsaufteilung</label><select id="mfitTrainingSplit"><option value="full">Ganzkörper</option><option value="upperlower">Oberkörper / Unterkörper</option><option value="pushpull">Push / Pull / Beine</option></select></div>
    <div><label for="mfitTrainingEquipment">Equipment</label><select id="mfitTrainingEquipment"><option value="gym">Fitnessstudio</option><option value="machines">Maschinen & Kabelzug</option><option value="free">Freihanteln & Kabelzug</option><option value="body">Körpergewicht</option></select></div>
   </div>
-  <button type="button" class="workout-create-btn" onclick="mfitBuildTrainingPlan()">✦ Meinen 7-Tage-Plan erstellen</button>
+  <button type="button" class="workout-create-btn" onclick="mfitBuildTrainingPlan()">✦ Meinen 7-Tage-Plan erstellen</button><p class="workout-control-footnote">Deine Einstellungen kannst du jederzeit ändern und eine neue Woche erstellen.</p>
  </div>
  <div id="mfitTrainingPlanOutput" aria-live="polite"></div>
  <div class="workout-science-note"><b>Trainingshinweis</b><p>Ein 7-Tage-Plan bedeutet nicht sieben harte Trainingstage. Er enthält bewusst Ruhetage. Steigere Belastung schrittweise und trainiere technisch sauber. Bei Maximalkraft keine 1-Wiederholungs-Maximaltests auf eigene Faust; Reaktivkraftübungen nur mit sicherer Landetechnik und passender Anleitung.</p></div>
@@ -187,6 +187,6 @@
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="./app-core.js?v=77"></script><script src="./app.js?v=83"></script><script src="./workout-planner.js?v=94"></script>
+<script src="./app-core.js?v=77"></script><script src="./app.js?v=83"></script><script src="./workout-planner.js?v=95"></script>
 <script src="./i18n.js?v=79"></script>
 </body></html>
