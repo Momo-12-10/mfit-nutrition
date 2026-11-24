@@ -254,9 +254,9 @@ renderShopCatalog();renderShopItems();
  function initProfile(){
   const section=document.getElementById('profile');if(!section||section.dataset.compactReady)return;
   section.dataset.compactReady='1';
-  [...section.children].filter(el=>el.classList.contains('card')).forEach((card,i)=>{
+  [...section.children].filter(el=>el.classList.contains('card')&&el.id!=='settingsHub').forEach((card,i)=>{
    const heading=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';
-   const subtitle=card.id==='settingsHub'?'Persönliche App-Einstellungen':card.id==='profileGoals'?'Persönliche Angaben und Trainingsziele':card.id==='appAppearance'?'Farben und Darstellung':card.id==='appReminders'?'Erinnerungen und Check-ins':card.id==='weightHistory'?'Dein Gewichtsverlauf':card.id==='dataBackup'?'Daten sichern und wiederherstellen':'Hinweise und Empfehlungen';
+   const subtitle=card.id==='settingsHub'?'Persönliche App-Einstellungen':card.id==='profileGoals'?'Persönliche Angaben und Trainingsziele':card.id==='appAppearance'?'Farben und Darstellung':card.id==='appReminders'?'Erinnerungen und Check-ins':card.id==='weightHistory'?'Dein Gewichtsverlauf':card.id==='dataBackup'?'Daten sichern und wiederherstellen':card.id==='privacyCenter'?'Datenschutz und Datenkontrolle':'Hinweise und Empfehlungen';
    const wrap=makeAccordion(heading,subtitle,[card],false);section.insertBefore(wrap,card);card.classList.add('mfit-accordion-inner');
   });
  }
@@ -286,16 +286,28 @@ renderShopCatalog();renderShopItems();
    else if(h2.includes('Fortschrittsanalyse')){title='Fortschritt & Bestleistungen';sub='Gewichtsverlauf und persönliche Rekorde';}
    else if(h2.includes('Muskelgruppen-Tracker')){title='Muskelgruppen-Tracker';sub='Wöchentliches Trainingsvolumen';}
    else if(h2.includes('Regeneration')){title='Regeneration';sub='Schlaf, Muskelkater und Energie';}
+   else if(h2.includes('Trainingsernährung')){title='Trainingsernährung';sub='Essen vor und nach dem Training';}
    if(title){groups.push({title,sub,items:[el]});}
    else {groups.push({title:'Weitere Trainingsdaten',sub:'Zusätzliche Informationen',items:[el]});}
    i++;
   }
   groups.forEach(g=>{const wrap=makeAccordion(g.title,g.sub,g.items,false);section.appendChild(wrap);});
  }
- window.mfitOpenProfileSection=function(id){
+ function openMfitAccordionTarget(id){
   const target=document.getElementById(id);if(!target)return;
   const accordion=target.closest('details.mfit-compact-accordion');if(accordion)accordion.open=true;
   target.scrollIntoView({behavior:'smooth',block:'start'});
- };
+ }
+ window.mfitOpenProfileSection=openMfitAccordionTarget;
+ window.mfitOpenFitnessSection=openMfitAccordionTarget;
  initProfile();initFitness();
 })();
+
+function clearMfitLocalData(){
+ if(!confirm('Möchtest du wirklich alle lokal gespeicherten MFit-Daten und Einstellungen auf diesem Gerät löschen? Dieser Schritt kann nicht rückgängig gemacht werden. Erstelle vorher bei Bedarf ein Backup.'))return;
+ try{
+  const keys=[];for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(key&&key.startsWith('mfit_'))keys.push(key);}
+  keys.forEach(key=>localStorage.removeItem(key));
+  location.reload();
+ }catch(e){const status=document.getElementById('backupStatus');if(status)status.textContent='Die Daten konnten nicht vollständig gelöscht werden. Bitte prüfe die Browser-Speichereinstellungen.';}
+}
