@@ -1889,3 +1889,14 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
  nav.mfit-nav .nav-icon{font-size:20px}
  nav.mfit-nav .nav-label{font-size:12px}
 }
+
+/* MFit v118 — unified rest timer controls */
+.mfit-rest-panel{align-items:flex-start}
+.mfit-rest-status{display:block;color:var(--muted);font-size:11px;line-height:1.35;margin-top:5px}
+.mfit-rest-actions{display:grid;gap:7px;min-width:0;flex:1}
+.mfit-rest-actions .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.mfit-rest-actions button{min-width:0;padding:8px 6px;font-size:12px}
+.mfit-pr-row{gap:4px 12px}
+.mfit-pr-row>span{font-size:12px}
+.mfit-pr-row>small{font-size:11px;line-height:1.4}
+@media(max-width:390px){.mfit-rest-panel{flex-direction:column}.mfit-rest-actions{width:100%}}
