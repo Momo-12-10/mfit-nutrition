@@ -15,11 +15,22 @@
  function card(id,title,body,cls){
   return '<div class="card mfit-advanced-card '+(cls||'')+'" id="'+id+'"><div class="mfit-advanced-heading"><div><span class="settings-kicker">MFIT PERFORMANCE TOOLS</span><h2>'+title+'</h2></div><span class="mfit-advanced-mark">✦</span></div>'+body+'</div>';
  }
+ // Liefert das direkte Kind-Element, falls ein Ziel durch ein Accordion verschachtelt wurde.
+ function directChild(parent,target){
+  if(!parent||!target)return null;
+  let node=target;
+  while(node&&node.parentNode!==parent)node=node.parentNode;
+  return node&&node.parentNode===parent?node:null;
+ }
+ function insertBeforeSafe(parent,node,target){
+  if(!parent||!node)return;
+  parent.insertBefore(node,directChild(parent,target));
+ }
  function install(){
   const home=$('home');
   if(home&&!$('mfitNutritionAnalytics')){
    const body='<p class="muted">Deine letzten sieben Tage im Vergleich – nur aus den Einträgen, die du gespeichert hast.</p><div class="mfit-analytics-kpis"><div><small>Ø KALORIEN</small><b id="mfitAnaKcal">–</b></div><div><small>Ø PROTEIN</small><b id="mfitAnaProtein">–</b></div><div><small>TRACKING-TAGE</small><b id="mfitAnaDays">0/7</b></div></div><div class="mfit-chart-title"><b>Protein pro Tag</b><small>Gramm</small></div><div id="mfitProteinChart" class="mfit-bars" role="img" aria-label="Proteinverlauf der letzten sieben Tage"></div><div class="mfit-analytics-note" id="mfitAnaInsight">Sobald du Einträge speicherst, erscheint hier deine Analyse.</div>';
-   const node=document.createElement('div');node.innerHTML=card('mfitNutritionAnalytics','Ernährungsanalyse',body,'mfit-nutrition-analytics').trim();home.insertBefore(node.firstChild,$('mfitSmartCoach')?.nextSibling||null);
+   const node=document.createElement('div');node.innerHTML=card('mfitNutritionAnalytics','Ernährungsanalyse',body,'mfit-nutrition-analytics').trim();insertBeforeSafe(home,node.firstChild,directChild(home,$('mfitSmartCoach'))?.nextSibling||null);
   }
   const track=$('track');
   if(track&&!$('mfitQuickMeals')){
@@ -29,17 +40,17 @@
   const fitness=$('fitness');
   if(fitness&&!$('mfitTrainingAnalytics')){
    const body='<p class="muted">Trainingsbelastung und Bestleistungen aus deinen gespeicherten Einheiten.</p><div class="mfit-analytics-kpis"><div><small>WORKOUTS · 7 TAGE</small><b id="mfitTrainDays">0</b></div><div><small>ARBEITSSÄTZE</small><b id="mfitTrainSets">0</b></div><div><small>VOLUMEN</small><b id="mfitTrainVolume">0 kg</b></div></div><div class="mfit-chart-title"><b>Trainingsvolumen · 7 Tage</b><small>kg</small></div><div id="mfitVolumeChart" class="mfit-bars" role="img" aria-label="Trainingsvolumen der letzten sieben Tage"></div><div id="mfitPRHighlights" class="mfit-pr-highlights"></div><p class="mfit-analytics-note">Das Volumen ist eine rechnerische Orientierung (Sätze × Wiederholungen × Gewicht), kein vollständiges Maß für Trainingsbelastung. Geräte und Körpergewichtsübungen sind nur eingeschränkt vergleichbar.</p>';
-   const node=document.createElement('div');node.innerHTML=card('mfitTrainingAnalytics','Trainingsanalyse',body,'mfit-training-analytics').trim();fitness.insertBefore(node.firstChild,$('workoutHistoryCard')||null);
+   const node=document.createElement('div');node.innerHTML=card('mfitTrainingAnalytics','Trainingsanalyse',body,'mfit-training-analytics').trim();insertBeforeSafe(fitness,node.firstChild,$('workoutHistoryCard'));
   }
   const profile=$('profile');
   if(profile&&!$('mfitChallenges')){
    const body='<p class="muted">Setze realistische Wochenziele. MFit zählt deine dokumentierten Aktivitäten – ohne tägliche Perfektion zu verlangen.</p><div class="mfit-challenge-grid"><div><label for="mfitChallengeWorkouts">Trainings pro Woche</label><select id="mfitChallengeWorkouts"><option value="2">2 Einheiten</option><option value="3">3 Einheiten</option><option value="4">4 Einheiten</option><option value="5">5 Einheiten</option><option value="6">6 Einheiten</option></select></div><div><label for="mfitChallengeTracking">Ernährung tracken</label><select id="mfitChallengeTracking"><option value="3">3 Tage</option><option value="4">4 Tage</option><option value="5">5 Tage</option><option value="6">6 Tage</option><option value="7">7 Tage</option></select></div></div><button type="button" onclick="mfitSaveChallenges()">Wochenziele speichern</button><div id="mfitChallengeProgress" class="mfit-challenge-progress"></div><div id="mfitXPProgress" class="mfit-xp-progress"></div>';
-   const node=document.createElement('div');node.innerHTML=card('mfitChallenges','Wochenziele & Level',body,'mfit-challenges').trim();profile.insertBefore(node.firstChild,$('appAppearance')||null);
+   const node=document.createElement('div');node.innerHTML=card('mfitChallenges','Wochenziele & Level',body,'mfit-challenges').trim();insertBeforeSafe(profile,node.firstChild,$('appAppearance'));
   }
   const settings=$('settings');
   if(settings&&!$('mfitAdvancedPreferences')){
    const body='<p class="muted">Passe die Darstellung an. Die Auswahl wird lokal auf diesem Gerät gespeichert.</p><label for="mfitThemeMode">Darstellung</label><select id="mfitThemeMode" onchange="mfitSetThemeMode(this.value)"><option value="dark">Dark Performance</option><option value="light">Light Performance</option><option value="system">Wie Geräteeinstellung</option></select><div class="mfit-theme-preview"><span></span><div><b>Dein MFit-Workspace</b><small>Deine Daten bleiben auf diesem Gerät.</small></div></div><div class="mfit-analytics-note">Dein Konto unterstützt manuelle Cloud-Backups und Wiederherstellung. Lade deine Daten nach wichtigen Änderungen in die Cloud hoch; automatische Synchronisierung ist derzeit noch nicht aktiv.</div>';
-   const node=document.createElement('div');node.innerHTML=card('mfitAdvancedPreferences','Darstellung & Workspace',body,'mfit-advanced-preferences').trim();settings.insertBefore(node.firstChild,$('mfitAboutSettings')||null);
+   const node=document.createElement('div');node.innerHTML=card('mfitAdvancedPreferences','Darstellung & Workspace',body,'mfit-advanced-preferences').trim();insertBeforeSafe(settings,node.firstChild,$('mfitAboutSettings'));
   }
   $('mfitChallengeWorkouts')&&($('mfitChallengeWorkouts').value=String(challenge.workouts));
   $('mfitChallengeTracking')&&($('mfitChallengeTracking').value=String(challenge.tracking));
