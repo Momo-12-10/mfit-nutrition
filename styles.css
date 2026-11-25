@@ -1900,3 +1900,15 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .mfit-pr-row>span{font-size:12px}
 .mfit-pr-row>small{font-size:11px;line-height:1.4}
 @media(max-width:390px){.mfit-rest-panel{flex-direction:column}.mfit-rest-actions{width:100%}}
+
+/* Auftrag C – Kraftverlauf */
+.mfit-strength-chart-head{display:grid;gap:6px;margin:16px 0 8px}
+.mfit-strength-chart-head label{font-size:12px;font-weight:650;color:var(--muted)}
+.mfit-strength-chart-head select{width:100%;min-height:42px}
+.mfit-strength-chart{min-width:0;overflow:hidden;border:1px solid var(--border);border-radius:14px;padding:10px;margin-top:8px}
+.mfit-strength-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--muted);margin:2px 0 8px}
+.mfit-strength-legend span{display:inline-flex;align-items:center;gap:6px}
+.mfit-strength-legend i{display:inline-block;width:17px;height:3px;border-radius:4px;background:var(--accent)}
+.mfit-strength-legend i.one-rm{background:#e0a34a}
+.mfit-strength-svg{display:block;width:100%;height:auto;overflow:visible}
+.mfit-strength-chart .muted{font-size:11px;line-height:1.45;margin:8px 0 2px}
