@@ -66,6 +66,19 @@
   try{localStorage.setItem(OWNER_KEY,user.id)}catch(e){say('Cloud-Backup gespeichert. Die lokale Kontozuordnung konnte nicht gespeichert werden; bestätige sie beim nächsten Upload erneut.');return}
   say('Cloud-Backup gespeichert ('+Object.keys(data).length+' lokale Datensätze/Einstellungen). Die lokalen Daten sind diesem Konto zugeordnet.');
  });
+ window.mfitCloudDeleteAccount=()=>run(async()=>{
+  if(!user)throw Error('Bitte zuerst anmelden.');
+  const email=user.email||'';
+  if(!confirm('ACHTUNG: Dein MFit-Konto und dein Cloud-Backup werden dauerhaft gelöscht. Deine lokalen Daten auf diesem Gerät bleiben erhalten. Möchtest du fortfahren?'))return;
+  const typed=prompt('Zur Bestätigung gib exakt LÖSCHEN ein.');
+  if(typed!=='LÖSCHEN')throw Error('Löschung abgebrochen. Es wurde nichts geändert.');
+  const {data,error}=await client().functions.invoke('delete-mfit-account',{body:{confirmation:'DELETE_MY_ACCOUNT'}});
+  if(error)throw error;
+  if(!data||data.deleted!==true)throw Error(data&&data.error?data.error:'Das Konto konnte nicht eindeutig gelöscht werden.');
+  try{localStorage.removeItem(OWNER_KEY)}catch(e){}
+  user=null;show(null);
+  say('Dein MFit-Konto und die Cloud-Daten wurden gelöscht. Deine lokalen Daten auf diesem Gerät bleiben erhalten.');
+ });
  window.mfitCloudDownload=()=>run(async()=>{
   if(!user)throw Error('Bitte zuerst anmelden.');
   if(!confirm('Cloud-Daten dieses Kontos auf dieses Gerät laden? Die aktuellen lokalen MFit-Daten werden ersetzt. Vorher wird automatisch ein Sicherheitsbackup erstellt.'))return;
