@@ -1912,3 +1912,23 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .mfit-strength-legend i.one-rm{background:#e0a34a}
 .mfit-strength-svg{display:block;width:100%;height:auto;overflow:visible}
 .mfit-strength-chart .muted{font-size:11px;line-height:1.45;margin:8px 0 2px}
+
+/* Auftrag E – dreistufiges Onboarding */
+.mfit-onboarding{position:fixed;inset:0;z-index:1000;overflow-y:auto;overscroll-behavior:contain;background:rgba(5,9,14,.96);padding:calc(18px + env(safe-area-inset-top)) 14px calc(18px + env(safe-area-inset-bottom));}
+.mfit-onboarding-card{width:min(100%,620px);margin:18px auto;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,4vw,28px);box-shadow:0 20px 70px #0007}
+.mfit-onboarding-brand{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--muted)}
+.mfit-onboarding-brand img{border-radius:12px}
+.mfit-onboarding-progress{display:flex;gap:7px;margin:22px 0}
+.mfit-onboarding-progress span{height:4px;flex:1;border-radius:8px;background:var(--line)}
+.mfit-onboarding-progress span.is-active,.mfit-onboarding-progress span.is-complete{background:var(--accent)}
+.mfit-onboarding-step h2{font-size:clamp(23px,6vw,30px);line-height:1.15;letter-spacing:-.03em;margin:10px 0}
+.mfit-onboarding-step>p{line-height:1.55}
+.mfit-onboarding-feature{display:grid;gap:4px;padding:13px 14px;border:1px solid var(--line);border-radius:13px;margin:10px 0}
+.mfit-onboarding-feature b{font-size:14px}
+.mfit-onboarding-feature span{font-size:13px;color:var(--muted);line-height:1.45}
+.mfit-onboarding-step label{display:block;margin:12px 0 5px}
+.mfit-onboarding-step input,.mfit-onboarding-step select{width:100%;min-width:0}
+.mfit-onboarding-step button{width:100%;margin-top:10px;min-height:44px}
+.mfit-onboarding-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.mfit-onboarding-step [hidden]{display:none!important}
+@media(max-width:390px){.mfit-onboarding-card{padding:16px;border-radius:18px}.mfit-onboarding-actions{grid-template-columns:1fr 1fr}}

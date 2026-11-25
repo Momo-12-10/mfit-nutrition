@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a0d12"><meta name="description" content="MFit Performance – Ernährung, Fitness und Alltag in einer App">
-<link rel="manifest" href="manifest.webmanifest?v=118">
+<link rel="manifest" href="manifest.webmanifest?v=119">
 <link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=76">
 <link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=76">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=118">
+<link rel="stylesheet" href="./styles.css?v=119">
 </head>
 <body>
 <header class="brand-header mfit-app-header"><div class="mfit-header-inner"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR PERSONAL PERFORMANCE SPACE</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Ernährung · Training · Fortschritt</p></div></div><div class="mfit-header-actions"><button type="button" class="mfit-header-profile" onclick="showTab('profile')" aria-label="Profil öffnen" title="Mein Profil"><span>↗</span></button><button type="button" class="header-settings" onclick="mfitToggleSettingsMenu()" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mfitSettingsMenu" title="Menü">⚙</button></div></div><div class="mfit-header-foot"><span class="mfit-header-status"><i></i> DEIN FITNESS & NUTRITION HUB</span><span class="mfit-header-edition">MFIT PERFORMANCE</span></div></header>
@@ -18,7 +18,44 @@
   <button type="button" class="mfit-menu-secondary-action" onclick="mfitCloseSettingsMenu();showTab('profile')"><span>👤</span><span><b>Mein Profil</b><small>Persönliche Angaben und Ziele</small></span><i>›</i></button>
  </div>
 </div>
-<main><div id="mfitOfflineBanner" class="mfit-offline-banner" role="status" hidden>Du bist offline. Deine lokal gespeicherten Einträge bleiben verfügbar; Online-Suchen sind vorübergehend eingeschränkt.</div><div id="setupOverlay" style="display:none;position:fixed;inset:0;background:#09110df5;z-index:20;overflow:auto;padding:22px 14px"><div style="max-width:620px;margin:20px auto;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:20px"><div class="pill">WILLKOMMEN BEI MFIT</div><h2 style="font-size:23px;margin-top:12px">Lass uns deinen Bedarf berechnen</h2><p class="muted">Ein paar Angaben helfen, deine ungefähren Tagesziele passend zu deinem Alltag und Sport zu schätzen. Du kannst alles später ändern.</p><div class="grid"><div><label>Alter</label><input id="setupAge" type="number" placeholder="Alter"></div><div><label>Geschlecht für die Schätzung</label><select id="setupSex"><option value="male">Männlich</option><option value="female">Weiblich</option></select></div><div><label>Größe (cm)</label><input id="setupHeight" type="number" placeholder="z. B. 185"></div><div><label>Gewicht (kg)</label><input id="setupWeight" type="number" step="0.1" placeholder="z. B. 78"></div></div><label>Dein Ziel</label><select id="setupGoal"><option value="lean">Lean Bulk</option><option value="muscle">Muskelaufbau</option><option value="maintain">Gewicht halten / Recomposition</option><option value="fatloss">Fett verlieren</option><option value="mass">Masse aufbauen / zunehmen</option></select><label>Alltagsaktivität</label><select id="setupActivity"><option value="1.2">Wenig Bewegung</option><option value="1.375">Leicht aktiv</option><option value="1.55" selected>Moderat aktiv</option><option value="1.725">Sehr aktiv</option><option value="1.9">Extrem aktiv</option></select><label>Vereinstraining pro Woche</label><input id="setupSessions" type="number" min="0" max="20" value="0"><label>Sportarten</label><input id="setupSports" placeholder="z. B. Fußball, Gym, Schwimmen"><label>Krafttrainingstage pro Woche</label><input id="setupGym" type="number" min="0" max="14" value="0"><button style="width:100%;margin-top:16px" onclick="saveSetup()">Mein Profil erstellen & Bedarf berechnen</button><button class="secondary" style="width:100%;margin-top:8px" onclick="skipSetup()">Später einrichten</button><p class="muted">Alle Werte sind Schätzungen. Bei Jugendlichen ist eine gezielte Gewichtsabnahme nur mit fachlicher Begleitung sinnvoll.</p></div></div>
+<main><div id="mfitOfflineBanner" class="mfit-offline-banner" role="status" hidden>Du bist offline. Deine lokal gespeicherten Einträge bleiben verfügbar; Online-Suchen sind vorübergehend eingeschränkt.</div><div id="setupOverlay" class="mfit-onboarding" style="display:none" role="dialog" aria-modal="true" aria-labelledby="mfitOnboardingTitle">
+ <div class="mfit-onboarding-card">
+  <div class="mfit-onboarding-brand"><img src="./icon.svg" alt="" width="42" height="42"><span>MFIT PERFORMANCE</span></div>
+  <div class="mfit-onboarding-progress" aria-label="Einführung, drei Schritte"><span class="is-active" data-onboard-dot="1"></span><span data-onboard-dot="2"></span><span data-onboard-dot="3"></span></div>
+  <section class="mfit-onboarding-step" data-onboard-step="1">
+   <span class="settings-kicker">SCHRITT 1 VON 3 · WILLKOMMEN</span>
+   <h2 id="mfitOnboardingTitle">Dein persönlicher Performance-Bereich.</h2>
+   <p class="muted">MFit verbindet Ernährung, Training und Regeneration an einem Ort. Du entscheidest selbst, welche Daten du einträgst.</p>
+   <div class="mfit-onboarding-feature"><b>🥗 Ernährung</b><span>Lebensmittel, Mahlzeiten und Nährwerte dokumentieren.</span></div>
+   <div class="mfit-onboarding-feature"><b>🏋️ Training</b><span>Workouts, Sätze, Gewichte und Fortschritt festhalten.</span></div>
+   <div class="mfit-onboarding-feature"><b>📈 Überblick</b><span>Verläufe und persönliche Entwicklungen ansehen.</span></div>
+   <button type="button" class="mfit-onboarding-primary" onclick="mfitOnboardingNext(2)">Weiter</button>
+   <button type="button" class="secondary" onclick="skipSetup()">Einführung überspringen</button>
+  </section>
+  <section class="mfit-onboarding-step" data-onboard-step="2" hidden>
+   <span class="settings-kicker">SCHRITT 2 VON 3 · DEIN PROFIL</span>
+   <h2>Ein paar Angaben für deinen Start.</h2>
+   <p class="muted">Diese Angaben sind optional und können später im Profil geändert werden. Schätzungen sind keine medizinischen Vorgaben.</p>
+   <div class="grid"><div><label>Alter</label><input id="setupAge" type="number" min="13" max="100" placeholder="Alter"></div><div><label>Geschlecht für die Schätzung</label><select id="setupSex"><option value="male">Männlich</option><option value="female">Weiblich</option></select></div><div><label>Größe (cm)</label><input id="setupHeight" type="number" min="100" max="250" placeholder="z. B. 185"></div><div><label>Gewicht (kg)</label><input id="setupWeight" type="number" min="25" max="350" step="0.1" placeholder="z. B. 78"></div></div>
+   <label>Dein Ziel</label><select id="setupGoal"><option value="lean">Lean Bulk</option><option value="muscle">Muskelaufbau</option><option value="maintain">Gewicht halten / Recomposition</option><option value="fatloss">Fett verlieren</option><option value="mass">Masse aufbauen / zunehmen</option></select>
+   <label>Alltagsaktivität</label><select id="setupActivity"><option value="1.2">Wenig Bewegung</option><option value="1.375">Leicht aktiv</option><option value="1.55" selected>Moderat aktiv</option><option value="1.725">Sehr aktiv</option><option value="1.9">Extrem aktiv</option></select>
+   <label>Vereinstraining pro Woche</label><input id="setupSessions" type="number" min="0" max="20" value="0">
+   <label>Sportarten</label><input id="setupSports" placeholder="z. B. Fußball, Gym, Schwimmen">
+   <label>Krafttrainingstage pro Woche</label><input id="setupGym" type="number" min="0" max="14" value="0">
+   <div class="mfit-onboarding-actions"><button type="button" class="secondary" onclick="mfitOnboardingNext(1)">Zurück</button><button type="button" onclick="mfitOnboardingNext(3)">Weiter</button></div>
+  </section>
+  <section class="mfit-onboarding-step" data-onboard-step="3" hidden>
+   <span class="settings-kicker">SCHRITT 3 VON 3 · DEINE DATEN</span>
+   <h2>Du behältst die Kontrolle.</h2>
+   <div class="mfit-onboarding-feature"><b>Auf diesem Gerät</b><span>Deine Einträge werden zunächst lokal in diesem Browser gespeichert.</span></div>
+   <div class="mfit-onboarding-feature"><b>Cloud ist freiwillig</b><span>Ein Cloud-Backup erfolgt nur nach Anmeldung und deiner ausdrücklichen Aktion.</span></div>
+   <div class="mfit-onboarding-feature"><b>Du kannst jederzeit ändern</b><span>Profil, Ziele und Einstellungen findest du später im Menü. Du kannst deine Daten exportieren.</span></div>
+   <p class="muted">Kalorien- und Nährwertangaben sind Schätzungen. Du kannst die App auch ohne Profilangaben verwenden.</p>
+   <div class="mfit-onboarding-actions"><button type="button" class="secondary" onclick="mfitOnboardingNext(2)">Zurück</button><button type="button" onclick="saveSetup()">MFit starten</button></div>
+   <button type="button" class="secondary" onclick="skipSetup()">Ohne Profil starten</button>
+  </section>
+ </div>
+</div>
 <section id="home">
 <div class="card tracking-history-card"><div class="row"><div><h2>📅 Tracking-Verlauf</h2><p class="muted">Sieh dir jeden Tag einzeln an und blättere zurück.</p></div><span class="pill">HISTORY</span></div><div class="history-periods"><button class="active" data-history-mode="day" onclick="setHistoryMode('day')">Tag</button><button data-history-mode="week" onclick="setHistoryMode('week')">Woche</button><button data-history-mode="month" onclick="setHistoryMode('month')">Monat</button><button data-history-mode="year" onclick="setHistoryMode('year')">Jahr</button></div><div class="history-navigation"><button id="historyPrev" class="secondary" onclick="mfitShiftHistory(-1)">‹ Tag</button><div><b id="trackingHistoryTitle">Heute</b><div class="muted" id="trackingHistoryCount">0 von 1 Tagen getrackt</div></div><button id="historyNext" class="secondary" onclick="mfitShiftHistory(1)">Tag ›</button></div><div id="trackingHistoryList" class="tracking-history-list"></div></div>
 <div class="daily-motivation"><span class="motivation-mark">✦</span><div><small>DAILY MINDSET</small><b id="dailyQuote">Small steps. Big changes.</b></div><span class="motivation-spark">↗</span></div>
@@ -274,8 +311,8 @@
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./app-core.js?v=118"></script><script src="./app.js?v=118"></script><script src="./mfit-plus.js?v=118"></script><script src="./workout-planner.js?v=118"></script><script src="./mfit-advanced.js?v=118"></script>
-<script src="./i18n.js?v=80"></script><script src="./mfit-cloud.js?v=118"></script><script src="./mfit-pro.js?v=118"></script><script src="./mfit-ultimate.js?v=118"></script><script src="./mfit-extras.js?v=118"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./app-core.js?v=119"></script><script src="./app.js?v=119"></script><script src="./mfit-plus.js?v=119"></script><script src="./workout-planner.js?v=119"></script><script src="./mfit-advanced.js?v=119"></script>
+<script src="./i18n.js?v=80"></script><script src="./mfit-cloud.js?v=119"></script><script src="./mfit-pro.js?v=119"></script><script src="./mfit-ultimate.js?v=119"></script><script src="./mfit-extras.js?v=119"></script>
 
 <script>
 (function(){
