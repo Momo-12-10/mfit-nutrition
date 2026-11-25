@@ -23,12 +23,6 @@ function addWorkout(){
 
 const workoutTemplates={push:[['Bankdrücken','Brust'],['Schulterdrücken','Schultern'],['Seitheben','Schultern'],['Trizepsdrücken','Trizeps']],pull:[['Latzug','Rücken'],['Rudern','Rücken'],['Face Pulls','Schultern'],['Bizepscurls','Bizeps']],legs:[['Kniebeugen','Beine'],['Beinpresse','Beine'],['Beinbeuger','Beine'],['Wadenheben','Waden']],upper:[['Bankdrücken','Brust'],['Rudern','Rücken'],['Schulterdrücken','Schultern'],['Bizepscurls','Bizeps']]};
 function useWorkoutTemplate(key){const plan=workoutTemplates[key];if(!plan)return;const first=plan[0];$('workoutExercise').value=first[0];$('workoutMuscle').value=first[1];$('workoutSets').value=3;$('workoutReps').value=10;$('templateHint').textContent=plan.map((x,i)=>(i+1)+'. '+x[0]).join(' · ')+' — Übung für Übung eintragen.';$('workoutExercise').scrollIntoView({behavior:'smooth',block:'center'});}
-let restSeconds=90,restRemaining=90,restInterval=null;
-function paintRest(){const m=Math.floor(restRemaining/60),s=restRemaining%60;$('restDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}
-function setRest(n){pauseRestTimer();restSeconds=n;restRemaining=n;paintRest();$('restStatus').textContent='Pause auf '+n+' Sekunden eingestellt.';}
-function startRestTimer(){if(restInterval)return;if(restRemaining<=0)restRemaining=restSeconds;paintRest();$('restStatus').textContent='Pause läuft …';restInterval=setInterval(()=>{restRemaining=Math.max(0,restRemaining-1);paintRest();if(restRemaining===0){pauseRestTimer();$('restStatus').textContent='Pause vorbei – bereit für den nächsten Satz!';if(navigator.vibrate)navigator.vibrate([180,80,180]);}},1000);}
-function pauseRestTimer(){if(restInterval){clearInterval(restInterval);restInterval=null;}if($('restStatus'))$('restStatus').textContent='Timer pausiert.';}
-function resetRestTimer(){pauseRestTimer();restRemaining=restSeconds;paintRest();$('restStatus').textContent='Timer zurückgesetzt.';}
 function removeWorkout(id){if(!confirm('Diesen Trainingseintrag wirklich löschen?'))return;workoutLogs=workoutLogs.filter(x=>Number(x.id)!==Number(id));storage.set('mfit_workout_logs',JSON.stringify(workoutLogs));renderFitness();}
 function renderFitness(){
  const now=localDate(),cutoff=new Date();cutoff.setDate(cutoff.getDate()-6);const since=localDate(cutoff),recent=workoutLogs.filter(x=>x.date>=since&&x.date<=now);
@@ -68,6 +62,27 @@ const shopCatalogData=[
 ["Skyr","Milchprodukte","1 Becher"],["Magerquark","Milchprodukte","1 Becher"],["Naturjoghurt","Milchprodukte","1 Becher"],["Milch","Milchprodukte","1 Liter"],["Hüttenkäse","Milchprodukte","1 Packung"],["Topfen","Milchprodukte","1 Packung"],["Käse light","Milchprodukte","1 Packung"],["Mozzarella","Milchprodukte","1 Packung"],["Eier","Milchprodukte","10 Stück"],["Hähnchenbrust","Fleisch & Fisch","500 g"],["Putenbrust","Fleisch & Fisch","500 g"],["Rinderfaschiertes","Fleisch & Fisch","500 g"],["Lachs","Fleisch & Fisch","2 Filets"],["Thunfisch","Fleisch & Fisch","1 Dose"],["Tofu","Pflanzlich","1 Packung"],["Linsen","Pflanzlich","1 Packung"],["Kichererbsen","Pflanzlich","1 Dose"],["Kidneybohnen","Pflanzlich","1 Dose"],["Haferflocken","Getreide & Beilagen","1 Packung"],["Reis","Getreide & Beilagen","1 Packung"],["Vollkornnudeln","Getreide & Beilagen","1 Packung"],["Kartoffeln","Getreide & Beilagen","1 kg"],["Vollkornbrot","Getreide & Beilagen","1 Laib"],["Wraps","Getreide & Beilagen","1 Packung"],["Couscous","Getreide & Beilagen","1 Packung"],["Bananen","Obst","1 Bund"],["Äpfel","Obst","1 kg"],["Beeren TK","Obst","1 Packung"],["Orangen","Obst","1 kg"],["Avocado","Obst","1 Stück"],["Brokkoli","Gemüse","1 Stück"],["Paprika","Gemüse","2 Stück"],["Gurken","Gemüse","1 Stück"],["Tomaten","Gemüse","500 g"],["Spinat TK","Gemüse","1 Packung"],["Karotten","Gemüse","1 kg"],["Zucchini","Gemüse","2 Stück"],["Salat","Gemüse","1 Packung"],["Zwiebeln","Gemüse","1 Netz"],["Olivenöl","Fette & Extras","1 Flasche"],["Nüsse","Fette & Extras","1 Packung"],["Erdnussmus","Fette & Extras","1 Glas"],["Chiasamen","Fette & Extras","1 Packung"],["Leinsamen","Fette & Extras","1 Packung"],["Tomatenpassata","Vorrat","1 Packung"],["Mais","Vorrat","1 Dose"],["Gemüsebrühe","Vorrat","1 Packung"],["Gewürze","Vorrat","nach Bedarf"]
 ];
 let shopItems=(()=>{try{const a=JSON.parse(storage.get('mfit_shop_items')||'[]');return Array.isArray(a)?a:[]}catch(e){return []}})();
+(function migrateLegacyProShopping(){
+ const flag='mfit_shop_migration_v1';
+ if(storage.get(flag)==='done')return;
+ let legacy=[];
+ try{const parsed=JSON.parse(storage.get('mfit_pro_shopping')||'[]');if(Array.isArray(parsed))legacy=parsed.filter(x=>x&&typeof x==='object');}catch(e){}
+ if(!legacy.length){try{localStorage.setItem(flag,'done')}catch(e){}return;}
+ const merged=shopItems.slice(),ids=new Set(merged.map(x=>String(x.id)));
+ legacy.forEach((item,index)=>{
+  const rawId=item.id===undefined||item.id===null?'legacy-'+index:String(item.id);
+  let id=rawId;
+  if(ids.has(id))id='pro-'+rawId+'-'+index;
+  while(ids.has(id))id='pro-'+id;
+  ids.add(id);
+  merged.push({...item,id,name:String(item.name??item.title??'Unbenannter Artikel'),qty:item.qty===undefined||item.qty===null?'':String(item.qty),done:!!item.done,store:item.store??'',price:item.price??''});
+ });
+ try{
+  const serialized=JSON.stringify(merged);
+  localStorage.setItem('mfit_shop_items',serialized);
+  if(localStorage.getItem('mfit_shop_items')===serialized){shopItems=merged;localStorage.setItem(flag,'done');}
+ }catch(e){console.warn('MFit: Einkaufsliste konnte noch nicht zusammengeführt werden.',e);}
+})();
 let mealWeekData=[];
 const weekMeals=[
 {name:"Skyr-Beeren-Bowl",focus:["balanced","protein","lowfat","vegetarian"],ingredients:[["Skyr","250 g"],["Beeren TK","100 g"],["Haferflocken","40 g"],["Banane","1 Stück"]]},
