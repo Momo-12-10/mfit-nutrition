@@ -8,7 +8,7 @@ const foods=()=>typeof data!=='undefined'&&Array.isArray(data)?data:[];
 const workouts=()=>typeof workoutLogs!=='undefined'&&Array.isArray(workoutLogs)?workoutLogs:[];
 const recoveries=()=>typeof recoveryLogs!=='undefined'&&Array.isArray(recoveryLogs)?recoveryLogs:[];
 const weights=()=>typeof weightHistory!=='undefined'&&Array.isArray(weightHistory)?weightHistory:[];
-const goals=()=>typeof window.goals!=='undefined'&&window.goals?window.goals:(typeof goalsData!=='undefined'?goalsData:{kcal:2800,protein:150});
+const getGoals=()=>typeof goals!=='undefined'&&goals?goals:{kcal:2800,protein:150};
 const dayKey=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const days=(n=7)=>{const a=[],d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-n+1);for(let i=0;i<n;i++){const x=new Date(d);x.setDate(d.getDate()+i);a.push(dayKey(x));}return a;};
 const sum=(arr,key)=>arr.reduce((n,x)=>n+(Number(x&&x[key])||0),0);
@@ -52,7 +52,7 @@ function renderNutritionRings(){
  const el=$('mfitDailyRingGrid');if(!el)return;
  const date=typeof selectedDate==='string'?selectedDate:today(),entries=foods().filter(x=>(x.date||today())===date);
  const vals={kcal:sum(entries,'kcal'),protein:sum(entries,'protein'),carbs:sum(entries,'carbs'),fat:sum(entries,'fat')};
- const g=(typeof goals!=='undefined'?goals:{kcal:2800,protein:150}),targets={kcal:Number(g.kcal)||2800,protein:Number(g.protein)||150,carbs:Math.round(((Number(g.kcal)||2800)*.5)/4),fat:Math.round(((Number(g.kcal)||2800)*.25)/9)};
+ const g=getGoals(),targets={kcal:Number(g.kcal)||2800,protein:Number(g.protein)||150,carbs:Math.round(((Number(g.kcal)||2800)*.5)/4),fat:Math.round(((Number(g.kcal)||2800)*.25)/9)};
  el.innerHTML=ring('Kalorien',vals.kcal,targets.kcal,'kcal','is-kcal')+ring('Protein',vals.protein,targets.protein,'g','is-protein')+ring('Kohlenhydrate',vals.carbs,targets.carbs,'g','is-carbs')+ring('Fett',vals.fat,targets.fat,'g','is-fat');
  const note=$('mfitDailyRingNote');if(note)note.textContent=entries.length?entries.length+' Einträge für '+date+' · Werte sind Schätzungen und dienen der Orientierung.':'Noch keine Ernährungseinträge für '+date+'.';
 }
