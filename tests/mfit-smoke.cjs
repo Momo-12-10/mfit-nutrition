@@ -43,6 +43,8 @@ const server = http.createServer((req,res)=>{
  if(layout.scrollWidth>layout.width+1)throw new Error('Horizontal page overflow at 360px: '+JSON.stringify(layout));
  if(layout.buttons.length)throw new Error('Buttons outside viewport at 360px: '+JSON.stringify(layout.buttons.slice(0,8)));
  log('checking viewport and existing data');
+ const todayStats=await page.evaluate(()=>({training:document.getElementById('mfitTodayTraining')?.textContent,meals:document.getElementById('mfitTodayMeals')?.textContent,water:document.getElementById('mfitTodayWater')?.textContent}));
+ if(todayStats.training!=='1'||todayStats.meals!=='1'||todayStats.water!=='450 ml')throw new Error('Today dashboard values are incorrect: '+JSON.stringify(todayStats));
  const dataBefore=await page.evaluate(()=>({entries:JSON.parse(localStorage.getItem('mfit_entries')||'[]').length,water:localStorage.getItem('mfit_water')}));
  if(dataBefore.entries!==2||dataBefore.water!=='450')throw new Error('Existing sample user data changed during startup: '+JSON.stringify(dataBefore));
  const yesterdayCard=page.locator('#mfit181YesterdayCopy');
