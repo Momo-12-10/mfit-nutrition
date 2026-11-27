@@ -26,6 +26,7 @@ const server = http.createServer((req,res)=>{
  await page.addInitScript(()=>{
   const now=new Date(),date=d=>{const x=new Date(d);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')};
   const yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);
+  localStorage.setItem('mfit_setup_done','1');
   localStorage.setItem('mfit_legal_acceptance_v1',JSON.stringify({version:'1.0',terms:true,privacyAcknowledged:true,acceptedAt:new Date().toISOString()}));
   localStorage.setItem('mfit_entries',JSON.stringify([{date:date(now),name:'Test Skyr',amount:250,unit:'g',meal:'Frühstück',kcal:160,protein:27,carbs:10,fat:1,drink:0},{date:date(yesterday),name:'Test Banane',amount:120,unit:'g',meal:'Snack',kcal:100,protein:1,carbs:23,fat:0,drink:0}]));
   localStorage.setItem('mfit_water','450');
