@@ -115,3 +115,39 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 document.addEventListener('click',e=>{if(e.target.closest('button[data-tab]')){setTimeout(navPolish,0);if(e.target.closest('button[data-tab]').dataset.tab==='track')setTimeout(renderFavorites,60);}});
 window.mfitRefreshFoodFavorites=renderFavorites;
 })();
+
+
+/* v142-150 usability layer */
+(function(){
+ 'use strict';
+ const $=id=>document.getElementById(id);
+ function addReportShortcuts(){
+  const home=$('home');if(!home||$('mfitReportShortcuts'))return;
+  const card=document.createElement('div');card.className='card mfit-report-shortcuts';card.id='mfitReportShortcuts';
+  card.innerHTML='<div><span class="settings-kicker">DEINE DATEN</span><h2>Berichte & Backup</h2><p class="muted">Deine bisherigen Einträge kompakt auswerten oder sichern.</p></div><div class="mfit-report-actions"><button type="button" id="mfitExportMonth">Monatsbericht als CSV</button><button type="button" class="secondary" id="mfitExportBackup">Daten-Backup als JSON</button></div><p class="muted" id="mfitReportShortcutStatus" aria-live="polite"></p>';
+  const anchor=$('weeklyMomentumCard')||home.querySelector('.weekly-momentum-card')||home.querySelector('.quick-start-card');
+  (anchor||home.lastElementChild)?.insertAdjacentElement('afterend',card);
+  $('mfitExportMonth').addEventListener('click',()=>{if(typeof window.mfitExportMonthlyReport==='function')window.mfitExportMonthlyReport();else $('mfitReportShortcutStatus').textContent='Monatsbericht ist gerade nicht verfügbar.';});
+  $('mfitExportBackup').addEventListener('click',()=>{if(typeof window.mfitExportAllProData==='function')window.mfitExportAllProData();else $('mfitReportShortcutStatus').textContent='Backup-Funktion ist gerade nicht verfügbar.';});
+ }
+ function addFavoriteSearch(){
+  const card=$('mfitFoodFavorites');if(!card||$('mfitFavoriteSearch'))return;
+  const input=document.createElement('input');input.type='search';input.id='mfitFavoriteSearch';input.placeholder='Favoriten oder zuletzt verwendete Lebensmittel suchen';input.setAttribute('aria-label','Lebensmittel-Favoriten durchsuchen');
+  const list=$('mfitFoodFavoritesList');if(list)list.insertAdjacentElement('beforebegin',input);
+  input.addEventListener('input',()=>{const q=input.value.trim().toLocaleLowerCase();list?.querySelectorAll('.mfit-favorite-row,.mfit-recent-food').forEach(row=>{row.hidden=!!q&&!row.textContent.toLocaleLowerCase().includes(q);});});
+ }
+ function addSectionControls(){
+  document.querySelectorAll('main section[id]').forEach(section=>{
+   const cards=[...section.querySelectorAll(':scope > .mfit-collapsible-card')];
+   if(cards.length<2)return;
+   let bar=section.querySelector(':scope > .mfit-section-controls');
+   if(!bar){bar=document.createElement('div');bar.className='mfit-section-controls';bar.innerHTML='<span>Bereiche</span><div><button type="button" data-collapse="all">Alle einklappen</button><button type="button" data-collapse="none">Alle ausklappen</button></div>';section.insertBefore(bar,section.firstElementChild);}
+   bar.querySelector('[data-collapse="all"]').onclick=()=>cards.forEach(card=>{card.classList.add('mfit-card-collapsed');const t=card.querySelector('.mfit-card-collapse-toggle');if(t){t.setAttribute('aria-expanded','false');t.setAttribute('aria-label','Bereich ausklappen');}});
+   bar.querySelector('[data-collapse="none"]').onclick=()=>cards.forEach(card=>{card.classList.remove('mfit-card-collapsed');const t=card.querySelector('.mfit-card-collapse-toggle');if(t){t.setAttribute('aria-expanded','true');t.setAttribute('aria-label','Bereich einklappen');}});
+  });
+ }
+ function boot(){addReportShortcuts();addFavoriteSearch();addSectionControls();}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+ const observer=new MutationObserver(()=>{addSectionControls();addFavoriteSearch();});
+ if(document.body)observer.observe(document.body,{childList:true,subtree:true});
+})();
