@@ -119,7 +119,7 @@ function installMobility(){
  $('mfit181MobilityRoutine').addEventListener('change',mobilityBuild);
  $('mfit181MobilityStart').addEventListener('click',mobilityStart);
  $('mfit181MobilityPause').addEventListener('click',mobilityStopTimer);
- $('mfit181MobilityNext').addEventListener('click',()=>{mobilityStopTimer();if(!mobilitySteps.length)mobilityBuild();else if(++mobilityIndex>=mobilitySteps.length){mobilityIndex=mobilitySteps.length-1;mobilityLeft=0}else mobilityLeft=mobilitySteps[mobilityIndex][1];mobilityRender()});
+ $('mfit181MobilityNext').addEventListener('click',()=>{mobilityStopTimer();if(!mobilitySteps.length)mobilityBuild();else if(++mobilityIndex>=mobilitySteps.length){mobilitySteps=[];mobilityIndex=0;mobilityLeft=0}else mobilityLeft=mobilitySteps[mobilityIndex][1];mobilityRender()});
  $('mfit181MobilityReset').addEventListener('click',mobilityBuild);
  mobilityBuild();
 }
@@ -140,7 +140,7 @@ function readGpx(xml){
  const duration=times.length>=2?Math.max(0,Math.round((times[times.length-1]-times[0])/1000)):null;
  const km=metres/1000,pace=duration&&km>0?duration/km:null;
  const name=(doc.getElementsByTagNameNS('*','name')[0]?.textContent||'').trim().slice(0,80);
- return {name,distanceKm:Number(km.toFixed(2)),durationSeconds:duration,paceSecondsPerKm:pace?Math.round(pace):null,points,recordedAt:new Date().toISOString()};
+ return {distanceKm:Number(km.toFixed(2)),durationSeconds:duration,paceSecondsPerKm:pace?Math.round(pace):null,points,recordedAt:new Date().toISOString()};
 }
 function formatDuration(seconds){if(!Number.isFinite(seconds))return 'Zeitdaten fehlen';const h=Math.floor(seconds/3600),m=Math.floor(seconds%3600/60),s=seconds%60;return h? h+' h '+m+' min':m+':'+String(s).padStart(2,'0')+' min'}
 function formatPace(seconds){if(!Number.isFinite(seconds))return '–';return Math.floor(seconds/60)+':'+String(seconds%60).padStart(2,'0')+' min/km'}
@@ -149,14 +149,13 @@ function renderGpxHistory(){
  const rows=safeParse(KEYS.gpx,[]);
  host.replaceChildren();
  if(!rows.length){host.textContent='Noch keine GPX-Aktivitäten importiert.';return}
- rows.slice().reverse().forEach(x=>{const row=document.createElement('div');row.className='mfit181-gpx-row';const title=document.createElement('b');title.textContent=x.name||'GPX-Aktivität';const detail=document.createElement('span');detail.textContent=Number(x.distanceKm).toFixed(2)+' km · '+formatDuration(x.durationSeconds)+' · '+formatPace(x.paceSecondsPerKm);const date=document.createElement('small');date.textContent=new Date(x.recordedAt).toLocaleDateString('de-AT');row.append(title,detail,date);host.appendChild(row)});
+ rows.slice().reverse().forEach(x=>{const row=document.createElement('div');row.className='mfit181-gpx-row';const title=document.createElement('b');title.textContent='GPX-Aktivität';const detail=document.createElement('span');detail.textContent=Number(x.distanceKm).toFixed(2)+' km · '+formatDuration(x.durationSeconds)+' · '+formatPace(x.paceSecondsPerKm);const date=document.createElement('small');date.textContent=new Date(x.recordedAt).toLocaleDateString('de-AT');row.append(title,detail,date);host.appendChild(row)});
 }
 async function importGpx(){
  const input=$('mfit181GpxFile'),status=$('mfit181GpxStatus'),file=input?.files?.[0];if(!file)return;
  if(file.size>10*1024*1024){status.textContent='Die GPX-Datei ist größer als 10 MB.';input.value='';return}
  try{
   const result=readGpx(await file.text());
-  result.fileName=file.name.slice(0,120);
   const rows=safeParse(KEYS.gpx,[]);rows.push(result);localStorage.setItem(KEYS.gpx,JSON.stringify(rows));
   status.textContent=result.distanceKm+' km · '+formatDuration(result.durationSeconds)+' · Pace '+formatPace(result.paceSecondsPerKm)+' gespeichert. Die Datei selbst wurde nicht hochgeladen.';
   renderGpxHistory();refreshToday();
