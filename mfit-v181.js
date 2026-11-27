@@ -149,7 +149,7 @@ function renderGpxHistory(){
  const rows=safeParse(KEYS.gpx,[]);
  host.replaceChildren();
  if(!rows.length){host.textContent='Noch keine GPX-Aktivitäten importiert.';return}
- rows.slice().reverse().forEach(x=>{const row=document.createElement('div');row.className='mfit181-gpx-row';const title=document.createElement('b');title.textContent=x.name||'GPX-Aktivität';const detail=document.createElement('span');detail.textContent=x.distanceKm+' km · '+formatDuration(x.durationSeconds)+' · '+formatPace(x.paceSecondsPerKm);const date=document.createElement('small');date.textContent=new Date(x.recordedAt).toLocaleDateString('de-AT');row.append(title,detail,date);host.appendChild(row)});
+ rows.slice().reverse().forEach(x=>{const row=document.createElement('div');row.className='mfit181-gpx-row';const title=document.createElement('b');title.textContent=x.name||'GPX-Aktivität';const detail=document.createElement('span');detail.textContent=Number(x.distanceKm).toFixed(2)+' km · '+formatDuration(x.durationSeconds)+' · '+formatPace(x.paceSecondsPerKm);const date=document.createElement('small');date.textContent=new Date(x.recordedAt).toLocaleDateString('de-AT');row.append(title,detail,date);host.appendChild(row)});
 }
 async function importGpx(){
  const input=$('mfit181GpxFile'),status=$('mfit181GpxStatus'),file=input?.files?.[0];if(!file)return;
