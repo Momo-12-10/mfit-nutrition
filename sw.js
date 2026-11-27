@@ -1,3 +1,4 @@
+// Release v131: compact settings and restored bottom navigation
 // Release v130: final cache and install manifest validation
 // Release v129: installability and cache validation
 // Release v128: dashboard visibility controls
@@ -7,8 +8,8 @@
 // Release v124: one-tap hydration quick action
 // Release v123: weekly training activity and muscle-group overview
 // Release v122: bodyweight, recovery and meal split views
-const CACHE='mfit-performance-v130';
-const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./apple-touch-icon.png','./styles.css','./app-core.js','./app.js','./mfit-plus.js','./i18n.js','./workout-planner.js','./mfit-advanced.js','./mfit-cloud.js','./mfit-pro.js','./mfit-ultimate.js','./mfit-extras.js','./mfit-next.js'];
+const CACHE='mfit-performance-v131';
+const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./apple-touch-icon.png','./styles.css','./app-core.js','./app.js','./mfit-plus.js','./i18n.js','./workout-planner.js','./mfit-advanced.js','./mfit-cloud.js','./mfit-pro.js','./mfit-ultimate.js','./mfit-extras.js','./mfit-next.js','./mfit-ui.js'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{
