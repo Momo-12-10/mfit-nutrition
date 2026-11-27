@@ -29,9 +29,9 @@ const server = http.createServer((req,res)=>{
  });
  await page.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded'});
  await page.waitForSelector('#mfitTodayPanel');
- await page.waitForSelector('#mfit181Mobility');
- await page.waitForSelector('#mfit181Gpx');
- await page.waitForSelector('#mfit181Share');
+ await page.waitForSelector('#mfit181Mobility',{state:'attached'});
+ await page.waitForSelector('#mfit181Gpx',{state:'attached'});
+ await page.waitForSelector('#mfit181Share',{state:'attached'});
  const layout=await page.evaluate(()=>({width:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,buttons:[...document.querySelectorAll('button')].filter(b=>b.getClientRects().length).map(b=>{const r=b.getBoundingClientRect();return {text:b.textContent.trim().slice(0,30),left:r.left,right:r.right}}).filter(x=>x.left < -1 || x.right > document.documentElement.clientWidth+1)}));
  if(layout.scrollWidth>layout.width+1)throw new Error('Horizontal page overflow at 360px: '+JSON.stringify(layout));
  if(layout.buttons.length)throw new Error('Buttons outside viewport at 360px: '+JSON.stringify(layout.buttons.slice(0,8)));
