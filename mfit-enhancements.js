@@ -141,9 +141,25 @@ window.mfitRefreshFoodFavorites=renderFavorites;
    const cards=[...section.querySelectorAll(':scope > .mfit-collapsible-card')];
    if(cards.length<2)return;
    let bar=section.querySelector(':scope > .mfit-section-controls');
-   if(!bar){bar=document.createElement('div');bar.className='mfit-section-controls';bar.innerHTML='<span>Bereiche</span><div><button type="button" data-collapse="all">Alle einklappen</button><button type="button" data-collapse="none">Alle ausklappen</button></div>';section.insertBefore(bar,section.firstElementChild);}
-   bar.querySelector('[data-collapse="all"]').onclick=()=>cards.forEach(card=>{card.classList.add('mfit-card-collapsed');const t=card.querySelector('.mfit-card-collapse-toggle');if(t){t.setAttribute('aria-expanded','false');t.setAttribute('aria-label','Bereich ausklappen');}});
-   bar.querySelector('[data-collapse="none"]').onclick=()=>cards.forEach(card=>{card.classList.remove('mfit-card-collapsed');const t=card.querySelector('.mfit-card-collapse-toggle');if(t){t.setAttribute('aria-expanded','true');t.setAttribute('aria-label','Bereich einklappen');}});
+   if(!bar){
+    bar=document.createElement('div');bar.className='mfit-section-controls';
+    bar.innerHTML='<div><button type="button" class="mfit-collapse-menu-toggle" aria-label="Bereiche verwalten" aria-expanded="false" title="Bereiche verwalten">⌄</button><button type="button" data-collapse="all">Alle einklappen</button><button type="button" data-collapse="none">Alle öffnen</button></div>';
+    section.appendChild(bar);
+    const menuToggle=bar.querySelector('.mfit-collapse-menu-toggle');
+    menuToggle.onclick=()=>{
+     const open=bar.classList.toggle('is-open');
+     menuToggle.setAttribute('aria-expanded',String(open));
+     menuToggle.textContent=open?'×':'⌄';
+    };
+   }
+   bar.querySelector('[data-collapse="all"]').onclick=()=>{
+    cards.forEach(card=>{card.classList.add('mfit-card-collapsed');const t=card.querySelector('.mfit-card-collapse-toggle');if(t){t.setAttribute('aria-expanded','false');t.setAttribute('aria-label','Bereich ausklappen');}});
+    bar.classList.remove('is-open');bar.querySelector('.mfit-collapse-menu-toggle').setAttribute('aria-expanded','false');bar.querySelector('.mfit-collapse-menu-toggle').textContent='⌄';
+   };
+   bar.querySelector('[data-collapse="none"]').onclick=()=>{
+    cards.forEach(card=>{card.classList.remove('mfit-card-collapsed');const t=card.querySelector('.mfit-card-collapse-toggle');if(t){t.setAttribute('aria-expanded','true');t.setAttribute('aria-label','Bereich einklappen');}});
+    bar.classList.remove('is-open');bar.querySelector('.mfit-collapse-menu-toggle').setAttribute('aria-expanded','false');bar.querySelector('.mfit-collapse-menu-toggle').textContent='⌄';
+   };
   });
  }
  function boot(){addReportShortcuts();addFavoriteSearch();addSectionControls();}
