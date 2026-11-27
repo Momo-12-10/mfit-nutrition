@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const mime = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.png':'image/png'};
+let browser;
 const server = http.createServer((req,res)=>{
   let pathname = decodeURIComponent(new URL(req.url,'http://127.0.0.1').pathname);
   if(pathname==='/') pathname='/index.html';
@@ -13,7 +14,7 @@ const server = http.createServer((req,res)=>{
 });
 (async()=>{
  await new Promise(resolve=>server.listen(4173,'127.0.0.1',resolve));
- const browser=await chromium.launch({headless:true});
+ browser=await chromium.launch({headless:true});
  const context=await browser.newContext({viewport:{width:360,height:800},acceptDownloads:true});
  const page=await context.newPage();
  const errors=[];
@@ -88,4 +89,4 @@ const server = http.createServer((req,res)=>{
  if(errors.length)throw new Error('Browser console/page errors: '+errors.join(' | '));
  console.log('PASS: 360px layout, existing data preservation, yesterday preview/copy, GPX import, share PNG, backup inclusion, offline reload; no console/page errors.');
  await browser.close();server.close();
-})().catch(err=>{console.error(err);process.exitCode=1;server.close();});
+})().catch(async err=>{console.error(err);process.exitCode=1;if(browser)await browser.close().catch(()=>{});server.close();});
