@@ -2494,3 +2494,90 @@ nav.mfit-nav .icon-wrap{
 nav.mfit-nav .nav-label{color:#f0f1f3!important}
 /* Keep emoji glyphs in their original full colour */
 .emoji,.nav-icon,.food-emoji,.category-emoji{filter:none!important}
+
+
+/* MFit v154 — high-specificity monochrome controls */
+button:not(.secondary):not(.danger):not(.theme-swatch),
+button.secondary,button.primary,button.action-btn,
+button.product-suggestion,
+nav.mfit-nav button[data-tab]:not(.secondary):not(.danger):not(.theme-swatch),
+#track #productSuggestions button.product-suggestion:not(.secondary):not(.danger):not(.theme-swatch),
+.mfit-nav button[data-tab]:not(.secondary):not(.danger):not(.theme-swatch){
+ background:#111315!important;background-image:none!important;
+ color:#f1f2f4!important;border-color:#30343a!important;
+ box-shadow:none!important;text-shadow:none!important;
+}
+button:not(.secondary):not(.danger):not(.theme-swatch):hover,
+button:not(.secondary):not(.danger):not(.theme-swatch):active,
+nav.mfit-nav button[data-tab]:not(.secondary):not(.danger):not(.theme-swatch).active{
+ background:#24282e!important;background-image:none!important;color:#fff!important;
+ border-color:#4a515b!important;
+}
+#productSuggestions,#track #productSuggestions,
+#productSuggestions.product-suggestions{
+ background:#101214!important;background-image:none!important;
+ border:1px solid #30343a!important;box-shadow:none!important;
+}
+#productSuggestions button.product-suggestion,
+#track #productSuggestions button.product-suggestion{
+ background:#101214!important;background-image:none!important;
+ color:#f1f2f4!important;border:0!important;
+ border-bottom:1px solid #292d33!important;
+}
+#productSuggestions button.product-suggestion:hover,
+#track #productSuggestions button.product-suggestion:active{
+ background:#24282e!important;background-image:none!important;color:#fff!important;
+}
+nav.mfit-nav{background:#08090b!important;background-image:none!important}
+nav.mfit-nav button[data-tab]:not(.secondary):not(.danger):not(.theme-swatch){
+ background:#101214!important;background-image:none!important;
+ border:1px solid #292d33!important;color:#f1f2f4!important;
+}
+nav.mfit-nav button[data-tab]:not(.secondary):not(.danger):not(.theme-swatch).active{
+ background:#24282e!important;color:#fff!important;border-color:#4a515b!important;
+}
+nav.mfit-nav .nav-icon{background:transparent!important;background-image:none!important}
+
+/* Compact section-wide collapse menu: subtle chevron at section bottom */
+.mfit-section-controls{
+ display:flex!important;justify-content:flex-end!important;align-items:center!important;
+ margin:4px 2px 18px!important;padding:0!important;border:0!important;
+ background:transparent!important;
+}
+.mfit-section-controls>span{display:none!important}
+.mfit-section-controls>div{position:relative;display:flex;align-items:center;gap:6px}
+.mfit-section-controls button[data-collapse]{
+ min-width:32px!important;width:32px!important;height:30px!important;
+ padding:0!important;border-radius:9px!important;
+ background:#111315!important;color:#aeb4bc!important;
+ border:1px solid #30343a!important;font-size:0!important;
+ box-shadow:none!important;
+}
+.mfit-section-controls button[data-collapse="all"]::after{
+ content:"Alle einklappen";font-size:11px;
+}
+.mfit-section-controls button[data-collapse="none"]::after{
+ content:"Alle öffnen";font-size:11px;
+}
+.mfit-section-controls button[data-collapse]{
+ width:auto!important;min-width:32px!important;padding:0 10px!important;
+}
+@media(max-width:390px){
+ .mfit-section-controls{flex-direction:row!important;align-items:center!important}
+ .mfit-section-controls>div{width:auto!important}
+ .mfit-section-controls button[data-collapse]{flex:0 0 auto!important}
+}
+
+.mfit-section-controls>div>.mfit-collapse-menu-toggle{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ width:32px!important;min-width:32px!important;height:30px!important;
+ padding:0!important;font-size:17px!important;line-height:1!important;
+ border-radius:9px!important;background:#111315!important;color:#c5cbd2!important;
+ border:1px solid #30343a!important;
+}
+.mfit-section-controls>div>button[data-collapse]{display:none!important}
+.mfit-section-controls.is-open>div>button[data-collapse]{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ width:auto!important;height:30px!important;padding:0 10px!important;
+ font-size:11px!important;white-space:nowrap!important;
+}
