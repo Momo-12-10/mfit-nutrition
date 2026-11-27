@@ -195,9 +195,7 @@ function installShare(){
  $('mfit181ShareButton').addEventListener('click',shareAchievement);
 }
 function refreshAll(){refreshToday();renderPins();renderGpxHistory()}
-function registerOfflineSupport(){if(!('serviceWorker'in navigator)||location.protocol==='file:')return;navigator.serviceWorker.register('./sw.js').catch(()=>{});}
 function init(){
- registerOfflineSupport();
  installToday();installYesterdayCopy();installMobility();installGpx();installShare();renderPins();refreshAll();
  document.addEventListener('click',e=>{if(e.target.closest('[data-tab]'))setTimeout(refreshAll,120)});
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshAll()});
