@@ -1,12 +1,15 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+const ALLOWED_ORIGIN = "https://momo-12-10.github.io";
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 Deno.serve(async (req) => {
+  const origin = req.headers.get("Origin");
+  if (origin && origin !== ALLOWED_ORIGIN) return json({ error: "Origin not allowed" }, 403);
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
@@ -37,19 +40,18 @@ Deno.serve(async (req) => {
       auth: { persistSession: false, autoRefreshToken: false },
     });
 
-    const { error: deleteUserError } = await admin.auth.admin.deleteUser(user.id);
-    if (deleteUserError) return json({ error: "Konto konnte nicht gelöscht werden: " + deleteUserError.message }, 500);
-
     const { error: deleteDataError } = await admin
       .from("mfit_user_data")
       .delete()
       .eq("user_id", user.id);
 
     if (deleteDataError) {
-      return json({
-        deleted: true,
-        warning: "Konto gelöscht; Cloud-Datensatz konnte nicht automatisch entfernt werden. Bitte Supabase-Datenbank prüfen.",
-      }, 200);
+      return json({ error: "Cloud-Daten konnten nicht gelöscht werden. Das Konto wurde nicht gelöscht: " + deleteDataError.message }, 500);
+    }
+
+    const { error: deleteUserError } = await admin.auth.admin.deleteUser(user.id);
+    if (deleteUserError) {
+      return json({ error: "Cloud-Daten wurden gelöscht, aber das Konto konnte nicht gelöscht werden: " + deleteUserError.message }, 500);
     }
 
     return json({ deleted: true }, 200);
