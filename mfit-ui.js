@@ -3,10 +3,10 @@
 'use strict';
 const $=id=>document.getElementById(id);
 const groups=[
- {id:'personal',icon:'🎨',title:'Personalisierung',desc:'Design, Sprache und Bedienung',items:['appAppearance','mfitAppPreferences','mfitLanguageSettings']},
+ {id:'personal',icon:'◐',title:'Darstellung & Bedienung',desc:'Design, Sprache und App-Verhalten',items:['appAppearance','mfitAppPreferences','mfitLanguageSettings']},
  {id:'reminders',icon:'🔔',title:'Erinnerungen',desc:'Trink- und Mahlzeiten-Erinnerungen',items:['appReminders']},
- {id:'privacy',icon:'🔒',title:'Daten & Datenschutz',desc:'Backup, Privatsphäre und Speicher',items:['privacyCenter','dataBackup','mfitDataTools']},
- {id:'system',icon:'⚙️',title:'System & Informationen',desc:'Installation, App-Status und Version',items:['mfitAppStatus','mfitAboutSettings','mfitReleaseReadiness']}
+ {id:'privacy',icon:'🔒',title:'Datenschutz & Daten',desc:'Privatsphäre, Backup und Speicher',items:['privacyCenter','dataBackup','mfitDataTools']},
+ {id:'about',icon:'ⓘ',title:'Über MFit',desc:'Installation, Status und Version',items:['mfitAppStatus','mfitAboutSettings','mfitReleaseReadiness']}
 ];
 let active='home';
 function makeButton(g){
@@ -21,7 +21,7 @@ function ensureSettings(){
  pages.appendChild(landing);
  groups.forEach(g=>{
   const page=document.createElement('div');page.id='mfitSettingsPage-'+g.id;page.className='mfit-settings-page hidden';
-  const back=document.createElement('button');back.type='button';back.className='mfit-settings-back';back.innerHTML='<span>‹</span> Alle Einstellungen';back.addEventListener('click',showLanding);page.appendChild(back);
+  const back=document.createElement('button');back.type='button';back.className='mfit-settings-back';back.innerHTML='<span>‹</span> Zurück zu Einstellungen';back.addEventListener('click',showLanding);page.appendChild(back);
   const heading=document.createElement('div');heading.className='mfit-settings-page-heading';heading.innerHTML='<span>'+g.icon+'</span><div><h3>'+g.title+'</h3><p>'+g.desc+'</p></div>';page.appendChild(heading);
   g.items.forEach(id=>{const el=$(id);if(el){el.classList.add('mfit-settings-detail');page.appendChild(el);}});
   pages.appendChild(page);
