@@ -72,6 +72,7 @@ function addFavorite(){
 function useFavorite(id){
  const o=readFavorites().find(x=>String(x.id)===String(id));if(!o)return;
  fields.forEach(k=>{const el=$(k);if(el&&o[k]!==undefined)el.value=o[k];});
+ if($('portionMode'))$('portionMode').value='custom';
  if(typeof window.recalculateNutrition==='function')window.recalculateNutrition();
  $('foodName')?.scrollIntoView({behavior:'smooth',block:'center'});
 }
