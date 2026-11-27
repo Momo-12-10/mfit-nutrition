@@ -2165,3 +2165,49 @@ nav.mfit-nav button:active{transform:scale(.96)!important}
 #settingsHub .settings-hub-top{margin-bottom:5px}
 #settingsHub .settings-hub-top h2{font-size:22px}
 @media(max-width:390px){nav.mfit-nav{padding-left:2px!important;padding-right:2px!important}nav.mfit-nav button .nav-icon{font-size:18px!important}nav.mfit-nav button .nav-label{font-size:9.5px!important}.mfit-settings-category{min-height:66px!important;padding:11px 12px!important}}
+
+
+/* MFit v132–140: native-feeling bottom navigation and focused settings */
+nav.mfit-nav{
+ position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:1000!important;
+ display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;align-items:center!important;
+ gap:2px!important;width:100%!important;margin:0!important;padding:7px 5px calc(7px + env(safe-area-inset-bottom))!important;
+ min-height:66px!important;border-radius:0!important;border:0!important;border-top:1px solid rgba(145,190,155,.17)!important;
+ background:rgba(8,15,11,.97)!important;box-shadow:0 -8px 26px rgba(0,0,0,.26)!important;
+ backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+nav.mfit-nav button[data-tab],nav.mfit-nav button[data-tab].active{
+ display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+ gap:4px!important;min-width:0!important;min-height:51px!important;width:100%!important;margin:0!important;
+ padding:5px 1px!important;border:1px solid transparent!important;border-radius:12px!important;
+ background:transparent!important;box-shadow:none!important;color:#9eafa2!important;
+ font-size:10px!important;font-weight:650!important;line-height:1.1!important;transform:none!important;
+}
+nav.mfit-nav button[data-tab] .nav-icon{display:block!important;min-height:0!important;font-size:19px!important;line-height:1.1!important;filter:none!important}
+nav.mfit-nav button[data-tab] .nav-label{display:block!important;font-size:10px!important;line-height:1.1!important;white-space:nowrap!important}
+nav.mfit-nav button[data-tab].active{color:#8cebb0!important;background:rgba(121,226,160,.075)!important;border-color:rgba(121,226,160,.13)!important}
+nav.mfit-nav button[data-tab]:active{transform:scale(.96)!important}
+body{padding-bottom:calc(82px + env(safe-area-inset-bottom))!important}
+.mfit-settings-landing{display:grid!important;grid-template-columns:1fr!important;gap:9px!important}
+.mfit-settings-category{display:flex!important;align-items:center!important;gap:13px!important;width:100%!important;min-height:70px!important;padding:12px 14px!important;text-align:left!important;background:rgba(255,255,255,.035)!important;color:#e8f1ea!important;border:1px solid rgba(145,190,155,.15)!important;border-radius:16px!important;box-shadow:none!important}
+.mfit-settings-category:active{background:rgba(121,226,160,.08)!important;border-color:rgba(121,226,160,.35)!important}
+.mfit-category-icon{flex:0 0 40px;width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:rgba(121,226,160,.09);font-size:20px}
+.mfit-category-copy{display:grid;gap:4px;min-width:0;flex:1}
+.mfit-category-copy b{font-size:14px;line-height:1.2}
+.mfit-category-copy small{font-size:11px;line-height:1.35;color:#9eafa2;font-weight:450}
+.mfit-category-arrow{font-size:25px;font-weight:300;color:#8cebb0}
+.mfit-settings-page{display:grid;gap:12px}
+.mfit-settings-back{justify-self:start;display:flex!important;align-items:center!important;gap:8px!important;padding:8px 12px!important;border-radius:12px!important;background:rgba(121,226,160,.08)!important;color:#a8eebc!important;border:1px solid rgba(121,226,160,.16)!important;font-size:12px!important}
+.mfit-settings-page-heading{display:flex;align-items:center;gap:12px;padding:7px 2px 5px}
+.mfit-settings-page-heading>span{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:rgba(121,226,160,.1);font-size:21px}
+.mfit-settings-page-heading h3{margin:0 0 4px;font-size:17px}
+.mfit-settings-page-heading p{margin:0;font-size:11px;color:#9eafa2}
+.mfit-settings-page>.mfit-settings-detail{margin:0!important;scroll-margin-top:12px}
+.mfit-food-favorites-list{display:grid;gap:7px;margin-top:12px}
+.mfit-favorite-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(145,190,155,.13);border-radius:13px;background:rgba(255,255,255,.025)}
+.mfit-favorite-load{display:flex!important;flex:1!important;flex-direction:column!important;align-items:flex-start!important;gap:3px!important;padding:4px!important;background:transparent!important;border:0!important;box-shadow:none!important;color:#e8f1ea!important;text-align:left!important}
+.mfit-favorite-load b{font-size:13px}.mfit-favorite-load small{font-size:11px;color:#9eafa2}
+.mfit-favorite-delete{width:34px!important;height:34px!important;flex:0 0 34px!important;border-radius:10px!important;background:rgba(255,100,100,.08)!important;color:#ffaaaa!important;border:1px solid rgba(255,100,100,.14)!important}
+.mfit-save-favorite{width:100%!important;margin-top:4px!important}
+@media(max-width:390px){nav.mfit-nav{padding-left:2px!important;padding-right:2px!important}nav.mfit-nav button[data-tab] .nav-icon{font-size:18px!important}nav.mfit-nav button[data-tab] .nav-label{font-size:9px!important}.mfit-category-copy b{font-size:13px}}
+@media(prefers-reduced-motion:reduce){nav.mfit-nav *,#mfitSettingsPages *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
