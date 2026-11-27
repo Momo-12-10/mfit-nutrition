@@ -1932,3 +1932,132 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .mfit-onboarding-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
 .mfit-onboarding-step [hidden]{display:none!important}
 @media(max-width:390px){.mfit-onboarding-card{padding:16px;border-radius:18px}.mfit-onboarding-actions{grid-template-columns:1fr 1fr}}
+
+
+/* MFit v120 — unified dark emerald performance interface */
+:root{
+ --bg:#080d0b;
+ --panel:#101915;
+ --panel2:#17231c;
+ --line:rgba(166,205,179,.13);
+ --muted:#91a69a;
+ --green:#79e2a0;
+ --accent:var(--green);
+ --accent-soft:rgba(121,226,160,.11);
+ --accent-border:rgba(121,226,160,.30);
+ --radius-card:22px;
+ color-scheme:dark;
+}
+html{background:#080d0b;scroll-padding-top:18px}
+body{
+ background:
+  radial-gradient(ellipse 100% 34% at 50% -8%,rgba(54,128,81,.22),transparent 72%),
+  linear-gradient(180deg,#0b120e 0%,#080d0b 58%,#0a110d 100%)!important;
+ color:#f2f8f3;
+ -webkit-font-smoothing:antialiased;
+}
+.brand-header,.mfit-app-header{
+ background:linear-gradient(118deg,#14251b 0%,#0d1711 66%,#101d15 100%)!important;
+ border-bottom:1px solid rgba(121,226,160,.20)!important;
+ box-shadow:0 12px 34px rgba(0,0,0,.24);
+}
+.brand-header:after{background:#79e2a0;opacity:.10}
+.brand-eyebrow,.mfit-header-status{color:#8cebb0!important}
+.brand-copy h1{letter-spacing:-1.25px}
+.brand-copy h1 small{color:#a7b9ac}
+.brand-copy p{color:#9aafa0}
+.brand-logo{box-shadow:0 0 0 1px rgba(121,226,160,.18),0 8px 22px rgba(0,0,0,.35)}
+main{max-width:790px}
+.card,.mfit-ultimate-card,.mfit-extras-card{
+ background:linear-gradient(148deg,rgba(20,32,24,.98),rgba(13,22,16,.99))!important;
+ border:1px solid rgba(151,194,163,.15)!important;
+ border-radius:22px!important;
+ box-shadow:0 13px 32px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.025)!important;
+}
+.card h2,.card h3{color:#f2f8f3}
+.muted,.card .muted{color:#9aafa0}
+.big,.mfit-progress-kpi b,.mfit-analytics-kpis b{color:#83e7a8}
+.mfit-progress-dashboard{
+ background:linear-gradient(145deg,rgba(24,49,32,.98),rgba(13,25,17,.99))!important;
+ border-color:rgba(121,226,160,.29)!important;
+ box-shadow:0 16px 38px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.04)!important;
+}
+.mfit-progress-emblem,.mfit-smart-icon{
+ background:rgba(121,226,160,.12)!important;color:#8cebb0!important;
+ border:1px solid rgba(121,226,160,.20);
+}
+.mfit-progress-kpi,.mfit-dash-insight,.mfit-coach-item{
+ background:rgba(4,12,7,.28)!important;
+ border:1px solid rgba(159,201,170,.13)!important;
+ border-radius:16px!important;
+}
+.mfit-dash-chart,.mfit-dash-section{border-color:rgba(159,201,170,.12)!important}
+.mfit-legend-food,.mfit-legend-workout{background:#79e2a0!important}
+.daily-motivation,.weekly-momentum-card,.quick-start-card{
+ background:linear-gradient(120deg,rgba(24,47,31,.96),rgba(15,26,18,.98))!important;
+ border:1px solid rgba(121,226,160,.19)!important;
+}
+button:not(.secondary):not(.danger):not(.theme-swatch){
+ background:linear-gradient(135deg,#9af0b7,#70d995)!important;
+ color:#092012!important;
+ box-shadow:0 6px 18px rgba(75,190,115,.16)!important;
+}
+button.secondary{
+ background:rgba(255,255,255,.045)!important;
+ border:1px solid rgba(166,205,179,.16)!important;
+ color:#e4efe7!important;
+ box-shadow:none!important;
+}
+button.danger{background:rgba(177,55,64,.18)!important;color:#ffdfe1!important}
+input,select,textarea{
+ background:#0a130d!important;
+ border:1px solid rgba(166,205,179,.18)!important;
+ color:#f2f8f3!important;
+}
+input:focus,select:focus,textarea:focus{
+ border-color:#79e2a0!important;
+ box-shadow:0 0 0 3px rgba(121,226,160,.12)!important;
+}
+.progress{background:rgba(164,197,173,.14)!important}
+.progress span{background:linear-gradient(90deg,#a1f2ba,#6edb96)!important;box-shadow:0 0 14px rgba(121,226,160,.25)}
+.pill,.notice{
+ background:rgba(121,226,160,.09)!important;
+ border-color:rgba(121,226,160,.25)!important;
+ color:#a5edbb!important;
+}
+.item,.mfit-live-row,.mfit-pr-row,.mfit-mini-row{border-color:rgba(166,205,179,.11)!important}
+.recipe-hero,.workout-planner-hero{
+ background:linear-gradient(120deg,#1c3b28,#102017 78%)!important;
+ border:1px solid rgba(121,226,160,.23)!important;
+}
+.recipe-card,.mfit-exercise-card,.workout-day-card{
+ background:linear-gradient(145deg,#17271c,#101a13)!important;
+ border-color:rgba(166,205,179,.15)!important;
+}
+.recipe-chip{background:rgba(121,226,160,.10)!important;color:#a5edbb!important;border-color:rgba(121,226,160,.25)!important}
+nav.mfit-nav{
+ background:rgba(10,18,13,.94)!important;
+ border:1px solid rgba(166,205,179,.17)!important;
+ box-shadow:0 14px 40px rgba(0,0,0,.52)!important;
+ backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+}
+nav.mfit-nav button,body nav.mfit-nav button,body nav.mfit-nav button.active{
+ color:#a4b5a8!important;background:transparent!important;border-color:transparent!important;
+}
+nav.mfit-nav button.active{
+ color:#8cebb0!important;background:rgba(121,226,160,.10)!important;
+ border-color:rgba(121,226,160,.18)!important;
+}
+.mfit-settings-menu,.mfit-settings-popover{background:#101a13!important;border-color:rgba(166,205,179,.17)!important}
+.mfit-onboarding{background:rgba(4,10,6,.97)!important}
+.mfit-onboarding-card{background:linear-gradient(145deg,#17271c,#0d1710)!important;border-color:rgba(121,226,160,.20)!important}
+@media(min-width:600px){
+ .card{padding:21px!important}
+}
+@media(max-width:390px){
+ .card{border-radius:19px!important}
+}
+@media(prefers-reduced-motion:no-preference){
+ .card,.mfit-ultimate-card,.mfit-extras-card{transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease}
+ button{transition:filter .16s ease,transform .16s ease}
+}
