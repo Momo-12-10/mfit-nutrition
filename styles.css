@@ -2293,3 +2293,21 @@ nav.mfit-nav button .nav-icon{filter:none!important}
 hr,.divider{border-color:#292929!important}
 *{scrollbar-color:#444 #111}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+
+
+/* MFit v142–150: compact monochrome productivity refinements */
+.mfit-report-shortcuts{display:grid;gap:12px;background:#111!important;border:1px solid #292929!important}
+.mfit-report-shortcuts h2{margin:4px 0;font-size:17px}
+.mfit-report-shortcuts p{margin:0;font-size:12px}
+.mfit-report-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mfit-report-actions button{min-height:42px;padding:10px!important;font-size:12px!important;background:#191919!important;border:1px solid #383838!important;color:#eee!important}
+#mfitFavoriteSearch{width:100%;margin:12px 0 4px;padding:12px!important;background:#0d0d0d!important;border:1px solid #333!important;color:#f4f4f4!important;border-radius:12px!important}
+.mfit-section-controls{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:6px 0 10px;padding:8px 10px;border:1px solid #282828;border-radius:12px;background:#101010}
+.mfit-section-controls>span{font-size:11px;color:#999;letter-spacing:.04em}
+.mfit-section-controls>div{display:flex;gap:6px}
+.mfit-section-controls button{padding:7px 9px!important;border-radius:9px!important;background:#1a1a1a!important;border:1px solid #383838!important;color:#ddd!important;font-size:10px!important;white-space:nowrap}
+.mfit-collapsible-card .mfit-card-collapse-head{border-color:#292929!important}
+.mfit-card-collapse-toggle{background:#191919!important;color:#ddd!important;border:1px solid #333!important;box-shadow:none!important}
+.mfit-card-collapsed .mfit-card-collapse-body{display:none!important}
+.mfit-card-collapsed{padding-bottom:10px!important}
+@media(max-width:390px){.mfit-report-actions{grid-template-columns:1fr}.mfit-section-controls{align-items:flex-start;flex-direction:column}.mfit-section-controls>div{width:100%}.mfit-section-controls button{flex:1}}
