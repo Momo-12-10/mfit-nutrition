@@ -1,3 +1,4 @@
+// Release v136: recent foods quick-entry shortcuts
 // Release v135: save reusable food favorites
 // Release v134: four-category settings navigation
 // Release v133: bottom navigation and iPhone safe-area polish
@@ -12,7 +13,7 @@
 // Release v124: one-tap hydration quick action
 // Release v123: weekly training activity and muscle-group overview
 // Release v122: bodyweight, recovery and meal split views
-const CACHE='mfit-performance-v135';
+const CACHE='mfit-performance-v136';
 const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./apple-touch-icon.png','./styles.css','./app-core.js','./app.js','./mfit-plus.js','./i18n.js','./workout-planner.js','./mfit-advanced.js','./mfit-cloud.js','./mfit-pro.js','./mfit-ultimate.js','./mfit-extras.js','./mfit-next.js','./mfit-ui.js','./mfit-enhancements.js'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
