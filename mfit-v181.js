@@ -51,6 +51,7 @@ function renderPins(){
  const card=$('mfitQuickActions');if(!card)return;
  const host=card.querySelector('.mfit-quick-actions');if(!host)return;
  const pins=readPins();
+ const todayPanel=$('mfitTodayPanel');if(todayPanel&&card.parentNode===todayPanel.parentNode)todayPanel.insertAdjacentElement('afterend',card);
  const heading=card.querySelector('h2');if(heading)heading.textContent='Deine Favoriten';
  const kicker=card.querySelector('.settings-kicker');if(kicker)kicker.textContent='DEIN SCHNELLZUGRIFF';
  host.innerHTML=pins.map(id=>{const a=actionCatalog.find(x=>x.id===id);return a?'<button type="button" data-mfit-pin="'+a.id+'"><span aria-hidden="true">'+a.icon+'</span> '+a.label+'</button>':''}).join('')+'<button type="button" class="mfit-pin-edit" id="mfitPinEdit">Anpassen</button>';
