@@ -4,21 +4,21 @@
  const URL='https://pxakmojxstpkmfuldxlx.supabase.co';
  const KEY='sb_publishable_FxKsCX9D9SiNN1cgwDt2DA_GPs8SkW7';
  const OWNER_KEY='__mfit_cloud_owner_v1';
- let db=null,user=null,busy=false;
+ let db=null,user=null,busy=false,recoveryMode=false;
  const byId=id=>document.getElementById(id);
  function say(msg){const n=byId('mfitCloudStatus');if(n)n.textContent=msg;}
  function client(){
   if(db)return db;
   if(!window.supabase||typeof window.supabase.createClient!=='function')throw new Error('Die Cloud-Bibliothek wurde nicht geladen. Bitte Internetverbindung prüfen und die Seite neu laden.');
   db=window.supabase.createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-  db.auth.onAuthStateChange((_event,session)=>show(session));
+  db.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY')recoveryMode=true;show(session);});
   return db;
  }
  function owner(){try{return localStorage.getItem(OWNER_KEY)||''}catch(e){return ''}}
  function show(session){
   user=session&&session.user?session.user:null;
   const out=byId('mfitCloudSignedOut'),inside=byId('mfitCloudSignedIn');
-  if(out)out.hidden=!!user;if(inside)inside.hidden=!user;
+  const recovery=byId('mfitCloudPasswordRecovery');if(recovery)recovery.hidden=!recoveryMode;\n  if(out)out.hidden=!!user||recoveryMode;if(inside)inside.hidden=!user||recoveryMode;
   const email=byId('mfitCloudUserEmail');if(email)email.textContent=(user&&user.email)||'Angemeldet';
   if(user){
    const linked=owner();
@@ -45,6 +45,17 @@
   const {email,password}=credentials();if(!email||!password)throw Error('Bitte E-Mail-Adresse und Passwort eingeben.');
   const {data,error}=await client().auth.signInWithPassword({email,password});if(error)throw error;
   show(data.session);if(owner()&&owner()!==data.session.user.id)say('Angemeldet, aber lokale Daten gehören einem anderen Konto. Ein Cloud-Upload ist gesperrt, bis du das passende Backup wiederherstellst.');
+ });
+ window.mfitCloudSaveNewPassword=()=>run(async()=>{
+  if(!recoveryMode)throw Error('Bitte öffne zuerst den Link aus der Passwort-E-Mail.');
+  const password=byId('mfitCloudNewPassword')?.value||'';
+  if(password.length<8)throw Error('Das neue Passwort muss mindestens 8 Zeichen haben.');
+  const {data,error}=await client().auth.updateUser({password});
+  if(error)throw error;
+  recoveryMode=false;
+  if(byId('mfitCloudNewPassword'))byId('mfitCloudNewPassword').value='';
+  show(data.user?{user:data.user}:null);
+  say('Dein neues Passwort wurde gespeichert. Du kannst dich jetzt mit dem neuen Passwort anmelden.');
  });
  window.mfitCloudResetPassword=()=>run(async()=>{
   const {email}=credentials();if(!email)throw Error('Bitte zuerst deine E-Mail-Adresse eingeben.');
