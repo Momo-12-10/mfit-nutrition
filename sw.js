@@ -49,7 +49,8 @@
 // Release v175: privacy details for training load and symptom entries
 // Release v176: translations for all added training tools
 // Release v177: new fitness tool cards collapsed by default
-const CACHE='mfit-performance-v177';
+// Release v178: fix warm-up assistant start behavior
+const CACHE='mfit-performance-v178';
 const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./apple-touch-icon.png','./styles.css','./mfit-monochrome-v155.css','./app-core.js','./app.js','./mfit-plus.js','./i18n.js','./workout-planner.js','./mfit-advanced.js','./mfit-cloud.js','./mfit-pro.js','./mfit-ultimate.js','./mfit-extras.js','./mfit-next.js','./mfit-ui.js','./mfit-enhancements.js','./mfit-v165.js','./mfit-v165.css','./privacy.html','./impressum.html','./mfit-interval-timer.js'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
