@@ -2105,3 +2105,18 @@ nav.mfit-nav button.active{
 .mfit-quick-actions button{min-height:44px;padding:10px 8px!important;font-size:11px!important;white-space:normal;line-height:1.3}
 @media(max-width:520px){.mfit-ring-grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:18px}.mfit-ring{width:104px}.mfit-quick-actions{grid-template-columns:1fr}.mfit-training-kpis>div,.mfit-data-care-grid>div{padding:9px}.mfit-training-kpis b,.mfit-data-care-grid b{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.mfit-ring-value{transition:none}}
+
+
+/* MFit v122–130 refinements */
+.mfit-meal-split,.mfit-recovery-trend{display:flex;flex-direction:column;gap:10px}
+.mfit-meal-row{display:grid;grid-template-columns:90px minmax(0,1fr) 68px;gap:8px;align-items:center;font-size:11px}
+.mfit-meal-row>div{height:8px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden}
+.mfit-meal-row i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#79e2a0,#a8f0bd)}
+.mfit-meal-row b{text-align:right;font-size:11px}
+.mfit-recovery-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px}
+.mfit-recovery-kpis>div{padding:10px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(166,205,179,.12)}
+.mfit-recovery-kpis small{display:block;font-size:9px;color:#9eafa2}.mfit-recovery-kpis b{display:block;margin-top:4px;font-size:16px}
+.mfit-recovery-row{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px solid rgba(166,205,179,.10);font-size:11px;color:#c5d3c8}
+.mfit-weight-trend svg{display:block;width:100%;height:auto;overflow:visible;margin:10px 0}
+.mfit-weight-endpoints{display:flex;justify-content:space-between;gap:12px;font-size:11px;color:#a6b8aa}
+@media(max-width:420px){.mfit-meal-row{grid-template-columns:75px minmax(0,1fr) 60px}.mfit-recovery-row{font-size:10px}.mfit-recovery-kpis b{font-size:14px}}
