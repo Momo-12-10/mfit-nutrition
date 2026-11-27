@@ -42,6 +42,16 @@ function openGroup(id,focusId){
  const page=$('mfitSettingsPage-'+id);if(page){page.classList.remove('hidden');if(focusId){const el=$(focusId);el?.scrollIntoView({behavior:'smooth',block:'start'});}else page.scrollIntoView({behavior:'smooth',block:'start'});}
 }
 window.mfitInitSettings=function(){ensureSettings();if(active==='home')showLanding();};
+window.mfitCloseSettingsMenu=function(){
+ const menu=$('mfitSettingsMenu');if(menu){menu.classList.add('hidden');menu.setAttribute('aria-hidden','true');}
+ const trigger=document.querySelector('.header-settings');if(trigger)trigger.setAttribute('aria-expanded','false');
+};
+window.mfitToggleSettingsMenu=function(){
+ const menu=$('mfitSettingsMenu');if(!menu)return;
+ const willOpen=menu.classList.contains('hidden');
+ menu.classList.toggle('hidden',!willOpen);menu.setAttribute('aria-hidden',String(!willOpen));
+ const trigger=document.querySelector('.header-settings');if(trigger)trigger.setAttribute('aria-expanded',String(willOpen));
+};
 window.mfitOpenSettingsSection=function(id){
  ensureSettings();
  const g=groups.find(x=>x.items.includes(id));
