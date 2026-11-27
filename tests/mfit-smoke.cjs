@@ -45,6 +45,7 @@ const server = http.createServer((req,res)=>{
  await page.locator('#mfit181YesterdayPreview button').click();
  const copied=await page.evaluate(()=>JSON.parse(localStorage.getItem('mfit_entries')||'[]').filter(x=>x.name==='Test Banane').length);
  if(copied!==2)throw new Error('Yesterday copy did not append the entry as expected');
+ await page.evaluate(()=>window.showTab('fitness'));
  const gpxCard=page.locator('#mfit181Gpx');
  await gpxCard.locator('.mfit-card-collapse-toggle').click();
  const gpx='<?xml version="1.0"?><gpx version="1.1" creator="MFit" xmlns="http://www.topografix.com/GPX/1/1"><trk><name>Test route</name><trkseg><trkpt lat="48.200000" lon="16.300000"><time>2026-01-01T10:00:00Z</time></trkpt><trkpt lat="48.209000" lon="16.300000"><time>2026-01-01T10:06:00Z</time></trkpt></trkseg></trk></gpx>';
@@ -56,6 +57,7 @@ const server = http.createServer((req,res)=>{
  await shareCard.locator('.mfit-card-collapse-toggle').click();
  const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#mfit181ShareButton').click()]);
  if(!download.suggestedFilename().endsWith('.png'))throw new Error('Share card did not produce PNG download');
+ await page.evaluate(()=>window.showTab('profile'));
  const backupCard=page.locator('#mfit165Backup');
  await backupCard.locator('.mfit-card-collapse-toggle').click();
  const [backup]=await Promise.all([page.waitForEvent('download'),page.evaluate(()=>window.mfit165ExportBackup())]);
