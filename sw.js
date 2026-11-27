@@ -1,3 +1,4 @@
+// Release v142: Berichte- und Backup-Schnellzugriff
 // Release v141: monochrome graphite design across controls, inputs, navigation and cards
 // Release v140: final release metadata and validation
 // Release v139: offline cache refresh
@@ -21,7 +22,7 @@
 // Release v124: one-tap hydration quick action
 // Release v123: weekly training activity and muscle-group overview
 // Release v122: bodyweight, recovery and meal split views
-const CACHE='mfit-performance-v141';
+const CACHE='mfit-performance-v142';
 const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./apple-touch-icon.png','./styles.css','./app-core.js','./app.js','./mfit-plus.js','./i18n.js','./workout-planner.js','./mfit-advanced.js','./mfit-cloud.js','./mfit-pro.js','./mfit-ultimate.js','./mfit-extras.js','./mfit-next.js','./mfit-ui.js','./mfit-enhancements.js'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
