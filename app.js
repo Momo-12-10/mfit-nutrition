@@ -307,7 +307,7 @@ renderShopCatalog();renderShopItems();
   [...section.children].filter(el=>el.classList.contains('card')&&el.id!=='settingsHub').forEach((card,i)=>{
    const heading=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';
    const subtitle=card.id==='settingsHub'?'Persönliche App-Einstellungen':card.id==='profileGoals'?'Persönliche Angaben und Trainingsziele':card.id==='appAppearance'?'Farben und Darstellung':card.id==='appReminders'?'Erinnerungen und Check-ins':card.id==='weightHistory'?'Dein Gewichtsverlauf':card.id==='dataBackup'?'Daten sichern und wiederherstellen':card.id==='privacyCenter'?'Datenschutz und Datenkontrolle':'Hinweise und Empfehlungen';
-   const wrap=makeAccordion(heading,subtitle,[card],false);section.insertBefore(wrap,card);card.classList.add('mfit-accordion-inner');
+   const wrap=makeAccordion(heading,subtitle,[card],false);section.appendChild(wrap);card.classList.add('mfit-accordion-inner');
   });
  }
  function initFitness(){
@@ -354,13 +354,22 @@ renderShopCatalog();renderShopItems();
 })();
 
 function clearMfitLocalData(){
- if(!confirm('Möchtest du wirklich alle lokal gespeicherten MFit-Daten und Einstellungen auf diesem Gerät löschen? Dieser Schritt kann nicht rückgängig gemacht werden. Erstelle vorher bei Bedarf ein Backup.'))return;
+ if(!confirm('Möchtest du wirklich alle lokalen MFit-Daten und Einstellungen auf diesem Gerät löschen? Auch die lokale Cloud-Anmeldung wird von diesem Gerät entfernt. Deine bereits gespeicherten Cloud-Daten in Supabase bleiben erhalten. Dieser Schritt kann nicht rückgängig gemacht werden. Erstelle vorher bei Bedarf ein Backup.'))return;
  try{
-  const keys=[];for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(key&&key.startsWith('mfit_'))keys.push(key);}
+  const prefixes=['mfit_','__mfit_','sb-pxakmojxstpkmfuldxlx-'];
+  const keys=[];
+  for(let i=0;i<localStorage.length;i++){
+   const key=localStorage.key(i);
+   if(key&&prefixes.some(prefix=>key.startsWith(prefix)))keys.push(key);
+  }
   keys.forEach(key=>localStorage.removeItem(key));
   location.reload();
- }catch(e){const status=document.getElementById('backupStatus');if(status)status.textContent='Die Daten konnten nicht vollständig gelöscht werden. Bitte prüfe die Browser-Speichereinstellungen.';}
+ }catch(e){
+  const status=document.getElementById('backupStatus')||document.getElementById('mfitDataToolsStatus');
+  if(status)status.textContent='Die lokalen Daten konnten nicht vollständig gelöscht werden. Bitte prüfe die Browser-Speichereinstellungen.';
+ }
 }
+window.mfitClearLocalData=clearMfitLocalData;
 
 
 /* v99 — PWA install, app health and local data controls */
@@ -417,12 +426,7 @@ function clearMfitLocalData(){
    else{let bytes=0;for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);bytes+=(k?.length||0)+(localStorage.getItem(k)?.length||0);}el.textContent=(bytes/1024).toFixed(1)+' KB';}
   }catch(e){el.textContent='Nicht verfügbar';}
  };
- window.mfitClearLocalData=function(){
-  if(!confirm('Wirklich alle lokalen MFit-Daten und Einstellungen in diesem Browser löschen? Diese Aktion kann nicht rückgängig gemacht werden. Lade vorher ein Backup herunter, wenn du Daten behalten möchtest.'))return;
-  try{const keys=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('mfit_'))keys.push(k);}keys.forEach(k=>localStorage.removeItem(k));
-   const status=document.getElementById('mfitDataToolsStatus');if(status)status.textContent='Lokale MFit-Daten gelöscht. Die App wird neu geladen …';setTimeout(()=>location.reload(),500);
-  }catch(e){const status=document.getElementById('mfitDataToolsStatus');if(status)status.textContent='Daten konnten nicht vollständig gelöscht werden. Bitte Browser-Speicher prüfen.';}
- };
+ window.mfitClearLocalData=clearMfitLocalData;
  document.addEventListener('DOMContentLoaded',()=>{window.mfitRefreshSystemCheck?.();});
 })();
 

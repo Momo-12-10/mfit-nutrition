@@ -1,4 +1,5 @@
-// Release v165: complete feature bundle and cache refresh\n// Release v155: isolated stylesheet to bypass stale cached CSS
+// Release v165: complete feature bundle and cache refresh
+// Release v155: isolated stylesheet to bypass stale cached CSS
 // Release v154: stronger black controls and compact section collapse menu
 // Release v153: force black clickable food categories, tiles and navigation
 // Release v152: graphite monochrome theme and neutral appearance controls
@@ -35,8 +36,23 @@
 // Release v124: one-tap hydration quick action
 // Release v123: weekly training activity and muscle-group overview
 // Release v122: bodyweight, recovery and meal split views
-// Releases v156–165: smart meals, meal library, weekly reports, exercise library, sleep, goals, search and backup\nconst CACHE='mfit-performance-v165';
-const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./apple-touch-icon.png','./styles.css','./mfit-monochrome-v155.css','./app-core.js','./app.js','./mfit-plus.js','./i18n.js','./workout-planner.js','./mfit-advanced.js','./mfit-cloud.js','./mfit-pro.js','./mfit-ultimate.js','./mfit-extras.js','./mfit-next.js','./mfit-ui.js','./mfit-enhancements.js','./mfit-v165.js','./mfit-v165.css'];
+// Releases v156–165: smart meals, meal library, weekly reports, exercise library, sleep, goals, search and backup
+// Release v167: Austrian privacy and imprint drafts, explicit health-data consent
+// Release v166: fixes startup accordion, local deletion, workout dates, password recovery and account deletion order
+// Release v168: Intervalltimer
+// Release v169: Matchday-Modus
+// Release v170: sport-specific warm-up assistant
+// Release v171: barbell plate calculator
+// Release v172: weekly workload overview
+// Release v173: private local symptom diary
+// Release v174: season planning calendar
+// Release v175: privacy details for training load and symptom entries
+// Release v176: translations for all added training tools
+// Release v177: new fitness tool cards collapsed by default
+// Release v178: fix warm-up assistant start behavior
+// Release v179: complete privacy and training-tool bundle
+const CACHE='mfit-performance-v179';
+const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./apple-touch-icon.png','./styles.css','./mfit-monochrome-v155.css','./app-core.js','./app.js','./mfit-plus.js','./i18n.js','./workout-planner.js','./mfit-advanced.js','./mfit-cloud.js','./mfit-pro.js','./mfit-ultimate.js','./mfit-extras.js','./mfit-next.js','./mfit-ui.js','./mfit-enhancements.js','./mfit-v165.js','./mfit-v165.css','./privacy.html','./impressum.html','./mfit-interval-timer.js','./mfit-matchday.js','./mfit-warmup.js','./mfit-plate-calculator.js','./mfit-workload.js','./mfit-symptom-diary.js','./mfit-season-plan.js'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{
