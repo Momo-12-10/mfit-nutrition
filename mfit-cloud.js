@@ -38,7 +38,10 @@
  }
  window.mfitCloudSignUp=()=>run(async()=>{
   const {email,password}=credentials();if(!email||password.length<8)throw Error('Bitte E-Mail und Passwort mit mindestens 8 Zeichen eingeben.');
-  const {data,error}=await client().auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}});
+  const consent=byId('mfitHealthConsent')?.checked===true;
+  if(!consent)throw Error('Bitte lies die Datenschutzerklärung und bestätige ausdrücklich die optionale Verarbeitung deiner Gesundheitsdaten.');
+  const consentRecord={version:'1.0',acceptedAt:new Date().toISOString(),purpose:'Ausdrückliche Einwilligung zur Verarbeitung und optionalen Cloud-Speicherung der von dir eingetragenen Gesundheitsdaten nach Art. 9 Abs. 2 lit. a DSGVO.'};
+  const {data,error}=await client().auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname,data:{mfit_health_data_consent:consentRecord}}});
   if(error)throw error;if(data.session)show(data.session);
   say(data.session?'Konto erstellt und angemeldet.':'Bitte bestätige den Link in deiner E-Mail. Danach kannst du dich anmelden.');
  });
@@ -69,10 +72,13 @@
  });
  window.mfitCloudUpload=()=>run(async()=>{
   if(!user)throw Error('Bitte zuerst anmelden.');
+  const consent=byId('mfitHealthConsent')?.checked===true;
+  if(!consent)throw Error('Vor dem Cloud-Upload ist deine ausdrückliche Einwilligung zur Verarbeitung der eingetragenen Gesundheitsdaten erforderlich.');
   const linked=owner();
   if(linked&&linked!==user.id)throw Error('Upload gesperrt: Die lokalen Daten gehören einem anderen Konto. Stelle zuerst das Cloud-Backup des angemeldeten Kontos wieder her.');
   if(!linked&&!confirm('Diese lokalen MFit-Daten sind noch keinem Konto zugeordnet. Möchtest du sie dem Konto '+(user.email||'')+' zuordnen und in dessen Cloud sichern?'))return;
   const data=snapshot();if(!Object.keys(data).length)throw Error('Es wurden keine lokalen MFit-Daten gefunden.');
+  data.__mfit_health_data_consent={version:'1.0',acceptedAt:new Date().toISOString(),purpose:'Ausdrückliche Einwilligung nach Art. 9 Abs. 2 lit. a DSGVO für die von dir ausgewählten Gesundheitsdaten.'};
   const {error}=await client().from('mfit_user_data').upsert({user_id:user.id,data,updated_at:new Date().toISOString()},{onConflict:'user_id'});
   if(error)throw error;
   try{localStorage.setItem(OWNER_KEY,user.id)}catch(e){say('Cloud-Backup gespeichert. Die lokale Kontozuordnung konnte nicht gespeichert werden; bestätige sie beim nächsten Upload erneut.');return}
