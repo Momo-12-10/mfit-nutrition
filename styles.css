@@ -2430,3 +2430,67 @@ nav.mfit-nav button[data-tab].active{background:#20242a!important;color:#fff!imp
 .theme-swatch{filter:grayscale(1)!important}
 #appAppearance .theme-preview,#appAppearance .theme-preview-dot{background:#252a30!important;box-shadow:none!important}
 #appAppearance .theme-picker-row input[type=color]{filter:grayscale(1)!important}
+
+
+/* MFit v153 — clickable surfaces are always black / graphite */
+:root{
+ --green:#b9c3cf!important;--accent:#b9c3cf!important;
+ --accent-2:#9ca8b6!important;--accent-soft:rgba(185,195,207,.07)!important;
+ --success:#c5cbd2!important;--lime:#c5cbd2!important;--mint:#c5cbd2!important;
+ --primary:#e8eaed!important;
+}
+/* Kill inline green gradients and inline green backgrounds on interactive tiles */
+[style*="linear-gradient"],
+[style*="radial-gradient"]{
+ background-color:#111315!important;background-image:none!important;
+}
+button,[role="button"],.btn,.primary,.secondary,.action-btn,
+.mfit-onboarding-primary,.meal-generate-btn,
+[class*="category"],[class*="food-cat"],[class*="food-category"],
+[class*="meal-category"],[class*="quick-food"],[class*="food-quick"],
+[class*="suggestion"],.product-suggestion{
+ background-color:#111315!important;background-image:none!important;
+ color:#f1f2f4!important;border-color:#30343a!important;
+ box-shadow:none!important;text-shadow:none!important;
+}
+button:hover,button:active,[role="button"]:hover,[role="button"]:active,
+[class*="category"]:hover,[class*="food-cat"]:hover,
+[class*="food-category"]:hover,[class*="meal-category"]:hover,
+.product-suggestion:hover,.product-suggestion:active{
+ background-color:#202328!important;background-image:none!important;
+ color:#fff!important;border-color:#454b54!important;
+}
+/* Food category tiles and clickable meal groups */
+.meal-quick-grid>*,.meal-pref-grid>*,.meal-preferences>*,
+.food-categories>*,.food-category-grid>*,.food-category-list>*,
+.food-group>*,.food-group button,.food-category,.food-category button,
+.meal-category,.meal-category button,.category-card,.category-tile{
+ background:#111315!important;background-image:none!important;
+ color:#f1f2f4!important;border:1px solid #30343a!important;
+ box-shadow:none!important;
+}
+/* Bottom navigation: black strip, dark icon tiles, white labels */
+nav.mfit-nav,nav.mfit-nav *{
+ box-shadow:none!important;text-shadow:none!important;
+}
+nav.mfit-nav{
+ background:#08090b!important;background-image:none!important;
+ border-top:1px solid #292d33!important;
+}
+nav.mfit-nav button[data-tab],
+nav.mfit-nav button[data-tab].active{
+ background:#101214!important;background-image:none!important;
+ color:#e7e9ec!important;border:1px solid #292d33!important;
+}
+nav.mfit-nav button[data-tab].active{
+ background:#24282e!important;color:#fff!important;border-color:#4a515b!important;
+}
+nav.mfit-nav .nav-icon,
+nav.mfit-nav .nav-icon-wrap,
+nav.mfit-nav .icon-wrap{
+ background:#111315!important;background-image:none!important;
+ border-color:#30343a!important;filter:none!important;
+}
+nav.mfit-nav .nav-label{color:#f0f1f3!important}
+/* Keep emoji glyphs in their original full colour */
+.emoji,.nav-icon,.food-emoji,.category-emoji{filter:none!important}
