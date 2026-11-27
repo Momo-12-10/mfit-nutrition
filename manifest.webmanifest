@@ -1,22 +1,22 @@
 {
   "name": "MFit Performance",
   "short_name": "MFit",
-  "start_url": "./?v=151",
+  "start_url": "./?v=152",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#090c11",
+  "background_color": "#090a0c",
   "theme_color": "#090c11",
   "description": "MFit Performance – Ernährung, Training und Fortschritt.",
   "icons": [
     {
-      "src": "./icon.svg?v=151",
+      "src": "./icon.svg?v=152",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "./apple-touch-icon.png?v=151",
+      "src": "./apple-touch-icon.png?v=152",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
