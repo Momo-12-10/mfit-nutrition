@@ -2120,3 +2120,48 @@ nav.mfit-nav button.active{
 .mfit-weight-trend svg{display:block;width:100%;height:auto;overflow:visible;margin:10px 0}
 .mfit-weight-endpoints{display:flex;justify-content:space-between;gap:12px;font-size:11px;color:#a6b8aa}
 @media(max-width:420px){.mfit-meal-row{grid-template-columns:75px minmax(0,1fr) 60px}.mfit-recovery-row{font-size:10px}.mfit-recovery-kpis b{font-size:14px}}
+
+
+/* MFit v131 — calmer app navigation and compact category-based settings */
+nav.mfit-nav{
+ display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ align-items:center!important;justify-content:stretch!important;gap:0!important;
+ padding:7px 5px calc(7px + env(safe-area-inset-bottom))!important;
+ background:rgba(8,15,11,.96)!important;border-top:1px solid rgba(145,190,155,.16)!important;
+ border-radius:0!important;box-shadow:0 -8px 26px rgba(0,0,0,.24)!important;
+ backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+nav.mfit-nav button,nav.mfit-nav button.active{
+ display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+ gap:4px!important;min-width:0!important;min-height:54px!important;width:100%!important;
+ padding:5px 2px!important;margin:0!important;border:0!important;border-radius:12px!important;
+ background:transparent!important;box-shadow:none!important;color:#9aa99e!important;
+ font-size:10px!important;font-weight:650!important;line-height:1.1!important;
+}
+nav.mfit-nav button .nav-icon{display:block!important;min-height:0!important;font-size:19px!important;line-height:1.15!important;filter:none!important}
+nav.mfit-nav button .nav-label{display:block!important;font-size:10px!important;line-height:1.1!important;white-space:nowrap!important}
+nav.mfit-nav button.active{color:#8cebb0!important}
+nav.mfit-nav button.active .nav-icon{filter:drop-shadow(0 0 5px rgba(121,226,160,.28))!important}
+nav.mfit-nav button:active{transform:scale(.96)!important}
+.mfit-settings-landing{display:grid;gap:10px}
+.mfit-settings-category{display:flex!important;align-items:center!important;gap:13px!important;width:100%!important;min-height:72px!important;padding:13px 15px!important;text-align:left!important;
+ background:rgba(255,255,255,.035)!important;color:#e8f1ea!important;border:1px solid rgba(145,190,155,.15)!important;border-radius:17px!important;box-shadow:none!important}
+.mfit-settings-category:active{background:rgba(121,226,160,.08)!important;border-color:rgba(121,226,160,.35)!important}
+.mfit-category-icon{flex:0 0 40px;width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:rgba(121,226,160,.09);font-size:20px}
+.mfit-category-copy{display:grid;gap:4px;min-width:0;flex:1}
+.mfit-category-copy b{font-size:14px;line-height:1.2}
+.mfit-category-copy small{font-size:11px;line-height:1.35;color:#9eafa2;font-weight:450}
+.mfit-category-arrow{font-size:25px;font-weight:300;color:#8cebb0}
+.mfit-settings-page{display:grid;gap:12px}
+.mfit-settings-back{justify-self:start;display:flex!important;align-items:center!important;gap:8px!important;padding:8px 12px!important;border-radius:12px!important;background:rgba(121,226,160,.08)!important;color:#a8eebc!important;border:1px solid rgba(121,226,160,.16)!important;font-size:12px!important}
+.mfit-settings-back span{font-size:21px;line-height:1}
+.mfit-settings-page-heading{display:flex;align-items:center;gap:12px;padding:7px 2px 5px}
+.mfit-settings-page-heading>span{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:rgba(121,226,160,.1);font-size:21px}
+.mfit-settings-page-heading h3{margin:0 0 4px;font-size:17px}
+.mfit-settings-page-heading p{margin:0;font-size:11px;color:#9eafa2}
+.mfit-settings-page>.mfit-settings-detail{margin:0!important;scroll-margin-top:12px}
+.mfit-settings-page>.mfit-settings-detail h2{font-size:16px}
+#settingsHub{margin-bottom:14px}
+#settingsHub .settings-hub-top{margin-bottom:5px}
+#settingsHub .settings-hub-top h2{font-size:22px}
+@media(max-width:390px){nav.mfit-nav{padding-left:2px!important;padding-right:2px!important}nav.mfit-nav button .nav-icon{font-size:18px!important}nav.mfit-nav button .nav-label{font-size:9.5px!important}.mfit-settings-category{min-height:66px!important;padding:11px 12px!important}}
