@@ -2211,3 +2211,12 @@ body{padding-bottom:calc(82px + env(safe-area-inset-bottom))!important}
 .mfit-save-favorite{width:100%!important;margin-top:4px!important}
 @media(max-width:390px){nav.mfit-nav{padding-left:2px!important;padding-right:2px!important}nav.mfit-nav button[data-tab] .nav-icon{font-size:18px!important}nav.mfit-nav button[data-tab] .nav-label{font-size:9px!important}.mfit-category-copy b{font-size:13px}}
 @media(prefers-reduced-motion:reduce){nav.mfit-nav *,#mfitSettingsPages *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+.mfit-favorite-section{display:grid;gap:8px;margin-top:12px}
+.mfit-favorite-section> b{font-size:12px;color:#a8eebc}
+.mfit-recent-food-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.mfit-recent-food{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:4px!important;min-width:0!important;padding:10px!important;text-align:left!important;border-radius:12px!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(145,190,155,.13)!important;color:#e8f1ea!important}
+.mfit-recent-food b{font-size:12px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mfit-recent-food small{font-size:10px;color:#9eafa2}
+@media(max-width:350px){.mfit-recent-food-list{grid-template-columns:1fr}}
