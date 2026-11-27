@@ -66,3 +66,15 @@ Hinweis: Mahlzeitenideen und Coach-Hinweise sind regelbasiert und keine generati
 
 
 Supabase-RLS-Prüfung und Einrichtung: [SUPABASE_SECURITY_SETUP.md](./SUPABASE_SECURITY_SETUP.md).
+
+
+## Version 179 — Datenschutz und Trainingstools
+
+- Österreichischer Datenschutz-Entwurf und Impressums-Entwurf mit klar markierten Platzhaltern; vor Veröffentlichung müssen Verantwortlicher, Kontaktdaten, tatsächliche Hosting-/Transferdetails, Verträge und Aufbewahrungsfristen ergänzt und rechtlich geprüft werden.
+- Ausdrückliche, nicht vorausgewählte Einwilligung für die Verarbeitung und optionale Cloud-Speicherung der selbst eingetragenen Gesundheitsdaten. Cloud-Upload wird ohne aktive Einwilligung blockiert; bestehende Konten müssen vor dem Upload zustimmen.
+- Neue Trainingstools: Intervalltimer, Spieltag-Modus mit Packliste, sportartspezifisches Warm-up, Langhantel-Scheibenrechner, RPE-basierte Wochenbelastung, lokales Symptomtagebuch und Saisonphasenplan.
+- Neue Fitnesskarten sind standardmäßig eingeklappt. Neue Beschriftungen sind in Englisch und Russisch ergänzt.
+- Symptomtagebuch und Belastungsdaten werden lokal gespeichert; ein manueller Cloud-Upload kann sie bei erteilter Einwilligung mit übertragen.
+- Keine bestehenden MFit-Datenschlüssel werden bei diesem Update zurückgesetzt.
+
+**Prüfstatus:** JavaScript-Syntax aller sieben neuen Module sowie der zentralen App-Skripte wurde geprüft; das PWA-Manifest ist valides JSON. Ein echter Browser-/iPhone-Funktionstest und die rechtliche Prüfung der Entwürfe stehen noch aus.
