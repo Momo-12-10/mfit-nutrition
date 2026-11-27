@@ -24,6 +24,8 @@ const server = http.createServer((req,res)=>{
  page.on('pageerror',e=>errors.push('pageerror: '+e.message));
  page.on('console',m=>{if(m.type()==='error')errors.push('console: '+m.text())});
  await page.addInitScript(()=>{
+  if(localStorage.getItem('mfit_smoke_seeded')==='1')return;
+  localStorage.setItem('mfit_smoke_seeded','1');
   const now=new Date(),date=d=>{const x=new Date(d);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')};
   const yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);
   localStorage.setItem('mfit_setup_done','1');
@@ -81,7 +83,15 @@ const server = http.createServer((req,res)=>{
  if(!backupPath)throw new Error('Backup export did not create a file');
  const backupJson=JSON.parse(fs.readFileSync(backupPath,'utf8'));
  if(!backupJson.localStorage['mfit_gpx_sessions_v181'])throw new Error('GPX summaries are missing from the existing MFit backup');
- log('checking backup');
+ await page.evaluate(()=>localStorage.removeItem('mfit_gpx_sessions_v181'));
+ const restoreNavigation=page.waitForNavigation({waitUntil:'domcontentloaded'});
+ page.once('dialog',d=>d.accept());
+ await page.locator('#mfit165RestoreFile').setInputFiles(backupPath);
+ await restoreNavigation;
+ await page.waitForSelector('#mfitTodayPanel');
+ const restored=await page.evaluate(()=>({gpx:JSON.parse(localStorage.getItem('mfit_gpx_sessions_v181')||'[]').length,entries:JSON.parse(localStorage.getItem('mfit_entries')||'[]').length}));
+ if(restored.gpx!==1||restored.entries!==3)throw new Error('Backup restore did not restore existing and new data: '+JSON.stringify(restored));
+ log('checking backup restore');
  await Promise.race([page.evaluate(()=>navigator.serviceWorker.ready.then(()=>true)),new Promise((_,reject)=>setTimeout(()=>reject(new Error('Service worker did not become ready within 12 seconds')),12000))]);
  log('checking service worker and offline mode');
  await page.reload({waitUntil:'domcontentloaded'});
