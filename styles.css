@@ -2311,3 +2311,78 @@ hr,.divider{border-color:#292929!important}
 .mfit-card-collapsed .mfit-card-collapse-body{display:none!important}
 .mfit-card-collapsed{padding-bottom:10px!important}
 @media(max-width:390px){.mfit-report-actions{grid-template-columns:1fr}.mfit-section-controls{align-items:flex-start;flex-direction:column}.mfit-section-controls>div{width:100%}.mfit-section-controls button{flex:1}}
+
+
+/* MFit v151 — restrained graphite / porcelain theme */
+:root{
+ color-scheme:dark!important;
+ --bg:#090a0c!important;--panel:#121417!important;--panel2:#1a1d21!important;
+ --green:#b9c3cf!important;--accent:#b9c3cf!important;--accent-2:#9ca8b6!important;
+ --accent-soft:rgba(185,195,207,.09)!important;--accent-border:#343b44!important;
+ --line:#292d33!important;--border:#292d33!important;--muted:#a0a5ad!important;
+ --text:#f1f2f4!important;--primary:#e8eaed!important;
+}
+html,body{background:#090a0c!important;color:#f1f2f4!important}
+body{background-image:none!important;background-color:#090a0c!important}
+header,header:before,header:after{
+ background:#101216!important;background-image:none!important;border-color:#262a30!important;
+ box-shadow:none!important;filter:none!important
+}
+header:after{opacity:0!important}
+main{background:transparent!important}
+.card,.panel,.modal,.sheet,.settings-card,.settings-section,.recipe-card,
+.mfit-settings-category,.mfit-favorite-row,.mfit-recent-food,.mfit-report-shortcuts{
+ background:#121417!important;background-image:none!important;color:#eff0f2!important;
+ border:1px solid #292d33!important;box-shadow:none!important
+}
+.card h1,.card h2,.card h3,.card h4, h1,h2,h3,h4,b,strong{color:#f1f2f4}
+p,.muted,small,.muted-text{color:#a0a5ad!important}
+button,.btn,.primary,.secondary,.action-btn,[role="button"],
+input[type="button"],input[type="submit"],input[type="reset"]{
+ background:#20242a!important;background-image:none!important;color:#edf0f3!important;
+ border:1px solid #363c44!important;box-shadow:none!important;text-shadow:none!important;
+}
+button:hover,.btn:hover,.primary:hover,.secondary:hover,[role="button"]:hover{
+ background:#292e35!important;border-color:#4a535e!important;color:#fff!important
+}
+button.active,button.selected,.active>.btn,.selected,[aria-pressed="true"],[aria-selected="true"]{
+ background:#30363e!important;color:#fff!important;border-color:#56616e!important
+}
+button.danger,.danger,.mfit-favorite-delete{
+ background:#292326!important;color:#e5c9cc!important;border-color:#48363a!important
+}
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+select,textarea{
+ color:#f1f2f4!important;background:#0e1013!important;border:1px solid #343940!important;
+ box-shadow:none!important;caret-color:#fff!important
+}
+input::placeholder,textarea::placeholder{color:#777e87!important;opacity:1}
+input:focus,select:focus,textarea:focus{outline:1px solid #687482!important;border-color:#687482!important;box-shadow:0 0 0 2px rgba(185,195,207,.07)!important}
+input[type="checkbox"],input[type="radio"],input[type="range"]{accent-color:#aeb8c4!important}
+.progress,.progress-bar,.progress-track{background:#292e34!important;box-shadow:none!important}
+.progress span,.progress-fill,.progress-bar>span,.progress-bar-fill,.macro-fill,.calorie-fill,
+.mfit-week-bar i,.mfit-muscle-row i,.mfit-meal-row i{background:#aeb8c4!important;box-shadow:none!important}
+.big,.text-accent,.accent,.highlight,.success,.positive,.pill,.recipe-chip,
+.settings-kicker,.section-kicker,.mfit-category-arrow,.mfit-favorite-section>b{
+ color:#c2cbd5!important;text-shadow:none!important
+}
+.pill,.badge,.tag,.chip,.recipe-chip{background:#1b2026!important;border-color:#353d47!important}
+.notice,.reminder-notice{background:#171c22!important;color:#d9dfe6!important;border-color:#343d48!important}
+nav,nav.mfit-nav{
+ background:rgba(10,11,13,.98)!important;background-image:none!important;
+ border-top:1px solid #292d33!important;box-shadow:0 -5px 18px rgba(0,0,0,.2)!important
+}
+nav button,nav button.active,nav.mfit-nav button[data-tab],nav.mfit-nav button[data-tab].active{
+ background:transparent!important;color:#969da6!important;border-color:transparent!important;box-shadow:none!important
+}
+nav button.active,nav.mfit-nav button[data-tab].active{
+ background:#1b1f24!important;color:#f1f2f4!important;border-color:#343a42!important
+}
+.recipe-card,.recipe-grid .card{background:#121417!important}
+.recipe-chip{color:#c2cbd5!important}
+.theme-swatch{filter:saturate(.25)!important;opacity:.72}
+.theme-preview-dot{background:#aeb8c4!important}
+hr,.divider{border-color:#292d33!important}
+svg [stroke*="#65"],svg [stroke*="#79"],svg [stroke*="#8c"],svg [fill*="#65"],svg [fill*="#79"],svg [fill*="#8c"]{stroke:#aeb8c4!important;fill:#aeb8c4!important}
+[style*="box-shadow"]{box-shadow:none!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
