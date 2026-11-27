@@ -1,0 +1,30 @@
+name: MFit v181 quality checks
+on:
+  push:
+    branches:
+      - release/mfit-performance-v181-daily-gpx-mobility
+  pull_request:
+    branches: [main]
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check JavaScript syntax
+        run: |
+          set -e
+          for file in *.js; do
+            echo "Checking $file"
+            node --check "$file"
+          done
+          node --check tests/mfit-smoke.cjs
+      - name: Install browser test dependency
+        run: npm install --no-save playwright
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run 360px browser smoke tests
+        run: node tests/mfit-smoke.cjs
