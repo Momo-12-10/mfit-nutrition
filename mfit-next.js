@@ -38,11 +38,15 @@ function install(){
  }
  const homeQuick=$('home');
  if(homeQuick&&!$('mfitQuickActions')){
-  const html='<div class="mfit-quick-actions"><button type="button" data-mfit-action="track">＋ Ernährung tracken</button><button type="button" data-mfit-action="fitness">＋ Training eintragen</button><button type="button" data-mfit-action="recipes">Rezeptideen ansehen</button></div>';
+  const html='<div class="mfit-quick-actions"><button type="button" data-mfit-action="track">＋ Ernährung tracken</button><button type="button" data-mfit-action="fitness">＋ Training eintragen</button><button type="button" data-mfit-action="recipes">Rezeptideen ansehen</button><button type="button" data-mfit-water="250">＋ 250 ml Wasser</button></div>';
   addCard(homeQuick,'mfitQuickActions','SCHNELLZUGRIFF','Direkt weitermachen',html,$('mfitDailyRings')||$('mfitProgressDashboard'));
   $('mfitQuickActions')?.querySelectorAll('[data-mfit-action]').forEach(b=>b.addEventListener('click',()=>{if(typeof showTab==='function')showTab(b.dataset.mfitAction);}));
+  $('mfitQuickActions')?.querySelector('[data-mfit-water]')?.addEventListener('click',()=>{if(typeof addWater==='function')addWater(250);refresh();});
  }
+ if(home&&!$('mfitMealSplit')){const html='<p class="muted">So verteilen sich deine eingetragenen Kalorien auf die Mahlzeiten.</p><div id="mfitMealSplitRows" class="mfit-meal-split"></div><p class="mfit-next-note">Nur Mahlzeiten mit gespeicherten Einträgen werden angezeigt.</p>';addCard(home,'mfitMealSplit','ERNÄHRUNGSÜBERSICHT','Kalorien nach Mahlzeit',html,$('mfitDailyRings'));}
+ if(fitness&&!$('mfitRecoveryTrend')){const html='<p class="muted">Deine letzten Check-ins zu Schlaf, Energie und Muskelkater.</p><div id="mfitRecoveryTrendRows" class="mfit-recovery-trend"></div><p class="mfit-next-note">Selbsteinschätzung zur Orientierung – keine medizinische Bewertung.</p>';addCard(fitness,'mfitRecoveryTrend','REGENERATION','Deine letzten Check-ins',html,$('mfitTrainingCommand'));}
  const profile=$('profile');
+ if(profile&&!$('mfitBodyTrend')){const html='<p class="muted">Dein dokumentierter Gewichtsverlauf. Einzelne Messungen können durch Wasser und Tageszeit schwanken.</p><div id="mfitBodyTrendChart" class="mfit-weight-trend"></div><div id="mfitBodyTrendHint" class="mfit-next-note"></div>';addCard(profile,'mfitBodyTrend','KÖRPERFORTSCHRITT','Gewichtsverlauf',html,$('mfitDataCare'));}
  if(profile&&!$('mfitDataCare')){
   const html='<p class="muted">Ein kurzer Überblick zu deinen lokal gespeicherten Einträgen.</p><div class="mfit-data-care-grid"><div><small>ERNÄHRUNGSEINTRÄGE</small><b id="mfitDataFoodCount">0</b></div><div><small>TRAININGSEINTRÄGE</small><b id="mfitDataWorkoutCount">0</b></div><div><small>RECOVERY-CHECK-INS</small><b id="mfitDataRecoveryCount">0</b></div></div><p class="mfit-next-note">Diese Anzeige liest deine vorhandenen Daten nur aus. Sie verändert oder löscht nichts.</p>';
   addCard(profile,'mfitDataCare','DATENÜBERBLICK','Deine MFit-Aktivität',html);
@@ -74,7 +78,33 @@ function renderDataCare(){
  if($('mfitDataWorkoutCount'))$('mfitDataWorkoutCount').textContent=String(workouts().length);
  if($('mfitDataRecoveryCount'))$('mfitDataRecoveryCount').textContent=String(recoveries().length);
 }
-function refresh(){renderNutritionRings();renderTrainingCommand();renderDataCare();}
+
+function renderMealSplit(){
+ const el=$('mfitMealSplitRows');if(!el)return;
+ const date=typeof selectedDate==='string'?selectedDate:today(),entries=foods().filter(x=>(x.date||today())===date);
+ const names=['Frühstück','Mittagessen','Abendessen','Snack','Sonstiges'];
+ const rows=names.map(name=>({name,kcal:entries.filter(x=>String(x.meal||'').toLowerCase()===name.toLowerCase()).reduce((n,x)=>n+(Number(x.kcal)||0),0)})).filter(x=>x.kcal>0);
+ const max=Math.max(1,...rows.map(x=>x.kcal));
+ el.innerHTML=rows.length?rows.map(x=>'<div class="mfit-meal-row"><span>'+esc(x.name)+'</span><div><i style="width:'+Math.min(100,x.kcal/max*100)+'%"></i></div><b>'+Math.round(x.kcal)+' kcal</b></div>').join(''):'<p class="muted">Noch keine Mahlzeiten für '+date+' erfasst.</p>';
+}
+function renderRecoveryTrend(){
+ const el=$('mfitRecoveryTrendRows');if(!el)return;
+ const rows=recoveries().slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))).slice(0,7);
+ if(!rows.length){el.innerHTML='<p class="muted">Noch keine Recovery-Check-ins gespeichert.</p>';return;}
+ const avg=k=>rows.reduce((n,x)=>n+(Number(x[k])||0),0)/rows.length;
+ el.innerHTML='<div class="mfit-recovery-kpis"><div><small>Ø SCHLAF</small><b>'+avg('sleep').toFixed(1)+' h</b></div><div><small>Ø ENERGIE</small><b>'+avg('energy').toFixed(1)+'/10</b></div><div><small>Ø MUSKELKATER</small><b>'+avg('soreness').toFixed(1)+'/10</b></div></div>'+rows.slice(0,4).map(x=>'<div class="mfit-recovery-row"><span>'+esc(x.date||'')+'</span><span>'+Number(x.sleep||0)+' h Schlaf</span><span>Energie '+Number(x.energy||0)+'/10</span></div>').join('');
+}
+function renderBodyTrend(){
+ const el=$('mfitBodyTrendChart');if(!el)return;
+ const rows=weights().filter(x=>Number(x.weight)>0&&x.date).slice().sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(-10);
+ if(!rows.length){el.innerHTML='<p class="muted">Noch keine Gewichtseinträge. Du kannst dein Gewicht im Profil dokumentieren.</p>';if($('mfitBodyTrendHint'))$('mfitBodyTrendHint').textContent='';return;}
+ const vals=rows.map(x=>Number(x.weight)),min=Math.min(...vals),max=Math.max(...vals),range=Math.max(.5,max-min);
+ const points=vals.map((v,i)=>{const x=8+(i/Math.max(1,vals.length-1))*284,y=84-((v-min)/range)*64;return x.toFixed(1)+','+y.toFixed(1)}).join(' ');
+ el.innerHTML='<svg viewBox="0 0 300 100" role="img" aria-label="Gewichtsverlauf mit '+rows.length+' Messungen"><polyline points="'+points+'" fill="none" stroke="#79e2a0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+vals.map((v,i)=>{const x=8+(i/Math.max(1,vals.length-1))*284,y=84-((v-min)/range)*64;return '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="3.5" fill="#b5f3c7"/>'}).join('')+'</svg><div class="mfit-weight-endpoints"><span>'+esc(rows[0].date)+' · '+vals[0].toFixed(1)+' kg</span><b>'+vals[vals.length-1].toFixed(1)+' kg</b></div>';
+ const delta=vals[vals.length-1]-vals[0];if($('mfitBodyTrendHint'))$('mfitBodyTrendHint').textContent=rows.length>1?'Veränderung über die angezeigten Messungen: '+(delta>0?'+':'')+delta.toFixed(1)+' kg.':'Bisher eine Messung gespeichert.';
+}
+
+function refresh(){renderNutritionRings();renderTrainingCommand();renderMealSplit();renderRecoveryTrend();renderBodyTrend();renderDataCare();}
 function boot(){
  install();refresh();
  ['render','renderFitness','saveRecovery','addWorkout','removeWorkout','saveWeightLog','removeEntry'].forEach(name=>{
