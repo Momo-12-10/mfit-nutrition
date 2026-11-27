@@ -2386,3 +2386,47 @@ hr,.divider{border-color:#292d33!important}
 svg [stroke*="#65"],svg [stroke*="#79"],svg [stroke*="#8c"],svg [fill*="#65"],svg [fill*="#79"],svg [fill*="#8c"]{stroke:#aeb8c4!important;fill:#aeb8c4!important}
 [style*="box-shadow"]{box-shadow:none!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+
+
+/* MFit v152 — echte Schwarz-Weiß-Oberfläche, auch für dynamische Vorschläge */
+:root{
+ --green:#b9c3cf!important;--accent:#b9c3cf!important;--accent-2:#9ca8b6!important;
+ --accent-soft:rgba(185,195,207,.08)!important;--accent-border:#343b44!important;
+ --success:#c5cbd2!important;--lime:#c5cbd2!important;--mint:#c5cbd2!important;
+}
+#productSuggestions.product-suggestions{
+ background:#111315!important;background-image:none!important;
+ border:1px solid #30343a!important;border-radius:16px!important;
+ box-shadow:none!important;overflow-y:auto!important;
+}
+#productSuggestions .product-suggestion,
+button.product-suggestion{
+ background:#111315!important;background-image:none!important;
+ color:#f1f2f4!important;border:0!important;
+ border-bottom:1px solid #292d33!important;border-radius:0!important;
+ box-shadow:none!important;text-shadow:none!important;
+}
+#productSuggestions .product-suggestion:active,
+#productSuggestions .product-suggestion:hover{
+ background:#202328!important;color:#fff!important;
+}
+#productSuggestions .suggestion-main b{color:#f3f4f6!important}
+#productSuggestions .suggestion-brand,
+#productSuggestions .suggestion-meta,
+#productSuggestions .suggestion-nutrition,
+#productSuggestions .suggestion-status{color:#9da3ac!important}
+.product-suggestions[hidden]{display:none!important}
+button:not(.theme-swatch),.btn,.primary,.secondary,[role="button"],
+input[type="button"],input[type="submit"],input[type="reset"]{
+ background-color:#1b1e22!important;background-image:none!important;
+ color:#edf0f3!important;border-color:#343940!important;box-shadow:none!important;
+}
+button.active,button.selected,.active>.btn,.selected,[aria-pressed="true"],[aria-selected="true"]{
+ background-color:#292e34!important;color:#fff!important;border-color:#505862!important;
+}
+nav.mfit-nav button[data-tab].active{background:#20242a!important;color:#fff!important}
+.mfit-favorite-section>b,.suggestion-brand,.suggestion-nutrition,.success,.positive,
+.text-accent,.accent,.highlight{color:#c3c9d1!important}
+.theme-swatch{filter:grayscale(1)!important}
+#appAppearance .theme-preview,#appAppearance .theme-preview-dot{background:#252a30!important;box-shadow:none!important}
+#appAppearance .theme-picker-row input[type=color]{filter:grayscale(1)!important}
