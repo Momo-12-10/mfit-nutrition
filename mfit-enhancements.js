@@ -111,6 +111,6 @@ function navPolish(){
 }
 function boot(){ensureSettings();ensureFavorites();navPolish();}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
-document.addEventListener('click',e=>{if(e.target.closest('button[data-tab]'))setTimeout(navPolish,0);});
+document.addEventListener('click',e=>{if(e.target.closest('button[data-tab]')){setTimeout(navPolish,0);if(e.target.closest('button[data-tab]').dataset.tab==='track')setTimeout(renderFavorites,60);}});
 window.mfitRefreshFoodFavorites=renderFavorites;
 })();
