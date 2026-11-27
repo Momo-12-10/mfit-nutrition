@@ -1,3 +1,4 @@
+// Release v136: recent foods quick-entry shortcuts
 // Release v138: accessibility labels and keyboard support
 // Release v137: small-screen responsive layout
 // Release v136: recent foods quick-entry shortcuts
