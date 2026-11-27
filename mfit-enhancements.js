@@ -76,18 +76,30 @@ function useFavorite(id){
  $('foodName')?.scrollIntoView({behavior:'smooth',block:'center'});
 }
 function removeFavorite(id){writeFavorites(readFavorites().filter(x=>String(x.id)!==String(id)));renderFavorites();}
+function useEntry(e){
+ const map={foodName:'name',amount:'amount',unit:'unit',meal:'meal',kcal:'kcal',protein:'protein',carbs:'carbs',fat:'fat',fiber:'fiber',sugar:'sugar',addedSugar:'addedSugar',drink:'drink',vitc:'vitc',vitd:'vitd',calcium:'calcium',iron:'iron',magnesium:'magnesium',potassium:'potassium',zinc:'zinc',b12:'b12'};
+ Object.entries(map).forEach(([field,key])=>{const el=$(field);if(el&&e[key]!==undefined)el.value=e[key];});
+ if($('portionMode'))$('portionMode').value='custom';
+ $('foodName')?.scrollIntoView({behavior:'smooth',block:'center'});
+}
 function renderFavorites(){
  const list=$('mfitFoodFavoritesList');if(!list)return;
- const favs=readFavorites();
- list.innerHTML=favs.length?favs.map(x=>'<div class="mfit-favorite-row"><button type="button" class="mfit-favorite-load" data-load="'+esc(x.id)+'"><b>'+esc(x.foodName)+'</b><small>'+Math.round(Number(x.kcal)||0)+' kcal · '+Math.round(Number(x.protein)||0)+' g Protein</small></button><button type="button" class="mfit-favorite-delete" data-delete="'+esc(x.id)+'" aria-label="'+esc(x.foodName)+' aus Favoriten entfernen">×</button></div>').join(''):'<p class="muted">Noch keine Favoriten. Fülle ein Lebensmittel aus und speichere es als Vorlage.</p>';
+ const favs=readFavorites();let entries=[];
+ try{entries=typeof data!=='undefined'&&Array.isArray(data)?data:[]}catch(e){}
+ const recent=[],seen=new Set();
+ entries.slice().reverse().forEach(e=>{const name=String(e.name||'').trim(),key=name.toLowerCase();if(name&&!seen.has(key)){seen.add(key);recent.push(e);}});
+ const favHtml=favs.length?favs.map(x=>'<div class="mfit-favorite-row"><button type="button" class="mfit-favorite-load" data-load="'+esc(x.id)+'"><b>'+esc(x.foodName)+'</b><small>'+Math.round(Number(x.kcal)||0)+' kcal · '+Math.round(Number(x.protein)||0)+' g Protein</small></button><button type="button" class="mfit-favorite-delete" data-delete="'+esc(x.id)+'" aria-label="'+esc(x.foodName)+' aus Favoriten entfernen">×</button></div>').join(''):'<p class="muted">Noch keine Favoriten gespeichert.</p>';
+ const recentHtml=recent.slice(0,5).map((x,i)=>'<button type="button" class="mfit-recent-food" data-recent="'+i+'"><b>'+esc(x.name)+'</b><small>'+Math.round(Number(x.kcal)||0)+' kcal · '+Math.round(Number(x.protein)||0)+' g Protein</small></button>').join('');
+ list.innerHTML='<div class="mfit-favorite-section"><b>Gespeicherte Favoriten</b>'+favHtml+'</div><div class="mfit-favorite-section"><b>Zuletzt verwendet</b><div class="mfit-recent-food-list">'+(recentHtml||'<p class="muted">Noch keine früheren Einträge vorhanden.</p>')+'</div></div>';
  list.querySelectorAll('[data-load]').forEach(b=>b.addEventListener('click',()=>useFavorite(b.dataset.load)));
  list.querySelectorAll('[data-delete]').forEach(b=>b.addEventListener('click',()=>removeFavorite(b.dataset.delete)));
+ list.querySelectorAll('[data-recent]').forEach(b=>b.addEventListener('click',()=>useEntry(recent[Number(b.dataset.recent)])));
 }
 function ensureFavorites(){
  const track=$('track');if(!track||$('mfitFoodFavorites'))return;
  const card=document.createElement('div');card.className='card mfit-food-favorites';card.id='mfitFoodFavorites';
  card.innerHTML='<div class="mfit-favorites-heading"><div><span class="settings-kicker">DEINE SCHNELLEINGABE</span><h2>⭐ Lebensmittel-Favoriten</h2><p class="muted">Speichere häufig verwendete Lebensmittel als Vorlage und füge sie schneller ein.</p></div></div><button type="button" class="secondary mfit-save-favorite" id="mfitSaveFoodFavorite">＋ Aktuelle Eingabe als Favorit speichern</button><div id="mfitFoodFavoritesList" class="mfit-food-favorites-list"></div>';
- track.appendChild(card);$('mfitSaveFoodFavorite').addEventListener('click',addFavorite);renderFavorites();
+ (track.querySelector(':scope > .card')||track).insertAdjacentElement(track.querySelector(':scope > .card')?'afterend':'beforeend',card);$('mfitSaveFoodFavorite').addEventListener('click',addFavorite);renderFavorites();
 }
 function navPolish(){
  const nav=document.querySelector('nav.mfit-nav');if(!nav)return;
