@@ -17,6 +17,9 @@ const server = http.createServer((req,res)=>{
  const context=await browser.newContext({viewport:{width:360,height:800},acceptDownloads:true});
  const page=await context.newPage();
  const errors=[];
+ const log=s=>console.log('[smoke] '+s);
+ page.setDefaultTimeout(12000);
+ await page.route('https://cdn.jsdelivr.net/**',route=>route.fulfill({status:200,contentType:'application/javascript',body:'window.supabase=window.supabase||{createClient:function(){return {auth:{}}}};'}));
  page.on('pageerror',e=>errors.push('pageerror: '+e.message));
  page.on('console',m=>{if(m.type()==='error')errors.push('console: '+m.text())});
  await page.addInitScript(()=>{
@@ -27,14 +30,18 @@ const server = http.createServer((req,res)=>{
   localStorage.setItem('mfit_water','450');
   localStorage.setItem('mfit_workout_logs',JSON.stringify([{id:1,date:date(now),exercise:'Test workout',muscle:'Ganzkörper',sets:3,reps:10,weight:0}]));
  });
- await page.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded'});
+ log('opening app');
+ await page.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded',timeout:20000});
+ log('app DOM ready');
  await page.waitForSelector('#mfitTodayPanel');
  await page.waitForSelector('#mfit181Mobility',{state:'attached'});
  await page.waitForSelector('#mfit181Gpx',{state:'attached'});
  await page.waitForSelector('#mfit181Share',{state:'attached'});
+ log('new cards mounted');
  const layout=await page.evaluate(()=>({width:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,buttons:[...document.querySelectorAll('button')].filter(b=>b.getClientRects().length).map(b=>{const r=b.getBoundingClientRect();return {text:b.textContent.trim().slice(0,30),left:r.left,right:r.right}}).filter(x=>x.left < -1 || x.right > document.documentElement.clientWidth+1)}));
  if(layout.scrollWidth>layout.width+1)throw new Error('Horizontal page overflow at 360px: '+JSON.stringify(layout));
  if(layout.buttons.length)throw new Error('Buttons outside viewport at 360px: '+JSON.stringify(layout.buttons.slice(0,8)));
+ log('checking viewport and existing data');
  const dataBefore=await page.evaluate(()=>({entries:JSON.parse(localStorage.getItem('mfit_entries')||'[]').length,water:localStorage.getItem('mfit_water')}));
  if(dataBefore.entries!==2||dataBefore.water!=='450')throw new Error('Existing sample user data changed during startup: '+JSON.stringify(dataBefore));
  const yesterdayCard=page.locator('#mfit181YesterdayCopy');
@@ -46,6 +53,7 @@ const server = http.createServer((req,res)=>{
  const copied=await page.evaluate(()=>JSON.parse(localStorage.getItem('mfit_entries')||'[]').filter(x=>x.name==='Test Banane').length);
  if(copied!==2)throw new Error('Yesterday copy did not append the entry as expected');
  await page.evaluate(()=>window.showTab('fitness'));
+ log('checking yesterday copy');
  const gpxCard=page.locator('#mfit181Gpx');
  await gpxCard.locator('.mfit-card-collapse-toggle').click();
  const gpx='<?xml version="1.0"?><gpx version="1.1" creator="MFit" xmlns="http://www.topografix.com/GPX/1/1"><trk><name>Test route</name><trkseg><trkpt lat="48.200000" lon="16.300000"><time>2026-01-01T10:00:00Z</time></trkpt><trkpt lat="48.209000" lon="16.300000"><time>2026-01-01T10:06:00Z</time></trkpt></trkseg></trk></gpx>';
@@ -53,6 +61,7 @@ const server = http.createServer((req,res)=>{
  await page.waitForFunction(()=>document.querySelector('#mfit181GpxStatus')?.textContent.includes('gespeichert'));
  const gpxRows=await page.locator('#mfit181GpxHistory').innerText();
  if(!gpxRows.includes('1.00 km'))throw new Error('GPX distance calculation failed: '+gpxRows);
+ log('checking GPX import');
  const shareCard=page.locator('#mfit181Share');
  await shareCard.locator('.mfit-card-collapse-toggle').click();
  const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#mfit181ShareButton').click()]);
@@ -65,13 +74,17 @@ const server = http.createServer((req,res)=>{
  if(!backupPath)throw new Error('Backup export did not create a file');
  const backupJson=JSON.parse(fs.readFileSync(backupPath,'utf8'));
  if(!backupJson.localStorage['mfit_gpx_sessions_v181'])throw new Error('GPX summaries are missing from the existing MFit backup');
- await page.evaluate(()=>navigator.serviceWorker.ready);
+ log('checking backup');
+ await Promise.race([page.evaluate(()=>navigator.serviceWorker.ready.then(()=>true)),new Promise((_,reject)=>setTimeout(()=>reject(new Error('Service worker did not become ready within 12 seconds')),12000))]);
+ log('checking service worker and offline mode');
  await page.reload({waitUntil:'domcontentloaded'});
- await page.evaluate(()=>navigator.serviceWorker.ready);
+ await Promise.race([page.evaluate(()=>navigator.serviceWorker.ready.then(()=>true)),new Promise((_,reject)=>setTimeout(()=>reject(new Error('Service worker did not become ready after reload')),12000))]);
+ log('going offline');
  await context.setOffline(true);
  await page.reload({waitUntil:'domcontentloaded'});
  await page.waitForSelector('#mfitTodayPanel');
  await context.setOffline(false);
+ log('offline page loaded');
  if(errors.length)throw new Error('Browser console/page errors: '+errors.join(' | '));
  console.log('PASS: 360px layout, existing data preservation, yesterday preview/copy, GPX import, share PNG, backup inclusion, offline reload; no console/page errors.');
  await browser.close();server.close();
