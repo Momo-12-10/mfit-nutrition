@@ -2,14 +2,32 @@
 <html lang="de-AT">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0a0d12"><meta name="description" content="MFit Performance – Ernährung, Fitness und Alltag in einer App"><meta name="mfit-version" content="179">
-<link rel="manifest" href="manifest.webmanifest?v=179">
-<link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=179">
-<link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=179">
+<meta name="theme-color" content="#0a0d12"><meta name="description" content="MFit Performance – Ernährung, Fitness und Alltag in einer App"><meta name="mfit-version" content="180">
+<link rel="manifest" href="manifest.webmanifest?v=180">
+<link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=180">
+<link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=180">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=179">
-<link rel="stylesheet" href="./mfit-monochrome-v155.css?v=179">
-<link rel="stylesheet" href="./mfit-v165.css?v=179">\n</head>
+<link rel="stylesheet" href="./styles.css?v=180">
+<link rel="stylesheet" href="./mfit-monochrome-v155.css?v=180">
+<link rel="stylesheet" href="./mfit-v165.css?v=180">
+<style>
+.mfit-legal-gate[hidden]{display:none!important}
+.mfit-legal-gate{position:fixed;inset:0;z-index:100000;display:grid;place-items:center;overflow-y:auto;padding:22px 14px;background:rgba(5,8,12,.96);backdrop-filter:blur(16px)}
+.mfit-legal-card{width:min(100%,520px);margin:auto;padding:26px 22px;border:1px solid rgba(180,190,202,.2);border-radius:22px;background:#11161d;color:#f2f4f7;box-shadow:0 24px 80px rgba(0,0,0,.45)}
+.mfit-legal-brand{display:flex;align-items:center;gap:11px;margin-bottom:25px;font-size:12px;letter-spacing:.16em;font-weight:800;color:#c5ccd5}
+.mfit-legal-card h2{margin:8px 0;font-size:27px;letter-spacing:-.03em}
+.mfit-legal-card .muted{color:#aab3bf;line-height:1.55}
+.mfit-legal-links{display:grid;gap:8px;margin:18px 0}
+.mfit-legal-links a{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;border:1px solid #303946;border-radius:12px;background:#171e27;color:#edf1f5;text-decoration:none;font-weight:650}
+.mfit-legal-check{display:flex;align-items:flex-start;gap:11px;padding:13px 2px;color:#e8edf2;line-height:1.45}
+.mfit-legal-check input{flex:0 0 19px;width:19px;height:19px;margin:2px 0 0;accent-color:#c3ccd6}
+.mfit-legal-warning{padding:12px 13px;border:1px solid #6b5734;border-radius:12px;background:#282218;color:#e9d8b6;font-size:13px;line-height:1.5}
+#mfitLegalContinue{width:100%;margin-top:8px;padding:14px;border:0;border-radius:12px;background:#d9dfe6;color:#11161d;font-weight:800}
+#mfitLegalContinue:disabled{opacity:.35;cursor:not-allowed}
+.mfit-legal-footnote{display:block;margin-top:13px;color:#929daa;line-height:1.5;text-align:center}
+@media(max-width:420px){.mfit-legal-card{padding:22px 17px;border-radius:18px}.mfit-legal-card h2{font-size:24px}}
+</style>
+\n</head>
 <body>
 <header class="brand-header mfit-app-header"><div class="mfit-header-inner"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR PERSONAL PERFORMANCE SPACE</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Ernährung · Training · Fortschritt</p></div></div><div class="mfit-header-actions"><button type="button" class="mfit-header-profile" onclick="showTab('profile')" aria-label="Profil öffnen" title="Mein Profil"><span>↗</span></button><button type="button" class="header-settings" onclick="mfitToggleSettingsMenu()" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mfitSettingsMenu" title="Menü">⚙</button></div></div><div class="mfit-header-foot"><span class="mfit-header-status"><i></i> DEIN FITNESS & NUTRITION HUB</span><span class="mfit-header-edition">MFIT PERFORMANCE</span></div></header>
 <div id="mfitSettingsMenu" class="mfit-settings-menu hidden" onclick="mfitCloseSettingsMenu()" aria-hidden="true">
@@ -19,6 +37,26 @@
   <button type="button" class="mfit-menu-secondary-action" onclick="mfitCloseSettingsMenu();showTab('profile')"><span>👤</span><span><b>Mein Profil</b><small>Persönliche Angaben und Ziele</small></span><i>›</i></button>
  </div>
 </div>
+<div id="mfitLegalGate" class="mfit-legal-gate" hidden role="dialog" aria-modal="true" aria-labelledby="mfitLegalTitle">
+ <div class="mfit-legal-card">
+  <div class="mfit-legal-brand"><img src="./icon.svg" alt="" width="38" height="38"><span>MFIT PERFORMANCE</span></div>
+  <span class="settings-kicker">BEVOR DU STARTES</span>
+  <h2 id="mfitLegalTitle">Kurz bestätigen</h2>
+  <p class="muted">Bitte öffne die Informationen und bestätige beide Punkte, bevor du MFit verwendest.</p>
+  <div class="mfit-legal-links">
+   <a href="./nutzungsbedingungen.html" target="_blank" rel="noopener">Nutzungsbedingungen <span>↗</span></a>
+   <a href="./privacy.html" target="_blank" rel="noopener">Datenschutzerklärung <span>↗</span></a>
+   <a href="./impressum.html" target="_blank" rel="noopener">Impressum <span>↗</span></a>
+  </div>
+  <label class="mfit-legal-check"><input id="mfitTermsAccepted" type="checkbox"><span>Ich stimme den Nutzungsbedingungen zu.</span></label>
+  <label class="mfit-legal-check"><input id="mfitPrivacyAcknowledged" type="checkbox"><span>Ich habe die Datenschutzerklärung gelesen und zur Kenntnis genommen.</span></label>
+  <p class="mfit-legal-warning"><b>Hinweis:</b> Die Rechtstexte sind derzeit Entwürfe. Im Impressum und in der Datenschutzerklärung stehen noch Beispieldaten. Vor einer öffentlichen Nutzung müssen die Angaben ersetzt und die Texte rechtlich geprüft werden.</p>
+  <p id="mfitLegalStatus" class="muted" role="status" aria-live="polite"></p>
+  <button id="mfitLegalContinue" type="button" disabled>Bestätigen und MFit öffnen</button>
+  <small class="mfit-legal-footnote">Wenn du nicht zustimmst, kannst du MFit nicht verwenden. Die gesonderte Einwilligung für optionale Cloud-Speicherung bleibt davon getrennt.</small>
+ </div>
+</div>
+
 <main><div id="mfitOfflineBanner" class="mfit-offline-banner" role="status" hidden>Du bist offline. Deine lokal gespeicherten Einträge bleiben verfügbar; Online-Suchen sind vorübergehend eingeschränkt.</div><div id="setupOverlay" class="mfit-onboarding" style="display:none" role="dialog" aria-modal="true" aria-labelledby="mfitOnboardingTitle">
  <div class="mfit-onboarding-card">
   <div class="mfit-onboarding-brand"><img src="./icon.svg" alt="" width="42" height="42"><span>MFIT PERFORMANCE</span></div>
@@ -224,18 +262,8 @@
 <div class="card" id="trainingNutrition"><h2>Trainingsernährung</h2><p class="muted">Vor dem Training (ca. 1–3 Stunden): leicht verdauliche Kohlenhydrate plus etwas Protein. Danach: eine normale Mahlzeit mit Protein und Kohlenhydraten. Timing und Menge an Hunger, Trainingsdauer und Verträglichkeit anpassen.</p><button class="secondary" onclick="alert('Pre-Workout: Banane + Skyr oder Brot + Topfen. Post-Workout: Reis mit Ei/Huhn/Tofu oder Skyr-Bowl. Passe Portionen an deinen Hunger und Tagesbedarf an.')">Ideen anzeigen</button></div></section>
 <section id="settings" class="hidden">
 <div class="card settings-hub" id="settingsHub">
- <div class="settings-hub-top"><div><span class="settings-kicker">MFIT CONTROL CENTER</span><h2>App-Einstellungen</h2><p class="muted">Alles rund um Bedienung, Darstellung, Datenschutz und deine App.</p></div><span class="settings-hub-icon">⚙</span></div>
- <div class="settings-shortcuts">
-  <button type="button" class="secondary" onclick="mfitOpenSettingsSection('appAppearance')"><span>🎨</span><b>Darstellung</b><small>Farben & Design</small></button>
-  <button type="button" class="secondary" onclick="mfitOpenSettingsSection('appReminders')"><span>🔔</span><b>Mitteilungen</b><small>Erinnerungen verwalten</small></button>
-  <button type="button" class="secondary" onclick="mfitOpenSettingsSection('mfitAppPreferences')"><span>📳</span><b>Bedienung</b><small>Vibration & Animationen</small></button>
-  <button type="button" class="secondary" onclick="mfitOpenSettingsSection('privacyCenter')"><span>🔒</span><b>Datenschutz</b><small>Deine Daten & Kontrolle</small></button>
-  <button type="button" class="secondary" onclick="mfitOpenSettingsSection('dataBackup')"><span>🛡️</span><b>Datensicherung</b><small>Sichern & wiederherstellen</small></button>
-  <button type="button" class="secondary" onclick="mfitOpenSettingsSection('mfitLanguageSettings')"><span>🌐</span><b>Sprache</b><small>App-Sprache wählen</small></button>
-  <button type="button" class="secondary" onclick="mfitOpenSettingsSection('mfitAppStatus')"><span>✨</span><b>App-Status</b><small>Installation & Systemcheck</small></button>
-  <button type="button" class="secondary" onclick="mfitOpenSettingsSection('mfitDataTools')"><span>🧰</span><b>Daten & Kontrolle</b><small>Speicher & Sicherheit</small></button>
-  <button type="button" class="secondary" onclick="mfitOpenSettingsSection('mfitAboutSettings')"><span>ⓘ</span><b>Über MFit</b><small>Version & Hinweise</small></button>
- </div>
+ <div class="settings-hub-top"><div><span class="settings-kicker">MFIT CONTROL CENTER</span><h2>Einstellungen</h2><p class="muted">Die wichtigsten Einstellungen – übersichtlich an einem Ort.</p></div><span class="settings-hub-icon">⚙</span></div>
+
 </div>
 <div class="card" id="mfitAppPreferences"><h2>📳 Bedienung & Feedback</h2>
  <label class="reminder-toggle"><input id="mfitVibrationEnabled" type="checkbox" checked onchange="saveMfitAppPreferences()"> <span><b>Vibration bei Timer-Ende</b><small>Wenn dein Gerät und Browser Vibration unterstützen, gibt MFit beim Ende des Pausentimers ein kurzes Signal.</small></span></label>
@@ -258,7 +286,7 @@
  <p class="muted">Vor dem Löschen ein Backup herunterladen. Das Löschen betrifft nur MFit-Daten in diesem Browser auf diesem Gerät. Es gibt ein MFit-Konto mit manueller Cloud-Sicherung; eine automatische Synchronisierung findet nicht statt.</p>
  <div id="mfitDataToolsStatus" class="muted" aria-live="polite"></div>
 </div>
-<div class="card" id="mfitAboutSettings"><h2>ⓘ Über MFit Performance</h2><div class="privacy-info-list"><div><b>Version 166 · Web-App</b><p>MFit ist derzeit eine installierbare Website (PWA), noch keine native App im Apple App Store oder Google Play Store.</p></div><div><b>Deine Daten</b><p>Profil-, Ernährungs-, Trainings- und Fortschrittsdaten werden lokal in diesem Browser gespeichert. Es gibt ein MFit-Konto mit manueller Cloud-Sicherung; eine automatische Synchronisierung findet nicht statt.</p></div><div><b>Externe Schnittstellen</b><p>Die Produktsuche kann Barcode- und Suchanfragen an Open Food Facts senden. Der Barcode-Scanner lädt bei Bedarf die Bibliothek html5-qrcode von unpkg.com. Rezeptbilder können von externen Bildservern geladen werden.</p></div></div></div>
+<div class="card" id="mfitAboutSettings"><h2>ⓘ Über MFit Performance</h2><div class="privacy-info-list"><div><b>Version 180 · Web-App</b><p>MFit ist derzeit eine installierbare Website (PWA), noch keine native App im Apple App Store oder Google Play Store.</p></div><div><b>Deine Daten</b><p>Profil-, Ernährungs-, Trainings- und Fortschrittsdaten werden lokal in diesem Browser gespeichert. Es gibt ein MFit-Konto mit manueller Cloud-Sicherung; eine automatische Synchronisierung findet nicht statt.</p></div><div><b>Externe Schnittstellen</b><p>Die Produktsuche kann Barcode- und Suchanfragen an Open Food Facts senden. Der Barcode-Scanner lädt bei Bedarf die Bibliothek html5-qrcode von unpkg.com. Rezeptbilder können von externen Bildservern geladen werden.</p></div></div></div>
 
 </section>
 <section id="profile" class="hidden">
@@ -307,10 +335,41 @@
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./app-core.js?v=179"></script><script src="./app.js?v=179"></script><script src="./mfit-plus.js?v=179"></script><script src="./workout-planner.js?v=179"></script><script src="./mfit-advanced.js?v=179"></script>
-<script src="./i18n.js?v=179"></script><script src="./mfit-cloud.js?v=179"></script><script src="./mfit-pro.js?v=179"></script><script src="./mfit-ultimate.js?v=179"></script><script src="./mfit-extras.js?v=179"></script><script src="./mfit-next.js?v=179"></script><script src="./mfit-ui.js?v=179"></script>
-<script src="./mfit-enhancements.js?v=179"></script><script src="./mfit-v165.js?v=179"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./app-core.js?v=180"></script><script src="./app.js?v=180"></script><script src="./mfit-plus.js?v=180"></script><script src="./workout-planner.js?v=180"></script><script src="./mfit-advanced.js?v=180"></script>
+<script src="./i18n.js?v=180"></script><script src="./mfit-cloud.js?v=180"></script><script src="./mfit-pro.js?v=180"></script><script src="./mfit-ultimate.js?v=180"></script><script src="./mfit-extras.js?v=180"></script><script src="./mfit-next.js?v=180"></script><script src="./mfit-ui.js?v=180"></script>
+<script src="./mfit-enhancements.js?v=180"></script><script src="./mfit-v165.js?v=180"></script>
 
+
+<script>
+(function(){
+ const KEY='mfit_legal_acceptance_v1';
+ const VERSION='1.0';
+ function init(){
+  const gate=document.getElementById('mfitLegalGate');
+  const terms=document.getElementById('mfitTermsAccepted');
+  const privacy=document.getElementById('mfitPrivacyAcknowledged');
+  const button=document.getElementById('mfitLegalContinue');
+  const status=document.getElementById('mfitLegalStatus');
+  if(!gate||!terms||!privacy||!button)return;
+  let accepted=null;
+  try{accepted=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
+  if(accepted&&accepted.version===VERSION&&accepted.terms===true&&accepted.privacyAcknowledged===true)return;
+  gate.hidden=false;
+  document.body.style.overflow='hidden';
+  const sync=()=>{button.disabled=!(terms.checked&&privacy.checked)};
+  terms.addEventListener('change',sync);privacy.addEventListener('change',sync);
+  button.addEventListener('click',()=>{
+   if(!(terms.checked&&privacy.checked))return;
+   const record={version:VERSION,terms:true,privacyAcknowledged:true,acceptedAt:new Date().toISOString()};
+   try{localStorage.setItem(KEY,JSON.stringify(record));}
+   catch(e){status.textContent='Die Bestätigung konnte nicht gespeichert werden. Bitte prüfe den Speicher deines Browsers.';return;}
+   gate.hidden=true;document.body.style.overflow='';
+  });
+  terms.focus();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
 <script>
 (function(){
  const STORAGE_KEY='mfit_collapsed_sections_v2';
@@ -356,11 +415,11 @@
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
 </script>
-<script src="./mfit-interval-timer.js?v=179"></script>
-<script src="./mfit-matchday.js?v=179"></script>
-<script src="./mfit-warmup.js?v=179"></script>
-<script src="./mfit-plate-calculator.js?v=179"></script>
-<script src="./mfit-workload.js?v=179"></script>
-<script src="./mfit-symptom-diary.js?v=179"></script>
-<script src="./mfit-season-plan.js?v=179"></script>
+<script src="./mfit-interval-timer.js?v=180"></script>
+<script src="./mfit-matchday.js?v=180"></script>
+<script src="./mfit-warmup.js?v=180"></script>
+<script src="./mfit-plate-calculator.js?v=180"></script>
+<script src="./mfit-workload.js?v=180"></script>
+<script src="./mfit-symptom-diary.js?v=180"></script>
+<script src="./mfit-season-plan.js?v=180"></script>
 </body></html>
