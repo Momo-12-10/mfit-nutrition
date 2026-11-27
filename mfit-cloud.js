@@ -18,7 +18,8 @@
  function show(session){
   user=session&&session.user?session.user:null;
   const out=byId('mfitCloudSignedOut'),inside=byId('mfitCloudSignedIn');
-  const recovery=byId('mfitCloudPasswordRecovery');if(recovery)recovery.hidden=!recoveryMode;\n  if(out)out.hidden=!!user||recoveryMode;if(inside)inside.hidden=!user||recoveryMode;
+  const recovery=byId('mfitCloudPasswordRecovery');if(recovery)recovery.hidden=!recoveryMode;
+  if(out)out.hidden=!!user||recoveryMode;if(inside)inside.hidden=!user||recoveryMode;
   const email=byId('mfitCloudUserEmail');if(email)email.textContent=(user&&user.email)||'Angemeldet';
   if(user){
    const linked=owner();
