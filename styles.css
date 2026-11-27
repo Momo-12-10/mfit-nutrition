@@ -2220,3 +2220,76 @@ body{padding-bottom:calc(82px + env(safe-area-inset-bottom))!important}
 .mfit-recent-food b{font-size:12px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mfit-recent-food small{font-size:10px;color:#9eafa2}
 @media(max-width:350px){.mfit-recent-food-list{grid-template-columns:1fr}}
+
+
+/* MFit v141 — complete monochrome graphite design system */
+:root{
+ color-scheme:dark!important;
+ --green:#d7d7d7!important;--green-light:#f2f2f2!important;--green-dark:#a8a8a8!important;
+ --accent:#dedede!important;--accent-2:#bcbcbc!important;--primary:#f2f2f2!important;
+ --success:#d8d8d8!important;--lime:#d8d8d8!important;--mint:#d8d8d8!important;
+ --surface:#111!important;--surface-2:#171717!important;--surface-3:#202020!important;
+ --border:#303030!important;--text:#f4f4f4!important;--muted:#a3a3a3!important;
+}
+html,body{background:#080808!important;color:#f2f2f2!important}
+body *{accent-color:#d5d5d5}
+button,.btn,.primary,.secondary,.action-btn,[role="button"],input[type="button"],input[type="submit"],input[type="reset"]{
+ background:#171717!important;color:#f3f3f3!important;border:1px solid #333!important;
+ box-shadow:none!important;text-shadow:none!important;
+}
+button:hover,.btn:hover,.primary:hover,.secondary:hover,[role="button"]:hover{
+ background:#222!important;border-color:#505050!important;color:#fff!important;
+}
+button:active,.btn:active,[role="button"]:active{background:#292929!important;transform:scale(.99)}
+button.active,button.selected,.active>.btn,.selected,[aria-pressed="true"],[aria-selected="true"]{
+ background:#292929!important;color:#fff!important;border-color:#666!important;box-shadow:none!important;
+}
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+select,textarea{
+ color:#f4f4f4!important;background:#101010!important;border:1px solid #383838!important;
+ box-shadow:none!important;caret-color:#fff!important;
+}
+input::placeholder,textarea::placeholder{color:#777!important;opacity:1}
+input:focus,select:focus,textarea:focus{
+ outline:1px solid #777!important;border-color:#888!important;box-shadow:0 0 0 2px rgba(255,255,255,.05)!important;
+}
+input[type="checkbox"],input[type="radio"],input[type="range"]{accent-color:#d8d8d8!important}
+input[type="color"]{background:#171717!important;border:1px solid #444!important}
+.card,.panel,.modal,.sheet,.settings-card,.settings-section,.mfit-settings-category,
+.mfit-favorite-row,.mfit-recent-food,.mfit-recovery-kpis>div{
+ background:#111!important;border-color:#292929!important;box-shadow:none!important;color:#eee!important;
+}
+.mfit-settings-category:active,.mfit-settings-category:hover{background:#1b1b1b!important;border-color:#444!important}
+.mfit-category-icon,.mfit-settings-page-heading>span,.icon-wrap,.icon-badge,.nav-icon-wrap{
+ background:#1b1b1b!important;border:1px solid #303030!important;box-shadow:none!important;
+}
+.mfit-category-arrow,.mfit-favorite-section>b,.settings-kicker,.section-kicker,
+.text-accent,.accent,.highlight,.success,.positive{color:#d5d5d5!important}
+[style*="background:"][style*="green"],[style*="background-color:"][style*="green"],
+[style*="#79e2a0"],[style*="#8cebb0"],[style*="#a8f0bd"],[style*="#4dba78"]{
+ box-shadow:none!important;
+}
+[style*="linear-gradient"]{box-shadow:none!important}
+.mfit-ring,.progress-ring,.progress-circle{filter:none!important}
+.mfit-week-bar i,.mfit-muscle-row i,.mfit-meal-row i,.progress-fill,.progress-bar>span,
+.progress-bar-fill,.macro-fill,.calorie-fill{
+ background:#bdbdbd!important;box-shadow:none!important;
+}
+svg [stroke*="#79"],svg [stroke*="#8c"],svg [fill*="#79"],svg [fill*="#8c"]{stroke:#c8c8c8!important;fill:#c8c8c8!important}
+nav.mfit-nav{
+ background:rgba(8,8,8,.98)!important;border-top:1px solid #292929!important;box-shadow:0 -6px 20px rgba(0,0,0,.35)!important;
+}
+nav.mfit-nav button[data-tab],nav.mfit-nav button[data-tab].active{
+ background:transparent!important;color:#999!important;border-color:transparent!important;box-shadow:none!important;
+}
+nav.mfit-nav button[data-tab].active{color:#fff!important;background:#191919!important;border-color:#333!important}
+nav.mfit-nav button .nav-icon{filter:none!important}
+.mfit-settings-back{background:#171717!important;color:#eee!important;border-color:#333!important}
+.mfit-settings-category{background:#111!important;color:#eee!important;border-color:#292929!important}
+.mfit-favorite-load{background:transparent!important;color:#eee!important;border:0!important}
+.mfit-favorite-delete{background:#191919!important;color:#ccc!important;border-color:#383838!important}
+.mfit-save-favorite{background:#191919!important;color:#f4f4f4!important;border-color:#383838!important}
+.badge,.pill,.tag,.chip{background:#1c1c1c!important;color:#ddd!important;border-color:#383838!important}
+hr,.divider{border-color:#292929!important}
+*{scrollbar-color:#444 #111}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
