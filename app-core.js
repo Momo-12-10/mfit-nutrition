@@ -1,13 +1,15 @@
 const $=id=>document.getElementById(id);
-const defaultThemeColor='#65d58b';
+const defaultThemeColor='#b9c3cf';
+const mfitNeutralThemeColors=['#8f969f','#aeb8c4','#cbd0d6','#f1f2f4'];
 function applyThemeColor(color,save=true){
- const valid=/^#[0-9a-fA-F]{6}$/.test(String(color))?String(color):defaultThemeColor;
+ const requested=String(color||'').toLowerCase();
+ const valid=mfitNeutralThemeColors.includes(requested)?requested:defaultThemeColor;
  document.documentElement.style.setProperty('--green',valid);
  document.documentElement.style.setProperty('--accent',valid);
  if($('themeColorPicker'))$('themeColorPicker').value=valid;
- const names={'#65d58b':'Performance Green','#42c7e8':'Electric Blue','#a78bfa':'Violet','#ff7b9c':'Pink','#ffad5c':'Orange','#f0cf63':'Gold','#e7edf4':'Ice'};
- if($('themeColorName'))$('themeColorName').textContent=names[valid.toLowerCase()]||'Custom Color';
- document.querySelectorAll('.theme-swatch').forEach(b=>b.classList.toggle('selected',b.dataset.color.toLowerCase()===valid.toLowerCase()));
+ const names={'#8f969f':'Graphit','#aeb8c4':'Silber','#cbd0d6':'Hellgrau','#f1f2f4':'Weiß'};
+ if($('themeColorName'))$('themeColorName').textContent=names[valid]||'Silber';
+ document.querySelectorAll('.theme-swatch').forEach(b=>b.classList.toggle('selected',b.dataset.color.toLowerCase()===valid));
  if(save)storage.set('mfit_theme_color',valid);
 }
 function resetThemeColor(){applyThemeColor(defaultThemeColor);}
