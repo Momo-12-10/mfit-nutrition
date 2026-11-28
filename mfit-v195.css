@@ -219,5 +219,6 @@ body .mfit194-nav button svg{flex:0 0 21px!important}
  .mfit-header-inner{gap:6px}
  body .mfit194-nav{gap:0!important;padding-left:0!important;padding-right:0!important}
  body .mfit194-nav button{flex:1 1 0!important;min-width:0!important;min-height:60px!important;padding:3px 0!important;font-size:12px!important;letter-spacing:-.3px!important;white-space:normal!important}
- body .mfit194-nav button span{display:block!important;max-width:100%!important;font-size:12px!important;line-height:1.05!important;white-space:normal!important;text-align:center!important}
+ body .mfit194-nav button span{display:block!important;max-width:100%!important;font-size:12px!important;line-height:1.05!important;white-space:nowrap!important;text-align:center!important}
+ body .mfit194-nav button[data-main="nutrition"] span,body .mfit194-nav button[data-main="progress"] span{transform:scaleX(.84)!important;transform-origin:center!important}
 }
