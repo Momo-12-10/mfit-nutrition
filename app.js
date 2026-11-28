@@ -24,21 +24,34 @@ function mfitPushKeyBytes(value){
  const raw=atob((value+pad).replace(/-/g,'+').replace(/_/g,'/'));
  return Uint8Array.from(raw,c=>c.charCodeAt(0));
 }
+function mfitPushDeviceToken(create=true){
+ let token='';
+ try{token=localStorage.getItem('mfit_push_device_token')||'';}catch(e){throw new Error('Geräteberechtigung kann nicht gespeichert werden.');}
+ if(!token&&create){
+  const bytes=new Uint8Array(32);crypto.getRandomValues(bytes);
+  token=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
+  try{localStorage.setItem('mfit_push_device_token',token);}catch(e){throw new Error('Geräteberechtigung kann nicht gespeichert werden.');}
+ }
+ return token;
+}
 async function syncMfitPushSettings(subscription){
- const settings=getReminderSettings();
- await mfitPushRequest({action:'subscribe',subscription:subscription.toJSON(),settings,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone||'Europe/Vienna'});
+ const settings=getReminderSettings(),deviceToken=mfitPushDeviceToken();
+ await mfitPushRequest({action:'subscribe',subscription:subscription.toJSON(),settings,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone||'Europe/Vienna',deviceToken});
  try{localStorage.setItem('mfit_push_enabled','1')}catch(e){}
 }
 async function disableMfitPush(){
- const reg=await navigator.serviceWorker.ready;
- const subscription=await reg.pushManager.getSubscription();
+ let registration=null;
+ if('serviceWorker'in navigator)registration=await navigator.serviceWorker.getRegistration();
+ const subscription=registration&&registration.pushManager?await registration.pushManager.getSubscription():null;
  if(subscription){
-  try{await mfitPushRequest({action:'unsubscribe',endpoint:subscription.endpoint})}catch(e){console.warn('Push-Abmeldung beim Server fehlgeschlagen:',e)}
+  const deviceToken=mfitPushDeviceToken();
+  await mfitPushRequest({action:'unsubscribe',endpoint:subscription.endpoint,deviceToken});
   await subscription.unsubscribe();
  }
- try{localStorage.removeItem('mfit_push_enabled')}catch(e){}
+ try{localStorage.removeItem('mfit_push_enabled');localStorage.removeItem('mfit_push_device_token')}catch(e){}
  const status=$('reminderStatus');if(status)status.textContent='Push-Mitteilungen wurden auf diesem Gerät ausgeschaltet.';
 }
+window.disableMfitPush=disableMfitPush;
 
 async function enableReminder(){
  const status=$('reminderStatus');
@@ -51,7 +64,7 @@ async function enableReminder(){
   const permission=await Notification.requestPermission();
   if(permission!=='granted'){if(status)status.textContent='Mitteilungen nicht erlaubt. Bitte prüfe die Geräte-Einstellungen.';return;}
   if(status)status.textContent='Push wird eingerichtet …';
-  const registrationRequest=navigator.serviceWorker.register('./sw.js?v=183',{updateViaCache:'none'});
+  const registrationRequest=navigator.serviceWorker.register('./sw.js?v=190',{updateViaCache:'none'});
   await registrationRequest;
   const registration=await Promise.race([
    navigator.serviceWorker.ready,
@@ -110,7 +123,7 @@ document.querySelectorAll('.theme-swatch').forEach(b=>b.addEventListener('click'
 applyThemeColor(storage.get('mfit_theme_color')||defaultThemeColor,false);
 $('diet').addEventListener('change',renderRecipes);$('focus').addEventListener('change',renderRecipes);$('unit').addEventListener('change',recalculateNutrition);
 $('shoppingItems').innerHTML=['Skyr','Eier','Haferflocken','Reis','Linsen','Tofu','Hähnchenbrust','Brokkoli','Beeren','Bananen'].map(x=>`<label><input type="checkbox" value="${x}" style="width:auto;margin-right:8px">${x}</label>`).join('');
-renderPresets();render();renderSteps();renderWeightHistory();loadProfile();startSmartReminders();if($('workoutDate'))$('workoutDate').value=localDate();if(!storage.get('mfit_setup_done')&&!storage.get('mfit_profile'))$('setupOverlay').style.display='block';if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=183',{updateViaCache:'none'}).then(reg=>reg.update()).catch(error=>console.warn('MFit Service Worker:',error)));
+renderPresets();render();renderSteps();renderWeightHistory();loadProfile();startSmartReminders();if($('workoutDate'))$('workoutDate').value=localDate();if(!storage.get('mfit_setup_done')&&!storage.get('mfit_profile'))$('setupOverlay').style.display='block';if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=190',{updateViaCache:'none'}).then(reg=>reg.update()).catch(error=>console.warn('MFit Service Worker:',error)));
 
 /* v34 — Wochenplanung, Einkauf, Trainingsgenerator */
 const shopCatalogData=[
@@ -409,9 +422,11 @@ renderShopCatalog();renderShopItems();
  initSettings();initProfile();initFitness();
 })();
 
-function clearMfitLocalData(){
+async function clearMfitLocalData(){
  if(!confirm('Möchtest du wirklich alle lokalen MFit-Daten und Einstellungen auf diesem Gerät löschen? Auch die lokale Cloud-Anmeldung wird von diesem Gerät entfernt. Deine bereits gespeicherten Cloud-Daten in Supabase bleiben erhalten. Dieser Schritt kann nicht rückgängig gemacht werden. Erstelle vorher bei Bedarf ein Backup.'))return;
+ const status=document.getElementById('backupStatus')||document.getElementById('mfitDataToolsStatus');
  try{
+  await disableMfitPush();
   const prefixes=['mfit_','__mfit_','sb-pxakmojxstpkmfuldxlx-'];
   const keys=[];
   for(let i=0;i<localStorage.length;i++){
@@ -421,8 +436,7 @@ function clearMfitLocalData(){
   keys.forEach(key=>localStorage.removeItem(key));
   location.reload();
  }catch(e){
-  const status=document.getElementById('backupStatus')||document.getElementById('mfitDataToolsStatus');
-  if(status)status.textContent='Die lokalen Daten konnten nicht vollständig gelöscht werden. Bitte prüfe die Browser-Speichereinstellungen.';
+  if(status)status.textContent='Push-Abo oder lokale Daten konnten nicht sicher entfernt werden. Bitte prüfe die Verbindung und versuche es erneut. Es wurden keine lokalen Daten gelöscht.';
  }
 }
 window.mfitClearLocalData=clearMfitLocalData;
