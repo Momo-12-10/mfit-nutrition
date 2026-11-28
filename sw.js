@@ -54,7 +54,7 @@
 // Release v179: complete privacy and training-tool bundle
 // Release v181: daily overview, local GPX import, mobility timer and share image
 // Release v182: Web Push receive handler and notification navigation
-const CACHE='mfit-performance-v182';
+const CACHE='mfit-performance-v183';
 const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./apple-touch-icon.png','./styles.css','./mfit-monochrome-v155.css','./app-core.js','./app.js','./mfit-plus.js','./i18n.js','./workout-planner.js','./mfit-advanced.js','./mfit-cloud.js','./mfit-pro.js','./mfit-ultimate.js','./mfit-extras.js','./mfit-next.js','./mfit-ui.js','./mfit-enhancements.js','./mfit-v165.js','./mfit-v165.css','./mfit-v181.css','./mfit-v181.js','./privacy.html','./impressum.html','./nutzungsbedingungen.html','./mfit-interval-timer.js','./mfit-matchday.js','./mfit-warmup.js','./mfit-plate-calculator.js','./mfit-workload.js','./mfit-symptom-diary.js','./mfit-season-plan.js'];
 
 self.addEventListener('push',event=>{
