@@ -9,6 +9,8 @@ const manifest = read('manifest.webmanifest');
 const i18n = read('i18n.js');
 const advanced = read('mfit-advanced.js');
 const meal = read('mfit-v165.js');
+const extras = read('mfit-extras.js');
+const next = read('mfit-next.js');
 
 for (const title of [
  'Dein Tag & Schnellzugriff','Kalorien & Makros heute','Wochen- & Monatsauswertung',
@@ -34,4 +36,10 @@ assert.match(manifest,/v=193/);
 assert.match(i18n,/Dein Tag & Schnellzugriff/);
 assert.match(i18n,/Kalender & Trainingsplanung/);
 assert.match(css,/\.mfit193-merged-card/);
+assert.doesNotMatch(html,/quick-start-card|mfitAchievementList/);
+assert.doesNotMatch(meal,/mfit165Barcode|mfit165ExerciseLibrary|mfit165WorkoutGoal/);
+assert.doesNotMatch(extras,/mfitThemeStudio|mfitChooseAccent/);
+assert.doesNotMatch(advanced,/mfitAdvancedPreferences/);
+assert.doesNotMatch(next,/mfitNextMuscles/);
+
 console.log('PASS: MFit v193 Part B consolidation, translations, offline assets and non-destructive storage checks.');
