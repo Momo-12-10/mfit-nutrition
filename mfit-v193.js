@@ -41,7 +41,8 @@ function mergeGroup({title,root,items,extra=[]}){
   toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));content.hidden=!open;});
   wrap.append(toggle,content);
   const first=nodes.find(n=>n.parentNode===host)||nodes[0];
-  if(first.parentNode)first.parentNode.insertBefore(wrap,first);
+  if(first.closest?.('.mfit193-merged-card'))host.appendChild(wrap);
+  else if(first.parentNode)first.parentNode.insertBefore(wrap,first);
   else host.appendChild(wrap);
  }
  const content=wrap.querySelector(':scope > .mfit193-merged-content');
