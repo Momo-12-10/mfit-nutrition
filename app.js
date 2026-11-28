@@ -44,7 +44,8 @@ async function disableMfitPush(){
  if('serviceWorker'in navigator)registration=await navigator.serviceWorker.getRegistration();
  const subscription=registration&&registration.pushManager?await registration.pushManager.getSubscription():null;
  if(subscription){
-  const deviceToken=mfitPushDeviceToken();
+  await syncMfitPushSettings(subscription);
+  const deviceToken=mfitPushDeviceToken(false);
   await mfitPushRequest({action:'unsubscribe',endpoint:subscription.endpoint,deviceToken});
   await subscription.unsubscribe();
  }
@@ -123,7 +124,7 @@ document.querySelectorAll('.theme-swatch').forEach(b=>b.addEventListener('click'
 applyThemeColor(storage.get('mfit_theme_color')||defaultThemeColor,false);
 $('diet').addEventListener('change',renderRecipes);$('focus').addEventListener('change',renderRecipes);$('unit').addEventListener('change',recalculateNutrition);
 $('shoppingItems').innerHTML=['Skyr','Eier','Haferflocken','Reis','Linsen','Tofu','Hähnchenbrust','Brokkoli','Beeren','Bananen'].map(x=>`<label><input type="checkbox" value="${x}" style="width:auto;margin-right:8px">${x}</label>`).join('');
-renderPresets();render();renderSteps();renderWeightHistory();loadProfile();startSmartReminders();if($('workoutDate'))$('workoutDate').value=localDate();if(!storage.get('mfit_setup_done')&&!storage.get('mfit_profile'))$('setupOverlay').style.display='block';if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=190',{updateViaCache:'none'}).then(reg=>reg.update()).catch(error=>console.warn('MFit Service Worker:',error)));
+renderPresets();render();renderSteps();renderWeightHistory();loadProfile();startSmartReminders();if($('workoutDate'))$('workoutDate').value=localDate();if(!storage.get('mfit_setup_done')&&!storage.get('mfit_profile'))$('setupOverlay').style.display='block';if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=190',{updateViaCache:'none'}).then(reg=>{reg.update();if(localStorage.getItem('mfit_push_enabled')==='1')reg.pushManager.getSubscription().then(sub=>sub?syncMfitPushSettings(sub):null).catch(error=>console.warn('MFit Push-Abo konnte nicht aktualisiert werden:',error));}).catch(error=>console.warn('MFit Service Worker:',error)));
 
 /* v34 — Wochenplanung, Einkauf, Trainingsgenerator */
 const shopCatalogData=[
