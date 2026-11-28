@@ -1,4 +1,4 @@
-.mfit193-merged-card{padding:16px!important;display:flex;flex-direction:column;gap:12px}
+.mfit193-merged-card{padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--card-bg,var(--surface,#111));border:1px solid var(--line,#303030);border-radius:18px;box-shadow:0 10px 28px rgba(0,0,0,.12)}
 .mfit193-merged-toggle{width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 0;border:0;background:transparent;color:inherit;text-align:left;font-size:19px;font-weight:800;letter-spacing:-.02em}
 .mfit193-merged-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .mfit193-chevron{display:inline-flex;transition:transform .18s ease;font-size:22px}
@@ -13,5 +13,5 @@
 .mfit193-timer-section .mfit-rest-panel,.mfit193-timer-section #mfitIntDisplay,.mfit193-timer-section #mfitWarmTime,.mfit193-timer-section #mfit181MobilityClock{font-variant-numeric:tabular-nums}
 .mfit193-timer-section .grid{gap:8px}
 .mfit193-merged-card button{min-height:40px}
-@media(min-width:700px){.mfit193-merged-card{padding:20px!important}.mfit193-merged-content{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:22px}.mfit193-merged-section{align-self:start}.mfit193-merged-section:only-child{grid-column:1/-1}.mfit193-merged-section:has(#mfit191CalendarGrid),.mfit193-merged-section:has(#mfitTrainingPlanControls){grid-column:1/-1}}
-@media(max-width:420px){.mfit193-merged-card{padding:13px!important}.mfit193-merged-section{padding:12px 0!important}.mfit193-merged-section .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:700px){.mfit193-merged-card{padding:20px}.mfit193-merged-content{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:22px}.mfit193-merged-section{align-self:start}.mfit193-merged-section:only-child{grid-column:1/-1}.mfit193-merged-section:has(#mfit191CalendarGrid),.mfit193-merged-section:has(#mfitTrainingPlanControls){grid-column:1/-1}}
+@media(max-width:420px){.mfit193-merged-card{padding:13px}.mfit193-merged-section{padding:12px 0!important}.mfit193-merged-section .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
