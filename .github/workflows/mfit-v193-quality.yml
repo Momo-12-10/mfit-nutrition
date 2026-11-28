@@ -1,10 +1,10 @@
-name: MFit v193 Part B quality checks
+name: MFit v194 Part C quality checks
 on:
   pull_request:
     branches: [main]
   push:
     branches:
-      - cleanup/part-b-consolidation-v193
+      - restructure/part-c-navigation-v194
 jobs:
   quality:
     runs-on: ubuntu-latest
@@ -40,6 +40,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mfit-v193-part-b-screenshots
+          name: mfit-v194-part-c-screenshots
           path: artifacts/*.png
           if-no-files-found: warn
