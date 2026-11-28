@@ -4,13 +4,63 @@ function copyShopping(){const txt=shopItems.filter(x=>!x.done).map(x=>'[ ] '+x.n
 let reminderCheckTimer=null;
 function getReminderSettings(){try{return Object.assign({waterEnabled:true,waterTime:'12:30',waterMin:750,mealEnabled:true,mealTime:'14:00',mealName:'Mittagessen'},JSON.parse(storage.get('mfit_reminder_settings')||'{}'))}catch(e){return {waterEnabled:true,waterTime:'12:30',waterMin:750,mealEnabled:true,mealTime:'14:00',mealName:'Mittagessen'}}}
 function loadReminderSettings(){const s=getReminderSettings();if(!$('reminderWaterEnabled'))return;$('reminderWaterEnabled').checked=!!s.waterEnabled;$('reminderWaterTime').value=s.waterTime;$('reminderWaterMin').value=s.waterMin;$('reminderMealEnabled').checked=!!s.mealEnabled;$('reminderMealTime').value=s.mealTime;$('reminderMealName').value=s.mealName;updateReminderStatus()}
-function saveReminderSettings(){const s={waterEnabled:$('reminderWaterEnabled').checked,waterTime:$('reminderWaterTime').value||'12:30',waterMin:Math.max(100,Math.min(5000,Number($('reminderWaterMin').value)||750)),mealEnabled:$('reminderMealEnabled').checked,mealTime:$('reminderMealTime').value||'14:00',mealName:$('reminderMealName').value};storage.set('mfit_reminder_settings',JSON.stringify(s));updateReminderStatus();checkSmartReminders();return s}
-function updateReminderStatus(){const el=$('reminderStatus');if(!el)return;const s=getReminderSettings();const active=[s.waterEnabled?'Trinken '+s.waterTime:null,s.mealEnabled?s.mealName+' '+s.mealTime:null].filter(Boolean);el.textContent=active.length?'Aktiv: '+active.join(' · ')+'. Prüfung nur bei geöffneter App.':'Alle Erinnerungen pausiert.'}
-function fireMfitReminder(title,body,key){const today=localDate();storage.set('mfit_reminder_fired_'+today+'_'+key,'1');const box=$('reminderNotice');if(box){box.hidden=false;box.innerHTML='<b>'+title+'</b><div>'+body+'</div>';}if('Notification'in window&&Notification.permission==='granted'){try{new Notification('MFit Performance',{body,tag:'mfit-'+key})}catch(e){}}}
+function saveReminderSettings(){const s={waterEnabled:$('reminderWaterEnabled').checked,waterTime:$('reminderWaterTime').value||'12:30',waterMin:Math.max(100,Math.min(5000,Number($('reminderWaterMin').value)||750)),mealEnabled:$('reminderMealEnabled').checked,mealTime:$('reminderMealTime').value||'14:00',mealName:$('reminderMealName').value};storage.set('mfit_reminder_settings',JSON.stringify(s));updateReminderStatus();checkSmartReminders();if(localStorage.getItem('mfit_push_enabled')==='1')navigator.serviceWorker.ready.then(r=>r.pushManager.getSubscription()).then(sub=>sub?syncMfitPushSettings(sub):null).catch(e=>{const el=$('reminderStatus');if(el)el.textContent='Push-Einstellungen konnten nicht synchronisiert werden: '+e.message});return s}
+function updateReminderStatus(){const el=$('reminderStatus');if(!el)return;const s=getReminderSettings();const active=[s.waterEnabled?'Trinken '+s.waterTime:null,s.mealEnabled?s.mealName+' '+s.mealTime:null].filter(Boolean);el.textContent=active.length?'Aktiv: '+active.join(' · ')+(localStorage.getItem('mfit_push_enabled')==='1'?' · Push-Mitteilungen aktiv.':' · Prüfung bei geöffneter App.'):'Alle Erinnerungen pausiert.'}
+function fireMfitReminder(title,body,key){const today=localDate();storage.set('mfit_reminder_fired_'+today+'_'+key,'1');const box=$('reminderNotice');if(box){box.hidden=false;box.innerHTML='<b>'+title+'</b><div>'+body+'</div>';}if('Notification'in window&&Notification.permission==='granted'&&localStorage.getItem('mfit_push_enabled')!=='1'){try{new Notification('MFit Performance',{body,tag:'mfit-'+key})}catch(e){}}}
 function checkSmartReminders(){const s=getReminderSettings(),now=new Date(),clock=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0'),today=localDate();const todayEntries=data.filter(e=>(e.date||today)===today);if(s.waterEnabled&&clock>=s.waterTime&&!storage.get('mfit_reminder_fired_'+today+'_water')&&Number(water)<Number(s.waterMin)){fireMfitReminder('💧 Zeit für eine Trinkpause', 'Du hast bisher etwa '+Math.round(Number(water)||0)+' ml erfasst. Trink etwas, wenn du Durst hast, und aktualisiere deinen Eintrag.', 'water');}
 if(s.mealEnabled&&clock>=s.mealTime&&!storage.get('mfit_reminder_fired_'+today+'_meal')){const found=todayEntries.some(e=>String(e.meal||'').toLowerCase()===String(s.mealName).toLowerCase());if(!found)fireMfitReminder('🍽️ Mahlzeit noch nicht eingetragen', 'Für heute fehlt noch dein Eintrag für '+s.mealName+'. Falls du schon gegessen hast, kannst du ihn einfach nachtragen.', 'meal');}}
 function startSmartReminders(){if(reminderCheckTimer)clearInterval(reminderCheckTimer);loadReminderSettings();checkSmartReminders();reminderCheckTimer=setInterval(checkSmartReminders,60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkSmartReminders()});}
-async function enableReminder(){if(!('Notification'in window)){$('reminderStatus').textContent='Mitteilungen werden von diesem Browser nicht unterstützt. Die Erinnerung erscheint sonst in MFit, solange die App geöffnet ist.';return}try{const p=await Notification.requestPermission();if(p==='granted'){$('reminderStatus').textContent='Mitteilungen erlaubt. Deine Einstellungen werden gespeichert.';saveReminderSettings();new Notification('MFit Performance',{body:'Deine Erinnerungen sind aktiviert.'})}else $('reminderStatus').textContent='Mitteilungen nicht erlaubt. Bitte prüfe die iPhone-/Browser-Einstellungen.'}catch(e){$('reminderStatus').textContent='Mitteilungen konnten nicht aktiviert werden.'}}
+
+const MFIT_PUSH_URL='https://pxakmojxstpkmfuldxlx.supabase.co/functions/v1/push-notifications';
+const MFIT_PUSH_KEY='sb_publishable_FxKsCX9D9SiNN1cgwDt2DA_GPs8SkW7';
+async function mfitPushRequest(payload){
+ const response=await fetch(MFIT_PUSH_URL,{method:'POST',headers:{'Content-Type':'application/json','apikey':MFIT_PUSH_KEY,'Authorization':'Bearer '+MFIT_PUSH_KEY},body:JSON.stringify(payload)});
+ const result=await response.json().catch(()=>({}));
+ if(!response.ok)throw new Error(result.error||'Push-Dienst nicht erreichbar ('+response.status+').');
+ return result;
+}
+function mfitPushKeyBytes(value){
+ const pad='='.repeat((4-value.length%4)%4);
+ const raw=atob((value+pad).replace(/-/g,'+').replace(/_/g,'/'));
+ return Uint8Array.from(raw,c=>c.charCodeAt(0));
+}
+async function syncMfitPushSettings(subscription){
+ const settings=getReminderSettings();
+ await mfitPushRequest({action:'subscribe',subscription:subscription.toJSON(),settings,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone||'Europe/Vienna'});
+ try{localStorage.setItem('mfit_push_enabled','1')}catch(e){}
+}
+async function disableMfitPush(){
+ const reg=await navigator.serviceWorker.ready;
+ const subscription=await reg.pushManager.getSubscription();
+ if(subscription){
+  try{await mfitPushRequest({action:'unsubscribe',endpoint:subscription.endpoint})}catch(e){console.warn('Push-Abmeldung beim Server fehlgeschlagen:',e)}
+  await subscription.unsubscribe();
+ }
+ try{localStorage.removeItem('mfit_push_enabled')}catch(e){}
+ const status=$('reminderStatus');if(status)status.textContent='Push-Mitteilungen wurden auf diesem Gerät ausgeschaltet.';
+}
+
+async function enableReminder(){
+ const status=$('reminderStatus');
+ if(!('Notification'in window)||!('serviceWorker'in navigator)||!('PushManager'in window)){
+  if(status)status.textContent='Push-Mitteilungen werden von diesem Browser nicht unterstützt.';
+  return;
+ }
+ if(!window.isSecureContext){if(status)status.textContent='Push-Mitteilungen benötigen eine sichere HTTPS-Verbindung.';return;}
+ try{
+  const permission=await Notification.requestPermission();
+  if(permission!=='granted'){if(status)status.textContent='Mitteilungen nicht erlaubt. Bitte prüfe die Geräte-Einstellungen.';return;}
+  const registration=await navigator.serviceWorker.ready;
+  const config=await mfitPushRequest({action:'public-key'});
+  if(!config.publicKey)throw new Error('Der öffentliche Push-Schlüssel fehlt am Server.');
+  let subscription=await registration.pushManager.getSubscription();
+  if(!subscription)subscription=await registration.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:mfitPushKeyBytes(config.publicKey)});
+  await syncMfitPushSettings(subscription);
+  if(status)status.textContent='Push-Mitteilungen sind aktiv. Erinnerungen können auch bei geschlossener App ankommen.';
+ }catch(error){
+  if(status)status.textContent='Push konnte nicht eingerichtet werden: '+(error&&error.message?error.message:'Unbekannter Fehler');
+ }
+}
  
 function localDate(d=new Date()){const x=new Date(d);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')}
 let workoutLogs=(()=>{try{const v=JSON.parse(storage.get('mfit_workout_logs')||'[]');return Array.isArray(v)?v.filter(x=>x&&typeof x==='object'):[]}catch(e){return []}})();
