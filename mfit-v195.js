@@ -28,9 +28,9 @@ function svg(path){return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable
 function addHeadingIcon(el){
  const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let node;
  while((node=walker.nextNode())){
-  const m=node.textContent.match(/^\\s*([\\p{Extended_Pictographic}\\u24C2-\\u3299])\\uFE0F?\\s*/u);
+  const m=node.textContent.match(/^\s*([\p{Extended_Pictographic}\u24C2-\u3299])\uFE0F?\s*/u);
   if(!m)continue;
-  node.textContent=node.textContent.replace(/^\\s*[\\p{Extended_Pictographic}\\u24C2-\\u3299]\\uFE0F?\\s*/u,'');
+  node.textContent=node.textContent.replace(/^\s*[\p{Extended_Pictographic}\u24C2-\u3299]\uFE0F?\s*/u,'');
   if(!el.querySelector('.mfit195-heading-icon')){const holder=document.createElement('span');holder.className='mfit195-heading-icon';holder.setAttribute('aria-hidden','true');holder.innerHTML=svg(iconPaths[m[1]]);el.prepend(holder);}
   el.dataset.mfit195IconDone='1';return;
  }
