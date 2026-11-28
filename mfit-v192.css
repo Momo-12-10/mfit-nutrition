@@ -33,3 +33,4 @@
 .mfit191-dots i.phase,.mfit191-calendar-legend i.phase{background:#b8a7e8}
 .mfit191-calendar-legend{align-items:center}
 .mfit191-calendar-legend span{display:inline-flex;align-items:center;gap:5px}
+@media(min-width:700px){.mfit-achievement-list{grid-template-columns:repeat(3,minmax(0,1fr))}.mfit-achievement-list>.mfit-achievement:last-child:nth-child(odd){grid-column:auto}}
