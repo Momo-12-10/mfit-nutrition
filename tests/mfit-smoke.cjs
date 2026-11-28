@@ -70,6 +70,10 @@ const server = http.createServer((req,res)=>{
  }
  if(!(await page.locator('#mfit194ProfileTools').count()))throw new Error('Dashboard settings were not moved to the profile section');
  log('Today dashboard limited to five cards; secondary details moved to matching sections');
+ await page.setViewportSize({width:390,height:900});
+ await page.evaluate(()=>window.scrollTo(0,0));
+ await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-c-navigation-390.png')});
+ await page.setViewportSize({width:360,height:800});
  await page.waitForSelector('#mfitTodayPanel',{state:'attached'});
  await page.waitForSelector('#mfit181Mobility',{state:'attached'});
  await page.waitForSelector('#mfit181Gpx',{state:'attached'});
@@ -182,8 +186,7 @@ const server = http.createServer((req,res)=>{
  const designGroup=page.locator('.mfit193-merged-card').filter({has:page.locator('#appAppearance')});if(await designGroup.locator('.mfit193-merged-toggle').getAttribute('aria-expanded')==='false')await designGroup.locator('.mfit193-merged-toggle').click();
  await page.locator('#appAppearance').scrollIntoViewIfNeeded();
  await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-settings-390.png')});
- await page.evaluate(()=>{window.showTab('home');window.scrollTo(0,0)});
- await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-c-navigation-390.png')});
+
  if(errors.length)throw new Error('Browser console/page errors: '+errors.join(' | '));
  console.log('PASS: 320/390/1280px responsive layouts, meal plan, fitness calendar, settings, goals, accordions, existing data preservation, yesterday preview/copy, GPX import, share PNG, backup restore, offline reload; no console/page errors.');
  await browser.close();server.close();
