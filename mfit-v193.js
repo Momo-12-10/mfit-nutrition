@@ -31,7 +31,7 @@ function mergeGroup({title,root,items,extra=[]}){
  if(!nodes.length){window.__mfit193Debug=window.__mfit193Debug||{};window.__mfit193Debug[title]={root,found:[],existing:!!wrap};return wrap;}
  if(!wrap){
   wrap=document.createElement('article');
-  wrap.className='card mfit193-merged-card';
+  wrap.className='mfit193-merged-card';
   wrap.dataset.mfit193Group=title;
   const toggle=document.createElement('button');toggle.type='button';toggle.className='mfit193-merged-toggle';toggle.setAttribute('aria-expanded','false');
   toggle.innerHTML='<span>'+title+'</span><span class="mfit193-chevron" aria-hidden="true">⌄</span>';
