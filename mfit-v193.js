@@ -96,10 +96,8 @@ function init(){
   const h=recentScans.querySelector(':scope > h2');if(h){const sub=document.createElement('h3');sub.textContent='Zuletzt gescannte Produkte';h.replaceWith(sub)}
   if(recentScans.parentElement!==foodForm)foodForm.appendChild(recentScans);
  }
- $('mfit165Barcode')?.remove();
 
  // 7. The main anatomical exercise library is the single library; remove the older parallel search card.
- $('mfit165ExerciseLibrary')?.remove();
  const library=$('mfitExerciseLibrary');
  if(library){
   const adjacent=[];
