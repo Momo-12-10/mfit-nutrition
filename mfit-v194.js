@@ -41,6 +41,26 @@ let activeMain='today',activeSub={nutrition:'diary',training:'workout',progress:
 const nav=document.createElement('nav');nav.className='mfit194-nav';nav.setAttribute('aria-label','Hauptnavigation');
 nav.innerHTML=navItems.map(x=>'<button type="button" data-main="'+x.id+'" aria-label="'+x.label+'">'+x.icon+'<span>'+x.label+'</span></button>').join('');
 const sub=document.createElement('nav');sub.className='mfit194-subnav';sub.setAttribute('aria-label','Bereichsnavigation');
+function detailWrap(targetId,id,title){
+ const target=document.getElementById(targetId);if(!target)return null;
+ let wrap=document.getElementById(id);if(!wrap){wrap=document.createElement('section');wrap.id=id;wrap.className='mfit194-detail-list';const h=document.createElement('h2');h.textContent=title;wrap.appendChild(h);target.appendChild(wrap);}
+ return wrap;
+}
+function relocateHomeDetails(){
+ const home=document.getElementById('home');if(!home)return;
+ const nutrition=detailWrap('track','mfit194NutritionDetails','Weitere Tagebuchdetails');
+ const profile=detailWrap('profile','mfit194ProfileTools','Dashboard-Einstellungen');
+ if(nutrition){
+  ['sugarTotal','todayList','sumVitC','customWaterAmount','mfit165Search'].forEach(id=>{
+   const el=document.getElementById(id);const card=el?.closest('.card')||el;
+   if(card&&home.contains(card)&&!card.dataset.mfit194Moved){card.dataset.mfit194Moved='true';nutrition.appendChild(card);}
+  });
+ }
+ if(profile){
+  const card=[...home.querySelectorAll('.card')].find(el=>/Dashboard anpassen/i.test(el.querySelector('h2,h3')?.textContent||''));
+  if(card&&!card.dataset.mfit194Moved){card.dataset.mfit194Moved='true';profile.appendChild(card);}
+ }
+}
 function renderSub(){
  const items=subpages[activeMain]||[];sub.replaceChildren();
  if(!items.length){sub.hidden=true;return;}
@@ -71,4 +91,7 @@ window.showTab=function(t){
 };
 window.mfit194Navigate=navigate;
 setActive('today');
+relocateHomeDetails();
+const homeObserver=new MutationObserver(()=>relocateHomeDetails());
+const homeRoot=document.getElementById('home');if(homeRoot)homeObserver.observe(homeRoot,{childList:true,subtree:true});
 })();
