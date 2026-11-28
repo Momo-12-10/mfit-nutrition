@@ -332,7 +332,16 @@ renderShopCatalog();renderShopItems();
 
 /* v93 — compact expandable sections for Profile and Fitness */
 (function(){
+ function hasAccordionContent(node){
+  if(!node)return false;
+  const clone=node.cloneNode(true);
+  clone.querySelectorAll('h1,h2,h3,h4,.settings-kicker,.pill,.mfit-accordion-chevron').forEach(el=>el.remove());
+  const text=(clone.textContent||'').replace(/\\s+/g,'').trim();
+  const control=clone.querySelector('input,select,textarea,button,[role="button"],canvas,svg,iframe,[data-content]');
+  return text.length>0||!!control;
+ }
  function makeAccordion(title,subtitle,items,open){
+  items=items.filter(hasAccordionContent);
   if(!items.length)return null;
   const details=document.createElement('details');details.className='mfit-compact-accordion';details.open=!!open;
   const summary=document.createElement('summary');
@@ -357,8 +366,8 @@ renderShopCatalog();renderShopItems();
   const section=document.getElementById('settings');if(!section||section.dataset.settingsReady)return;
   section.dataset.settingsReady='1';
   const ids=['appAppearance','appReminders','privacyCenter','dataBackup','mfitAppStatus','mfitDataTools'];
-  ids.forEach(id=>{const card=document.getElementById(id);if(!card)return;const title=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';const subtitle=id==='appAppearance'?'Farben und Darstellung':id==='appReminders'?'Mitteilungen und Erinnerungen':id==='privacyCenter'?'Datenschutz und Datenkontrolle':id==='dataBackup'?'Daten sichern und wiederherstellen':id==='mfitAppStatus'?'Installation, Offline-Funktion und Systemcheck':'Speicher und lokale Daten verwalten';section.appendChild(makeAccordion(title,subtitle,[card],false));card.classList.add('mfit-accordion-inner');});
-  ['mfitAppPreferences','mfitLanguageSettings','mfitAboutSettings'].forEach(id=>{const card=document.getElementById(id);if(!card)return;const title=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';const subtitle=id==='mfitAppPreferences'?'Vibration und Animationen':id==='mfitLanguageSettings'?'Sprache der App':'Versionsinformationen';section.appendChild(makeAccordion(title,subtitle,[card],false));card.classList.add('mfit-accordion-inner');});
+  ids.forEach(id=>{const card=document.getElementById(id);if(!card)return;const title=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';const subtitle=id==='appAppearance'?'Farben und Darstellung':id==='appReminders'?'Mitteilungen und Erinnerungen':id==='privacyCenter'?'Datenschutz und Datenkontrolle':id==='dataBackup'?'Daten sichern und wiederherstellen':id==='mfitAppStatus'?'Installation, Offline-Funktion und Systemcheck':'Speicher und lokale Daten verwalten';const wrap=makeAccordion(title,subtitle,[card],false);if(wrap){section.appendChild(wrap);card.classList.add('mfit-accordion-inner');}else card.remove();});
+  ['mfitAppPreferences','mfitLanguageSettings','mfitAboutSettings'].forEach(id=>{const card=document.getElementById(id);if(!card)return;const title=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';const subtitle=id==='mfitAppPreferences'?'Vibration und Animationen':id==='mfitLanguageSettings'?'Sprache der App':'Versionsinformationen';const wrap=makeAccordion(title,subtitle,[card],false);if(wrap){section.appendChild(wrap);card.classList.add('mfit-accordion-inner');}else card.remove();});
   const vibration=document.getElementById('mfitVibrationEnabled'),motion=document.getElementById('mfitReducedMotion');
   if(vibration)vibration.checked=localStorage.getItem('mfit_vibration_enabled')!=='false';
   if(motion){motion.checked=localStorage.getItem('mfit_reduced_motion')==='true';document.documentElement.classList.toggle('mfit-reduced-motion',motion.checked);}const contrast=document.getElementById('mfitHighContrast'),large=document.getElementById('mfitLargeText');if(contrast){contrast.checked=localStorage.getItem('mfit_high_contrast')==='true';document.documentElement.classList.toggle('mfit-high-contrast',contrast.checked);}if(large){large.checked=localStorage.getItem('mfit_large_text')==='true';document.documentElement.classList.toggle('mfit-large-text',large.checked);}
@@ -377,7 +386,7 @@ renderShopCatalog();renderShopItems();
   [...section.children].filter(el=>el.classList.contains('card')&&el.id!=='settingsHub').forEach((card,i)=>{
    const heading=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';
    const subtitle=card.id==='settingsHub'?'Persönliche App-Einstellungen':card.id==='profileGoals'?'Persönliche Angaben und Trainingsziele':card.id==='appAppearance'?'Farben und Darstellung':card.id==='appReminders'?'Erinnerungen und Check-ins':card.id==='weightHistory'?'Dein Gewichtsverlauf':card.id==='dataBackup'?'Daten sichern und wiederherstellen':card.id==='privacyCenter'?'Datenschutz und Datenkontrolle':'Hinweise und Empfehlungen';
-   const wrap=makeAccordion(heading,subtitle,[card],false);section.appendChild(wrap);card.classList.add('mfit-accordion-inner');
+   const wrap=makeAccordion(heading,subtitle,[card],false);if(wrap){section.appendChild(wrap);card.classList.add('mfit-accordion-inner');}else card.remove();
   });
  }
  function initFitness(){
@@ -411,7 +420,7 @@ renderShopCatalog();renderShopItems();
    else {groups.push({title:'Weitere Trainingsdaten',sub:'Zusätzliche Informationen',items:[el]});}
    i++;
   }
-  groups.forEach(g=>{const wrap=makeAccordion(g.title,g.sub,g.items,g.title==='Trainingsplan erstellen');section.appendChild(wrap);});
+  groups.forEach(g=>{const wrap=makeAccordion(g.title,g.sub,g.items,g.title==='Trainingsplan erstellen');if(wrap)section.appendChild(wrap);else g.items.forEach(node=>node.remove());});
  }
  function openMfitAccordionTarget(id){
   const target=document.getElementById(id);if(!target)return;
