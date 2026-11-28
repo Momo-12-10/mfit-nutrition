@@ -26,14 +26,14 @@ const iconPaths={
 const generic='<circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/>';
 function svg(path){return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+(path||generic)+'</svg>';}
 function addHeadingIcon(el){
- if(el.dataset.mfit195IconDone==='1')return;
- let node=[...el.childNodes].find(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim());
- if(!node)return;
- const m=node.textContent.match(/^\s*([\p{Extended_Pictographic}\u24C2-\u3299])\uFE0F?\s*/u);
- if(!m)return;
- node.textContent=node.textContent.replace(/^\s*[\p{Extended_Pictographic}\u24C2-\u3299]\uFE0F?\s*/u,'');
- const holder=document.createElement('span');holder.className='mfit195-heading-icon';holder.setAttribute('aria-hidden','true');holder.innerHTML=svg(iconPaths[m[1]]);
- el.prepend(holder);el.dataset.mfit195IconDone='1';
+ const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let node;
+ while((node=walker.nextNode())){
+  const m=node.textContent.match(/^\\s*([\\p{Extended_Pictographic}\\u24C2-\\u3299])\\uFE0F?\\s*/u);
+  if(!m)continue;
+  node.textContent=node.textContent.replace(/^\\s*[\\p{Extended_Pictographic}\\u24C2-\\u3299]\\uFE0F?\\s*/u,'');
+  if(!el.querySelector('.mfit195-heading-icon')){const holder=document.createElement('span');holder.className='mfit195-heading-icon';holder.setAttribute('aria-hidden','true');holder.innerHTML=svg(iconPaths[m[1]]);el.prepend(holder);}
+  el.dataset.mfit195IconDone='1';return;
+ }
 }
 let generatedId=0;
 function ensureLabel(el){
@@ -66,6 +66,7 @@ function normalizeCardActions(root){
   );
   const primary=buttons.find(btn=>!btn.classList.contains('secondary')&&!btn.classList.contains('mfit195-secondary-action'));
   if(!primary)return;
+  primary.classList.add('mfit195-primary-action');
   buttons.forEach(btn=>{if(btn!==primary&&!btn.classList.contains('secondary'))btn.classList.add('mfit195-secondary-action');});
  });
 }
@@ -83,8 +84,8 @@ function scan(root){
 }
 function start(){
  scan(document);
- const observer=new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===1)scan(node)})));
- observer.observe(document.body,{childList:true,subtree:true});
+ const observer=new MutationObserver(records=>records.forEach(record=>{if(record.type==='characterData'){const heading=record.target.parentElement?.closest('h2,h3');if(heading)addHeadingIcon(heading);}record.addedNodes?.forEach(node=>{if(node.nodeType===1)scan(node)})}));
+ observer.observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
