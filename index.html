@@ -411,7 +411,7 @@
   toggle.addEventListener('click',()=>{card.classList.toggle('mfit-card-collapsed');const next=safeRead();next[key]=card.classList.contains('mfit-card-collapsed');safeWrite(next);sync()});
   sync();
  }
- function scan(root){if(root.matches?.('.card'))enhance(root);root.querySelectorAll?.('.card').forEach(enhance)}
+ function scan(root){const cards=[];if(root.matches?.('.card'))cards.push(root);root.querySelectorAll?.('.card').forEach(card=>cards.push(card));cards.forEach(card=>{if(!card.closest('details.mfit-compact-accordion'))enhance(card)})}
  function start(){scan(document);const observer=new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===1)scan(node)})));observer.observe(document.body,{childList:true,subtree:true})}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
