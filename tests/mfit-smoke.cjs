@@ -63,6 +63,13 @@ const server = http.createServer((req,res)=>{
  await page.locator('.mfit194-nav button[data-main="today"]').click();
  if(!(await page.locator('#home').isVisible()))throw new Error('Today tab did not return to dashboard');
  log('five-area navigation and all subpages verified');
+ const homeCardCount=await page.locator('#home > .mfit193-merged-card, #home > .card').count();
+ if(homeCardCount>5)throw new Error('Today dashboard contains more than five cards: '+homeCardCount);
+ for(const id of ['sugarTotal','todayList','sumVitC','customWaterAmount','mfit165Search']){
+  const el=page.locator('#'+id);if(await el.count()&&!(await el.evaluate(node=>!!node.closest('#mfit194NutritionDetails'))))throw new Error('Daily nutrition detail was not moved into the diary: '+id);
+ }
+ if(!(await page.locator('#mfit194ProfileTools').count()))throw new Error('Dashboard settings were not moved to the profile section');
+ log('Today dashboard limited to five cards; secondary details moved to matching sections');
  await page.waitForSelector('#mfitTodayPanel',{state:'attached'});
  await page.waitForSelector('#mfit181Mobility',{state:'attached'});
  await page.waitForSelector('#mfit181Gpx',{state:'attached'});
