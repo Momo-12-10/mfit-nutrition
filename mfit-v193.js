@@ -165,4 +165,5 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 const observer=new MutationObserver(schedule);
 observer.observe(document.documentElement,{childList:true,subtree:true});
 window.addEventListener('load',schedule,{once:true});
+[150,500,1100,2200].forEach(delay=>setTimeout(init,delay));
 })();
