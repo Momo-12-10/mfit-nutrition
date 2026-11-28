@@ -96,7 +96,7 @@ function weekStart(date){const d=new Date(date+'T12:00:00');d.setDate(d.getDate(
 function renderChallenge(){
  const c=read('mfit191_challenge',null),host=$('mfit191ChallengeStatus');if(!host)return;
  if(!c){host.textContent='Noch keine Challenge gestartet. Deine bisherigen Trainingseinträge bleiben unverändert.';return}
- const start=weekStart(c.start),end=weekStart(c.end),weeks=[];for(let w=0,d=start;d<=end&&weeks.length<4;w++,d=shift(d,7)){const stop=shift(d,6),training=workouts().filter(x=>x.date>=d&&x.date<=stop).length,mobility=read('mfit191_mobility_days',[]).filter(x=>x>=d&&x<=stop).length;weeks.push({d,training,mobility})}
+ const weeks=[];for(let w=0,d=shift(c.start,w*7);w<4;w++,d=shift(c.start,(w+1)*7)){const stop=shift(d,6),training=workouts().filter(x=>x.date>=d&&x.date<=stop).length,mobility=read('mfit191_mobility_days',[]).filter(x=>x>=d&&x<=stop).length;weeks.push({d,training,mobility})}
  host.innerHTML='<b>'+c.start+' bis '+c.end+'</b>'+weeks.map((w,i)=>'<div class="mfit191-list-row"><b>Woche '+(i+1)+'</b><span>Training '+w.training+' / '+c.workouts+' · Mobility '+w.mobility+' / '+c.mobility+'</span><div class="mfit191-progress"><i style="width:'+Math.min(100,w.training/c.workouts*100)+'%"></i></div><small>Ruhetage: '+(c.restDays.length?c.restDays.map(x=>['Mo','Di','Mi','Do','Fr','Sa','So'][x]).join(', '):'keine festgelegt')+'</small></div>').join('')+'<p class="muted">Fortschritt zählt nur gespeicherte Trainingseinheiten und deine Mobility-Bestätigungen. Du kannst jederzeit pausieren oder Ziele ändern.</p>';
 }
 function installCoachReport(){
