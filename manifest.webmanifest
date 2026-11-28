@@ -1,7 +1,7 @@
 {
   "name": "MFit Performance",
   "short_name": "MFit",
-  "start_url": "./?v=194",
+  "start_url": "./?v=195",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
@@ -10,13 +10,13 @@
   "description": "MFit Performance – Ernährung, Training und Fortschritt.",
   "icons": [
     {
-      "src": "./icon.svg?v=194",
+      "src": "./icon.svg?v=195",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "./apple-touch-icon.png?v=194",
+      "src": "./apple-touch-icon.png?v=195",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
