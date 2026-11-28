@@ -56,7 +56,7 @@ const server = http.createServer((req,res)=>{
  if(layout.scrollWidth>layout.width+1)throw new Error('Horizontal page overflow at 360px: '+JSON.stringify(layout));
  if(layout.buttons.length)throw new Error('Buttons outside viewport at 360px: '+JSON.stringify(layout.buttons.slice(0,8)));
  log('checking viewport and existing data');
- await page.waitForFunction(()=>{const quick=document.querySelector('[data-mfit193-group="Dein Tag & Schnellzugriff"] .mfit193-merged-content'),timers=document.querySelector('[data-mfit193-group="Timer-Werkzeuge"] .mfit193-merged-content');return !!quick?.hidden&&!!timers?.hidden&&['mfit181Gpx','mfit181Share'].every(id=>document.getElementById(id)?.classList.contains('mfit-card-collapsed'))});
+ await page.waitForFunction(()=>{const groups=[...document.querySelectorAll('.mfit193-merged-content')];return groups.length>=10&&groups.every(x=>x.hidden)});
  const quickGroup=page.locator('.mfit193-merged-card').filter({has:page.locator('#mfitTodayPanel')});
  if(!(await quickGroup.count())||!(await quickGroup.locator('#mfitQuickActions').count())){const debug=await page.evaluate(()=>({groups:[...document.querySelectorAll('.mfit193-merged-card')].map(x=>x.dataset.mfit193Group),todayParent:document.getElementById('mfitTodayPanel')?.parentElement?.outerHTML.slice(0,600),quickParent:document.getElementById('mfitQuickActions')?.parentElement?.outerHTML.slice(0,600)}));throw new Error('Pinned favourites were not consolidated with the Today overview: '+JSON.stringify(debug));}
  const mergedAudit=await page.evaluate(()=>({groups:[...document.querySelectorAll('.mfit193-merged-card')].map(x=>x.dataset.mfit193Group),nestedCards:document.querySelectorAll('.mfit193-merged-card .card').length,barcodeDuplicate:!!document.getElementById('mfit165Barcode'),exerciseDuplicate:!!document.getElementById('mfit165ExerciseLibrary'),deleteButtons:document.querySelectorAll('#settings .privacy-danger-zone button.danger').length}));
@@ -80,7 +80,7 @@ const server = http.createServer((req,res)=>{
  await page.evaluate(()=>window.showTab('fitness'));
  log('checking yesterday copy');
  const gpxCard=page.locator('#mfit181Gpx');
- await gpxCard.locator('.mfit-card-collapse-toggle').click();
+ const trainingGroup=page.locator('.mfit193-merged-card').filter({has:gpxCard});if(await trainingGroup.locator('.mfit193-merged-toggle').getAttribute('aria-expanded')==='false')await trainingGroup.locator('.mfit193-merged-toggle').click();
  const gpx='<?xml version="1.0"?><gpx version="1.1" creator="MFit" xmlns="http://www.topografix.com/GPX/1/1"><trk><name>Test route</name><trkseg><trkpt lat="48.200000" lon="16.300000"><time>2026-01-01T10:00:00Z</time></trkpt><trkpt lat="48.209000" lon="16.300000"><time>2026-01-01T10:06:00Z</time></trkpt></trkseg></trk></gpx>';
  await page.locator('#mfit181GpxFile').setInputFiles({name:'test.gpx',mimeType:'application/gpx+xml',buffer:Buffer.from(gpx)});
  await page.waitForFunction(()=>document.querySelector('#mfit181GpxStatus')?.textContent.includes('gespeichert'));
@@ -88,7 +88,6 @@ const server = http.createServer((req,res)=>{
  if(!gpxRows.includes('1.00 km'))throw new Error('GPX distance calculation failed: '+gpxRows);
  log('checking GPX import');
  const shareCard=page.locator('#mfit181Share');
- await shareCard.locator('.mfit-card-collapse-toggle').click();
  const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#mfit181ShareButton').click()]);
  if(!download.suggestedFilename().endsWith('.png'))throw new Error('Share card did not produce PNG download');
  await page.evaluate(()=>window.showTab('profile'));
