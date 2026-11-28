@@ -4,6 +4,12 @@
 const $=id=>document.getElementById(id);
 const cardOf=el=>el?.closest?.('.card')||el;
 const rootOf=id=>$(id);
+function unwrapCollapse(card){
+ const head=card.querySelector(':scope > .mfit-card-collapse-head');
+ const body=card.querySelector(':scope > .mfit-card-collapse-body');
+ if(body){const fragment=document.createDocumentFragment();while(body.firstChild)fragment.appendChild(body.firstChild);body.replaceWith(fragment);}
+ if(head)head.remove();
+}
 function mergeGroup({title,root,items,extra=[]}){
  const host=rootOf(root);if(!host)return null;
  const nodes=[];
@@ -23,18 +29,23 @@ function mergeGroup({title,root,items,extra=[]}){
   wrap=document.createElement('article');
   wrap.className='card mfit193-merged-card';
   wrap.dataset.mfit193Group=title;
-  const heading=document.createElement('h2');heading.textContent=title;
-  const content=document.createElement('div');content.className='mfit193-merged-content';
-  wrap.append(heading,content);
+  const toggle=document.createElement('button');toggle.type='button';toggle.className='mfit193-merged-toggle';toggle.setAttribute('aria-expanded','false');
+  toggle.innerHTML='<span>'+title+'</span><span class="mfit193-chevron" aria-hidden="true">⌄</span>';
+  const content=document.createElement('div');content.className='mfit193-merged-content';content.hidden=true;
+  const contentId='mfit193-content-'+title.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-z0-9]+/g,'-');
+  content.id=contentId;toggle.setAttribute('aria-controls',contentId);
+  toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));content.hidden=!open;});
+  wrap.append(toggle,content);
   const first=nodes.find(n=>n.parentNode===host)||nodes[0];
   if(first.parentNode)first.parentNode.insertBefore(wrap,first);
   else host.appendChild(wrap);
  }
  const content=wrap.querySelector(':scope > .mfit193-merged-content');
  for(const node of nodes){
+  unwrapCollapse(node);
+  node.querySelectorAll('.card').forEach(child=>{unwrapCollapse(child);child.classList.remove('card');child.classList.add('mfit193-merged-section')});
   node.classList.remove('card');
   node.classList.add('mfit193-merged-section');
-  node.querySelectorAll('.card').forEach(child=>{child.classList.remove('card');child.classList.add('mfit193-merged-section')});
   node.removeAttribute('style');
   node.querySelectorAll(':scope > h2').forEach(h=>{const sub=document.createElement('h3');sub.className=h.className;sub.textContent=h.textContent;h.replaceWith(sub)});
   content.appendChild(node);
