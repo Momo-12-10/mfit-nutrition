@@ -55,7 +55,8 @@ function ensureLabel(el){
 }
 function normalizeCardActions(root){
  const cards=[];
- if(root.matches?.('.card,.mfit193-merged-card'))cards.push(root);
+ const nearest=root.closest?.('.card,.mfit193-merged-card');if(nearest)cards.push(nearest);
+ if(root.matches?.('.card,.mfit193-merged-card')&&!cards.includes(root))cards.push(root);
  root.querySelectorAll?.('.card,.mfit193-merged-card').forEach(el=>cards.push(el));
  cards.forEach(card=>{
   const buttons=[...card.querySelectorAll('button')].filter(btn=>
