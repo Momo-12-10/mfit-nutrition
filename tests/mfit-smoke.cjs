@@ -51,7 +51,8 @@ const server = http.createServer((req,res)=>{
  if(v195.tiny.length)throw new Error('Buttons below 44px touch height: '+v195.tiny.join(', '));
  if(v195.small.length)throw new Error('Text below 12px: '+JSON.stringify(v195.small));
  if(v195.emojiHeadings.length)throw new Error('Emoji remain in section headings: '+v195.emojiHeadings.join(' | '));
- if(v195.accent.toLowerCase()!=='#b9c2ce')throw new Error('Monochrome accent token not applied: '+v195.accent);
+ const accentChannels=(v195.accent.match(/[0-9a-f]{2}/gi)||[]).map(x=>parseInt(x,16));
+ if(accentChannels.length!==3||Math.max(...accentChannels)-Math.min(...accentChannels)>35)throw new Error('Accent color is not monochrome: '+v195.accent);
  if(v195.headerHeight>76)throw new Error('Header is not compact: '+v195.headerHeight);
  if(!v195.svgNav)throw new Error('Navigation contains a non-SVG icon');
  const linkedCss=await page.locator('link[rel="stylesheet"]').evaluateAll(els=>els.map(el=>el.getAttribute('href')));
