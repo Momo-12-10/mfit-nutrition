@@ -1,0 +1,145 @@
+/* MFit v195 — unified monochrome design system */
+:root{
+ --bg:#0b0d10;--panel:#14171c;--panel2:#1b2027;--line:#303640;
+ --muted:#aab2bd;--text:#f1f3f5;--text-main:#f1f3f5;
+ --green:#b9c2ce;--accent:#b9c2ce;
+ --accent-soft:rgba(185,194,206,.11);--accent-border:rgba(185,194,206,.30);
+ --surface-elevated:#1b2027;--border-soft:rgba(185,194,206,.16);
+ --radius-card:16px;--radius-control:12px;--space-card:16px;
+ color-scheme:dark;
+}
+html{background:var(--bg);scroll-behavior:smooth}
+body{
+ margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ font-size:16px;line-height:1.5;letter-spacing:0;padding-bottom:calc(90px + env(safe-area-inset-bottom));
+}
+main{width:min(100%,1040px);margin:0 auto;padding:12px 16px 28px}
+section{scroll-margin-top:62px}
+h1,h2,h3,h4{color:var(--text);line-height:1.25;letter-spacing:-.02em}
+h2{font-size:19px;font-weight:700;margin:0 0 10px}
+h3{font-size:16px;font-weight:650;margin:0 0 8px}
+p{line-height:1.55}
+small,.small,.muted,.caption,.settings-kicker{font-size:max(12px, .82em);color:var(--muted)}
+.muted{line-height:1.5}
+a{color:#d8dee6;text-underline-offset:3px}
+hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+
+/* Compact brand header */
+header.mfit-app-header{
+ position:relative;display:block;padding:10px 16px 9px;background:#101318;border:0;border-bottom:1px solid var(--line);
+ box-shadow:none;overflow:hidden;
+}
+header.mfit-app-header:before,header.mfit-app-header:after{display:none;content:none}
+.mfit-header-inner{max-width:1040px;margin:0 auto;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand-lockup{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-logo{width:38px;height:38px;border-radius:11px;box-shadow:none}
+.brand-copy{min-width:0}
+.brand-copy .brand-eyebrow,.mfit-header-foot,.brand-copy>p{display:none}
+.brand-copy h1{margin:0;font-size:19px;font-weight:800;letter-spacing:.015em;background:none;color:var(--text);-webkit-text-fill-color:currentColor}
+.brand-copy h1 span{color:#c4ccd5}
+.brand-copy h1 small{font-size:10px;letter-spacing:.09em;color:var(--muted)}
+.mfit-header-actions{display:flex;align-items:center;gap:8px}
+.mfit-header-actions button{width:44px;min-width:44px;height:44px;padding:0;display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);box-shadow:none;font-size:18px}
+.mfit-header-actions button svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* Calm, consistent surfaces */
+.card,.mfit193-merged-card,.mfit194-detail-list,.mfit-settings-popover,.theme-preview,.notice{
+ border-radius:var(--radius-card);box-shadow:none;
+}
+.card,.mfit193-merged-card{
+ background:var(--panel);border:1px solid var(--line);padding:var(--space-card);margin:12px 0;
+}
+.card h2:before{display:none}
+.card h2,.mfit193-merged-card h2{display:flex;align-items:center;gap:9px}
+.mfit195-heading-icon{width:19px;height:19px;flex:0 0 19px;display:inline-grid;place-items:center;color:#c3cbd5}
+.mfit195-heading-icon svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.mfit193-merged-card{padding:0;overflow:hidden}
+.mfit193-merged-card .mfit193-merged-toggle{min-height:48px;padding:12px 15px}
+.mfit193-merged-content{padding:0 15px 15px}
+.mfit194-detail-list{padding:12px;background:var(--panel2);border:1px solid var(--line)}
+.mfit194-detail-list>h2{font-size:16px}
+
+/* One neutral accent, restrained buttons and links */
+button,.button{
+ min-height:44px;border-radius:var(--radius-control);padding:10px 14px;
+ font:inherit;font-size:14px;font-weight:650;line-height:1.25;cursor:pointer;
+ background:#c2cad4;color:#11151a;border:1px solid #c2cad4;box-shadow:none;
+}
+button:not(.secondary):not(.danger):not(.theme-swatch){background:#c2cad4;color:#11151a;box-shadow:none}
+button.secondary,.secondary,button.danger{
+ background:var(--panel2);color:var(--text);border:1px solid var(--line);box-shadow:none
+}
+button.danger{background:#282326;border-color:#55464b;color:#f0dfe3}
+button:disabled{opacity:.48;cursor:not-allowed}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{
+ outline:2px solid #d5dbe3;outline-offset:3px;box-shadow:none
+}
+.mfit194-nav{background:rgba(15,17,21,.98);border-top:1px solid var(--line);backdrop-filter:blur(16px)}
+.mfit194-nav button{min-height:54px;font-size:12px;color:#aab2bd;border-radius:11px}
+.mfit194-nav button.active{background:#282e36;color:#fff}
+.mfit194-nav button svg{width:21px;height:21px;stroke-width:1.8}
+.mfit194-subnav{background:var(--bg);border-color:var(--line)}
+.mfit194-subnav button{min-height:44px;background:var(--panel);border-color:var(--line);color:var(--muted)}
+.mfit194-subnav button.active{background:#282e36;color:#fff;border-color:#68717d}
+
+/* Form controls and accessible touch targets */
+label{display:block;margin:10px 0 6px;color:#c2c9d2;font-size:14px;font-weight:600;line-height:1.4}
+input:not([type=checkbox]):not([type=radio]):not([type=color]),select,textarea{
+ width:100%;min-width:0;min-height:44px;padding:10px 12px;border:1px solid #3a414b;border-radius:12px;
+ background:#101318;color:var(--text);font:inherit;font-size:15px;box-shadow:none
+}
+textarea{min-height:88px;resize:vertical}
+input::placeholder,textarea::placeholder{color:#828c99;opacity:1}
+input[type=checkbox],input[type=radio]{width:20px;height:20px;min-width:20px;min-height:20px;accent-color:#c2cad4}
+input[type=file]{min-height:48px;padding:7px;background:var(--panel);border:1px dashed #626c78;border-radius:12px;color:var(--text);font-size:14px}
+input[type=file]::file-selector-button{
+ min-height:34px;margin:0 10px 0 0;padding:6px 12px;border:1px solid var(--line);border-radius:9px;
+ background:#303741;color:#f3f5f7;font:inherit;font-weight:650
+}
+select{appearance:auto}
+.grid{gap:12px}
+.row{gap:12px}
+label:has(input[type=checkbox]),label:has(input[type=radio]),.reminder-toggle,.mfit-legal-check{
+ min-height:44px;display:flex;align-items:center;gap:10px
+}
+.mfit-legal-check{align-items:flex-start}
+.mfit195-visually-hidden{
+ position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;
+ overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
+}
+
+/* Charts, status and empty states */
+.progress{height:9px;border-radius:99px;background:#303640}
+.progress span{background:#b9c2ce;box-shadow:none}
+.big,.pill,.shop-estimate,.suggestion-brand,.product-suggestion .suggestion-nutrition{color:#d1d7df;text-shadow:none}
+.pill{background:#252b33;border:1px solid #414954}
+.notice{background:#20252c;border:1px solid #414954;color:#e0e4e9}
+.theme-preview,.theme-picker-row{background:#191e25;border-color:#3a424c}
+.theme-preview-dot{background:#b9c2ce;box-shadow:none}
+.theme-swatch{min-width:40px;min-height:40px;border:2px solid #59616c}
+.theme-swatch.selected{outline:2px solid #d8dee6;outline-offset:3px}
+.mfit195-daily-note{background:#20252c;border:1px solid #3a424c}
+.mfit-settings-menu{background:rgba(0,0,0,.68)}
+.mfit-settings-popover{background:#15191f;border:1px solid var(--line)}
+.mfit-settings-popover button{min-height:48px}
+
+/* Readability and responsive layout */
+@media(max-width:420px){
+ main{padding:10px 12px 24px}
+ .card{padding:14px}
+ .mfit-header-inner{gap:8px}
+ .brand-logo{width:35px;height:35px}
+ .brand-copy h1{font-size:18px}
+ .mfit194-nav{gap:2px;padding-left:6px;padding-right:6px}
+ .mfit194-nav button{padding:5px 1px;font-size:12px}
+ .mfit194-subnav{padding:8px 10px;gap:6px}
+ .mfit194-subnav button{padding:8px 12px}
+}
+@media(min-width:700px){
+ main{padding:20px 24px 36px}
+ .mfit-app-header{padding-left:24px;padding-right:24px}
+ .mfit194-nav{border:1px solid var(--line);border-bottom:0}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
