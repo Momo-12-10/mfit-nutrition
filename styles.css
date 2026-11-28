@@ -786,11 +786,6 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 .weekly-day.is-today{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 40%,transparent)}
 .weekly-day-label{font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.25px}
 .weekly-hint{margin:12px 0 0}
-.quick-start-card>h2{margin:4px 0 13px}
-.quick-start-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-.quick-start-grid button{
- min-width:0;min-height:104px;padding:12px 8px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px;text-align:left;
-}
 .quick-start-grid button>span{font-size:19px;line-height:1.2}
 .quick-start-grid button>b{font-size:12px;line-height:1.25}
 .quick-start-grid button>small{font-size:10px;line-height:1.35;font-weight:550;color:inherit;opacity:.72}
@@ -1088,9 +1083,8 @@ button:active{transform:scale(.985)}
 .progress span{border-radius:30px}
 .notice{padding:13px 14px;border-radius:15px;line-height:1.5;background:var(--accent-soft);border-color:var(--accent-border);font-size:12px}
 .item{border-color:rgba(174,194,218,.10)}
-.daily-motivation,.weekly-momentum-card,.quick-start-card{border-color:color-mix(in srgb,var(--accent) 22%,var(--line))}
+
 .daily-motivation{border-radius:18px}
-.quick-start-grid button{border-radius:15px!important}
 .history-periods button{border-radius:11px!important}
 .history-periods button.active{background:var(--accent-soft)!important;color:var(--accent)!important;border-color:var(--accent-border)!important}
 nav.mfit-nav{
@@ -1498,14 +1492,6 @@ hr{opacity:.7}
 .mfit-coach-item{padding:11px 12px;border:1px solid rgba(255,255,255,.075);border-radius:12px;background:rgba(255,255,255,.025)}
 .mfit-coach-item b{display:block;font-size:11px;color:#eaf5ed}
 .mfit-coach-item small{display:block;margin-top:4px;color:#aab9b1;font-size:9px;line-height:1.5}
-.mfit-achievement-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:11px;border-top:1px solid rgba(255,255,255,.08);font-size:11px}
-.mfit-achievement-head .muted{font-size:9px}
-.mfit-achievement-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:9px}
-.mfit-achievement{min-width:0;padding:10px 7px;text-align:center;border:1px solid rgba(255,255,255,.08);border-radius:11px;background:rgba(255,255,255,.025)}
-.mfit-achievement span{display:block;font-size:17px}
-.mfit-achievement b{display:block;margin-top:4px;font-size:9px}
-.mfit-achievement small{display:block;margin-top:3px;color:#9eada8;font-size:8px;line-height:1.3}
-.mfit-achievement.is-earned{border-color:rgba(126,221,165,.3);background:rgba(100,190,132,.08)}
 .mfit-smart-footer{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07)}
 .mfit-smart-footer span{font-size:9px;line-height:1.45;color:#aab9b1;flex:1}
 .mfit-smart-footer button{min-height:33px;padding:7px 10px!important;font-size:9px!important;white-space:nowrap}
@@ -1527,7 +1513,7 @@ hr{opacity:.7}
 .mfit-large-text .muted,.mfit-large-text small,.mfit-large-text label{font-size:calc(1em + 1px)}
 :focus-visible{outline:2px solid var(--accent,#65d58b)!important;outline-offset:3px}
 button,input,select,textarea{touch-action:manipulation}
-@media(max-width:360px){.mfit-achievement-list{gap:5px}.mfit-achievement{padding:8px 4px}.mfit-smart-footer{align-items:flex-start;flex-direction:column}.mfit-smart-footer button{width:100%}}
+@media(max-width:360px){.mfit-smart-footer{align-items:flex-start;flex-direction:column}.mfit-smart-footer button{width:100%}}
 
 
 /* v102 — einheitlich einklappbare Inhaltskarten in allen App-Bereichen */
@@ -1993,7 +1979,7 @@ main{max-width:790px}
 }
 .mfit-dash-chart,.mfit-dash-section{border-color:rgba(159,201,170,.12)!important}
 .mfit-legend-food,.mfit-legend-workout{background:#79e2a0!important}
-.daily-motivation,.weekly-momentum-card,.quick-start-card{
+.daily-motivation,.weekly-momentum-card{
  background:linear-gradient(120deg,rgba(24,47,31,.96),rgba(15,26,18,.98))!important;
  border:1px solid rgba(121,226,160,.19)!important;
 }
