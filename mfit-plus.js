@@ -25,7 +25,7 @@
   const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='mfit-koerpermasse-'+(typeof localDate==='function'?localDate():new Date().toISOString().slice(0,10))+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
  };
  window.mfitRenderSmartCoach=function(){
-  const insight=$m('mfitCoachInsights'),ach=$m('mfitAchievementList');if(!insight||!ach||typeof data==='undefined'||typeof workoutLogs==='undefined')return;
+  const insight=$m('mfitCoachInsights');if(!insight||typeof data==='undefined'||typeof workoutLogs==='undefined')return;
   const today=new Date(),key=d=>{const x=new Date(d);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')};
   const recent=[];for(let i=6;i>=0;i--){const d=new Date(today);d.setDate(today.getDate()-i);const k=key(d),foods=data.filter(x=>(x.date||key(new Date()))===k),workouts=workoutLogs.filter(x=>x.date===k);recent.push({k,foods,workouts,protein:foods.reduce((s,x)=>s+(Number(x.protein)||0),0)});}
   const tracked=recent.filter(x=>x.foods.length),training=recent.filter(x=>x.workouts.length),average=tracked.length?tracked.reduce((s,x)=>s+x.protein,0)/tracked.length:null;
@@ -37,9 +37,7 @@
   if(recovery)cards.push(['Regeneration','Letzter Check-in: '+recovery.sleep+' h Schlaf, Energie '+recovery.energy+'/10 und Muskelkater '+recovery.soreness+'/10. Nutze das als Orientierung, nicht als medizinische Bewertung.']);
   else cards.push(['Erholung ergänzen','Ein kurzer Check-in zu Schlaf, Energie und Muskelkater macht deine Trainingsdaten aussagekräftiger.']);
   insight.innerHTML=cards.slice(0,3).map(x=>'<div class="mfit-coach-item"><b>'+safe(x[0])+'</b><small>'+safe(x[1])+'</small></div>').join('');
-  const totalFoods=data.length,totalWorkouts=workoutLogs.length,earned=[totalFoods>=1,totalFoods>=25,totalWorkouts>=1,totalWorkouts>=10,new Set(data.map(x=>x.date)).size>=7];
-  const milestones=[['🥗','Erster Eintrag','1 Ernährungseintrag',earned[0]],['📘','Dranbleiben','25 Ernährungseinträge',earned[1]],['🏋️','Erstes Workout','1 Trainingseintrag',earned[2]],['💪','Trainingsroutine','10 Trainingseinträge',earned[3]],['📅','Konstanz','7 dokumentierte Tage',earned[4]]];
-  ach.innerHTML=milestones.map(x=>'<div class="mfit-achievement '+(x[3]?'is-earned':'')+'"><span>'+x[0]+'</span><b>'+x[1]+'</b><small>'+(x[3]?'Erreicht':x[2])+'</small></div>').join('');
+  const totalFoods=data.length,totalWorkouts=workoutLogs.length;
   const summary=$m('mfitCoachSummary');if(summary)summary.textContent=totalWorkouts+' Trainingseinträge · '+totalFoods+' Ernährungseinträge gespeichert';
  };
  const banner=$m('mfitOfflineBanner'),updateNetwork=()=>{if(banner)banner.hidden=!!navigator.onLine;};
