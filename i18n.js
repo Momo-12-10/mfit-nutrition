@@ -60,6 +60,7 @@ Object.assign(dictionaries.en,{
  "Geräteberechtigung fehlt oder ist ungültig.":"The device authorization is missing or invalid.",
  "Dieses Push-Abo gehört bereits zu einem anderen Gerät oder Browserprofil.":"This push subscription already belongs to another device or browser profile.",
  "Dieses Push-Abo darf von diesem Gerät nicht entfernt werden.":"This device is not authorized to remove this push subscription.",
+ "Dieses ältere Push-Abo konnte diesem Browserprofil nicht sicher zugeordnet werden. Bitte Push einmal ausschalten und danach erneut aktivieren.":"This older push subscription could not be securely matched to this browser profile. Turn push off once, then enable it again.",
  "Push-Abo wurde gleichzeitig geändert. Bitte erneut versuchen.":"The push subscription changed at the same time. Please try again.",
  "Push-Abo oder lokale Daten konnten nicht sicher entfernt werden. Bitte prüfe die Verbindung und versuche es erneut. Es wurden keine lokalen Daten gelöscht.":"The push subscription or local data could not be safely removed. Check your connection and try again. No local data was deleted."
 });
@@ -68,6 +69,7 @@ Object.assign(dictionaries.ru,{
  "Geräteberechtigung fehlt oder ist ungültig.":"Разрешение устройства отсутствует или недействительно.",
  "Dieses Push-Abo gehört bereits zu einem anderen Gerät oder Browserprofil.":"Эта push-подписка уже принадлежит другому устройству или профилю браузера.",
  "Dieses Push-Abo darf von diesem Gerät nicht entfernt werden.":"Это устройство не имеет права удалять данную push-подписку.",
+ "Dieses ältere Push-Abo konnte diesem Browserprofil nicht sicher zugeordnet werden. Bitte Push einmal ausschalten und danach erneut aktivieren.":"Не удалось безопасно связать старую push-подписку с этим профилем браузера. Один раз отключите push, затем включите снова.",
  "Push-Abo wurde gleichzeitig geändert. Bitte erneut versuchen.":"Push-подписка была одновременно изменена. Повторите попытку.",
  "Push-Abo oder lokale Daten konnten nicht sicher entfernt werden. Bitte prüfe die Verbindung und versuche es erneut. Es wurden keine lokalen Daten gelöscht.":"Не удалось безопасно удалить push-подписку или локальные данные. Проверьте соединение и повторите попытку. Локальные данные не удалены."
 });
