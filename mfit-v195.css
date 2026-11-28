@@ -246,3 +246,25 @@ body .mfit191-calendar-legend{
 body .mfit191-calendar-legend span{display:inline-flex!important;align-items:center!important;gap:5px!important;white-space:nowrap!important;font-size:12px!important;color:#c0c7d0!important}
 body .mfit191-calendar-legend i{min-width:16px!important;height:16px!important;font-size:10px!important}
 @media(max-width:360px){body #mfit191CalendarGrid.mfit191-calendar-grid{gap:3px!important}body #mfit191CalendarGrid .mfit191-day{min-height:42px!important}}
+
+/* Monochrome chart language: retain meaning and labels, remove mixed green/blue/orange accents. */
+body .mfit-today-panel{background:linear-gradient(145deg,#191d23,#11151a)!important;border-color:#343b44!important;box-shadow:none!important}
+body .mfit-today-stats>div,body .mfit-progress-kpi,body .mfit-dash-insight,body .mfit-training-kpis>div,body .mfit-data-care-grid>div{
+ background:#1b2027!important;border-color:#343b44!important;color:#eef1f4!important
+}
+body .mfit-progress-kpi b,body .mfit-analytics-kpis b,body .mfit-ring-center b{color:#eef1f4!important}
+body .mfit-dash-foodbar,body .mfit-bar-track i,body .mfit-week-bar i,body .mfit-muscle-row i,body .mfit-meal-row i,
+body .mfit-dash-legend i,body .mfit-legend-food,body .mfit-legend-workout,body .mfit-strength-legend i,body .mfit-strength-legend i.one-rm{
+ background:#aeb8c4!important;box-shadow:none!important
+}
+body .mfit-dash-workoutdot,body .mfit-dash-workoutdot.is-active{background:#aeb8c4!important;border-color:#d0d6de!important;box-shadow:none!important}
+body .mfit-ring-value,body .mfit-ring.is-protein .mfit-ring-value,body .mfit-ring.is-carbs .mfit-ring-value,body .mfit-ring.is-fat .mfit-ring-value{
+ stroke:#aeb8c4!important
+}
+body .mfit-ring-track{stroke:#343b44!important}
+body .mfit-advanced-mark{background:#252b33!important;color:#c5cdd7!important}
+body .mfit-progress-kpi small,body .mfit-dash-insight small,body .mfit-training-kpis small,body .mfit-data-care-grid small,
+body .mfit-dash-day small,body .mfit-week-bar small,body .mfit-bar-col small,body .mfit-chart-title,body .mfit-next-chart-title,
+body .mfit-body-point,body .mfit-muscle-row,body .mfit-dash-legend,body .mfit-strength-legend{
+ font-size:12px!important;color:#aab2bd!important
+}
