@@ -49,7 +49,7 @@ function detailWrap(targetId,id,title){
 function relocateHomeDetails(){
  const home=document.getElementById('home');if(!home)return;
  const nutrition=detailWrap('track','mfit194NutritionDetails','Weitere Tagebuchdetails');
- const dailyNote=document.getElementById('dailyQuote')?.closest('.card');
+ const dailyNote=document.getElementById('dailyQuote')?.closest('.daily-motivation');
  const quickGroup=[...home.querySelectorAll('.mfit193-merged-card')].find(el=>el.dataset.mfit193Group==='Dein Tag & Schnellzugriff');
  const quickContent=quickGroup?.querySelector('.mfit193-merged-content');
  if(dailyNote&&quickContent&&!quickContent.contains(dailyNote)){dailyNote.classList.remove('card');dailyNote.classList.add('mfit194-daily-note');quickContent.prepend(dailyNote);}
