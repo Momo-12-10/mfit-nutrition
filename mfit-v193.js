@@ -63,7 +63,7 @@ function init(){
  if(achievementList)achievementList.remove();
 
  // 1. One home quick-access area: today's overview, pinned actions and older shortcuts.
- mergeGroup({title:'Dein Tag & Schnellzugriff',root:'home',items:['mfitTodayPanel','mfitQuickActions','.quick-start-card','mfit181YesterdayCopy']});
+ mergeGroup({title:'Dein Tag & Schnellzugriff',root:'home',items:['mfitTodayPanel','mfitQuickActions','mfit181YesterdayCopy']});
 
  // 2. One daily calories/macros overview. The source nodes and their IDs remain intact.
  mergeGroup({title:'Kalorien & Makros heute',root:'home',items:[
@@ -134,9 +134,7 @@ function init(){
  ],extra:[achievementHead,achievementList]});
 
  // 12. All appearance controls are grouped under the existing settings tab.
- mergeGroup({title:'Darstellung & App-Design',root:'settings',items:[
-  'appAppearance','mfitAdvancedPreferences','mfitThemeStudio'
- ]});
+ mergeGroup({title:'Darstellung & App-Design',root:'settings',items:['appAppearance']});
 
  // 13. One data-control area. Keep backup/export/restore tools; remove only the duplicate local-delete action.
  $('privacyCenter')?.querySelector('.privacy-danger-zone')?.remove();
