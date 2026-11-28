@@ -22,7 +22,7 @@ assert.match(app, /mfit191_challenge/);
 assert.match(app, /mfit191ReportHealth/);
 assert.match(app, /mfit_weight_history/);
 assert.match(app, /mfit_symptom_diary_v1/);
-assert.match(app, /window\.open\('', '_blank'\)/);
+assert.ok(app.includes("window.open('','_blank')"));
 assert.match(timer, /speechSynthesis/);
 assert.match(timer, /speak\('Start'\)/);
 assert.match(timer, /speak\('Pause'\)/);
