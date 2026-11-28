@@ -47,6 +47,7 @@ Deno.serve(async (req) => {
   try {
     const body = await req.json();
     const action = body?.action;
+    if (action !== "dispatch" && origin !== ALLOWED_ORIGIN) return reply({ error: "Origin not allowed." }, 403);
 
     if (action === "public-key") return reply({ publicKey: configurePush() });
 
