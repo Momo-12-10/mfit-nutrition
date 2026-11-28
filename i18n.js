@@ -38,6 +38,23 @@ Object.assign(dictionaries.ru,{"Dein Tag auf einen Blick":"Ваш день вк�
 const originalText=new WeakMap(),originalAttrs=new WeakMap();
 const key='mfit_language';
 function active(){const v=localStorage.getItem(key)||'de-AT';return v==='en'||v==='ru'?v:'de-AT'}
+
+Object.assign(dictionaries.en,{
+ "Push-Mitteilungen aktivieren":"Enable push notifications",
+ "Push-Mitteilungen ausschalten":"Turn off push notifications",
+ "Push-Mitteilungen sind aktiv. Erinnerungen können auch bei geschlossener App ankommen.":"Push notifications are enabled. Reminders can arrive even when the app is closed.",
+ "Push-Mitteilungen wurden auf diesem Gerät ausgeschaltet.":"Push notifications have been turned off on this device.",
+ "Push-Mitteilungen werden von diesem Browser nicht unterstützt.":"Push notifications are not supported by this browser.",
+ "Push-Mitteilungen werden zu den eingestellten Uhrzeiten übermittelt, auch wenn MFit geschlossen ist. Die Push-Erinnerungen sind zeitbasiert; die Prüfung deiner tatsächlich erfassten Wasser- und Mahlzeit-Einträge funktioniert weiterhin lokal, solange MFit geöffnet ist.":"Push notifications are sent at the selected times, even when MFit is closed. They are time-based; checking your actual water and meal entries still happens locally while MFit is open."
+});
+Object.assign(dictionaries.ru,{
+ "Push-Mitteilungen aktivieren":"Включить push-уведомления",
+ "Push-Mitteilungen ausschalten":"Отключить push-уведомления",
+ "Push-Mitteilungen sind aktiv. Erinnerungen können auch bei geschlossener App ankommen.":"Push-уведомления включены. Напоминания могут приходить, даже когда приложение закрыто.",
+ "Push-Mitteilungen wurden auf diesem Gerät ausgeschaltet.":"Push-уведомления отключены на этом устройстве.",
+ "Push-Mitteilungen werden von diesem Browser nicht unterstützt.":"Этот браузер не поддерживает push-уведомления.",
+ "Push-Mitteilungen werden zu den eingestellten Uhrzeiten übermittelt, auch wenn MFit geschlossen ist. Die Push-Erinnerungen sind zeitbasiert; die Prüfung deiner tatsächlich erfassten Wasser- und Mahlzeit-Einträge funktioniert weiterhin lokal, solange MFit geöffnet ist.":"Push-уведомления отправляются в заданное время, даже если MFit закрыт. Проверка фактически внесённых записей о воде и приёмах пищи по-прежнему выполняется локально, пока приложение открыто."
+});
 function tr(value,lang){if(lang==='de-AT'||!value)return value;let out=value;const dict=dictionaries[lang]||{};const word=c=>!!c&&/[A-Za-z0-9À-žА-яЁё_]/.test(c);for(const k of Object.keys(dict).sort((a,b)=>b.length-a.length)){let from=0,pos;while((pos=out.indexOf(k,from))!==-1){const left=word(k[0])&&word(out[pos-1]),right=word(k[k.length-1])&&word(out[pos+k.length]);if(!left&&!right){out=out.slice(0,pos)+dict[k]+out.slice(pos+k.length);from=pos+dict[k].length}else from=pos+k.length}}return out}
 function scan(root,lang){
  if(!root)return;
