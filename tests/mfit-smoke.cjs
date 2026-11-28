@@ -45,12 +45,15 @@ const server = http.createServer((req,res)=>{
   const tiny=[...document.querySelectorAll('button')].filter(el=>el.getClientRects().length&&el.getBoundingClientRect().height<43.5).map(el=>el.textContent.trim().slice(0,25));
   const small=[...document.querySelectorAll('p,label,small,.muted,.settings-kicker,.pill')].filter(el=>el.getClientRects().length&&el.textContent.trim()&&parseFloat(getComputedStyle(el).fontSize)<11.9).map(el=>({text:el.textContent.trim().slice(0,24),size:getComputedStyle(el).fontSize}));
   const emojiHeadings=[...document.querySelectorAll('h2,h3')].filter(el=>!el.querySelector('.mfit195-heading-icon')&&/^\s*[\p{Extended_Pictographic}\u24C2-\u3299]/u.test(el.textContent));
+  const multiPrimary=[...document.querySelectorAll('.card,.mfit193-merged-card')].filter(card=>[...card.querySelectorAll('button')].filter(btn=>btn.closest('.card,.mfit193-merged-card')===card&&!btn.matches('.mfit-card-collapse-toggle,.mfit193-merged-toggle,.theme-swatch,.mfit-collapse-menu-toggle,[data-action-role="toggle"],[data-action-role="icon"]')&&!btn.classList.contains('danger')&&!btn.classList.contains('secondary')&&!btn.classList.contains('mfit195-secondary-action')).length>1).map(card=>card.id||card.querySelector('h2,h3')?.textContent||'unnamed');
+
   return {unlabeled,tiny:tiny.slice(0,12),small:small.slice(0,12),emojiHeadings:emojiHeadings.map(el=>el.textContent.trim()),accent:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(),headerHeight:document.querySelector('.mfit-app-header')?.getBoundingClientRect().height,svgNav:[...document.querySelectorAll('.mfit194-nav button')].every(el=>!!el.querySelector('svg'))};
  });
  if(v195.unlabeled.length)throw new Error('Form fields without associated labels: '+v195.unlabeled.join(', '));
  if(v195.tiny.length)throw new Error('Buttons below 44px touch height: '+v195.tiny.join(', '));
  if(v195.small.length)throw new Error('Text below 12px: '+JSON.stringify(v195.small));
  if(v195.emojiHeadings.length)throw new Error('Emoji remain in section headings: '+v195.emojiHeadings.join(' | '));
+ if(v195.multiPrimary.length)throw new Error('Cards have more than one primary action: '+v195.multiPrimary.join(' | '));
  const accentChannels=(v195.accent.match(/[0-9a-f]{2}/gi)||[]).map(x=>parseInt(x,16));
  if(accentChannels.length!==3||Math.max(...accentChannels)-Math.min(...accentChannels)>35)throw new Error('Accent color is not monochrome: '+v195.accent);
  if(v195.headerHeight>76)throw new Error('Header is not compact: '+v195.headerHeight);
