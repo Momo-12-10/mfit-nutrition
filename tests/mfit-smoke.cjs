@@ -21,7 +21,7 @@ const server = http.createServer((req,res)=>{
  const errors=[];
  const log=s=>console.log('[smoke] '+s);
  page.setDefaultTimeout(12000);
- await page.route('https://cdn.jsdelivr.net/**',route=>route.fulfill({status:200,contentType:'application/javascript',body:'window.supabase=window.supabase||{createClient:function(){return {auth:{}}}};'}));
+ await page.route('https://**/*',route=>{const req=route.request();if(req.url().startsWith('https://cdn.jsdelivr.net/'))return route.fulfill({status:200,contentType:'application/javascript',body:'window.supabase=window.supabase||{createClient:function(){return {auth:{}}}};'});if(req.resourceType()==='image')return route.fulfill({status:200,contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="2" height="2"><rect width="2" height="2" fill="#20242b"/></svg>'});return route.continue();});
  page.on('pageerror',e=>errors.push('pageerror: '+e.message));
  page.on('requestfailed',r=>errors.push('requestfailed: '+r.url()+' '+(r.failure()?.errorText||'')));
  page.on('console',m=>{if(m.type()==='error')errors.push('console: '+m.text())});
