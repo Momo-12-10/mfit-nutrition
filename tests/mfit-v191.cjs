@@ -1,0 +1,40 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const read = p => fs.readFileSync(p, 'utf8');
+const app = read('mfit-v191.js');
+const timer = read('mfit-interval-timer.js');
+const html = read('index.html');
+const sw = read('sw.js');
+const privacy = read('privacy.html');
+const css = read('mfit-v191.css');
+
+for (const id of ['mfit191Calendar','mfit191RunBests','mfit191Equipment','mfit191Challenge','mfit191CoachReport','mfit191Accessibility']) {
+  assert.ok(app.includes(id), 'Missing v191 feature: ' + id);
+}
+assert.match(app, /mfit_workout_logs/);
+assert.match(app, /mfit_gpx_sessions_v181/);
+assert.match(app, /mfit_matchday_v1/);
+assert.match(app, /mfit_season_plan_v1/);
+assert.match(app, /mfit191_rest_days/);
+assert.match(app, /mfit191_equipment/);
+assert.match(app, /mfit191_mobility_days/);
+assert.match(app, /mfit191_challenge/);
+assert.match(app, /mfit191ReportHealth/);
+assert.match(app, /mfit_weight_history/);
+assert.match(app, /mfit_symptom_diary_v1/);
+assert.match(app, /window\.open\('', '_blank'\)/);
+assert.match(timer, /speechSynthesis/);
+assert.match(timer, /speak\('Start'\)/);
+assert.match(timer, /speak\('Pause'\)/);
+assert.match(timer, /remaining<=3/);
+assert.match(timer, /mfit_timer_voice/);
+assert.match(html, /mfit-v191\.js\?v=191/);
+assert.match(html, /mfit-v191\.css\?v=191/);
+assert.match(html, /mfit-version" content="191"/);
+assert.match(sw, /mfit-performance-v191/);
+assert.match(sw, /mfit-v191\.js/);
+assert.match(sw, /mfit-v191\.css/);
+assert.match(privacy, /Gesundheitsdaten sind darin standardmäßig ausgeschlossen/);
+assert.match(css, /:focus-visible/);
+assert.match(css, /prefers-reduced-motion/);
+console.log('PASS: MFit v191 calendar, GPX records, equipment, 4-week challenge, opt-in report, timer voice, privacy, cache and accessibility hooks.');
