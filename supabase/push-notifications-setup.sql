@@ -13,3 +13,9 @@ create index if not exists push_subscriptions_updated_at_idx
 -- Grant explicit table access; RLS remains enabled and service_role bypasses it.
 grant usage on schema public to service_role;
 grant select, insert, update, delete on table public.push_subscriptions to service_role;
+
+
+-- v190: bind each push subscription to a random per-device capability.
+-- The raw capability is never stored in the database; only its SHA-256 hash is.
+alter table public.push_subscriptions
+  add column if not exists device_token_hash text;
