@@ -1,4 +1,4 @@
-/* MFit Performance v112 — remaining extras: smart coach, muscle balance, scan history, achievements and themes */
+/* MFit Performance v112 — remaining extras: smart coach, muscle balance, scan history, achievements and progress */
 (function(){
 'use strict';
 const $=id=>document.getElementById(id);
@@ -16,7 +16,7 @@ function install(){
  addCard(fitness,'mfitMuscleBalance','MUSCLE BALANCE','Muskelgruppen-Tracker','<p class="muted">Deine dokumentierten Arbeitssätze der letzten 7 Tage. Das ist eine Übersicht, keine Trainingsvorgabe.</p><div id="mfitMuscleBalanceRows" class="mfit-muscle-balance-rows"></div><p class="mfit-extras-note" id="mfitMuscleBalanceNote"></p>',$('mfitPRCenter'));
  addCard(track,'mfitSmartNutritionAssistant','MFIT SMART ASSISTANT','Ernährungs-Assistent','<p class="muted">Stelle eine Frage zu deinen heutigen Einträgen. Die Antworten basieren auf deinen gespeicherten Daten und einfachen Regeln – keine externe KI.</p><label for="mfitCoachQuestion">Was möchtest du wissen?</label><select id="mfitCoachQuestion"><option value="protein">Wie sieht mein Protein heute aus?</option><option value="meal">Was könnte ich als Nächstes essen?</option><option value="training">Was passt nach meinem Training?</option><option value="balance">Wie ausgewogen sind meine heutigen Einträge?</option><option value="hydration">Was sollte ich bei Getränken beachten?</option></select><button type="button" onclick="mfitAskNutritionAssistant()">Antwort anzeigen</button><div id="mfitCoachAnswer" class="mfit-coach-answer" aria-live="polite">Wähle eine Frage und tippe auf „Antwort anzeigen“.</div><p class="mfit-extras-note">Keine medizinische Beratung und keine automatische Kalorien- oder Diätvorgabe.</p>',$('mfitNutritionPro'));
  addCard(track,'mfitRecentScans','SCAN HISTORY','Zuletzt gescannte Produkte','<p class="muted">Die letzten erfolgreichen Barcode-Suchen auf diesem Gerät. Tippe auf einen Eintrag, um den Produktnamen zu übernehmen.</p><div id="mfitRecentScanRows" class="mfit-scan-history"></div><button type="button" class="secondary" onclick="mfitClearScanHistory()">Scan-Verlauf löschen</button>',$('mfitSmartNutritionAssistant'));
- addCard(settings,'mfitAchievementCenter','ACHIEVEMENTS','Deine Trainings-Meilensteine','<p class="muted">Abzeichen für dokumentierte Aktivität – ohne Punkte für weniger Essen oder niedriges Körpergewicht.</p><div id="mfitAchievementRows" class="mfit-achievement-rows"></div>',$('mfitThemeStudio'));
+ addCard(settings,'mfitAchievementCenter','ACHIEVEMENTS','Deine Trainings-Meilensteine','<p class="muted">Abzeichen für dokumentierte Aktivität – ohne Punkte für weniger Essen oder niedriges Körpergewicht.</p><div id="mfitAchievementRows" class="mfit-achievement-rows"></div>');
  enhanceScanner();
  refresh();
 }
