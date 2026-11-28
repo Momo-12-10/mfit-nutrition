@@ -33,7 +33,7 @@ function install(){
  }
  const fitness=$('fitness');
  if(fitness&&!$('mfitTrainingCommand')){
-  const html='<p class="muted">Deine dokumentierte Trainingswoche auf einen Blick.</p><div class="mfit-training-kpis"><div><small>TRAININGSTAGE</small><b id="mfitNextTrainDays">0 / 7</b></div><div><small>ARBEITSSÄTZE</small><b id="mfitNextTrainSets">0</b></div><div><small>VOLUMEN</small><b id="mfitNextTrainVolume">0 kg</b></div></div><div class="mfit-next-chart-title"><b>Trainingsaktivität</b><span>letzte 7 Tage</span></div><div id="mfitNextTrainChart" class="mfit-week-bars" role="img" aria-label="Trainingsaktivität der letzten sieben Tage"></div><div class="mfit-next-chart-title"><b>Muskelgruppen</b><span>Arbeitssätze</span></div><div id="mfitNextMuscles" class="mfit-muscle-bars"></div><p class="mfit-next-note">Nur gespeicherte Einträge werden gezählt. Trainingsvolumen ist ein grober Vergleichswert und zwischen verschiedenen Übungen nur eingeschränkt vergleichbar.</p>';
+  const html='<p class="muted">Deine dokumentierte Trainingswoche auf einen Blick.</p><div class="mfit-training-kpis"><div><small>TRAININGSTAGE</small><b id="mfitNextTrainDays">0 / 7</b></div><div><small>ARBEITSSÄTZE</small><b id="mfitNextTrainSets">0</b></div><div><small>VOLUMEN</small><b id="mfitNextTrainVolume">0 kg</b></div></div><div class="mfit-next-chart-title"><b>Trainingsaktivität</b><span>letzte 7 Tage</span></div><div id="mfitNextTrainChart" class="mfit-week-bars" role="img" aria-label="Trainingsaktivität der letzten sieben Tage"></div><p class="mfit-next-note">Nur gespeicherte Einträge werden gezählt. Trainingsvolumen ist ein grober Vergleichswert und zwischen verschiedenen Übungen nur eingeschränkt vergleichbar.</p>';
   addCard(fitness,'mfitTrainingCommand','TRAINING COMMAND CENTER','Deine Trainingsübersicht',html,$('mfitTrainingAnalytics')||$('workoutHistoryCard'));
  }
  const homeQuick=$('home');
@@ -68,10 +68,7 @@ function renderTrainingCommand(){
  if($('mfitNextTrainSets'))$('mfitNextTrainSets').textContent=String(sets);
  if($('mfitNextTrainVolume'))$('mfitNextTrainVolume').textContent=Math.round(volume).toLocaleString('de-AT')+' kg';
  chart.innerHTML=range.map((d,i)=>{const n=recent.filter(x=>x.date===d).length,h=Math.max(5,Math.min(100,n*28));const label=['So','Mo','Di','Mi','Do','Fr','Sa'][new Date(d+'T12:00:00').getDay()];return '<div class="mfit-week-bar"><span>'+n+'</span><i style="height:'+h+'%"></i><small>'+label+'</small></div>';}).join('');
- const muscleEl=$('mfitNextMuscles');if(!muscleEl)return;
- const groups=['Brust','Rücken','Schultern','Bizeps','Trizeps','Beine','Gesäß','Bauch','Waden','Ganzkörper'];
- const counts=groups.map(name=>({name,n:recent.filter(x=>x.muscle===name).reduce((a,x)=>a+(Number(x.sets)||0),0)})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n);
- muscleEl.innerHTML=counts.length?counts.slice(0,6).map(x=>'<div class="mfit-muscle-row"><span>'+esc(x.name)+'</span><div><i style="width:'+Math.min(100,x.n/Math.max(1,counts[0].n)*100)+'%"></i></div><b>'+x.n+'</b></div>').join(''):'<p class="muted">Noch keine Muskelgruppen dokumentiert.</p>';
+
 }
 function renderDataCare(){
  if($('mfitDataFoodCount'))$('mfitDataFoodCount').textContent=String(foods().length);
