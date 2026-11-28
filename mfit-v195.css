@@ -196,3 +196,5 @@ body .mfit-settings-popover button,body #settings button:not(.danger):not(.theme
 body #settings button.mfit195-primary-action{background:#3b444f!important;color:#fff!important;border-color:#626d7a!important}
 .brand-copy h1{white-space:nowrap;font-size:18px}
 @media(max-width:360px){.brand-copy h1{font-size:17px}.brand-copy h1 small{font-size:9px}}
+
+body #settings button.mfit195-secondary-action,body #settings button.secondary{background:#1b2027!important;color:#e5e9ee!important;border-color:#3a424c!important}
