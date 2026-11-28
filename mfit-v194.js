@@ -5,9 +5,9 @@ const legacyShowTab=window.showTab;
 if(typeof legacyShowTab!=='function')return;
 const navItems=[
  {id:'today',label:'Heute',icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',legacy:'home'},
- {id:'nutrition',label:'Ernäh<wbr>rung',ariaLabel:'Ernährung',icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3v7m4-7v7M6 3v18M17 3c-3 4-3 8 0 9v9m0-18v9"/></svg>',legacy:'track'},
+ {id:'nutrition',label:'Ernährung',icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3v7m4-7v7M6 3v18M17 3c-3 4-3 8 0 9v9m0-18v9"/></svg>',legacy:'track'},
  {id:'training',label:'Training',icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7v10M3 9v6m15-8v10m3-8v6M6 12h12"/></svg>',legacy:'fitness'},
- {id:'progress',label:'Fortsch<wbr>ritt',ariaLabel:'Fortschritt',icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5m0 14h17M8 15l4-4 3 2 5-7"/></svg>',legacy:'home'},
+ {id:'progress',label:'Fortschritt',icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5m0 14h17M8 15l4-4 3 2 5-7"/></svg>',legacy:'home'},
  {id:'profile',label:'Profil',icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>',legacy:'profile'}
 ];
 const subpages={
