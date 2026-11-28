@@ -43,8 +43,8 @@ function mergeGroup({title,root,items,extra=[]}){
  const content=wrap.querySelector(':scope > .mfit193-merged-content');
  for(const node of nodes){
   unwrapCollapse(node);
-  node.querySelectorAll('.card').forEach(child=>{unwrapCollapse(child);child.classList.remove('card');child.classList.add('mfit193-merged-section')});
-  node.classList.remove('card');
+  node.querySelectorAll('.card').forEach(child=>{unwrapCollapse(child);child.classList.remove('card','mfit-card-collapsed');child.classList.add('mfit193-merged-section')});
+  node.classList.remove('card','mfit-card-collapsed');
   node.classList.add('mfit193-merged-section');
   node.removeAttribute('style');
   node.querySelectorAll(':scope > h2').forEach(h=>{const sub=document.createElement('h3');sub.className=h.className;sub.textContent=h.textContent;h.replaceWith(sub)});
