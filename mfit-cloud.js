@@ -67,8 +67,9 @@
   say('Wenn ein Konto zu dieser Adresse besteht, wurde ein Link zum Zurücksetzen gesendet.');
  });
  window.mfitCloudSignOut=()=>run(async()=>{
+  if(typeof window.disableMfitPush==='function')await window.disableMfitPush();
   const {error}=await client().auth.signOut();if(error)throw error;
-  show(null);say('Abgemeldet. Deine lokalen Daten und die Kontozuordnung bleiben auf diesem Gerät erhalten.');
+  show(null);say('Abgemeldet. Push-Mitteilungen wurden auf diesem Gerät ausgeschaltet. Deine lokalen Daten und die Kontozuordnung bleiben erhalten.');
  });
  window.mfitCloudUpload=()=>run(async()=>{
   if(!user)throw Error('Bitte zuerst anmelden.');
@@ -90,6 +91,7 @@
   if(!confirm('ACHTUNG: Dein MFit-Konto und dein Cloud-Backup werden dauerhaft gelöscht. Deine lokalen Daten auf diesem Gerät bleiben erhalten. Möchtest du fortfahren?'))return;
   const typed=prompt('Zur Bestätigung gib exakt LÖSCHEN ein.');
   if(typed!=='LÖSCHEN')throw Error('Löschung abgebrochen. Es wurde nichts geändert.');
+  if(typeof window.disableMfitPush==='function')await window.disableMfitPush();
   const {data,error}=await client().functions.invoke('delete-mfit-account',{body:{confirmation:'DELETE_MY_ACCOUNT'}});
   if(error)throw error;
   if(!data||data.deleted!==true)throw Error(data&&data.error?data.error:'Das Konto konnte nicht eindeutig gelöscht werden.');

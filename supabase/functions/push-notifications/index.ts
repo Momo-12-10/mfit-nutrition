@@ -29,6 +29,12 @@ function configurePush() {
   return publicKey;
 }
 
+async function hashDeviceToken(token: string) {
+  const bytes = new TextEncoder().encode(token);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
 function localClock(timeZone: string) {
   const parts = new Intl.DateTimeFormat("en-GB", {
     timeZone, year: "numeric", month: "2-digit", day: "2-digit",
@@ -57,11 +63,16 @@ Deno.serve(async (req) => {
       if (!sub || typeof sub.endpoint !== "string" || !sub.endpoint.startsWith("https://") || !sub.keys?.p256dh || !sub.keys?.auth) {
         return reply({ error: "Ungültiges Push-Abonnement." }, 400);
       }
+      const deviceToken = body.deviceToken;
+      if (typeof deviceToken !== "string" || !/^[a-f0-9]{64}$/.test(deviceToken)) {
+        return reply({ error: "Geräteberechtigung fehlt oder ist ungültig." }, 400);
+      }
+      const tokenHash = await hashDeviceToken(deviceToken);
       const settings = body.settings && typeof body.settings === "object" ? body.settings : {};
       const timezone = typeof body.timezone === "string" && body.timezone.length <= 80 ? body.timezone : "Europe/Vienna";
       try { new Intl.DateTimeFormat("en", { timeZone: timezone }); } catch { return reply({ error: "Ungültige Zeitzone." }, 400); }
-      const { error } = await getAdmin().from("push_subscriptions").upsert({
-        endpoint: sub.endpoint,
+      const admin = getAdmin();
+      const record = {
         subscription: sub,
         settings: {
           waterEnabled: settings.waterEnabled !== false,
@@ -72,15 +83,51 @@ Deno.serve(async (req) => {
           mealName: ["Frühstück", "Mittagessen", "Abendessen"].includes(settings.mealName) ? settings.mealName : "Mittagessen",
         },
         timezone,
+        device_token_hash: tokenHash,
         updated_at: new Date().toISOString(),
-      }, { onConflict: "endpoint" });
-      if (error) throw error;
+      };
+      const { data: existing, error: lookupError } = await admin
+        .from("push_subscriptions").select("device_token_hash,subscription").eq("endpoint", sub.endpoint).maybeSingle();
+      if (lookupError) throw lookupError;
+      if (existing) {
+        if (!existing.device_token_hash && (
+          existing.subscription?.keys?.p256dh !== sub.keys.p256dh ||
+          existing.subscription?.keys?.auth !== sub.keys.auth
+        )) {
+          return reply({ error: "Dieses ältere Push-Abo konnte diesem Browserprofil nicht sicher zugeordnet werden. Bitte Push einmal ausschalten und danach erneut aktivieren." }, 403);
+        }
+        if (existing.device_token_hash && existing.device_token_hash !== tokenHash) {
+          return reply({ error: "Dieses Push-Abo gehört bereits zu einem anderen Gerät oder Browserprofil." }, 403);
+        }
+        let update = admin.from("push_subscriptions").update(record).eq("endpoint", sub.endpoint);
+        update = existing.device_token_hash ? update.eq("device_token_hash", tokenHash) : update.is("device_token_hash", null);
+        const { data: updated, error } = await update.select("endpoint");
+        if (error) throw error;
+        if (!updated?.length) return reply({ error: "Push-Abo wurde gleichzeitig geändert. Bitte erneut versuchen." }, 409);
+      } else {
+        const { error } = await admin.from("push_subscriptions").insert({ endpoint: sub.endpoint, ...record });
+        if (error) throw error;
+      }
       return reply({ saved: true });
     }
 
     if (action === "unsubscribe") {
       if (typeof body.endpoint !== "string" || !body.endpoint.startsWith("https://")) return reply({ error: "Ungültiger Endpunkt." }, 400);
-      const { error } = await getAdmin().from("push_subscriptions").delete().eq("endpoint", body.endpoint);
+      const deviceToken = body.deviceToken;
+      if (typeof deviceToken !== "string" || !/^[a-f0-9]{64}$/.test(deviceToken)) {
+        return reply({ error: "Geräteberechtigung fehlt oder ist ungültig." }, 400);
+      }
+      const tokenHash = await hashDeviceToken(deviceToken);
+      const admin = getAdmin();
+      const { data: existing, error: lookupError } = await admin
+        .from("push_subscriptions").select("device_token_hash").eq("endpoint", body.endpoint).maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!existing) return reply({ removed: true });
+      if (!existing.device_token_hash || existing.device_token_hash !== tokenHash) {
+        return reply({ error: "Dieses Push-Abo darf von diesem Gerät nicht entfernt werden." }, 403);
+      }
+      const { error } = await admin.from("push_subscriptions")
+        .delete().eq("endpoint", body.endpoint).eq("device_token_hash", tokenHash);
       if (error) throw error;
       return reply({ removed: true });
     }
@@ -104,8 +151,13 @@ Deno.serve(async (req) => {
           jobs.push({ kind: "meal", title: "Mahlzeit-Erinnerung 🍽️", body: "Denk an deine " + (settings.mealName || "Mahlzeit") + " und trage sie bei Bedarf in MFit ein.", field: "last_meal_date" });
         }
         for (const job of jobs) {
-          const { error: markError } = await admin.from("push_subscriptions").update({ [job.field]: clock.date }).eq("endpoint", row.endpoint);
+          const { data: claimed, error: markError } = await admin.from("push_subscriptions")
+            .update({ [job.field]: clock.date })
+            .eq("endpoint", row.endpoint)
+            .or(job.field + ".is.null," + job.field + ".neq." + clock.date)
+            .select("endpoint");
           if (markError) throw markError;
+          if (!claimed?.length) continue;
           try {
             await webpush.sendNotification(row.subscription, JSON.stringify({ title: job.title, body: job.body, tag: "mfit-" + job.kind }), { TTL: 180, urgency: "normal" });
             sent++;
