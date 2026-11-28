@@ -11,3 +11,5 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
 @media(min-width:700px){.mfit194-nav{left:50%;right:auto;transform:translateX(-50%);width:min(720px,calc(100% - 32px));border:1px solid var(--line,#30343b);border-radius:18px 18px 0 0}.mfit194-subnav{max-width:1100px;margin:0 auto 14px}}
 
 .mfit194-detail-list{display:grid;gap:12px;margin:14px 0}.mfit194-detail-list>h2{margin:0;font-size:16px;font-weight:650;color:var(--text,#f3f4f6)}
+
+.mfit194-daily-note{margin:0 0 10px;padding:12px;border-radius:12px;background:var(--panel2,#20242b);color:var(--text,#f3f4f6)}
