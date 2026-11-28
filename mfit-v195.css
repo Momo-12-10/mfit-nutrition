@@ -149,3 +149,5 @@ body :where(small,.small,.muted,.caption,.settings-kicker,.pill){font-size:12px!
 body button:not(.theme-swatch){min-height:44px!important}
 body input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=color]),body select,body textarea{min-height:44px!important}
 body .theme-swatch{min-width:44px!important;min-height:44px!important}
+
+.mfit195-secondary-action{background:var(--panel2)!important;color:var(--text)!important;border-color:var(--line)!important;box-shadow:none!important}
