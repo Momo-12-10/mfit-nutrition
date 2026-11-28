@@ -99,7 +99,9 @@ const server = http.createServer((req,res)=>{
  if(!download.suggestedFilename().endsWith('.png'))throw new Error('Share card did not produce PNG download');
  await page.evaluate(()=>window.showTab('profile'));
  const backupCard=page.locator('#mfit165Backup');
- await page.locator('.mfit193-merged-card').filter({has:backupCard}).locator('.mfit193-merged-toggle').click();
+ const backupGroup=page.locator('.mfit193-merged-card').filter({has:backupCard});
+ console.log('[backup-group-visibility]',JSON.stringify(await backupGroup.locator('.mfit193-merged-toggle').evaluate(el=>({rect:el.getBoundingClientRect().toJSON(),ancestors:(()=>{const a=[];for(let n=el;n&&a.length<8;n=n.parentElement)a.push({tag:n.tagName,id:n.id,cls:n.className,display:getComputedStyle(n).display,visibility:getComputedStyle(n).visibility,hidden:n.hidden});return a})()}))));
+ await backupGroup.locator('.mfit193-merged-toggle').click();
  const [backup]=await Promise.all([page.waitForEvent('download'),page.evaluate(()=>window.mfit165ExportBackup())]);
  const backupPath=await backup.path();
  if(!backupPath)throw new Error('Backup export did not create a file');
