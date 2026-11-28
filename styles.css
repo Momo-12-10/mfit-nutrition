@@ -91,7 +91,7 @@ nav button br{display:block}
 .theme-swatches{gap:14px}
 button.theme-swatch{min-height:36px}
 .savebar{background:linear-gradient(transparent,var(--panel) 22%)}
-hr{border-color:rgba(174,194,218,.12)!important}
+hr{border-color:rgba(174,194,218,.12)}
 @media(min-width:600px){main{padding:22px}.card{padding:20px}.recipe-photo{height:205px}nav{left:50%;right:auto;transform:translateX(-50%);width:min(680px,calc(100% - 32px))}}
 @media(max-width:380px){nav button{font-size:9px;padding-left:0;padding-right:0}main{padding-left:11px;padding-right:11px}.grid.three .card{padding:12px 9px}.grid.three .big{font-size:21px}}
 @media(prefers-reduced-motion:no-preference){.card{transition:border-color .2s ease,transform .2s ease}.card:active{transform:translateY(1px)}button{transition:filter .16s ease,transform .16s ease}button:active{filter:brightness(.94)}}
@@ -138,7 +138,7 @@ nav button.active{background:#26313d;box-shadow:inset 0 0 0 1px rgba(220,232,245
 /* v25: Auch die Flächen direkt um jedes Navigations-Icon neutral halten */
 body nav{background:rgba(15,22,31,.97)!important;border-color:rgba(180,198,220,.15)!important}
 body nav button,
-body nav button.active{color:#c4ccd6!important;background:#202a36!important;border:1px solid rgba(190,205,222,.10)!important;box-shadow:none!important}
+body nav button.active{color:#c4ccd6!important;background:#202a36;border:1px solid rgba(190,205,222,.10)!important;box-shadow:none!important}
 body nav button.active{background:#2b3745!important;border-color:rgba(210,222,238,.20)!important}
 body nav button:focus,
 body nav button:focus-visible{outline:none!important;box-shadow:none!important}
@@ -385,8 +385,7 @@ label{letter-spacing:.7px;font-size:10px}
 .progress span{box-shadow:0 0 13px var(--glow)}
 /* Navigation: Icon-/Label-Hierarchie */
 body nav.mfit-nav{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:stretch;gap:5px;left:9px;right:9px;bottom:8px;padding:8px 7px calc(8px + env(safe-area-inset-bottom));border:1px solid rgba(190,210,235,.15);border-radius:23px;background:rgba(13,20,30,.96);box-shadow:0 15px 42px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.045);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
-body nav.mfit-nav button,body nav.mfit-nav button.active{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;min-height:55px;height:auto;padding:6px 2px;border-radius:15px;background:transparent!important;border:1px solid transparent!important;color:#aeb9c8!important;box-shadow:none!important}
-body nav.mfit-nav button.active{background:#263443!important;border-color:rgba(220,233,248,.12)!important;color:#fff!important}
+body nav.mfit-nav button,body nav.mfit-nav button.active{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;min-height:55px;height:auto;padding:6px 2px;border-radius:15px;background:transparentx solid transparentb9c8w:none.mfit-nav button.active{background:#263443;border-color:rgba(220,233,248,.12);color:#fff}
 .nav-icon{display:grid;place-items:center;width:29px;height:27px;font-size:21px;line-height:1;font-weight:700;transition:transform .18s ease}
 .nav-label{font-size:9px;line-height:1.15;font-weight:800;letter-spacing:.1px;white-space:nowrap}
 body nav.mfit-nav button.active .nav-icon{transform:translateY(-1px);color:var(--accent);filter:drop-shadow(0 0 7px var(--glow))}
@@ -404,7 +403,7 @@ body nav.mfit-nav button.active .nav-icon{transform:translateY(-1px);color:var(-
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media(max-width:390px){body nav.mfit-nav{left:6px;right:6px;gap:3px;padding-left:5px;padding-right:5px}body nav.mfit-nav button,body nav.mfit-nav button.active{min-height:53px}.nav-icon{font-size:20px}.nav-label{font-size:8px}.card{padding:16px;border-radius:20px}}
 @media(min-width:600px){body nav.mfit-nav{left:50%;right:auto;transform:translateX(-50%);width:min(680px,calc(100% - 32px));grid-template-columns:repeat(6,minmax(0,1fr))}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto;animation:none;transition:none}}
 
 
 /* v34 — Meal planner, shopping and workout builder */
@@ -472,9 +471,9 @@ body{background:radial-gradient(ellipse 95% 34% at 50% -8%,rgba(166,255,63,.12),
 .daily-motivation small{font-size:8px;font-weight:900;letter-spacing:1.6px;color:#b7ff69}
 .daily-motivation b{font-size:13px;letter-spacing:-.2px;line-height:1.35}
 .motivation-spark{margin-left:auto;color:#b7ff69;font-size:19px}
-nav.mfit-nav{background:rgba(11,15,21,.96)!important;border:1px solid rgba(195,210,230,.14)!important;box-shadow:0 12px 36px rgba(0,0,0,.52)}
-body nav.mfit-nav button,body nav.mfit-nav button.active{background:transparent!important;border:0!important;color:#8f9baa!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-body nav.mfit-nav button.active{color:#b5ff68!important}
+nav.mfit-nav{background:rgba(11,15,21,.96);border:1px solid rgba(195,210,230,.14);box-shadow:0 12px 36px rgba(0,0,0,.52)}
+body nav.mfit-nav button,body nav.mfit-nav button.active{background:transparentbaalex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+body nav.mfit-nav button.active{color:#b5ff68}
 .nav-icon{font-size:19px;line-height:1.1;filter:saturate(.9)}
 .nav-label{font-size:8px;letter-spacing:.2px}
 .card{border-color:rgba(190,210,230,.11);background:linear-gradient(150deg,rgba(24,32,43,.98),rgba(14,20,29,.98));box-shadow:0 12px 30px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.025)}
@@ -589,18 +588,15 @@ section:not(.hidden)::before{margin:7px 5px 15px;font-size:9px;letter-spacing:2p
 nav.mfit-nav{
  bottom:9px;left:50%;right:auto;transform:translateX(-50%);
  width:min(690px,calc(100% - 24px));padding:7px 8px calc(7px + env(safe-area-inset-bottom));
- border:1px solid rgba(190,207,228,.15)!important;border-radius:21px;
- background:rgba(12,18,27,.94)!important;
+ border:1px solid rgba(190,207,228,.15);border-radius:21px;
+ background:rgba(12,18,27,.94);
  box-shadow:0 15px 42px rgba(0,0,0,.52),inset 0 1px 0 rgba(255,255,255,.04);
  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
 }
 body nav.mfit-nav button,body nav.mfit-nav button.active{
- min-height:52px;border-radius:14px!important;gap:4px;
- color:#8e9cad!important;background:transparent!important;
-}
-body nav.mfit-nav button.active{
- color:var(--accent)!important;background:color-mix(in srgb,var(--accent) 10%,#1a2633)!important;
- box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 19%,transparent)!important;
+ min-height:52px;border-radius:14px color:#8e9cadd:transparentav.mfit-nav button.active{
+ color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,#1a2633);
+ box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 19%,transparent);
 }
 .nav-icon{font-size:18px;line-height:1.05}
 .nav-label{font-size:9px;font-weight:760;letter-spacing:.1px}
@@ -653,39 +649,29 @@ summary{cursor:pointer}
 }
 @media(prefers-reduced-motion:reduce){
  html{scroll-behavior:auto}
- *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
-}
-
-
-/* v65 — bottom navigation alignment fix */
+ *,*::before,*::after{animation-duration:.01ms:.01msm navigation alignment fix */
 body nav.mfit-nav{
- position:fixed!important;
- display:grid!important;
- grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ position:fixed;
+ display:grid;
+ grid-template-columns:repeat(6,minmax(0,1fr));
  align-items:stretch!important;
- left:50%!important;right:auto!important;
- bottom:calc(8px + env(safe-area-inset-bottom))!important;
- transform:translateX(-50%)!important;
- width:calc(100% - 24px)!important;
- max-width:680px!important;
+ left:50%;right:auto;
+ bottom:calc(8px + env(safe-area-inset-bottom));
+ transform:translateX(-50%);
+ width:calc(100% - 24px);
+ max-width:680px;
  margin:0!important;
- box-sizing:border-box!important;
- padding:7px 7px!important;
- gap:4px!important;
+ box-sizing:border-box;
+ padding:7px 7px;
+ gap:4px;
  z-index:1000!important;
 }
 body nav.mfit-nav button,
 body nav.mfit-nav button.active{
- width:100%!important;min-width:0!important;max-width:none!important;
- margin:0!important;box-sizing:border-box!important;
- display:flex!important;flex-direction:column!important;
- align-items:center!important;justify-content:center!important;
- text-align:center!important;overflow:hidden!important;
+ width:100%:0:none0g:border-box:flexction:columntems:centerontent:centerign:center!important;overflow:hidden!important;
 }
 body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{
- display:block!important;width:100%!important;text-align:center!important;
-}
-@media(max-width:390px){
+ display:block!important;width:100%n:center(max-width:390px){
  body nav.mfit-nav{width:calc(100% - 18px)!important;gap:2px!important;padding-left:4px!important;padding-right:4px!important}
  body nav.mfit-nav button,body nav.mfit-nav button.active{padding-left:1px!important;padding-right:1px!important}
  body nav.mfit-nav .nav-label{font-size:8px!important;letter-spacing:0!important}
@@ -703,7 +689,7 @@ body nav.mfit-nav{
 }
 body nav.mfit-nav button,body nav.mfit-nav button.active{
  min-width:0!important;width:100%!important;max-width:none!important;
- padding:5px 1px!important;margin:0!important;box-sizing:border-box!important;
+ padding:5px 1pximportant;box-sizing:border-box!important;
  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
 }
 body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;text-align:center!important;white-space:nowrap!important}
@@ -813,7 +799,7 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 
 /* v77 — settings hub and quick access */
 .brand-lockup{gap:10px}
-.header-settings{flex:0 0 42px;width:42px;height:42px;min-height:42px;padding:0!important;display:grid;place-items:center;border-radius:14px!important;background:rgba(255,255,255,.07)!important;color:#f3f6fa!important;border:1px solid rgba(210,225,242,.16)!important;font-size:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)!important}
+.header-settings{flex:0 0 42px;width:42px;height:42px;min-height:42px;padding:0!important;display:grid;place-items:center;border-radius:14px;background:rgba(255,255,255,.07);color:#f3f6fa!important;border:1px solid rgba(210,225,242,.16)!important;font-size:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)!important}
 .header-settings:active{transform:scale(.96)}
 .settings-hub{scroll-margin-top:18px;overflow:hidden;background:radial-gradient(ellipse at 100% 0%,rgba(166,255,63,.14),transparent 42%),linear-gradient(145deg,#1b2936,#111923 72%)!important;border-color:rgba(166,255,63,.23)!important}
 .settings-hub-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:17px}
@@ -823,7 +809,7 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 .settings-hub-top p{font-size:12px;line-height:1.5;margin:0;max-width:38ch}
 .settings-hub-icon{flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;border-radius:15px;background:rgba(166,255,63,.12);border:1px solid rgba(166,255,63,.22);font-size:22px;color:#c8ff8d}
 .settings-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.settings-shortcuts button{display:grid;grid-template-columns:27px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;column-gap:8px;row-gap:3px;min-width:0;min-height:69px;padding:11px 10px!important;text-align:left;border-radius:14px!important;background:rgba(255,255,255,.045)!important;border:1px solid rgba(220,235,250,.11)!important;color:#edf3fa!important}
+.settings-shortcuts button{display:grid;grid-template-columns:27px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;column-gap:8px;row-gap:3px;min-width:0;min-height:69px;padding:11px 10px!important;text-align:left;border-radius:14px;background:rgba(255,255,255,.045)!important;border:1px solid rgba(220,235,250,.11)!important;color:#edf3fa!important}
 .settings-shortcuts button>span{grid-row:1/3;font-size:20px}
 .settings-shortcuts button>b{font-size:11px;line-height:1.2;white-space:normal}
 .settings-shortcuts button>small{font-size:9px;line-height:1.25;color:#aab7c7}
@@ -850,7 +836,7 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 .workout-hero-icon{flex:0 0 43px;width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:rgba(166,255,63,.13);border:1px solid rgba(166,255,63,.22);font-size:23px}
 .workout-planner-controls{display:grid;gap:8px}
 .workout-planner-controls label{margin-top:5px}
-.workout-create-btn{width:100%;margin-top:8px;background:linear-gradient(100deg,#b5ff6c,#8ce83e)!important;color:#10180d!important;font-weight:900!important;border:0!important;box-shadow:0 8px 22px rgba(142,232,62,.15)!important}
+.workout-create-btn{width:100%;margin-top:8px;background:linear-gradient(100deg,#b5ff6c,#8ce83e)!important;color:#10180d!important;font-weight:900;border:0!important;box-shadow:0 8px 22px rgba(142,232,62,.15)!important}
 .workout-goal-card{margin-top:15px;padding:14px;border-radius:15px;background:linear-gradient(135deg,rgba(166,255,63,.09),rgba(48,75,91,.22));border:1px solid rgba(166,255,63,.19)}
 .workout-goal-card h3{margin:0 0 7px;font-size:15px}
 .workout-goal-card p{font-size:11px;line-height:1.5;margin:5px 0;color:var(--muted)}
@@ -881,7 +867,7 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 
 /* v80 — compact fitness navigation, exercise library and muscle maps */
 .fitness-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 14px}
-.fitness-shortcuts button{display:grid;grid-template-columns:25px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;column-gap:8px;row-gap:3px;min-width:0;min-height:64px;padding:10px!important;text-align:left;border-radius:13px!important;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025))!important;border:1px solid var(--line)!important;color:var(--text)!important}
+.fitness-shortcuts button{display:grid;grid-template-columns:25px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;column-gap:8px;row-gap:3px;min-width:0;min-height:64px;padding:10px;text-align:left;border-radius:13px;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));border:1px solid var(--line);color:var(--text)!important}
 .fitness-shortcuts button>span{grid-row:1/3;font-size:19px;color:#c2ff82}
 .fitness-shortcuts button>b{font-size:11px;line-height:1.2}
 .fitness-shortcuts button>small{font-size:9px;color:var(--muted);line-height:1.2}
@@ -951,7 +937,7 @@ body nav.mfit-nav .nav-icon,body nav.mfit-nav .nav-label{width:100%!important;te
 .anatomy-browser{margin:14px 0 12px;padding:13px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(135,178,213,.09),rgba(255,255,255,.018))}
 .anatomy-browser-heading p{font-size:10px;color:var(--muted);margin:5px 0 10px}
 .anatomy-filter-groups,.anatomy-filter-subgroups{display:flex;flex-wrap:wrap;gap:7px}
-.anatomy-filter-chip,.anatomy-sub-chip{border:1px solid var(--line)!important;border-radius:999px!important;padding:8px 11px!important;background:rgba(255,255,255,.04)!important;color:var(--text)!important;font-size:10px!important;line-height:1.2}
+.anatomy-filter-chip,.anatomy-sub-chip{border:1px solid var(--line)!important;border-radius:999px;padding:8px 11pxd:rgba(255,255,255,.04)!important;color:var(--text)!important;font-size:10pxht:1.2}
 .anatomy-filter-chip.active,.anatomy-sub-chip.active{background:rgba(183,255,107,.15)!important;border-color:rgba(183,255,107,.58)!important;color:#d7ffad!important}
 .anatomy-filter-chip.active{box-shadow:0 0 0 2px rgba(183,255,107,.07)}
 .anatomy-filter-subgroups{padding-top:10px;margin-top:10px;border-top:1px solid var(--line)}
@@ -1084,23 +1070,21 @@ nav.mfit-nav{
  left:10px;right:10px;bottom:8px;width:auto;transform:none;
  display:flex;align-items:stretch;gap:4px;padding:7px 5px calc(7px + env(safe-area-inset-bottom));
  border:1px solid rgba(177,198,220,.16);border-radius:20px;
- background:rgba(12,19,28,.94)!important;box-shadow:0 12px 38px rgba(0,0,0,.48);
+ background:rgba(12,19,28,.94);box-shadow:0 12px 38px rgba(0,0,0,.48);
  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
 }
 nav.mfit-nav button,body nav.mfit-nav button,body nav.mfit-nav button.active{
- flex:1 1 0;min-width:0;min-height:49px;padding:5px 2px!important;
+ flex:1 1 0;min-width:0;min-height:49px;padding:5px 2px;
  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
- border:1px solid transparent!important;border-radius:13px!important;
- color:#aab6c5!important;background:transparent!important;box-shadow:none!important;
-}
-nav.mfit-nav button .nav-icon{font-size:17px;line-height:1}
+ border:1px solid transparent
+ color:#aab6c5ent.nav-icon{font-size:17px;line-height:1}
 nav.mfit-nav button .nav-label{font-size:9px;line-height:1.1;font-weight:750;white-space:nowrap}
-nav.mfit-nav button.active{color:var(--accent)!important;background:var(--accent-soft)!important;border-color:color-mix(in srgb,var(--accent) 22%,transparent)!important}
+nav.mfit-nav button.active{color:var(--accent);background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 22%,transparent)}
 .recipe-hero{border-radius:22px;overflow:hidden}
 .recipe-finder-card,.workout-planner-card{border-color:color-mix(in srgb,var(--accent) 20%,var(--line))}
 .recipe-card{border-radius:18px;overflow:hidden}
 .recipe-photo{background:#172535}
-.fitness-shortcuts button,.settings-shortcuts button{border-radius:15px!important}
+.fitness-shortcuts button,.settings-shortcuts button{border-radius:15px}
 .mfit-exercise-card,.workout-day-card{border-radius:15px}
 .anatomy-browser,.mfit-body-overview{border-radius:18px}
 .savebar{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
@@ -1176,27 +1160,27 @@ hr{opacity:.7}
 #mfitExerciseCatalog{scroll-margin-top:18px}
 
 /* v91 — farbiger Anatomieatlas nach der Referenzgrafik */
-.mfit-body-overview{background:#fff!important;border:1px solid rgba(0,0,0,.12)!important;color:#171717!important;box-shadow:0 10px 28px rgba(0,0,0,.2)}
+.mfit-body-overview{background:#fff;border:1px solid rgba(0,0,0,.12);color:#171717;box-shadow:0 10px 28px rgba(0,0,0,.2)}
 .mfit-body-overview .mfit-anatomy-graphic{background:#fff;border-radius:14px;padding:8px 5px 10px}
-.mfit-body-overview .mfit-anatomy-legend{color:#333!important}
-.mfit-body-overview .mfit-anatomy-viewlabel{fill:#222!important;font-size:11px;font-weight:800;letter-spacing:1px}
+.mfit-body-overview .mfit-anatomy-legend{color:#333}
+.mfit-body-overview .mfit-anatomy-viewlabel{fill:#222;font-size:11px;font-weight:800;letter-spacing:1px}
 .mfit-body-overview .anatomy-key-item{background:#f7f7f7;border-color:#dedede}
 .mfit-body-overview .anatomy-key-item b{color:#191919}
 .mfit-body-overview .anatomy-key-item small{color:#555}
 .mfit-body-overview .mfit-muscle-hit{stroke:#171717;stroke-width:1.5;stroke-opacity:.95}
-.mfit-body-overview .mfit-muscle-hit:hover,.mfit-body-overview .mfit-muscle-hit:focus-visible,.mfit-body-overview .mfit-muscle-hit.is-selected{stroke:#080808!important;stroke-width:3!important;filter:drop-shadow(0 0 3px rgba(0,0,0,.35))}
+.mfit-body-overview .mfit-muscle-hit:hover,.mfit-body-overview .mfit-muscle-hit:focus-visible,.mfit-body-overview .mfit-muscle-hit.is-selected{stroke:#080808px rgba(0,0,0,.35))}
 .mfit-body-overview .mfit-dot-primary{background:#d7ff83}.mfit-body-overview .mfit-dot-support{background:#79d9f4}
 .mfit-body-overview .anatomy-body-svg{max-height:500px;max-width:560px}
 @media(max-width:390px){.mfit-body-overview .anatomy-body-svg{max-height:430px}}
 
 /* v92 — feinere Anatomie, bessere Proportionen und hochwertiger Atlas-Look */
-.mfit-body-overview{border-radius:20px!important;padding:12px!important;background:linear-gradient(145deg,#fff 0%,#f4f5f7 100%)!important}
+.mfit-body-overview{border-radius:20px;padding:12px;background:linear-gradient(145deg,#fff 0%,#f4f5f7 100%)}
 .mfit-body-overview .mfit-anatomy-graphic{padding:12px 8px 14px;border-radius:16px;background:linear-gradient(180deg,#fff,#fafafa);box-shadow:inset 0 0 0 1px rgba(20,20,20,.06)}
 .mfit-body-overview .anatomy-body-svg{display:block;width:100%;max-width:620px;max-height:none;height:auto;margin:0 auto;overflow:visible}
-.mfit-body-overview .mfit-anatomy-viewlabel{font-size:10px;letter-spacing:1.6px;fill:#333!important;font-weight:900}
+.mfit-body-overview .mfit-anatomy-viewlabel{font-size:10px;letter-spacing:1.6px;fill:#333;font-weight:900}
 .mfit-body-overview .mfit-anatomy-legend{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;padding:4px 0 10px;font-size:11px;font-weight:700}
-.mfit-body-overview .mfit-muscle-hit{stroke:#171717!important;stroke-width:1.35!important;stroke-opacity:.94!important;paint-order:stroke fill;transition:filter .18s ease,opacity .18s ease}
-.mfit-body-overview .mfit-muscle-hit:hover,.mfit-body-overview .mfit-muscle-hit:focus-visible,.mfit-body-overview .mfit-muscle-hit.is-selected{stroke:#111!important;stroke-width:2.8!important;filter:drop-shadow(0 2px 2px rgba(0,0,0,.22))}
+.mfit-body-overview .mfit-muscle-hit{stroke:#171717;stroke-width:1.35!important;stroke-opacity:.94!important;paint-order:stroke fill;transition:filter .18s ease,opacity .18s ease}
+.mfit-body-overview .mfit-muscle-hit:hover,.mfit-body-overview .mfit-muscle-hit:focus-visible,.mfit-body-overview .mfit-muscle-hit.is-selected{stroke:#111px 2px rgba(0,0,0,.22))}
 .mfit-body-overview .mfit-muscle-fibers,.mfit-body-overview .mfit-anatomy-detail-lines{pointer-events:none}
 .mfit-body-overview .anatomy-muscle-key{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding-top:10px}
 .mfit-body-overview .anatomy-key-item{align-items:center;min-height:42px;padding:7px 9px;border:1px solid #e5e5e5;border-radius:11px;background:rgba(255,255,255,.9);box-shadow:0 1px 3px rgba(0,0,0,.035)}
@@ -1316,7 +1300,7 @@ hr{opacity:.7}
 .workout-week-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:17px 1px 4px!important}
 .workout-week-head h3{font-size:16px!important;letter-spacing:-.3px}
 .workout-week-list{gap:8px!important}
-.workout-day-card{border:1px solid rgba(180,199,217,.13)!important;border-radius:14px!important;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018))!important}
+.workout-day-card{border:1px solid rgba(180,199,217,.13)!important;border-radius:14px!important;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018))}
 .workout-day-card[open]{border-color:rgba(166,255,63,.38)!important;background:rgba(166,255,63,.035)!important}
 .workout-day-summary{min-height:61px!important;padding:11px 13px!important;gap:8px}
 .workout-day-name b{font-size:12px!important;font-weight:800}
@@ -1388,7 +1372,7 @@ hr{opacity:.7}
 .mfit-settings-popover-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
 .mfit-settings-popover-head h2{font-size:18px;margin:4px 0 0}
 .mfit-menu-close{width:34px;min-height:34px;height:34px;padding:0!important;border-radius:50%!important;background:rgba(255,255,255,.08)!important;color:#fff!important;font-size:23px!important}
-.mfit-menu-main-action,.mfit-menu-secondary-action{width:100%;display:grid;grid-template-columns:36px minmax(0,1fr) 16px;align-items:center;gap:10px;text-align:left;padding:12px!important;margin-top:8px;border-radius:13px!important;border:1px solid rgba(190,220,240,.13)!important;background:rgba(255,255,255,.045)!important;color:#f1f6fa!important}
+.mfit-menu-main-action,.mfit-menu-secondary-action{width:100%;display:grid;grid-template-columns:36px minmax(0,1fr) 16px;align-items:center;gap:10px;text-align:left;padding:12px!important;margin-top:8px;border-radius:13px!important;border:1px solid rgba(190,220,240,.13)!important;background:rgba(255,255,255,.045);color:#f1f6fa!important}
 .mfit-menu-main-action{background:rgba(166,255,63,.10)!important;border-color:rgba(166,255,63,.28)!important}
 .mfit-menu-main-action>span:first-child,.mfit-menu-secondary-action>span:first-child{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:rgba(255,255,255,.07);font-size:18px}
 .mfit-menu-main-action b,.mfit-menu-secondary-action b{display:block;font-size:12px}
@@ -1504,7 +1488,7 @@ hr{opacity:.7}
 .mfit-high-contrast .muted,.mfit-high-contrast small{color:#d0ddd4}
 .mfit-large-text{font-size:17px}
 .mfit-large-text .muted,.mfit-large-text small,.mfit-large-text label{font-size:calc(1em + 1px)}
-:focus-visible{outline:2px solid var(--accent,#65d58b)!important;outline-offset:3px}
+:focus-visible{outline:2px solid var(--accent,#65d58b);outline-offset:3px}
 button,input,select,textarea{touch-action:manipulation}
 @media(max-width:360px){.mfit-smart-footer{align-items:flex-start;flex-direction:column}.mfit-smart-footer button{width:100%}}
 
@@ -1513,16 +1497,15 @@ button,input,select,textarea{touch-action:manipulation}
 .mfit-collapsible-card{position:relative;min-width:0}
 .mfit-card-collapse-head{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:28px;margin:0 0 8px}
 .mfit-card-collapse-title{min-width:0;flex:1;display:flex;align-items:center;gap:8px}
-.mfit-card-collapse-title>h2,.mfit-card-collapse-title>h3{margin:0!important}
-.mfit-card-collapse-title>.row{width:100%;margin:0!important}
-.mfit-card-collapse-toggle{flex:0 0 32px;width:32px;height:32px;min-height:32px;padding:0!important;display:grid;place-items:center;border-radius:10px!important;background:rgba(255,255,255,.065)!important;border:1px solid var(--line)!important;color:var(--green)!important;font-size:20px!important;line-height:1;transition:transform .18s ease,background .18s ease}
+.mfit-card-collapse-title>h2,.mfit-card-collapse-title>h3{margin:0rd-collapse-title>.row{width:100%;margin:0!important}
+.mfit-card-collapse-toggle{flex:0 0 32px;width:32px;height:32px;min-height:32px;padding:0!important;display:grid;place-items:center;border-radius:10px;background:rgba(255,255,255,.065);border:1px solid var(--line);color:var(--green);font-size:20px!important;line-height:1;transition:transform .18s ease,background .18s ease}
 .mfit-card-collapse-toggle span{display:block;transform:translateY(-1px);font-weight:700}
 .mfit-card-collapse-toggle:hover{background:rgba(255,255,255,.11)!important}
 .mfit-card-collapse-body{min-width:0}
-.mfit-card-collapsed{padding-bottom:12px!important}
+.mfit-card-collapsed{padding-bottom:12px}
 .mfit-card-collapsed>.mfit-card-collapse-head{margin-bottom:0}
 .mfit-card-collapsed>.mfit-card-collapse-body{display:none!important}
-.mfit-card-collapsed .mfit-card-collapse-toggle{background:rgba(101,213,139,.1)!important}
+.mfit-card-collapsed .mfit-card-collapse-toggle{background:rgba(101,213,139,.1)}
 @media(prefers-reduced-motion:reduce){.mfit-card-collapse-toggle{transition:none}}
 
 
@@ -1540,7 +1523,7 @@ button,input,select,textarea{touch-action:manipulation}
 .mfit-app-header h1 small{font-size:9px;letter-spacing:1.65px;color:#b7c7d0;font-weight:850}
 .mfit-app-header p{font-size:10px;line-height:1.3;letter-spacing:.2px;margin:5px 0 0;color:#a9bac5}
 .mfit-header-actions{display:flex;align-items:center;gap:7px;flex:0 0 auto}
-.mfit-header-profile,.mfit-app-header .header-settings{width:39px;height:39px;min-height:39px;padding:0!important;display:grid;place-items:center;border-radius:13px!important;background:rgba(255,255,255,.075)!important;border:1px solid rgba(255,255,255,.12)!important;color:#eaf5f0!important;font-size:17px!important;box-shadow:none!important}
+.mfit-header-profile,.mfit-app-header .header-settings{width:39px;height:39px;min-height:39px;padding:0!important;display:grid;place-items:center;border-radius:13px!important;background:rgba(255,255,255,.075)!important;border:1px solid rgba(255,255,255,.12)!important;color:#eaf5f0!important;font-size:17px;box-shadow:none!important}
 .mfit-header-profile span{font-size:19px;line-height:1}
 .mfit-app-header .header-settings{font-size:18px!important}
 .mfit-header-foot{width:min(100%,920px);margin:13px auto 0;padding-top:10px;border-top:1px solid rgba(255,255,255,.075);display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -1556,9 +1539,9 @@ main>section{min-width:0}
 .mfit-card-collapse-title{gap:8px}
 .mfit-card-collapse-title>h2,.mfit-card-collapse-title>h3{font-size:15px;line-height:1.3;margin:0!important}
 .mfit-card-collapse-title>.row{align-items:center}
-.mfit-card-collapse-toggle{width:34px;height:34px;flex-basis:34px;border-radius:11px!important;background:rgba(255,255,255,.055)!important;border-color:rgba(180,205,225,.14)!important;color:#a3edbf!important}
+.mfit-card-collapse-toggle{width:34px;height:34px;flex-basis:34px;border-radius:11px!important;background:rgba(255,255,255,.055);border-color:rgba(180,205,225,.14)!important;color:#a3edbf}
 .mfit-card-collapse-toggle svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s ease}
-.mfit-card-collapsed{padding-top:13px!important;padding-bottom:13px!important}
+.mfit-card-collapsed{padding-top:13px!important;padding-bottom:13px}
 .mfit-card-collapsed>.mfit-card-collapse-head{border-bottom:0;margin:0;padding:0}
 .mfit-card-collapsed .mfit-card-collapse-title{min-height:32px}
 .mfit-card-collapsed .mfit-card-collapse-toggle{background:rgba(125,231,167,.1)!important;border-color:rgba(125,231,167,.24)!important}
@@ -1931,7 +1914,7 @@ html{background:#080d0b;scroll-padding-top:18px}
 body{
  background:
   radial-gradient(ellipse 100% 34% at 50% -8%,rgba(54,128,81,.22),transparent 72%),
-  linear-gradient(180deg,#0b120e 0%,#080d0b 58%,#0a110d 100%)!important;
+  linear-gradient(180deg,#0b120e 0%,#080d0b 58%,#0a110d 100%);
  color:#f2f8f3;
  -webkit-font-smoothing:antialiased;
 }
@@ -1948,10 +1931,10 @@ body{
 .brand-logo{box-shadow:0 0 0 1px rgba(121,226,160,.18),0 8px 22px rgba(0,0,0,.35)}
 main{max-width:790px}
 .card,.mfit-ultimate-card,.mfit-extras-card{
- background:linear-gradient(148deg,rgba(20,32,24,.98),rgba(13,22,16,.99))!important;
- border:1px solid rgba(151,194,163,.15)!important;
+ background:linear-gradient(148deg,rgba(20,32,24,.98),rgba(13,22,16,.99));
+ border:1px solid rgba(151,194,163,.15);
  border-radius:22px!important;
- box-shadow:0 13px 32px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.025)!important;
+ box-shadow:0 13px 32px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.025);
 }
 .card h2,.card h3{color:#f2f8f3}
 .muted,.card .muted{color:#9aafa0}
@@ -1977,54 +1960,43 @@ main{max-width:790px}
  border:1px solid rgba(121,226,160,.19)!important;
 }
 button:not(.secondary):not(.danger):not(.theme-swatch){
- background:linear-gradient(135deg,#9af0b7,#70d995)!important;
- color:#092012!important;
- box-shadow:0 6px 18px rgba(75,190,115,.16)!important;
+ background:linear-gradient(135deg,#9af0b7,#70d995);
+ color:#092012;
+ box-shadow:0 6px 18px rgba(75,190,115,.16);
 }
 button.secondary{
- background:rgba(255,255,255,.045)!important;
+ background:rgba(255,255,255,.045);
  border:1px solid rgba(166,205,179,.16)!important;
- color:#e4efe7!important;
- box-shadow:none!important;
+ color:#e4efe7;
+ box-shadow:none;
 }
-button.danger{background:rgba(177,55,64,.18)!important;color:#ffdfe1!important}
+button.danger{background:rgba(177,55,64,.18);color:#ffdfe1}
 input,select,textarea{
- background:#0a130d!important;
- border:1px solid rgba(166,205,179,.18)!important;
- color:#f2f8f3!important;
-}
-input:focus,select:focus,textarea:focus{
- border-color:#79e2a0!important;
- box-shadow:0 0 0 3px rgba(121,226,160,.12)!important;
-}
-.progress{background:rgba(164,197,173,.14)!important}
-.progress span{background:linear-gradient(90deg,#a1f2ba,#6edb96)!important;box-shadow:0 0 14px rgba(121,226,160,.25)}
+ background:#0a130d1px solid rgba(166,205,179,.18)f2f8f3focus,select:focus,textarea:focus{
+ border-color:#79e2a03px rgba(121,226,160,.12)ound:rgba(164,197,173,.14)}
+.progress span{background:linear-gradient(90deg,#a1f2ba,#6edb96);box-shadow:0 0 14px rgba(121,226,160,.25)}
 .pill,.notice{
- background:rgba(121,226,160,.09)!important;
- border-color:rgba(121,226,160,.25)!important;
- color:#a5edbb!important;
-}
-.item,.mfit-live-row,.mfit-pr-row,.mfit-mini-row{border-color:rgba(166,205,179,.11)!important}
+ background:rgba(121,226,160,.09)color:rgba(121,226,160,.25)a5edbb.mfit-live-row,.mfit-pr-row,.mfit-mini-row{border-color:rgba(166,205,179,.11)!important}
 .recipe-hero,.workout-planner-hero{
  background:linear-gradient(120deg,#1c3b28,#102017 78%)!important;
  border:1px solid rgba(121,226,160,.23)!important;
 }
 .recipe-card,.mfit-exercise-card,.workout-day-card{
- background:linear-gradient(145deg,#17271c,#101a13)!important;
+ background:linear-gradient(145deg,#17271c,#101a13);
  border-color:rgba(166,205,179,.15)!important;
 }
-.recipe-chip{background:rgba(121,226,160,.10)!important;color:#a5edbb!important;border-color:rgba(121,226,160,.25)!important}
+.recipe-chip{background:rgba(121,226,160,.10);color:#a5edbb;border-color:rgba(121,226,160,.25)}
 nav.mfit-nav{
- background:rgba(10,18,13,.94)!important;
- border:1px solid rgba(166,205,179,.17)!important;
- box-shadow:0 14px 40px rgba(0,0,0,.52)!important;
+ background:rgba(10,18,13,.94);
+ border:1px solid rgba(166,205,179,.17);
+ box-shadow:0 14px 40px rgba(0,0,0,.52);
  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
 }
 nav.mfit-nav button,body nav.mfit-nav button,body nav.mfit-nav button.active{
- color:#a4b5a8!important;background:transparent!important;border-color:transparent!important;
+ color:#a4b5a8entarent;
 }
 nav.mfit-nav button.active{
- color:#8cebb0!important;background:rgba(121,226,160,.10)!important;
+ color:#8cebb0;background:rgba(121,226,160,.10);
  border-color:rgba(121,226,160,.18)!important;
 }
 .mfit-settings-menu,.mfit-settings-popover{background:#101a13!important;border-color:rgba(166,205,179,.17)!important}
@@ -2103,47 +2075,47 @@ nav.mfit-nav button.active{
 
 /* MFit v131 — calmer app navigation and compact category-based settings */
 nav.mfit-nav{
- display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
- align-items:center!important;justify-content:stretch!important;gap:0!important;
- padding:7px 5px calc(7px + env(safe-area-inset-bottom))!important;
- background:rgba(8,15,11,.96)!important;border-top:1px solid rgba(145,190,155,.16)!important;
- border-radius:0!important;box-shadow:0 -8px 26px rgba(0,0,0,.24)!important;
+ display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
+ align-items:center;justify-content:stretch!important;gap:0;
+ padding:7px 5px calc(7px + env(safe-area-inset-bottom));
+ background:rgba(8,15,11,.96);border-top:1px solid rgba(145,190,155,.16);
+ border-radius:0;box-shadow:0 -8px 26px rgba(0,0,0,.24);
  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
 }
 nav.mfit-nav button,nav.mfit-nav button.active{
  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
  gap:4px!important;min-width:0!important;min-height:54px!important;width:100%!important;
  padding:5px 2px!important;margin:0!important;border:0!important;border-radius:12px!important;
- background:transparent!important;box-shadow:none!important;color:#9aa99e!important;
+ background:transparent!important;box-shadow:none!important;color:#9aa99e;
  font-size:10px!important;font-weight:650!important;line-height:1.1!important;
 }
-nav.mfit-nav button .nav-icon{display:block!important;min-height:0!important;font-size:19px!important;line-height:1.15!important;filter:none!important}
+nav.mfit-nav button .nav-icon{display:block!important;min-height:0!important;font-size:19px!important;line-height:1.15!important;filter:none}
 nav.mfit-nav button .nav-label{display:block!important;font-size:10px!important;line-height:1.1!important;white-space:nowrap!important}
 nav.mfit-nav button.active{color:#8cebb0!important}
 nav.mfit-nav button.active .nav-icon{filter:drop-shadow(0 0 5px rgba(121,226,160,.28))!important}
 nav.mfit-nav button:active{transform:scale(.96)!important}
 .mfit-settings-landing{display:grid;gap:10px}
-.mfit-settings-category{display:flex!important;align-items:center!important;gap:13px!important;width:100%!important;min-height:72px!important;padding:13px 15px!important;text-align:left!important;
- background:rgba(255,255,255,.035)!important;color:#e8f1ea!important;border:1px solid rgba(145,190,155,.15)!important;border-radius:17px!important;box-shadow:none!important}
-.mfit-settings-category:active{background:rgba(121,226,160,.08)!important;border-color:rgba(121,226,160,.35)!important}
+.mfit-settings-category{display:flex;align-items:center;gap:13px;width:100%;min-height:72px;padding:13px 15px;text-align:left;
+ background:rgba(255,255,255,.035);color:#e8f1ea;border:1px solid rgba(145,190,155,.15);border-radius:17px;box-shadow:none}
+.mfit-settings-category:active{background:rgba(121,226,160,.08);border-color:rgba(121,226,160,.35)}
 .mfit-category-icon{flex:0 0 40px;width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:rgba(121,226,160,.09);font-size:20px}
 .mfit-category-copy{display:grid;gap:4px;min-width:0;flex:1}
 .mfit-category-copy b{font-size:14px;line-height:1.2}
 .mfit-category-copy small{font-size:11px;line-height:1.35;color:#9eafa2;font-weight:450}
 .mfit-category-arrow{font-size:25px;font-weight:300;color:#8cebb0}
 .mfit-settings-page{display:grid;gap:12px}
-.mfit-settings-back{justify-self:start;display:flex!important;align-items:center!important;gap:8px!important;padding:8px 12px!important;border-radius:12px!important;background:rgba(121,226,160,.08)!important;color:#a8eebc!important;border:1px solid rgba(121,226,160,.16)!important;font-size:12px!important}
+.mfit-settings-back{justify-self:start;display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:rgba(121,226,160,.08);color:#a8eebc;border:1px solid rgba(121,226,160,.16);font-size:12px}
 .mfit-settings-back span{font-size:21px;line-height:1}
 .mfit-settings-page-heading{display:flex;align-items:center;gap:12px;padding:7px 2px 5px}
 .mfit-settings-page-heading>span{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:rgba(121,226,160,.1);font-size:21px}
 .mfit-settings-page-heading h3{margin:0 0 4px;font-size:17px}
 .mfit-settings-page-heading p{margin:0;font-size:11px;color:#9eafa2}
-.mfit-settings-page>.mfit-settings-detail{margin:0!important;scroll-margin-top:12px}
+.mfit-settings-page>.mfit-settings-detail{margin:0;scroll-margin-top:12px}
 .mfit-settings-page>.mfit-settings-detail h2{font-size:16px}
 #settingsHub{margin-bottom:14px}
 #settingsHub .settings-hub-top{margin-bottom:5px}
 #settingsHub .settings-hub-top h2{font-size:22px}
-@media(max-width:390px){nav.mfit-nav{padding-left:2px!important;padding-right:2px!important}nav.mfit-nav button .nav-icon{font-size:18px!important}nav.mfit-nav button .nav-label{font-size:9.5px!important}.mfit-settings-category{min-height:66px!important;padding:11px 12px!important}}
+@media(max-width:390px){nav.mfit-nav{padding-left:2px;padding-right:2px}nav.mfit-nav button .nav-icon{font-size:18px!important}nav.mfit-nav button .nav-label{font-size:9.5px!important}.mfit-settings-category{min-height:66px!important;padding:11px 12px!important}}
 
 
 /* MFit v132–140: native-feeling bottom navigation and focused settings */
@@ -2151,32 +2123,31 @@ nav.mfit-nav{
  position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:1000!important;
  display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;align-items:center!important;
  gap:2px!important;width:100%!important;margin:0!important;padding:7px 5px calc(7px + env(safe-area-inset-bottom))!important;
- min-height:66px!important;border-radius:0!important;border:0!important;border-top:1px solid rgba(145,190,155,.17)!important;
- background:rgba(8,15,11,.97)!important;box-shadow:0 -8px 26px rgba(0,0,0,.26)!important;
+ min-height:66px!important;border-radius:0!important;border:0!important;border-top:1px solid rgba(145,190,155,.17);
+ background:rgba(8,15,11,.97);box-shadow:0 -8px 26px rgba(0,0,0,.26);
  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
 }
 nav.mfit-nav button[data-tab],nav.mfit-nav button[data-tab].active{
  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
  gap:4px!important;min-width:0!important;min-height:51px!important;width:100%!important;margin:0!important;
- padding:5px 1px!important;border:1px solid transparent!important;border-radius:12px!important;
- background:transparent!important;box-shadow:none!important;color:#9eafa2!important;
- font-size:10px!important;font-weight:650!important;line-height:1.1!important;transform:none!important;
+ padding:5px 1px!important;border:1px solid transparentdius:12px!important;
+ background:transparentw:noneafa2ze:10px!important;font-weight:650!important;line-height:1.1!important;transform:none!important;
 }
 nav.mfit-nav button[data-tab] .nav-icon{display:block!important;min-height:0!important;font-size:19px!important;line-height:1.1!important;filter:none!important}
 nav.mfit-nav button[data-tab] .nav-label{display:block!important;font-size:10px!important;line-height:1.1!important;white-space:nowrap!important}
-nav.mfit-nav button[data-tab].active{color:#8cebb0!important;background:rgba(121,226,160,.075)!important;border-color:rgba(121,226,160,.13)!important}
+nav.mfit-nav button[data-tab].active{color:#8cebb0;background:rgba(121,226,160,.075);border-color:rgba(121,226,160,.13)}
 nav.mfit-nav button[data-tab]:active{transform:scale(.96)!important}
 body{padding-bottom:calc(82px + env(safe-area-inset-bottom))!important}
 .mfit-settings-landing{display:grid!important;grid-template-columns:1fr!important;gap:9px!important}
-.mfit-settings-category{display:flex!important;align-items:center!important;gap:13px!important;width:100%!important;min-height:70px!important;padding:12px 14px!important;text-align:left!important;background:rgba(255,255,255,.035)!important;color:#e8f1ea!important;border:1px solid rgba(145,190,155,.15)!important;border-radius:16px!important;box-shadow:none!important}
-.mfit-settings-category:active{background:rgba(121,226,160,.08)!important;border-color:rgba(121,226,160,.35)!important}
+.mfit-settings-category{display:flex!important;align-items:center!important;gap:13px!important;width:100%!important;min-height:70px!important;padding:12px 14px!important;text-align:left!important;background:rgba(255,255,255,.035);color:#e8f1ea;border:1px solid rgba(145,190,155,.15);border-radius:16px!important;box-shadow:none}
+.mfit-settings-category:active{background:rgba(121,226,160,.08);border-color:rgba(121,226,160,.35)}
 .mfit-category-icon{flex:0 0 40px;width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:rgba(121,226,160,.09);font-size:20px}
 .mfit-category-copy{display:grid;gap:4px;min-width:0;flex:1}
 .mfit-category-copy b{font-size:14px;line-height:1.2}
 .mfit-category-copy small{font-size:11px;line-height:1.35;color:#9eafa2;font-weight:450}
 .mfit-category-arrow{font-size:25px;font-weight:300;color:#8cebb0}
 .mfit-settings-page{display:grid;gap:12px}
-.mfit-settings-back{justify-self:start;display:flex!important;align-items:center!important;gap:8px!important;padding:8px 12px!important;border-radius:12px!important;background:rgba(121,226,160,.08)!important;color:#a8eebc!important;border:1px solid rgba(121,226,160,.16)!important;font-size:12px!important}
+.mfit-settings-back{justify-self:start;display:flex!important;align-items:center!important;gap:8px!important;padding:8px 12px!important;border-radius:12px!important;background:rgba(121,226,160,.08);color:#a8eebc;border:1px solid rgba(121,226,160,.16)!important;font-size:12px!important}
 .mfit-settings-page-heading{display:flex;align-items:center;gap:12px;padding:7px 2px 5px}
 .mfit-settings-page-heading>span{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:rgba(121,226,160,.1);font-size:21px}
 .mfit-settings-page-heading h3{margin:0 0 4px;font-size:17px}
@@ -2184,9 +2155,9 @@ body{padding-bottom:calc(82px + env(safe-area-inset-bottom))!important}
 .mfit-settings-page>.mfit-settings-detail{margin:0!important;scroll-margin-top:12px}
 .mfit-food-favorites-list{display:grid;gap:7px;margin-top:12px}
 .mfit-favorite-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(145,190,155,.13);border-radius:13px;background:rgba(255,255,255,.025)}
-.mfit-favorite-load{display:flex!important;flex:1!important;flex-direction:column!important;align-items:flex-start!important;gap:3px!important;padding:4px!important;background:transparent!important;border:0!important;box-shadow:none!important;color:#e8f1ea!important;text-align:left!important}
+.mfit-favorite-load{display:flex!important;flex:1!important;flex-direction:column!important;align-items:flex-start!important;gap:3px!important;padding:4px!important;background:transparent;border:0;box-shadow:none!important;color:#e8f1ea;text-align:left!important}
 .mfit-favorite-load b{font-size:13px}.mfit-favorite-load small{font-size:11px;color:#9eafa2}
-.mfit-favorite-delete{width:34px!important;height:34px!important;flex:0 0 34px!important;border-radius:10px!important;background:rgba(255,100,100,.08)!important;color:#ffaaaa!important;border:1px solid rgba(255,100,100,.14)!important}
+.mfit-favorite-delete{width:34px!important;height:34px!important;flex:0 0 34px!important;border-radius:10px!important;background:rgba(255,100,100,.08);color:#ffaaaa;border:1px solid rgba(255,100,100,.14)!important}
 .mfit-save-favorite{width:100%!important;margin-top:4px!important}
 @media(max-width:390px){nav.mfit-nav{padding-left:2px!important;padding-right:2px!important}nav.mfit-nav button[data-tab] .nav-icon{font-size:18px!important}nav.mfit-nav button[data-tab] .nav-label{font-size:9px!important}.mfit-category-copy b{font-size:13px}}
 @media(prefers-reduced-motion:reduce){nav.mfit-nav *,#mfitSettingsPages *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
@@ -2195,7 +2166,7 @@ body{padding-bottom:calc(82px + env(safe-area-inset-bottom))!important}
 .mfit-favorite-section{display:grid;gap:8px;margin-top:12px}
 .mfit-favorite-section> b{font-size:12px;color:#a8eebc}
 .mfit-recent-food-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
-.mfit-recent-food{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:4px!important;min-width:0!important;padding:10px!important;text-align:left!important;border-radius:12px!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(145,190,155,.13)!important;color:#e8f1ea!important}
+.mfit-recent-food{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:4px!important;min-width:0!important;padding:10px!important;text-align:left!important;border-radius:12px!important;background:rgba(255,255,255,.035);border:1px solid rgba(145,190,155,.13);color:#e8f1ea}
 .mfit-recent-food b{font-size:12px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mfit-recent-food small{font-size:10px;color:#9eafa2}
 @media(max-width:350px){.mfit-recent-food-list{grid-template-columns:1fr}}
@@ -2203,48 +2174,24 @@ body{padding-bottom:calc(82px + env(safe-area-inset-bottom))!important}
 
 /* MFit v141 — complete monochrome graphite design system */
 :root{
- color-scheme:dark!important;
- --green:#d7d7d7!important;--green-light:#f2f2f2!important;--green-dark:#a8a8a8!important;
- --accent:#dedede!important;--accent-2:#bcbcbc!important;--primary:#f2f2f2!important;
- --success:#d8d8d8!important;--lime:#d8d8d8!important;--mint:#d8d8d8!important;
+ color-scheme:dark;
+ --green:#d7d7d7;--green-light:#f2f2f2!important;--green-dark:#a8a8a8!important;
+ --accent:#dedede;--accent-2:#bcbcbc;--primary:#f2f2f2;
+ --success:#d8d8d8;--lime:#d8d8d8;--mint:#d8d8d8;
  --surface:#111!important;--surface-2:#171717!important;--surface-3:#202020!important;
- --border:#303030!important;--text:#f4f4f4!important;--muted:#a3a3a3!important;
+ --border:#303030;--text:#f4f4f4;--muted:#a3a3a3;
 }
-html,body{background:#080808!important;color:#f2f2f2!important}
-body *{accent-color:#d5d5d5}
+html,body{background:#080808f2f2ccent-color:#d5d5d5}
 button,.btn,.primary,.secondary,.action-btn,[role="button"],input[type="button"],input[type="submit"],input[type="reset"]{
- background:#171717!important;color:#f3f3f3!important;border:1px solid #333!important;
- box-shadow:none!important;text-shadow:none!important;
-}
-button:hover,.btn:hover,.primary:hover,.secondary:hover,[role="button"]:hover{
- background:#222!important;border-color:#505050!important;color:#fff!important;
-}
-button:active,.btn:active,[role="button"]:active{background:#292929!important;transform:scale(.99)}
-button.active,button.selected,.active>.btn,.selected,[aria-pressed="true"],[aria-selected="true"]{
- background:#292929!important;color:#fff!important;border-color:#666!important;box-shadow:none!important;
-}
-input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
-select,textarea{
- color:#f4f4f4!important;background:#101010!important;border:1px solid #383838!important;
- box-shadow:none!important;caret-color:#fff!important;
-}
-input::placeholder,textarea::placeholder{color:#777!important;opacity:1}
-input:focus,select:focus,textarea:focus{
- outline:1px solid #777!important;border-color:#888!important;box-shadow:0 0 0 2px rgba(255,255,255,.05)!important;
-}
-input[type="checkbox"],input[type="radio"],input[type="range"]{accent-color:#d8d8d8!important}
-input[type="color"]{background:#171717!important;border:1px solid #444!important}
+ background:#171717rea:focus{
+ outline:1px solid #777rgba(255,255,255,.05)kbox"],input[type="radio"],input[type="range"]{accent-color:#d8d8d8]{background:#171717!important;border:1px solid #444!important}
 .card,.panel,.modal,.sheet,.settings-card,.settings-section,.mfit-settings-category,
 .mfit-favorite-row,.mfit-recent-food,.mfit-recovery-kpis>div{
- background:#111!important;border-color:#292929!important;box-shadow:none!important;color:#eee!important;
-}
-.mfit-settings-category:active,.mfit-settings-category:hover{background:#1b1b1b!important;border-color:#444!important}
-.mfit-category-icon,.mfit-settings-page-heading>span,.icon-wrap,.icon-badge,.nav-icon-wrap{
+ background:#111-badge,.nav-icon-wrap{
  background:#1b1b1b!important;border:1px solid #303030!important;box-shadow:none!important;
 }
 .mfit-category-arrow,.mfit-favorite-section>b,.settings-kicker,.section-kicker,
-.text-accent,.accent,.highlight,.success,.positive{color:#d5d5d5!important}
-[style*="background:"][style*="green"],[style*="background-color:"][style*="green"],
+.text-accent,.accent,.highlight,.success,.positive{color:#d5d5d5een"],
 [style*="#79e2a0"],[style*="#8cebb0"],[style*="#a8f0bd"],[style*="#4dba78"]{
  box-shadow:none!important;
 }
@@ -2252,30 +2199,19 @@ input[type="color"]{background:#171717!important;border:1px solid #444!important
 .mfit-ring,.progress-ring,.progress-circle{filter:none!important}
 .mfit-week-bar i,.mfit-muscle-row i,.mfit-meal-row i,.progress-fill,.progress-bar>span,
 .progress-bar-fill,.macro-fill,.calorie-fill{
- background:#bdbdbd!important;box-shadow:none!important;
-}
-svg [stroke*="#79"],svg [stroke*="#8c"],svg [fill*="#79"],svg [fill*="#8c"]{stroke:#c8c8c8!important;fill:#c8c8c8!important}
-nav.mfit-nav{
- background:rgba(8,8,8,.98)!important;border-top:1px solid #292929!important;box-shadow:0 -6px 20px rgba(0,0,0,.35)!important;
+ background:#bdbdbdshadow:0 -6px 20px rgba(0,0,0,.35);
 }
 nav.mfit-nav button[data-tab],nav.mfit-nav button[data-tab].active{
- background:transparent!important;color:#999!important;border-color:transparent!important;box-shadow:none!important;
-}
-nav.mfit-nav button[data-tab].active{color:#fff!important;background:#191919!important;border-color:#333!important}
+ background:transparent9lor:transparentw:noneit-nav button[data-tab].active{color:#fff;background:#191919;border-color:#333}
 nav.mfit-nav button .nav-icon{filter:none!important}
 .mfit-settings-back{background:#171717!important;color:#eee!important;border-color:#333!important}
-.mfit-settings-category{background:#111!important;color:#eee!important;border-color:#292929!important}
+.mfit-settings-category{background:#111;color:#eee;border-color:#292929!important}
 .mfit-favorite-load{background:transparent!important;color:#eee!important;border:0!important}
-.mfit-favorite-delete{background:#191919!important;color:#ccc!important;border-color:#383838!important}
+.mfit-favorite-delete{background:#191919;color:#ccc;border-color:#383838}
 .mfit-save-favorite{background:#191919!important;color:#f4f4f4!important;border-color:#383838!important}
-.badge,.pill,.tag,.chip{background:#1c1c1c!important;color:#ddd!important;border-color:#383838!important}
-hr,.divider{border-color:#292929!important}
-*{scrollbar-color:#444 #111}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
-
-
-/* MFit v142–150: compact monochrome productivity refinements */
-.mfit-report-shortcuts{display:grid;gap:12px;background:#111!important;border:1px solid #292929!important}
+.badge,.pill,.tag,.chip{background:#1c1c1c382929bar-color:#444 #111}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:nonempact monochrome productivity refinements */
+.mfit-report-shortcuts{display:grid;gap:12px;background:#111;border:1px solid #292929}
 .mfit-report-shortcuts h2{margin:4px 0;font-size:17px}
 .mfit-report-shortcuts p{margin:0;font-size:12px}
 .mfit-report-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -2294,15 +2230,14 @@ hr,.divider{border-color:#292929!important}
 
 /* MFit v151 — restrained graphite / porcelain theme */
 :root{
- color-scheme:dark!important;
- --bg:#090a0c!important;--panel:#121417!important;--panel2:#1a1d21!important;
- --green:#b9c3cf!important;--accent:#b9c3cf!important;--accent-2:#9ca8b6!important;
- --accent-soft:rgba(185,195,207,.09)!important;--accent-border:#343b44!important;
- --line:#292d33!important;--border:#292d33!important;--muted:#a0a5ad!important;
- --text:#f1f2f4!important;--primary:#e8eaed!important;
+ color-scheme:dark;
+ --bg:#090a0c;--panel:#121417;--panel2:#1a1d21;
+ --green:#b9c3cf;--accent:#b9c3cf;--accent-2:#9ca8b6;
+ --accent-soft:rgba(185,195,207,.09);--accent-border:#343b44;
+ --line:#292d33;--border:#292d33!important;--muted:#a0a5ad;
+ --text:#f1f2f4!important;--primary:#e8eaed;
 }
-html,body{background:#090a0c!important;color:#f1f2f4!important}
-body{background-image:none!important;background-color:#090a0c!important}
+html,body{background:#090a0cf2f4kground-image:none!important;background-color:#090a0c!important}
 header,header:before,header:after{
  background:#101216!important;background-image:none!important;border-color:#262a30!important;
  box-shadow:none!important;filter:none!important
@@ -2311,24 +2246,15 @@ header:after{opacity:0!important}
 main{background:transparent!important}
 .card,.panel,.modal,.sheet,.settings-card,.settings-section,.recipe-card,
 .mfit-settings-category,.mfit-favorite-row,.mfit-recent-food,.mfit-report-shortcuts{
- background:#121417!important;background-image:none!important;color:#eff0f2!important;
+ background:#121417;background-image:none!important;color:#eff0f2!important;
  border:1px solid #292d33!important;box-shadow:none!important
 }
 .card h1,.card h2,.card h3,.card h4, h1,h2,h3,h4,b,strong{color:#f1f2f4}
 p,.muted,small,.muted-text{color:#a0a5ad!important}
 button,.btn,.primary,.secondary,.action-btn,[role="button"],
 input[type="button"],input[type="submit"],input[type="reset"]{
- background:#20242a!important;background-image:none!important;color:#edf0f3!important;
- border:1px solid #363c44!important;box-shadow:none!important;text-shadow:none!important;
-}
-button:hover,.btn:hover,.primary:hover,.secondary:hover,[role="button"]:hover{
- background:#292e35!important;border-color:#4a535e!important;color:#fff!important
-}
-button.active,button.selected,.active>.btn,.selected,[aria-pressed="true"],[aria-selected="true"]{
- background:#30363e!important;color:#fff!important;border-color:#56616e!important
-}
-button.danger,.danger,.mfit-favorite-delete{
- background:#292326!important;color:#e5c9cc!important;border-color:#48363a!important
+ background:#20242a!important;background-image:noneselected="true"]{
+ background:#30363e!important;color:#fffe5c9cc!important;border-color:#48363a!important
 }
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
 select,textarea{
@@ -2343,23 +2269,19 @@ input[type="checkbox"],input[type="radio"],input[type="range"]{accent-color:#aeb
 .mfit-week-bar i,.mfit-muscle-row i,.mfit-meal-row i{background:#aeb8c4!important;box-shadow:none!important}
 .big,.text-accent,.accent,.highlight,.success,.positive,.pill,.recipe-chip,
 .settings-kicker,.section-kicker,.mfit-category-arrow,.mfit-favorite-section>b{
- color:#c2cbd5!important;text-shadow:none!important
-}
-.pill,.badge,.tag,.chip,.recipe-chip{background:#1b2026!important;border-color:#353d47!important}
+ color:#c2cbd5e-chip{background:#1b2026!important;border-color:#353d47!important}
 .notice,.reminder-notice{background:#171c22!important;color:#d9dfe6!important;border-color:#343d48!important}
 nav,nav.mfit-nav{
- background:rgba(10,11,13,.98)!important;background-image:none!important;
- border-top:1px solid #292d33!important;box-shadow:0 -5px 18px rgba(0,0,0,.2)!important
-}
+ background:rgba(10,11,13,.98);background-image:none;
+ border-top:1px solid #292d33;box-shadow:0 -5px 18px rgba(0,0,0,.2)}
 nav button,nav button.active,nav.mfit-nav button[data-tab],nav.mfit-nav button[data-tab].active{
- background:transparent!important;color:#969da6!important;border-color:transparent!important;box-shadow:none!important
+ background:transparent:none!important
 }
 nav button.active,nav.mfit-nav button[data-tab].active{
- background:#1b1f24!important;color:#f1f2f4!important;border-color:#343a42!important
-}
+ background:#1b1f24;color:#f1f2f4;border-color:#343a42}
 .recipe-card,.recipe-grid .card{background:#121417!important}
 .recipe-chip{color:#c2cbd5!important}
-.theme-swatch{filter:saturate(.25)!important;opacity:.72}
+.theme-swatch{filter:saturate(.25);opacity:.72}
 .theme-preview-dot{background:#aeb8c4!important}
 hr,.divider{border-color:#292d33!important}
 svg [stroke*="#65"],svg [stroke*="#79"],svg [stroke*="#8c"],svg [fill*="#65"],svg [fill*="#79"],svg [fill*="#8c"]{stroke:#aeb8c4!important;fill:#aeb8c4!important}
@@ -2369,21 +2291,21 @@ svg [stroke*="#65"],svg [stroke*="#79"],svg [stroke*="#8c"],svg [fill*="#65"],sv
 
 /* MFit v152 — echte Schwarz-Weiß-Oberfläche, auch für dynamische Vorschläge */
 :root{
- --green:#b9c3cf!important;--accent:#b9c3cf!important;--accent-2:#9ca8b6!important;
- --accent-soft:rgba(185,195,207,.08)!important;--accent-border:#343b44!important;
- --success:#c5cbd2!important;--lime:#c5cbd2!important;--mint:#c5cbd2!important;
+ --green:#b9c3cf;--accent:#b9c3cf;--accent-2:#9ca8b6;
+ --accent-soft:rgba(185,195,207,.08);--accent-border:#343b44;
+ --success:#c5cbd2;--lime:#c5cbd2;--mint:#c5cbd2;
 }
 #productSuggestions.product-suggestions{
- background:#111315!important;background-image:none!important;
- border:1px solid #30343a!important;border-radius:16px!important;
- box-shadow:none!important;overflow-y:auto!important;
+ background:#111315;background-image:none;
+ border:1px solid #30343a;border-radius:16px!important;
+ box-shadow:none;overflow-y:auto!important;
 }
 #productSuggestions .product-suggestion,
 button.product-suggestion{
- background:#111315!important;background-image:none!important;
- color:#f1f2f4!important;border:0!important;
+ background:#111315;background-image:none;
+ color:#f1f2f4;border:0!important;
  border-bottom:1px solid #292d33!important;border-radius:0!important;
- box-shadow:none!important;text-shadow:none!important;
+ box-shadow:none;text-shadow:none;
 }
 #productSuggestions .product-suggestion:active,
 #productSuggestions .product-suggestion:hover{
@@ -2397,13 +2319,10 @@ button.product-suggestion{
 .product-suggestions[hidden]{display:none!important}
 button:not(.theme-swatch),.btn,.primary,.secondary,[role="button"],
 input[type="button"],input[type="submit"],input[type="reset"]{
- background-color:#1b1e22!important;background-image:none!important;
- color:#edf0f3!important;border-color:#343940!important;box-shadow:none!important;
-}
-button.active,button.selected,.active>.btn,.selected,[aria-pressed="true"],[aria-selected="true"]{
+ background-color:#1b1e22e"],[aria-selected="true"]{
  background-color:#292e34!important;color:#fff!important;border-color:#505862!important;
 }
-nav.mfit-nav button[data-tab].active{background:#20242a!important;color:#fff!important}
+nav.mfit-nav button[data-tab].active{background:#20242a;color:#fff}
 .mfit-favorite-section>b,.suggestion-brand,.suggestion-nutrition,.success,.positive,
 .text-accent,.accent,.highlight{color:#c3c9d1!important}
 .theme-swatch{filter:grayscale(1)!important}
@@ -2413,9 +2332,9 @@ nav.mfit-nav button[data-tab].active{background:#20242a!important;color:#fff!imp
 
 /* MFit v153 — clickable surfaces are always black / graphite */
 :root{
- --green:#b9c3cf!important;--accent:#b9c3cf!important;
- --accent-2:#9ca8b6!important;--accent-soft:rgba(185,195,207,.07)!important;
- --success:#c5cbd2!important;--lime:#c5cbd2!important;--mint:#c5cbd2!important;
+ --green:#b9c3cf;--accent:#b9c3cf;
+ --accent-2:#9ca8b6!important;--accent-soft:rgba(185,195,207,.07);
+ --success:#c5cbd2;--lime:#c5cbd2;--mint:#c5cbd2;
  --primary:#e8eaed!important;
 }
 /* Kill inline green gradients and inline green backgrounds on interactive tiles */
@@ -2453,13 +2372,13 @@ nav.mfit-nav,nav.mfit-nav *{
  box-shadow:none!important;text-shadow:none!important;
 }
 nav.mfit-nav{
- background:#08090b!important;background-image:none!important;
+ background:#08090b;background-image:none;
  border-top:1px solid #292d33!important;
 }
 nav.mfit-nav button[data-tab],
 nav.mfit-nav button[data-tab].active{
- background:#101214!important;background-image:none!important;
- color:#e7e9ec!important;border:1px solid #292d33!important;
+ background:#101214;background-image:none!important;
+ color:#e7e9ec;border:1px solid #292d33!important;
 }
 nav.mfit-nav button[data-tab].active{
  background:#24282e!important;color:#fff!important;border-color:#4a515b!important;
@@ -2467,7 +2386,7 @@ nav.mfit-nav button[data-tab].active{
 nav.mfit-nav .nav-icon,
 nav.mfit-nav .nav-icon-wrap,
 nav.mfit-nav .icon-wrap{
- background:#111315!important;background-image:none!important;
+ background:#111315;background-image:none;
  border-color:#30343a!important;filter:none!important;
 }
 nav.mfit-nav .nav-label{color:#f0f1f3!important}
@@ -2482,15 +2401,15 @@ button.product-suggestion,
 nav.mfit-nav button[data-tab]:not(.secondary):not(.danger):not(.theme-swatch),
 #track #productSuggestions button.product-suggestion:not(.secondary):not(.danger):not(.theme-swatch),
 .mfit-nav button[data-tab]:not(.secondary):not(.danger):not(.theme-swatch){
- background:#111315!important;background-image:none!important;
- color:#f1f2f4!important;border-color:#30343a!important;
+ background:#111315;background-image:none;
+ color:#f1f2f4;border-color:#30343a!important;
  box-shadow:none!important;text-shadow:none!important;
 }
 button:not(.secondary):not(.danger):not(.theme-swatch):hover,
 button:not(.secondary):not(.danger):not(.theme-swatch):active,
 nav.mfit-nav button[data-tab]:not(.secondary):not(.danger):not(.theme-swatch).active{
- background:#24282e!important;background-image:none!important;color:#fff!important;
- border-color:#4a515b!important;
+ background:#24282e;background-image:none!important;color:#fff;
+ border-color:#4a515b;
 }
 #productSuggestions,#track #productSuggestions,
 #productSuggestions.product-suggestions{
@@ -2526,8 +2445,8 @@ nav.mfit-nav .nav-icon{background:transparent!important;background-image:none!im
 .mfit-section-controls>span{display:none!important}
 .mfit-section-controls>div{position:relative;display:flex;align-items:center;gap:6px}
 .mfit-section-controls button[data-collapse]{
- min-width:32px!important;width:32px!important;height:30px!important;
- padding:0!important;border-radius:9px!important;
+ min-width:32px;width:32px;height:30px!important;
+ padding:0;border-radius:9px!important;
  background:#111315!important;color:#aeb4bc!important;
  border:1px solid #30343a!important;font-size:0!important;
  box-shadow:none!important;
@@ -2571,7 +2490,7 @@ nav.mfit-nav .nav-icon{background:transparent!important;background-image:none!im
  --green:#b9c3cf!important;--accent:#b9c3cf!important;
  --accent-soft:rgba(185,195,207,.08)!important;--accent-border:#3b424b!important;
  --success:#c5cbd2!important;--lime:#c5cbd2!important;--mint:#c5cbd2!important;
- background:#08090b!important;color:#f1f2f4!important;
+ background:#08090b;color:#f1f2f4;
 }
 body{background:#08090b!important;color:#f1f2f4!important}
 body .card,body .panel,body .modal,body .sheet,body .settings-card,
@@ -2636,8 +2555,8 @@ body nav.mfit-nav{
 }
 body nav.mfit-nav button,body nav.mfit-nav button[data-tab],
 body nav.mfit-nav button.active,body nav.mfit-nav button[data-tab].active{
- background:#111315!important;background-image:none!important;
- color:#e7e9ec!important;border:1px solid #30343a!important;
+ background:#111315d-image:none!important;
+ color:#e7e9ecx solid #30343a!important;
  box-shadow:none!important;
 }
 body nav.mfit-nav button.active,body nav.mfit-nav button[data-tab].active{
