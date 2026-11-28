@@ -45,7 +45,8 @@ function init(){
 
  // Keep the existing achievement content, but place it with goals rather than coaching tips.
  const achievementHead=$('mfitSmartCoach')?.querySelector('.mfit-achievement-head');
- const achievementList=$('mfitAchievementList');
+ const achievementNode=$('mfitAchievementList');
+ const achievementList=achievementNode?.closest('.mfit193-merged-card')?null:achievementNode;
  if(achievementHead)achievementHead.remove();
  if(achievementList)achievementList.remove();
 
