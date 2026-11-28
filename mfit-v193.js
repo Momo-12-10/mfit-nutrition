@@ -119,7 +119,7 @@ function init(){
  // 8. Training analytics, history, PRs and both muscle summaries become one training overview.
  mergeGroup({title:'Trainingsauswertung',root:'fitness',items:[
   'mfitTrainingAnalytics','workoutHistoryCard','mfitPRCenter','mfitMuscleBalance',
-  'mfitTrainingCommand','mfitWorkload',{selector:'#muscleTracker'}
+  'mfitTrainingCommand','mfitWorkload','mfit181Gpx','mfit181Share',{selector:'#muscleTracker'}
  ]});
 
  // 9. Sleep, subjective recovery and check-in history are one recovery area; storage remains separate and untouched.
