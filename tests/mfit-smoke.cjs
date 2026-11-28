@@ -58,7 +58,7 @@ const server = http.createServer((req,res)=>{
  log('checking viewport and existing data');
  await page.waitForFunction(()=>['mfit181YesterdayCopy','mfit181Mobility','mfit181Gpx','mfit181Share'].every(id=>document.getElementById(id)?.classList.contains('mfit-card-collapsed')));
  const quickGroup=page.locator('.mfit193-merged-card').filter({has:page.locator('#mfitTodayPanel')});
- if(!(await quickGroup.count())||!(await quickGroup.locator('#mfitQuickActions').count()))throw new Error('Pinned favourites were not consolidated with the Today overview.');
+ if(!(await quickGroup.count())||!(await quickGroup.locator('#mfitQuickActions').count())){const debug=await page.evaluate(()=>({groups:[...document.querySelectorAll('.mfit193-merged-card')].map(x=>x.dataset.mfit193Group),todayParent:document.getElementById('mfitTodayPanel')?.parentElement?.outerHTML.slice(0,600),quickParent:document.getElementById('mfitQuickActions')?.parentElement?.outerHTML.slice(0,600)}));throw new Error('Pinned favourites were not consolidated with the Today overview: '+JSON.stringify(debug));}
  const mergedAudit=await page.evaluate(()=>({groups:[...document.querySelectorAll('.mfit193-merged-card')].map(x=>x.dataset.mfit193Group),nestedCards:document.querySelectorAll('.mfit193-merged-card .card').length,barcodeDuplicate:!!document.getElementById('mfit165Barcode'),exerciseDuplicate:!!document.getElementById('mfit165ExerciseLibrary'),deleteButtons:document.querySelectorAll('#settings .privacy-danger-zone button.danger').length}));
  if(mergedAudit.groups.length<10)throw new Error('Too few unified sections were mounted: '+JSON.stringify(mergedAudit.groups));
  if(mergedAudit.nestedCards)throw new Error('Nested cards remain inside consolidated sections: '+mergedAudit.nestedCards);
