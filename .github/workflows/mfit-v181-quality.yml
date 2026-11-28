@@ -1,4 +1,4 @@
-name: MFit v190 quality checks
+name: MFit v191 quality checks
 on:
   push:
     branches:
@@ -23,8 +23,11 @@ jobs:
           done
           node --check tests/mfit-smoke.cjs
           node --check tests/push-security.cjs
+          node --check tests/mfit-v191.cjs
       - name: Run push security regression checks
         run: node tests/push-security.cjs
+      - name: Run v191 feature regression checks
+        run: node tests/mfit-v191.cjs
       - name: Install browser test dependency
         run: npm install --no-save playwright
       - name: Install Chromium
