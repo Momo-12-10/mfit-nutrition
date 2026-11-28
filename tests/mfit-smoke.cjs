@@ -122,7 +122,18 @@ const server = http.createServer((req,res)=>{
   await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-'+width+'.png'),fullPage:true});
   log('responsive screenshot saved: '+width+'px');
  }
+ await page.setViewportSize({width:390,height:900});
+ await page.evaluate(()=>window.showTab('shop'));
+ await page.locator('#mealBudgetPeriod').scrollIntoViewIfNeeded();
+ await page.locator('.meal-preferences summary').click();
+ await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-shop-390.png')});
+ await page.evaluate(()=>window.showTab('fitness'));
+ const calendar=page.locator('#mfit191Calendar');
+ if(await calendar.count()){const toggle=calendar.locator('.mfit-card-collapse-toggle');if(await toggle.count()&&await toggle.getAttribute('aria-expanded')==='false')await toggle.click();await calendar.scrollIntoViewIfNeeded();await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-fitness-390.png')});}
+ await page.evaluate(()=>window.showTab('settings'));
+ await page.locator('#appAppearance').scrollIntoViewIfNeeded();
+ await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-settings-390.png')});
  if(errors.length)throw new Error('Browser console/page errors: '+errors.join(' | '));
- console.log('PASS: 320/390/1280px responsive layouts, goals, accordions, existing data preservation, yesterday preview/copy, GPX import, share PNG, backup restore, offline reload; no console/page errors.');
+ console.log('PASS: 320/390/1280px responsive layouts, meal plan, fitness calendar, settings, goals, accordions, existing data preservation, yesterday preview/copy, GPX import, share PNG, backup restore, offline reload; no console/page errors.');
  await browser.close();server.close();
 })().catch(async err=>{console.error(err);process.exitCode=1;if(browser)await browser.close().catch(()=>{});server.close();});
