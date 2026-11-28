@@ -143,3 +143,9 @@ label:has(input[type=checkbox]),label:has(input[type=radio]),.reminder-toggle,.m
 @media(prefers-reduced-motion:reduce){
  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
+
+/* Enforce the minimum accessible text and target sizes across legacy controls. */
+body :where(small,.small,.muted,.caption,.settings-kicker,.pill){font-size:12px!important}
+body button:not(.theme-swatch){min-height:44px!important}
+body input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=color]),body select,body textarea{min-height:44px!important}
+body .theme-swatch{min-width:44px!important;min-height:44px!important}
