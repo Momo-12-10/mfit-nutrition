@@ -1,4 +1,4 @@
-// Release v180: first-run legal confirmation and simplified settings
+// Release v195: unified monochrome design system, consolidated CSS, SVG headings and accessible form labels\n// Release v180: first-run legal confirmation and simplified settings
 // Release v165: complete feature bundle and cache refresh
 // Release v155: isolated stylesheet to bypass stale cached CSS
 // Release v154: stronger black controls and compact section collapse menu
@@ -54,8 +54,8 @@
 // Release v179: complete privacy and training-tool bundle
 // Release v181: daily overview, local GPX import, mobility timer and share image
 // Release v182: Web Push receive handler and notification navigation
-const CACHE='mfit-performance-v194';
-const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./apple-touch-icon.png','./styles.css','./mfit-monochrome-v155.css','./app-core.js','./app.js','./mfit-plus.js','./i18n.js','./workout-planner.js','./mfit-advanced.js','./mfit-cloud.js','./mfit-pro.js','./mfit-ultimate.js','./mfit-extras.js','./mfit-next.js','./mfit-ui.js','./mfit-enhancements.js','./mfit-v165.js','./mfit-v165.css','./mfit-v181.css','./mfit-v181.js','./mfit-v191.js','./mfit-v193.js','./mfit-v194.js','./mfit-v194.css','./mfit-v191.css','./mfit-v192.css','./mfit-v193.css','./privacy.html','./impressum.html','./nutzungsbedingungen.html','./mfit-interval-timer.js','./mfit-matchday.js','./mfit-warmup.js','./mfit-plate-calculator.js','./mfit-workload.js','./mfit-symptom-diary.js','./mfit-season-plan.js'];
+const CACHE='mfit-performance-v195';
+const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./apple-touch-icon.png','./styles.css','./mfit-v195.css','./mfit-v195.js','./app-core.js','./app.js','./mfit-plus.js','./i18n.js','./workout-planner.js','./mfit-advanced.js','./mfit-cloud.js','./mfit-pro.js','./mfit-ultimate.js','./mfit-extras.js','./mfit-next.js','./mfit-ui.js','./mfit-enhancements.js','./mfit-v165.js','./mfit-v181.js','./mfit-v191.js','./mfit-v193.js','./mfit-v194.js','./privacy.html','./impressum.html','./nutzungsbedingungen.html','./mfit-interval-timer.js','./mfit-matchday.js','./mfit-warmup.js','./mfit-plate-calculator.js','./mfit-workload.js','./mfit-symptom-diary.js','./mfit-season-plan.js'];
 
 self.addEventListener('push',event=>{
  let data={title:'MFit Performance',body:'Du hast eine Erinnerung.',tag:'mfit-reminder'};
