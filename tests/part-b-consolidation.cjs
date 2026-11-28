@@ -1,0 +1,34 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const read = p => fs.readFileSync(p, 'utf8');
+const html = read('index.html');
+const js = read('mfit-v193.js');
+const css = read('mfit-v193.css');
+const sw = read('sw.js');
+const manifest = read('manifest.webmanifest');
+const i18n = read('i18n.js');
+
+for (const title of [
+ 'Dein Tag & Schnellzugriff','Kalorien & Makros heute','Wochen- & Monatsauswertung',
+ 'Performance-Coach & Ernährungstipps','Lebensmittel & Mahlzeiten-Favoriten',
+ 'Trainingsauswertung','Erholung & Check-in','Körper & Gewicht',
+ 'Ziele, Level & Meilensteine','Darstellung & App-Design',
+ 'Daten, Datenschutz & Backup','Timer-Werkzeuge','Kalender & Trainingsplanung'
+]) assert.ok(js.includes(title), 'Missing consolidated section: '+title);
+assert.match(js,/mfit193-merged-section/);
+assert.match(js,/mfit165Barcode.*remove/);
+assert.match(js,/mfit165ExerciseLibrary.*remove/);
+assert.match(js,/privacyCenter.*privacy-danger-zone.*remove/);
+assert.doesNotMatch(js,/localStorage\.(?:removeItem|clear)\(/,'Consolidation must not delete user storage');
+assert.match(js,/mfit_weekly_training_goal_v192/);
+assert.match(html,/mfit-version" content="193"/);
+assert.match(html,/mfit-v193\.js\?v=193/);
+assert.match(html,/mfit-v193\.css\?v=193/);
+assert.match(sw,/mfit-performance-v193/);
+assert.match(sw,/\.\/mfit-v193\.js/);
+assert.match(sw,/\.\/mfit-v193\.css/);
+assert.match(manifest,/v=193/);
+assert.match(i18n,/Dein Tag & Schnellzugriff/);
+assert.match(i18n,/Kalender & Trainingsplanung/);
+assert.match(css,/\.mfit193-merged-card/);
+console.log('PASS: MFit v193 Part B consolidation, translations, offline assets and non-destructive storage checks.');
