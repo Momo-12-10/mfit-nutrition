@@ -151,3 +151,6 @@ body input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=c
 body .theme-swatch{min-width:44px!important;min-height:44px!important}
 
 .mfit195-secondary-action{background:var(--panel2)!important;color:var(--text)!important;border-color:var(--line)!important;box-shadow:none!important}
+
+/* Nested legacy cards become simple sections rather than cards inside cards. */
+body .card .card{background:transparent!important;border:0!important;border-top:1px solid var(--line)!important;border-radius:0!important;box-shadow:none!important;padding:12px 0!important;margin:12px 0!important}
