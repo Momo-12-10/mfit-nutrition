@@ -24,7 +24,7 @@ assert.match(push, /delete\(\)\.eq\("endpoint", body\.endpoint\)\.eq\("device_to
 assert.match(push, /\.or\(job\.field \+ "\.is\.null," \+ job\.field \+ "\.neq\." \+ clock\.date\)/);
 assert.match(push, /timeZone, year: "numeric"/);
 assert.match(privacy, /gerätebezogene Berechtigung/);
-assert.match(privacy, /abmeldest, dich abmeldest/);
+assert.match(privacy, /dich abmeldest, dein Konto löschst/);
 
 const vienna = date => new Intl.DateTimeFormat('en-GB', {
   timeZone: 'Europe/Vienna', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
