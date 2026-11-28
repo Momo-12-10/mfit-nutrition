@@ -87,9 +87,15 @@ Deno.serve(async (req) => {
         updated_at: new Date().toISOString(),
       };
       const { data: existing, error: lookupError } = await admin
-        .from("push_subscriptions").select("device_token_hash").eq("endpoint", sub.endpoint).maybeSingle();
+        .from("push_subscriptions").select("device_token_hash,subscription").eq("endpoint", sub.endpoint).maybeSingle();
       if (lookupError) throw lookupError;
       if (existing) {
+        if (!existing.device_token_hash && (
+          existing.subscription?.keys?.p256dh !== sub.keys.p256dh ||
+          existing.subscription?.keys?.auth !== sub.keys.auth
+        )) {
+          return reply({ error: "Dieses ältere Push-Abo konnte diesem Browserprofil nicht sicher zugeordnet werden. Bitte Push einmal ausschalten und danach erneut aktivieren." }, 403);
+        }
         if (existing.device_token_hash && existing.device_token_hash !== tokenHash) {
           return reply({ error: "Dieses Push-Abo gehört bereits zu einem anderen Gerät oder Browserprofil." }, 403);
         }
