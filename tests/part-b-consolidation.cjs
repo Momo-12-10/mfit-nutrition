@@ -7,6 +7,8 @@ const css = read('mfit-v193.css');
 const sw = read('sw.js');
 const manifest = read('manifest.webmanifest');
 const i18n = read('i18n.js');
+const advanced = read('mfit-advanced.js');
+const meal = read('mfit-v165.js');
 
 for (const title of [
  'Dein Tag & Schnellzugriff','Kalorien & Makros heute','Wochen- & Monatsauswertung',
@@ -20,7 +22,8 @@ assert.match(js,/mfit165Barcode.*remove/);
 assert.match(js,/mfit165ExerciseLibrary.*remove/);
 assert.match(js,/privacyCenter.*privacy-danger-zone.*remove/);
 assert.doesNotMatch(js,/localStorage\.(?:removeItem|clear)\(/,'Consolidation must not delete user storage');
-assert.match(js,/mfit_weekly_training_goal_v192/);
+assert.match(advanced,/mfit_weekly_training_goal_v192/);
+assert.match(meal,/mfit_weekly_training_goal_v192/);
 assert.match(html,/mfit-version" content="193"/);
 assert.match(html,/mfit-v193\.js\?v=193/);
 assert.match(html,/mfit-v193\.css\?v=193/);
