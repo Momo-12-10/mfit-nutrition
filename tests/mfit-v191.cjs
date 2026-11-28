@@ -6,7 +6,7 @@ const timer = read('mfit-interval-timer.js');
 const html = read('index.html');
 const sw = read('sw.js');
 const privacy = read('privacy.html');
-const css = read('mfit-v191.css');
+const css = read('styles.css');
 
 for (const id of ['mfit191Calendar','mfit191RunBests','mfit191Equipment','mfit191Challenge','mfit191CoachReport','mfit191Accessibility']) {
   assert.ok(app.includes(id), 'Missing v191 feature: ' + id);
@@ -28,10 +28,10 @@ assert.match(timer, /speak\('Start'\)/);
 assert.match(timer, /speak\('Pause'\)/);
 assert.match(timer, /remaining<=3/);
 assert.match(timer, /mfit_timer_voice/);
-assert.match(html, /mfit-v191\.js\?v=194/);
-assert.match(html, /mfit-v191\.css\?v=194/);
-assert.match(html, /mfit-version" content="194"/);
-assert.match(sw, /mfit-performance-v194/);
+assert.match(html, /mfit-v191\.js\?v=195/);
+assert.match(html, /mfit-v191\.css\?v=195/);
+assert.match(html, /mfit-version" content="195"/);
+assert.match(sw, /mfit-performance-v195/);
 assert.match(sw, /mfit-v191\.js/);
 assert.match(sw, /mfit-v191\.css/);
 assert.match(privacy, /Gesundheitsdaten sind darin standardmäßig ausgeschlossen/);
