@@ -1,36 +1,45 @@
-name: MFit v191 quality checks
+name: MFit v192 Part A quality checks
 on:
-  push:
-    branches:
-      - release/mfit-performance-v181-daily-gpx-mobility
   pull_request:
     branches: [main]
+  push:
+    branches:
+      - cleanup/part-a-fixes-v192
 jobs:
   quality:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Check JavaScript syntax
+      - name: Check JavaScript and test syntax
         run: |
           set -e
-          for file in *.js; do
+          for file in *.js tests/*.cjs; do
             echo "Checking $file"
             node --check "$file"
           done
-          node --check tests/mfit-smoke.cjs
-          node --check tests/push-security.cjs
-          node --check tests/mfit-v191.cjs
-      - name: Run push security regression checks
-        run: node tests/push-security.cjs
-      - name: Run v191 feature regression checks
-        run: node tests/mfit-v191.cjs
+      - name: Run all non-browser tests
+        run: |
+          set -e
+          for file in tests/*.cjs; do
+            if [ "$file" != "tests/mfit-smoke.cjs" ]; then
+              echo "Running $file"
+              node "$file"
+            fi
+          done
       - name: Install browser test dependency
         run: npm install --no-save playwright
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
-      - name: Run 360px browser smoke tests
+      - name: Run responsive browser tests (320, 390 and 1280px)
         run: node tests/mfit-smoke.cjs
+      - name: Upload Part A screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mfit-v192-part-a-screenshots
+          path: artifacts/*.png
+          if-no-files-found: warn

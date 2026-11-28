@@ -65,7 +65,7 @@ async function enableReminder(){
   const permission=await Notification.requestPermission();
   if(permission!=='granted'){if(status)status.textContent='Mitteilungen nicht erlaubt. Bitte prüfe die Geräte-Einstellungen.';return;}
   if(status)status.textContent='Push wird eingerichtet …';
-  const registrationRequest=navigator.serviceWorker.register('./sw.js?v=191',{updateViaCache:'none'});
+  const registrationRequest=navigator.serviceWorker.register('./sw.js?v=192',{updateViaCache:'none'});
   await registrationRequest;
   const registration=await Promise.race([
    navigator.serviceWorker.ready,
@@ -124,7 +124,7 @@ document.querySelectorAll('.theme-swatch').forEach(b=>b.addEventListener('click'
 applyThemeColor(storage.get('mfit_theme_color')||defaultThemeColor,false);
 $('diet').addEventListener('change',renderRecipes);$('focus').addEventListener('change',renderRecipes);$('unit').addEventListener('change',recalculateNutrition);
 $('shoppingItems').innerHTML=['Skyr','Eier','Haferflocken','Reis','Linsen','Tofu','Hähnchenbrust','Brokkoli','Beeren','Bananen'].map(x=>`<label><input type="checkbox" value="${x}" style="width:auto;margin-right:8px">${x}</label>`).join('');
-renderPresets();render();renderSteps();renderWeightHistory();loadProfile();startSmartReminders();if($('workoutDate'))$('workoutDate').value=localDate();if(!storage.get('mfit_setup_done')&&!storage.get('mfit_profile'))$('setupOverlay').style.display='block';if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=191',{updateViaCache:'none'}).then(reg=>{reg.update();if(localStorage.getItem('mfit_push_enabled')==='1')reg.pushManager.getSubscription().then(sub=>sub?syncMfitPushSettings(sub):null).catch(error=>console.warn('MFit Push-Abo konnte nicht aktualisiert werden:',error));}).catch(error=>console.warn('MFit Service Worker:',error)));
+renderPresets();render();renderSteps();renderWeightHistory();loadProfile();startSmartReminders();if($('workoutDate'))$('workoutDate').value=localDate();if(!storage.get('mfit_setup_done')&&!storage.get('mfit_profile'))$('setupOverlay').style.display='block';if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=192',{updateViaCache:'none'}).then(reg=>{reg.update();if(localStorage.getItem('mfit_push_enabled')==='1')reg.pushManager.getSubscription().then(sub=>sub?syncMfitPushSettings(sub):null).catch(error=>console.warn('MFit Push-Abo konnte nicht aktualisiert werden:',error));}).catch(error=>console.warn('MFit Service Worker:',error)));
 
 /* v34 — Wochenplanung, Einkauf, Trainingsgenerator */
 const shopCatalogData=[
@@ -332,7 +332,16 @@ renderShopCatalog();renderShopItems();
 
 /* v93 — compact expandable sections for Profile and Fitness */
 (function(){
+ function hasAccordionContent(node){
+  if(!node)return false;
+  const clone=node.cloneNode(true);
+  clone.querySelectorAll('h1,h2,h3,h4,.settings-kicker,.pill,.mfit-accordion-chevron').forEach(el=>el.remove());
+  const text=(clone.textContent||'').replace(/\\s+/g,'').trim();
+  const control=clone.querySelector('input,select,textarea,button,[role="button"],canvas,svg,iframe,[data-content]');
+  return text.length>0||!!control;
+ }
  function makeAccordion(title,subtitle,items,open){
+  items=items.filter(hasAccordionContent);
   if(!items.length)return null;
   const details=document.createElement('details');details.className='mfit-compact-accordion';details.open=!!open;
   const summary=document.createElement('summary');
@@ -356,9 +365,8 @@ renderShopCatalog();renderShopItems();
  function initSettings(){
   const section=document.getElementById('settings');if(!section||section.dataset.settingsReady)return;
   section.dataset.settingsReady='1';
-  const ids=['appAppearance','appReminders','privacyCenter','dataBackup','mfitAppStatus','mfitDataTools'];
-  ids.forEach(id=>{const card=document.getElementById(id);if(!card)return;const title=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';const subtitle=id==='appAppearance'?'Farben und Darstellung':id==='appReminders'?'Mitteilungen und Erinnerungen':id==='privacyCenter'?'Datenschutz und Datenkontrolle':id==='dataBackup'?'Daten sichern und wiederherstellen':id==='mfitAppStatus'?'Installation, Offline-Funktion und Systemcheck':'Speicher und lokale Daten verwalten';section.appendChild(makeAccordion(title,subtitle,[card],false));card.classList.add('mfit-accordion-inner');});
-  ['mfitAppPreferences','mfitLanguageSettings','mfitAboutSettings'].forEach(id=>{const card=document.getElementById(id);if(!card)return;const title=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';const subtitle=id==='mfitAppPreferences'?'Vibration und Animationen':id==='mfitLanguageSettings'?'Sprache der App':'Versionsinformationen';section.appendChild(makeAccordion(title,subtitle,[card],false));card.classList.add('mfit-accordion-inner');});
+  const ids=['appAppearance','appReminders','privacyCenter','dataBackup','mfitAppStatus','mfitDataTools','mfitAppPreferences','mfitLanguageSettings','mfitAboutSettings'];
+  ids.forEach(id=>{const card=document.getElementById(id);if(!card)return;card.classList.remove('mfit-accordion-inner');section.appendChild(card);});
   const vibration=document.getElementById('mfitVibrationEnabled'),motion=document.getElementById('mfitReducedMotion');
   if(vibration)vibration.checked=localStorage.getItem('mfit_vibration_enabled')!=='false';
   if(motion){motion.checked=localStorage.getItem('mfit_reduced_motion')==='true';document.documentElement.classList.toggle('mfit-reduced-motion',motion.checked);}const contrast=document.getElementById('mfitHighContrast'),large=document.getElementById('mfitLargeText');if(contrast){contrast.checked=localStorage.getItem('mfit_high_contrast')==='true';document.documentElement.classList.toggle('mfit-high-contrast',contrast.checked);}if(large){large.checked=localStorage.getItem('mfit_large_text')==='true';document.documentElement.classList.toggle('mfit-large-text',large.checked);}
@@ -377,7 +385,7 @@ renderShopCatalog();renderShopItems();
   [...section.children].filter(el=>el.classList.contains('card')&&el.id!=='settingsHub').forEach((card,i)=>{
    const heading=card.querySelector('h2')?.textContent?.trim()||'Einstellungen';
    const subtitle=card.id==='settingsHub'?'Persönliche App-Einstellungen':card.id==='profileGoals'?'Persönliche Angaben und Trainingsziele':card.id==='appAppearance'?'Farben und Darstellung':card.id==='appReminders'?'Erinnerungen und Check-ins':card.id==='weightHistory'?'Dein Gewichtsverlauf':card.id==='dataBackup'?'Daten sichern und wiederherstellen':card.id==='privacyCenter'?'Datenschutz und Datenkontrolle':'Hinweise und Empfehlungen';
-   const wrap=makeAccordion(heading,subtitle,[card],false);section.appendChild(wrap);card.classList.add('mfit-accordion-inner');
+   const wrap=makeAccordion(heading,subtitle,[card],false);if(wrap){section.appendChild(wrap);card.classList.add('mfit-accordion-inner');}else card.remove();
   });
  }
  function initFitness(){
@@ -411,7 +419,7 @@ renderShopCatalog();renderShopItems();
    else {groups.push({title:'Weitere Trainingsdaten',sub:'Zusätzliche Informationen',items:[el]});}
    i++;
   }
-  groups.forEach(g=>{const wrap=makeAccordion(g.title,g.sub,g.items,g.title==='Trainingsplan erstellen');section.appendChild(wrap);});
+  groups.forEach(g=>{const wrap=makeAccordion(g.title,g.sub,g.items,g.title==='Trainingsplan erstellen');if(wrap)section.appendChild(wrap);else g.items.forEach(node=>node.remove());});
  }
  function openMfitAccordionTarget(id){
   const target=document.getElementById(id);if(!target)return;

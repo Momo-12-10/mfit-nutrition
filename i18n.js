@@ -105,6 +105,60 @@ Object.assign(dictionaries.ru,{
  "Mit Tab und Umschalt+Tab durch Buttons, Eingaben und Navigation gehen.":"Используйте Tab и Shift+Tab для перехода между кнопками, полями и навигацией.","Fokusrahmen muss jederzeit gut sichtbar sein; Enter oder Leertaste aktiviert Buttons.":"Рамка фокуса должна быть хорошо видна; Enter или пробел активирует кнопки.","Formularfelder brauchen sichtbare Beschriftungen; Fehlermeldungen sollen verständlich sein.":"У полей формы должны быть видимые подписи, а сообщения об ошибках — понятными.","Statusmeldungen und dynamische Ergebnisse sollen von Screenreadern angekündigt werden.":"Экранный диктор должен озвучивать статусы и динамические результаты.","iPhone: VoiceOver aktivieren und Navigation sowie Kalender testen.":"iPhone: включите VoiceOver и проверьте навигацию и календарь.","Android: TalkBack aktivieren und Navigation sowie Kalender testen.":"Android: включите TalkBack и проверьте навигацию и календарь.","Die vorhandenen Einstellungen „Größere Schrift“, „Kontrast erhöhen“ und „Bewegungen reduzieren“ bleiben erhalten.":"Существующие настройки увеличения шрифта, контраста и уменьшения движения сохраняются.","Bedienungseinstellungen öffnen":"Открыть настройки доступности",
  "Sprachansagen aktivieren (Start, Pause, letzte 3 Sekunden)":"Включить голосовые объявления (старт, пауза, последние 3 секунды)","Arbeits- und Pausenphasen mit Runden, Signalton, Vibration und optionalen Sprachansagen.":"Рабочие и паузные интервалы с раундами, звуковым сигналом, вибрацией и голосовыми объявлениями."
 });
+
+Object.assign(dictionaries.en,{
+ "DEIN PERFORMANCE-BEREICH":"YOUR PERSONAL PERFORMANCE SPACE",
+ "ERNÄHRUNG · TRAINING · FORTSCHRITT":"NUTRITION · TRAINING · PROGRESS",
+ "DAILY MINDSET":"DAILY MINDSET","MFIT PERFORMANCE OVERVIEW":"MFIT PERFORMANCE OVERVIEW",
+ "DEIN RÜCKBLICK":"YOUR WEEKLY RECAP","DEIN TRAININGSFOKUS":"YOUR TRAINING FOCUS",
+ "DEINE WOCHE":"YOUR WEEK","7-Tage-Trainingsplan":"7-day training plan",
+ "Tippe auf einen Wochentag, um Übungen und Details zu öffnen.":"Select a weekday to view exercises and details.",
+ "Trainingstage":"Training days","Ruhetag – Muskeln und Nervensystem erholen sich":"Rest day – allow your muscles and nervous system to recover",
+ "Erholung, lockere Bewegung oder Spaziergang":"Recovery, gentle movement or a walk",
+ "Deine Einstellungen kannst du jederzeit ändern und eine neue Woche erstellen.":"You can change your settings and create a new week at any time.",
+ "Deine Einstellungen kannst du jederzeit ändern.":"You can change your settings at any time.",
+ "Budget gilt pro":"Budget applies per","Tag":"Day","Übung":"Exercise",
+ "Unverträglichkeiten & Ausschlüsse":"Intolerances & exclusions",
+ "Optional · antippen zum Auswählen":"Optional · tap to select",
+ "Lebensmittel, die vermieden werden sollen":"Foods to avoid",
+ "Wähle alles aus, was auf dich zutrifft. Bei Allergien immer Zutatenlisten und mögliche Spuren prüfen.":"Select all that apply. If you have allergies, always check ingredient lists and possible traces.",
+ "Deine abwechslungsreiche Woche – passend zu deinen Vorlieben.":"A varied week tailored to your preferences.",
+ "Essensbudget (€)":"Food budget (€)","7-Tage-Ernährungsplan":"7-day meal plan",
+ "Training, Ernährung und Regeneration – gemeinsam im Blick.":"Training, nutrition and recovery in one overview.",
+ "Kleine Schritte zählen":"Every step counts",
+ "Deine Daten werden ausgewertet …":"Your data is being analysed…",
+ "Trage Ernährung, Training und Regeneration ein.":"Log nutrition, training and recovery.",
+ "Noch keine Muskelgruppen dokumentiert.":"No muscle groups recorded yet.",
+ "Deine gespeicherten Tagesrichtwerte:":"Your saved daily targets:",
+ "kein Kalorienziel":"no calorie target","kein Proteinziel":"no protein target"
+});
+Object.assign(dictionaries.ru,{
+ "DEIN PERFORMANCE-BEREICH":"ВАШЕ ПРОСТРАНСТВО ДЛЯ РЕЗУЛЬТАТОВ",
+ "ERNÄHRUNG · TRAINING · FORTSCHRITT":"ПИТАНИЕ · ТРЕНИРОВКИ · ПРОГРЕСС",
+ "DAILY MINDSET":"НАСТРОЙ НА ДЕНЬ","MFIT PERFORMANCE OVERVIEW":"ОБЗОР MFIT PERFORMANCE",
+ "DEIN RÜCKBLICK":"ИТОГИ НЕДЕЛИ","DEIN TRAININGSFOKUS":"ВАШ ТРЕНИРОВОЧНЫЙ ФОКУС",
+ "DEINE WOCHE":"ВАША НЕДЕЛЯ","7-Tage-Trainingsplan":"План тренировок на 7 дней",
+ "Tippe auf einen Wochentag, um Übungen und Details zu öffnen.":"Выберите день недели, чтобы увидеть упражнения и подробности.",
+ "Trainingstage":"Дни тренировок","Ruhetag – Muskeln und Nervensystem erholen sich":"День отдыха — дайте мышцам и нервной системе восстановиться",
+ "Erholung, lockere Bewegung oder Spaziergang":"Восстановление, лёгкая активность или прогулка",
+ "Deine Einstellungen kannst du jederzeit ändern und eine neue Woche erstellen.":"Вы можете изменить настройки и составить новую неделю в любое время.",
+ "Deine Einstellungen kannst du jederzeit ändern.":"Вы можете изменить настройки в любое время.",
+ "Budget gilt pro":"Бюджет на","Tag":"День","Übung":"Упражнение",
+ "Unverträglichkeiten & Ausschlüsse":"Непереносимость и исключения",
+ "Optional · antippen zum Auswählen":"Необязательно · нажмите для выбора",
+ "Lebensmittel, die vermieden werden sollen":"Продукты, которых следует избегать",
+ "Wähle alles aus, was auf dich zutrifft. Bei Allergien immer Zutatenlisten und mögliche Spuren prüfen.":"Выберите всё подходящее. При аллергии всегда проверяйте состав и возможные следы аллергенов.",
+ "Deine abwechslungsreiche Woche – passend zu deinen Vorlieben.":"Разнообразное меню на неделю с учётом ваших предпочтений.",
+ "Essensbudget (€)":"Бюджет на питание (€)","7-Tage-Ernährungsplan":"План питания на 7 дней",
+ "Training, Ernährung und Regeneration – gemeinsam im Blick.":"Тренировки, питание и восстановление — всё в одном обзоре.",
+ "Kleine Schritte zählen":"Каждый небольшой шаг важен",
+ "Deine Daten werden ausgewertet …":"Ваши данные анализируются…",
+ "Trage Ernährung, Training und Regeneration ein.":"Добавляйте данные о питании, тренировках и восстановлении.",
+ "Noch keine Muskelgruppen dokumentiert.":"Группы мышц ещё не записаны.",
+ "Deine gespeicherten Tagesrichtwerte:":"Ваши сохранённые дневные цели:",
+ "kein Kalorienziel":"нет цели по калориям","kein Proteinziel":"нет цели по белку"
+});
+
 function tr(value,lang){if(lang==='de-AT'||!value)return value;let out=value;const dict=dictionaries[lang]||{};const word=c=>!!c&&/[A-Za-z0-9À-žА-яЁё_]/.test(c);for(const k of Object.keys(dict).sort((a,b)=>b.length-a.length)){let from=0,pos;while((pos=out.indexOf(k,from))!==-1){const left=word(k[0])&&word(out[pos-1]),right=word(k[k.length-1])&&word(out[pos+k.length]);if(!left&&!right){out=out.slice(0,pos)+dict[k]+out.slice(pos+k.length);from=pos+dict[k].length}else from=pos+k.length}}return out}
 function scan(root,lang){
  if(!root)return;

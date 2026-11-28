@@ -2,14 +2,14 @@
 <html lang="de-AT">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0a0d12"><meta name="description" content="MFit Performance – Ernährung, Fitness und Alltag in einer App"><meta name="mfit-version" content="191">
-<link rel="manifest" href="manifest.webmanifest?v=191">
-<link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=191">
-<link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=191">
+<meta name="theme-color" content="#0a0d12"><meta name="description" content="MFit Performance – Ernährung, Fitness und Alltag in einer App"><meta name="mfit-version" content="192">
+<link rel="manifest" href="manifest.webmanifest?v=192">
+<link rel="apple-touch-icon" sizes="180x180" href="https://momo-12-10.github.io/mfit-nutrition/apple-touch-icon.png?v=192">
+<link rel="icon" type="image/svg+xml" href="https://momo-12-10.github.io/mfit-nutrition/icon.svg?v=192">
 <title>MFit Performance</title>
-<link rel="stylesheet" href="./styles.css?v=191">
-<link rel="stylesheet" href="./mfit-monochrome-v155.css?v=191">
-<link rel="stylesheet" href="./mfit-v165.css?v=191"><link rel="stylesheet" href="./mfit-v181.css?v=191"><link rel="stylesheet" href="./mfit-v191.css?v=191">
+<link rel="stylesheet" href="./styles.css?v=192">
+<link rel="stylesheet" href="./mfit-monochrome-v155.css?v=192">
+<link rel="stylesheet" href="./mfit-v165.css?v=192"><link rel="stylesheet" href="./mfit-v181.css?v=192"><link rel="stylesheet" href="./mfit-v191.css?v=192"><link rel="stylesheet" href="./mfit-v192.css?v=192">
 <style>
 .mfit-legal-gate[hidden]{display:none!important}
 .mfit-legal-gate{position:fixed;inset:0;z-index:100000;display:grid;place-items:center;overflow-y:auto;padding:22px 14px;background:rgba(5,8,12,.96);backdrop-filter:blur(16px)}
@@ -27,9 +27,10 @@
 .mfit-legal-footnote{display:block;margin-top:13px;color:#929daa;line-height:1.5;text-align:center}
 @media(max-width:420px){.mfit-legal-card{padding:22px 17px;border-radius:18px}.mfit-legal-card h2{font-size:24px}}
 </style>
-\n</head>
+
+</head>
 <body>
-<header class="brand-header mfit-app-header"><div class="mfit-header-inner"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">YOUR PERSONAL PERFORMANCE SPACE</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Ernährung · Training · Fortschritt</p></div></div><div class="mfit-header-actions"><button type="button" class="mfit-header-profile" onclick="showTab('profile')" aria-label="Profil öffnen" title="Mein Profil"><span>↗</span></button><button type="button" class="header-settings" onclick="mfitToggleSettingsMenu()" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mfitSettingsMenu" title="Menü">⚙</button></div></div><div class="mfit-header-foot"><span class="mfit-header-status"><i></i> DEIN FITNESS & NUTRITION HUB</span><span class="mfit-header-edition">MFIT PERFORMANCE</span></div></header>
+<header class="brand-header mfit-app-header"><div class="mfit-header-inner"><div class="brand-lockup"><img src="./icon.svg" class="brand-logo" alt="MFit Logo"><div class="brand-copy"><div class="brand-eyebrow">DEIN PERFORMANCE-BEREICH</div><h1>M<span>FIT</span> <small>PERFORMANCE</small></h1><p>Ernährung · Training · Fortschritt</p></div></div><div class="mfit-header-actions"><button type="button" class="mfit-header-profile" onclick="showTab('profile')" aria-label="Profil öffnen" title="Mein Profil"><span>↗</span></button><button type="button" class="header-settings" onclick="mfitToggleSettingsMenu()" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mfitSettingsMenu" title="Menü">⚙</button></div></div><div class="mfit-header-foot"><span class="mfit-header-status"><i></i> ERNÄHRUNG · TRAINING · FORTSCHRITT</span><span class="mfit-header-edition">MFIT PERFORMANCE</span></div></header>
 <div id="mfitSettingsMenu" class="mfit-settings-menu hidden" onclick="mfitCloseSettingsMenu()" aria-hidden="true">
  <div class="mfit-settings-popover" role="dialog" aria-modal="true" aria-labelledby="mfitMenuTitle" onclick="event.stopPropagation()">
   <div class="mfit-settings-popover-head"><div><span class="settings-kicker">MFIT QUICK MENU</span><h2 id="mfitMenuTitle">Dein Menü</h2></div><button type="button" class="mfit-menu-close" onclick="mfitCloseSettingsMenu()" aria-label="Menü schließen">×</button></div>
@@ -286,7 +287,7 @@
  <p class="muted">Vor dem Löschen ein Backup herunterladen. Das Löschen betrifft nur MFit-Daten in diesem Browser auf diesem Gerät. Es gibt ein MFit-Konto mit manueller Cloud-Sicherung; eine automatische Synchronisierung findet nicht statt.</p>
  <div id="mfitDataToolsStatus" class="muted" aria-live="polite"></div>
 </div>
-<div class="card" id="mfitAboutSettings"><h2>ⓘ Über MFit Performance</h2><div class="privacy-info-list"><div><b>Version 191 · Web-App</b><p>MFit ist derzeit eine installierbare Website (PWA), noch keine native App im Apple App Store oder Google Play Store.</p></div><div><b>Deine Daten</b><p>Profil-, Ernährungs-, Trainings- und Fortschrittsdaten werden lokal in diesem Browser gespeichert. Es gibt ein MFit-Konto mit manueller Cloud-Sicherung; eine automatische Synchronisierung findet nicht statt.</p></div><div><b>Externe Schnittstellen</b><p>Die Produktsuche kann Barcode- und Suchanfragen an Open Food Facts senden. Der Barcode-Scanner lädt bei Bedarf die Bibliothek html5-qrcode von unpkg.com. Rezeptbilder können von externen Bildservern geladen werden.</p></div></div></div>
+<div class="card" id="mfitAboutSettings"><h2>ⓘ Über MFit Performance</h2><div class="privacy-info-list"><div><b>Version 192 · Web-App</b><p>MFit ist derzeit eine installierbare Website (PWA), noch keine native App im Apple App Store oder Google Play Store.</p></div><div><b>Deine Daten</b><p>Profil-, Ernährungs-, Trainings- und Fortschrittsdaten werden lokal in diesem Browser gespeichert. Es gibt ein MFit-Konto mit manueller Cloud-Sicherung; eine automatische Synchronisierung findet nicht statt.</p></div><div><b>Externe Schnittstellen</b><p>Die Produktsuche kann Barcode- und Suchanfragen an Open Food Facts senden. Der Barcode-Scanner lädt bei Bedarf die Bibliothek html5-qrcode von unpkg.com. Rezeptbilder können von externen Bildservern geladen werden.</p></div></div></div>
 
 </section>
 <section id="profile" class="hidden">
@@ -335,9 +336,9 @@
 </section>
 </main>
 <nav class="mfit-nav"><button class="active" data-tab="home" onclick="showTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button><button data-tab="track" onclick="showTab('track')"><span class="nav-icon">📊</span><span class="nav-label">Track</span></button><button data-tab="recipes" onclick="showTab('recipes')"><span class="nav-icon">🥗</span><span class="nav-label">Rezepte</span></button><button data-tab="shop" onclick="showTab('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></button><button data-tab="fitness" onclick="showTab('fitness')"><span class="nav-icon">💪</span><span class="nav-label">Fitness</span></button><button data-tab="profile" onclick="showTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></button></nav>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./app-core.js?v=191"></script><script src="./app.js?v=191"></script><script src="./mfit-plus.js?v=191"></script><script src="./workout-planner.js?v=191"></script><script src="./mfit-advanced.js?v=191"></script>
-<script src="./i18n.js?v=191"></script><script src="./mfit-cloud.js?v=191"></script><script src="./mfit-pro.js?v=191"></script><script src="./mfit-ultimate.js?v=191"></script><script src="./mfit-extras.js?v=191"></script><script src="./mfit-next.js?v=191"></script><script src="./mfit-ui.js?v=191"></script>
-<script src="./mfit-enhancements.js?v=191"></script><script src="./mfit-v165.js?v=191"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./app-core.js?v=192"></script><script src="./app.js?v=192"></script><script src="./mfit-plus.js?v=192"></script><script src="./workout-planner.js?v=192"></script><script src="./mfit-advanced.js?v=192"></script>
+<script src="./i18n.js?v=192"></script><script src="./mfit-cloud.js?v=192"></script><script src="./mfit-pro.js?v=192"></script><script src="./mfit-ultimate.js?v=192"></script><script src="./mfit-extras.js?v=192"></script><script src="./mfit-next.js?v=192"></script><script src="./mfit-ui.js?v=192"></script>
+<script src="./mfit-enhancements.js?v=192"></script><script src="./mfit-v165.js?v=192"></script>
 
 
 <script>
@@ -410,17 +411,17 @@
   toggle.addEventListener('click',()=>{card.classList.toggle('mfit-card-collapsed');const next=safeRead();next[key]=card.classList.contains('mfit-card-collapsed');safeWrite(next);sync()});
   sync();
  }
- function scan(root){if(root.matches?.('.card'))enhance(root);root.querySelectorAll?.('.card').forEach(enhance)}
+ function scan(root){const cards=[];if(root.matches?.('.card'))cards.push(root);root.querySelectorAll?.('.card').forEach(card=>cards.push(card));cards.forEach(card=>{if(!card.closest('details.mfit-compact-accordion'))enhance(card)})}
  function start(){scan(document);const observer=new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===1)scan(node)})));observer.observe(document.body,{childList:true,subtree:true})}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
 </script>
-<script src="./mfit-interval-timer.js?v=191"></script>
-<script src="./mfit-matchday.js?v=191"></script>
-<script src="./mfit-warmup.js?v=191"></script>
-<script src="./mfit-plate-calculator.js?v=191"></script>
-<script src="./mfit-workload.js?v=191"></script>
-<script src="./mfit-symptom-diary.js?v=191"></script>
-<script src="./mfit-season-plan.js?v=191"></script>
-<script src="./mfit-v181.js?v=191"></script><script src="./mfit-v191.js?v=191"></script>
+<script src="./mfit-interval-timer.js?v=192"></script>
+<script src="./mfit-matchday.js?v=192"></script>
+<script src="./mfit-warmup.js?v=192"></script>
+<script src="./mfit-plate-calculator.js?v=192"></script>
+<script src="./mfit-workload.js?v=192"></script>
+<script src="./mfit-symptom-diary.js?v=192"></script>
+<script src="./mfit-season-plan.js?v=192"></script>
+<script src="./mfit-v181.js?v=192"></script><script src="./mfit-v191.js?v=192"></script>
 </body></html>

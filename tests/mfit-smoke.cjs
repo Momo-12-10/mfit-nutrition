@@ -2,6 +2,7 @@ const { chromium } = require('playwright');
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
+fs.mkdirSync(path.resolve(__dirname, '..', 'artifacts'), {recursive:true});
 const root = path.resolve(__dirname, '..');
 const mime = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.png':'image/png'};
 let browser;
@@ -42,6 +43,15 @@ const server = http.createServer((req,res)=>{
  await page.waitForSelector('#mfit181Gpx',{state:'attached'});
  await page.waitForSelector('#mfit181Share',{state:'attached'});
  log('new cards mounted');
+ await page.waitForSelector('#mfit165MealSuggestions');
+ const goalSuggestion=await page.locator('#mfit165MealSuggestions').innerText();
+ if(!goalSuggestion.includes('2640 kcal')||!goalSuggestion.includes('123 g Protein')||goalSuggestion.includes('kein Kalorienziel'))throw new Error('Meal suggestions did not apply the 2800 kcal / 150 g targets to the seeded 160 kcal / 27 g entry: '+goalSuggestion);
+ const emptyAccordions=await page.evaluate(()=>[...document.querySelectorAll('#settings details.mfit-compact-accordion')].filter(d=>{const c=d.querySelector('.mfit-accordion-content');return !c||(!c.textContent.trim()&&!c.querySelector('input,select,textarea,button,[role="button"],canvas,svg'))}).map(d=>d.querySelector('summary')?.innerText||'empty'));
+ if(emptyAccordions.length)throw new Error('Empty settings accordions remain: '+emptyAccordions.join(' | '));
+ const sharedGoals=await page.evaluate(()=>({profile:document.getElementById('mfitChallengeWorkouts')?.value,fitness:document.getElementById('mfit165WorkoutGoal')?.value}));
+ if(sharedGoals.profile!==sharedGoals.fitness)throw new Error('Weekly workout goals differ between profile and fitness: '+JSON.stringify(sharedGoals));
+ const calendarMarkers=await page.evaluate(()=>({training:document.querySelector('.mfit191-dots .training')?.textContent,competition:document.querySelector('.mfit191-dots .competition')?.textContent,rest:document.querySelector('.mfit191-dots .rest')?.textContent,phase:document.querySelector('.mfit191-dots .phase')?.textContent}));
+ log('checking Part A content');
  const layout=await page.evaluate(()=>({width:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,buttons:[...document.querySelectorAll('button')].filter(b=>b.getClientRects().length).map(b=>{const r=b.getBoundingClientRect();return {text:b.textContent.trim().slice(0,30),left:r.left,right:r.right}}).filter(x=>x.left < -1 || x.right > document.documentElement.clientWidth+1)}));
  if(layout.scrollWidth>layout.width+1)throw new Error('Horizontal page overflow at 360px: '+JSON.stringify(layout));
  if(layout.buttons.length)throw new Error('Buttons outside viewport at 360px: '+JSON.stringify(layout.buttons.slice(0,8)));
@@ -102,7 +112,28 @@ const server = http.createServer((req,res)=>{
  await page.waitForSelector('#mfitTodayPanel');
  await context.setOffline(false);
  log('offline page loaded');
+ await context.setOffline(false);
+ for(const width of [320,390,1280]){
+  await page.setViewportSize({width,height:900});
+  await page.waitForTimeout(150);
+  const check=await page.evaluate(()=>({width:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,offscreen:[...document.querySelectorAll('button')].filter(b=>b.getClientRects().length).map(b=>{const r=b.getBoundingClientRect();return {text:b.textContent.trim().slice(0,24),left:r.left,right:r.right}}).filter(x=>x.left < -1 || x.right > document.documentElement.clientWidth+1)}));
+  if(check.scrollWidth>check.width+1)throw new Error('Horizontal overflow at '+width+'px: '+JSON.stringify(check));
+  if(check.offscreen.length)throw new Error('Off-screen button at '+width+'px: '+JSON.stringify(check.offscreen.slice(0,5)));
+  await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-'+width+'.png'),fullPage:true});
+  log('responsive screenshot saved: '+width+'px');
+ }
+ await page.setViewportSize({width:390,height:900});
+ await page.evaluate(()=>window.showTab('shop'));
+ await page.locator('#mealBudgetPeriod').scrollIntoViewIfNeeded();
+ await page.locator('.meal-preferences summary').click();
+ await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-shop-390.png')});
+ await page.evaluate(()=>window.showTab('fitness'));
+ const calendar=page.locator('#mfit191Calendar');
+ if(await calendar.count()){const toggle=calendar.locator('.mfit-card-collapse-toggle');if(await toggle.count()&&await toggle.getAttribute('aria-expanded')==='false')await toggle.click();await calendar.scrollIntoViewIfNeeded();await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-fitness-390.png')});}
+ await page.evaluate(()=>window.showTab('settings'));
+ await page.locator('#appAppearance').scrollIntoViewIfNeeded();
+ await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-settings-390.png')});
  if(errors.length)throw new Error('Browser console/page errors: '+errors.join(' | '));
- console.log('PASS: 360px layout, existing data preservation, yesterday preview/copy, GPX import, share PNG, backup inclusion, offline reload; no console/page errors.');
+ console.log('PASS: 320/390/1280px responsive layouts, meal plan, fitness calendar, settings, goals, accordions, existing data preservation, yesterday preview/copy, GPX import, share PNG, backup restore, offline reload; no console/page errors.');
  await browser.close();server.close();
 })().catch(async err=>{console.error(err);process.exitCode=1;if(browser)await browser.close().catch(()=>{});server.close();});
