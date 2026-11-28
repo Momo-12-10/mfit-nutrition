@@ -1,8 +1,8 @@
 const { chromium } = require('playwright');
 const http = require('node:http');
 const fs = require('node:fs');
-fs.mkdirSync(path.resolve(__dirname, '..', 'artifacts'), {recursive:true});
 const path = require('node:path');
+fs.mkdirSync(path.resolve(__dirname, '..', 'artifacts'), {recursive:true});
 const root = path.resolve(__dirname, '..');
 const mime = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.png':'image/png'};
 let browser;
