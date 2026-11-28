@@ -66,7 +66,7 @@ const server = http.createServer((req,res)=>{
  log('v195 monochrome design, consolidated CSS, SVG headings, labels and accessible target sizes verified');
  const mainNav=page.locator('.mfit194-nav button');
  if(await mainNav.count()!==5)throw new Error('Part C must expose exactly five main navigation items');
- const mainLabels=await mainNav.allTextContents();
+ const mainLabels=await mainNav.evaluateAll(buttons=>buttons.map(button=>button.getAttribute('aria-label')));
  if(mainLabels.map(x=>x.trim()).join('|')!=='Heute|Ernährung|Training|Fortschritt|Profil')throw new Error('Unexpected Part C main navigation: '+JSON.stringify(mainLabels));
  await page.locator('.mfit194-nav button[data-main="nutrition"]').click();
  if(!(await page.locator('#track').isVisible())||await page.locator('.mfit194-subnav button').count()!==3)throw new Error('Nutrition tab or its three subpages did not open');
