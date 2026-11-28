@@ -82,6 +82,7 @@ const server = http.createServer((req,res)=>{
  const copied=await page.evaluate(()=>JSON.parse(localStorage.getItem('mfit_entries')||'[]').filter(x=>x.name==='Test Banane').length);
  if(copied!==2)throw new Error('Yesterday copy did not append the entry as expected');
  await page.evaluate(()=>window.showTab('fitness'));
+ await page.locator('#fitness').waitFor({state:'visible'});
  log('checking yesterday copy');
  const gpxCard=page.locator('#mfit181Gpx');
  const trainingGroup=page.locator('.mfit193-merged-card').filter({has:gpxCard});if(await trainingGroup.locator('.mfit193-merged-toggle').getAttribute('aria-expanded')==='false')await trainingGroup.locator('.mfit193-merged-toggle').click();
@@ -140,6 +141,7 @@ const server = http.createServer((req,res)=>{
  const calendar=page.locator('#mfit191Calendar');
  if(await calendar.count()){const toggle=page.locator('.mfit193-merged-card').filter({has:calendar}).locator('.mfit193-merged-toggle');if(await toggle.count()&&await toggle.getAttribute('aria-expanded')==='false')await toggle.click();await calendar.scrollIntoViewIfNeeded();await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-fitness-390.png')});}
  await page.evaluate(()=>window.showTab('settings'));
+ await page.locator('#settings').waitFor({state:'visible'});
  const designGroup=page.locator('.mfit193-merged-card').filter({has:page.locator('#appAppearance')});if(await designGroup.locator('.mfit193-merged-toggle').getAttribute('aria-expanded')==='false')await designGroup.locator('.mfit193-merged-toggle').click();
  await page.locator('#appAppearance').scrollIntoViewIfNeeded();
  await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-settings-390.png')});
