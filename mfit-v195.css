@@ -156,3 +156,43 @@ body .theme-swatch{min-width:44px!important;min-height:44px!important}
 body .card .card{background:transparent!important;border:0!important;border-top:1px solid var(--line)!important;border-radius:0!important;box-shadow:none!important;padding:12px 0!important;margin:12px 0!important}
 
 .mfit194-subnav{position:sticky;top:0;z-index:1002;background:var(--bg)}
+
+/* Final monochrome hierarchy: primary actions are medium graphite; all navigation and toggles stay quiet. */
+body button:not(.secondary):not(.danger):not(.theme-swatch):not(.mfit-card-collapse-toggle):not(.mfit193-merged-toggle):not(.mfit-collapse-menu-toggle){
+ background:#343b45!important;color:#f2f4f6!important;border:1px solid #4a535f!important;box-shadow:none!important
+}
+body button.mfit195-primary-action{
+ background:#3b444f!important;color:#fff!important;border-color:#626d7a!important
+}
+body button.mfit195-secondary-action,body button.secondary,body button.danger{
+ background:#1b2027!important;color:#e5e9ee!important;border-color:#3a424c!important;box-shadow:none!important
+}
+body .mfit193-merged-toggle{
+ width:100%;min-height:48px;padding:12px 15px!important;border:1px solid #303640!important;border-radius:14px!important;
+ background:#191e25!important;color:#eef1f4!important;font-size:15px!important;font-weight:650!important;letter-spacing:0!important
+}
+body .mfit193-merged-toggle .mfit193-chevron{color:#c2cad4!important}
+body .mfit194-nav button{
+ min-height:54px!important;background:transparent!important;color:#aeb7c2!important;border:1px solid transparent!important;
+ box-shadow:none!important;font-size:12px!important
+}
+body .mfit194-nav button.active{
+ background:#282f38!important;color:#fff!important;border-color:#414a55!important
+}
+body .mfit194-nav button span{color:inherit!important}
+body .mfit194-subnav button{
+ background:#171b21!important;color:#b9c1cb!important;border:1px solid #343b45!important
+}
+body .mfit194-subnav button.active{background:#303843!important;color:#fff!important;border-color:#606b78!important}
+body .mfit-header-actions button{
+ background:#1b2027!important;color:#edf0f4!important;border:1px solid #3a424c!important
+}
+body .mfit-section-controls button,body .mfit-card-collapse-toggle,body .mfit-collapse-menu-toggle{
+ background:#1b2027!important;color:#dce1e7!important;border:1px solid #3a424c!important;box-shadow:none!important
+}
+body .mfit-settings-popover button,body #settings button:not(.danger):not(.theme-swatch):not(.mfit-card-collapse-toggle):not(.mfit193-merged-toggle){
+ background:#252b33!important;color:#edf0f4!important;border-color:#414954!important;box-shadow:none!important
+}
+body #settings button.mfit195-primary-action{background:#3b444f!important;color:#fff!important;border-color:#626d7a!important}
+.brand-copy h1{white-space:nowrap;font-size:18px}
+@media(max-width:360px){.brand-copy h1{font-size:17px}.brand-copy h1 small{font-size:9px}}
