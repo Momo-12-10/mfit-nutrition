@@ -74,7 +74,7 @@ function init(){
 
  // 3. Weekly/monthly reporting is kept together; report options and exports remain available.
  mergeGroup({title:'Wochen- & Monatsauswertung',root:'home',items:[
-  'mfitProgressDashboard','.weekly-momentum-card','mfitProWeek','mfitNutritionAnalytics',
+  'mfitProgressDashboard',{selector:'.weekly-momentum-card'},'mfitProWeek','mfitNutritionAnalytics',
   'mfit165Weekly','mfit165NutritionWeek','mfitMonthlyReport','mfit191CoachReport'
  ]});
 
