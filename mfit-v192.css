@@ -24,3 +24,12 @@
 .meal-pref-grid input{flex:0 0 18px;width:18px;height:18px;margin:1px 0 0}
 .mfit-legal-check input{flex:0 0 19px;width:19px;height:19px;min-width:19px;min-height:19px;aspect-ratio:1/1;transform:none;appearance:auto}
 @media(max-width:360px){#home>.grid.three{grid-template-columns:1fr}#home>.grid.three>.card:last-child:nth-child(odd){grid-column:auto}.meal-budget-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}.meal-pref-grid{grid-template-columns:1fr}.meal-preferences>summary small{flex-basis:100%;text-align:left}}
+
+.mfit191-dots{align-items:center;gap:2px}
+.mfit191-dots i,.mfit191-calendar-legend i{display:inline-grid;place-items:center;min-width:14px;height:14px;padding:0 2px;border-radius:4px;font-size:9px;font-style:normal;font-weight:800;line-height:1;color:#101419}
+.mfit191-dots i.training,.mfit191-calendar-legend i.training{background:#9fc4e8}
+.mfit191-dots i.competition,.mfit191-calendar-legend i.competition{background:#e8c477}
+.mfit191-dots i.rest,.mfit191-calendar-legend i.rest{background:#91d2a4}
+.mfit191-dots i.phase,.mfit191-calendar-legend i.phase{background:#b8a7e8}
+.mfit191-calendar-legend{align-items:center}
+.mfit191-calendar-legend span{display:inline-flex;align-items:center;gap:5px}
