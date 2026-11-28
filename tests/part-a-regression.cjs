@@ -14,7 +14,7 @@ const manifest = read('manifest.webmanifest');
 
 assert.ok(!html.includes('\\n</head>'), 'Literal backslash-n must not appear before </head>');
 assert.match(html, /mfit-version" content="195"/);
-assert.match(html, /mfit-v192\.css\?v=195/);
+assert.match(html, /styles\.css\?v=195/);
 assert.match(meal, /const getGoals=\(\)=>typeof goals!=='undefined'&&goals/);
 assert.doesNotMatch(meal, /window\.goals/);
 assert.match(meal, /g=getGoals\(\)/);
@@ -38,6 +38,6 @@ assert.match(calendar, /title="Ruhetag">R/);
 assert.match(calendar, /title="Saisonphase">S/);
 assert.match(css, /\.mfit191-dots i\.training/);
 assert.match(sw, /mfit-performance-v195/);
-assert.match(sw, /\.\/mfit-v192\.css/);
+assert.match(sw, /\.\/mfit-v195\.css/);
 assert.match(manifest, /v=195/);
 console.log('PASS: MFit v192 Part A regression checks.');
