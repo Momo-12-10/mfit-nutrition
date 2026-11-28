@@ -30,6 +30,7 @@ function mergeGroup({title,root,items,extra=[]}){
   if(first.parentNode)first.parentNode.insertBefore(wrap,first);
   else host.appendChild(wrap);
  }
+ const content=wrap.querySelector(':scope > .mfit193-merged-content');
  for(const node of nodes){
   node.classList.remove('card');
   node.classList.add('mfit193-merged-section');
