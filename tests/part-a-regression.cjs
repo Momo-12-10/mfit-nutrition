@@ -39,5 +39,5 @@ assert.match(calendar, /title="Saisonphase">S/);
 assert.match(css, /\.mfit191-dots i\.training/);
 assert.match(sw, /mfit-performance-v194/);
 assert.match(sw, /\.\/mfit-v192\.css/);
-assert.match(manifest, /v=193/);
+assert.match(manifest, /v=194/);
 console.log('PASS: MFit v192 Part A regression checks.');
