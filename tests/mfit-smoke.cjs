@@ -38,7 +38,7 @@ const server = http.createServer((req,res)=>{
  log('opening app');
  await page.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded',timeout:20000});
  log('app DOM ready');
- await page.waitForSelector('#mfitTodayPanel');
+ await page.waitForSelector('#mfitTodayPanel',{state:'attached'});
  await page.waitForSelector('#mfit181Mobility',{state:'attached'});
  await page.waitForSelector('#mfit181Gpx',{state:'attached'});
  await page.waitForSelector('#mfit181Share',{state:'attached'});
@@ -104,7 +104,7 @@ const server = http.createServer((req,res)=>{
  page.once('dialog',d=>d.accept());
  await page.locator('#mfit165RestoreFile').setInputFiles(backupPath);
  await restoreNavigation;
- await page.waitForSelector('#mfitTodayPanel');
+ await page.waitForSelector('#mfitTodayPanel',{state:'attached'});
  const restored=await page.evaluate(()=>({gpx:JSON.parse(localStorage.getItem('mfit_gpx_sessions_v181')||'[]').length,entries:JSON.parse(localStorage.getItem('mfit_entries')||'[]').length}));
  if(restored.gpx!==1||restored.entries!==3)throw new Error('Backup restore did not restore existing and new data: '+JSON.stringify(restored));
  log('checking backup restore');
@@ -115,7 +115,7 @@ const server = http.createServer((req,res)=>{
  log('going offline');
  await context.setOffline(true);
  await page.reload({waitUntil:'domcontentloaded'});
- await page.waitForSelector('#mfitTodayPanel');
+ await page.waitForSelector('#mfitTodayPanel',{state:'attached'});
  await context.setOffline(false);
  log('offline page loaded');
  await context.setOffline(false);
