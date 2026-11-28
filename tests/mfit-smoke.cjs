@@ -159,6 +159,13 @@ const server = http.createServer((req,res)=>{
  if(!download.suggestedFilename().endsWith('.png'))throw new Error('Share card did not produce PNG download');
  await page.evaluate(()=>window.showTab('settings'));
  await page.locator('#settings').waitFor({state:'visible'});
+ const settingsCategory=page.locator('.mfit-settings-category').first();
+ if(await settingsCategory.count()){
+  const icon=await settingsCategory.locator('svg').count();
+  const copy=await settingsCategory.locator('.mfit-category-copy').evaluate(el=>({display:getComputedStyle(el).display,direction:getComputedStyle(el).flexDirection,children:[...el.children].map(x=>x.tagName)}));
+  if(!icon||copy.display!=='flex'||copy.direction!=='column')throw new Error('Settings category icon or two-line label layout is incorrect: '+JSON.stringify({icon,copy}));
+ }
+
  const backupCard=page.locator('#mfit165Backup');
  const backupGroup=page.locator('.mfit193-merged-card').filter({has:backupCard});
  await backupGroup.locator('.mfit193-merged-toggle').click();
