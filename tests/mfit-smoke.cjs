@@ -59,6 +59,12 @@ const server = http.createServer((req,res)=>{
  await page.waitForFunction(()=>['mfit181YesterdayCopy','mfit181Mobility','mfit181Gpx','mfit181Share'].every(id=>document.getElementById(id)?.classList.contains('mfit-card-collapsed')));
  const quickGroup=page.locator('.mfit193-merged-card').filter({has:page.locator('#mfitTodayPanel')});
  if(!(await quickGroup.count())||!(await quickGroup.locator('#mfitQuickActions').count()))throw new Error('Pinned favourites were not consolidated with the Today overview.');
+ const mergedAudit=await page.evaluate(()=>({groups:[...document.querySelectorAll('.mfit193-merged-card')].map(x=>x.dataset.mfit193Group),nestedCards:document.querySelectorAll('.mfit193-merged-card .card').length,barcodeDuplicate:!!document.getElementById('mfit165Barcode'),exerciseDuplicate:!!document.getElementById('mfit165ExerciseLibrary'),deleteButtons:document.querySelectorAll('#settings .privacy-danger-zone button.danger').length}));
+ if(mergedAudit.groups.length<10)throw new Error('Too few unified sections were mounted: '+JSON.stringify(mergedAudit.groups));
+ if(mergedAudit.nestedCards)throw new Error('Nested cards remain inside consolidated sections: '+mergedAudit.nestedCards);
+ if(mergedAudit.barcodeDuplicate||mergedAudit.exerciseDuplicate)throw new Error('Duplicate barcode or exercise library card remains.');
+ if(mergedAudit.deleteButtons>0)throw new Error('Duplicate local data deletion button remains in privacy panel.');
+
  const todayStats=await page.evaluate(()=>({training:document.getElementById('mfitTodayTraining')?.textContent,meals:document.getElementById('mfitTodayMeals')?.textContent,water:document.getElementById('mfitTodayWater')?.textContent}));
  if(todayStats.training!=='1'||todayStats.meals!=='1'||todayStats.water!=='450 ml')throw new Error('Today dashboard values are incorrect: '+JSON.stringify(todayStats));
  const dataBefore=await page.evaluate(()=>({entries:JSON.parse(localStorage.getItem('mfit_entries')||'[]').length,water:localStorage.getItem('mfit_water')}));
