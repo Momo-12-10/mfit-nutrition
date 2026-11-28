@@ -10,6 +10,8 @@
  const todayDate=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
  let quickMeals=read('mfit_quick_meals_v104',[]);
  let challenge=Object.assign({workouts:3,tracking:5},read('mfit_challenge_v104',{}));
+ function sharedWorkoutGoal(){try{const key='mfit_weekly_training_goal_v192',saved=localStorage.getItem(key);if(saved!==null)return Math.max(0,Math.min(14,Number(saved)||3));const profile=read('mfit_challenge_v104',{}),legacy=read('mfit_v165_targets',{workouts:4}),initial=Number.isInteger(Number(profile.workouts))?Number(profile.workouts):Number(legacy.workouts)||3;localStorage.setItem(key,String(initial));return initial}catch(e){return 3}}
+ challenge.workouts=sharedWorkoutGoal();
  let themeMode=localStorage.getItem('mfit_theme_mode_v104')||'dark';
 
  function card(id,title,body,cls){
@@ -110,7 +112,7 @@
  };
  window.mfitDeleteQuickMeal=function(i){quickMeals.splice(i,1);write('mfit_quick_meals_v104',quickMeals);renderQuickMeals();};
  window.mfitSaveChallenges=function(){
-  challenge={workouts:Number($('mfitChallengeWorkouts').value)||3,tracking:Number($('mfitChallengeTracking').value)||5};write('mfit_challenge_v104',challenge);weekProgress();
+  challenge={workouts:Number($('mfitChallengeWorkouts').value)||3,tracking:Number($('mfitChallengeTracking').value)||5};localStorage.setItem('mfit_weekly_training_goal_v192',String(challenge.workouts));write('mfit_challenge_v104',challenge);write('mfit_v165_targets',Object.assign(read('mfit_v165_targets',{}),{workouts:challenge.workouts}));weekProgress();
  };
  window.mfitSetThemeMode=function(mode){themeMode=['dark','light','system'].includes(mode)?mode:'dark';localStorage.setItem('mfit_theme_mode_v104',themeMode);applyThemeMode();};
  function applyThemeMode(){
