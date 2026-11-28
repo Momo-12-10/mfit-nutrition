@@ -7,23 +7,29 @@ const rootOf=id=>$(id);
 function mergeGroup({title,root,items,extra=[]}){
  const host=rootOf(root);if(!host)return null;
  const nodes=[];
+ const existing=document.querySelectorAll('.mfit193-merged-card');
+ let wrap=[...existing].find(x=>x.dataset.mfit193Group===title)||null;
  for(const item of items){
   let el=typeof item==='string'?$(item):document.querySelector(item.selector);
   if(item&&typeof item==='object'&&item.node)el=item.node;
+  if(el?.closest?.('.mfit193-merged-card'))continue;
   el=cardOf(el);
+  if(el?.closest?.('.mfit193-merged-card'))continue;
   if(el&&el!==host&&!nodes.includes(el)&&!nodes.some(n=>n.contains(el))&&!nodes.some(n=>el.contains(n)))nodes.push(el);
  }
  for(const el of extra)if(el&&!nodes.includes(el)&&!nodes.some(n=>n.contains(el))&&!nodes.some(n=>el.contains(n)))nodes.push(el);
- if(!nodes.length)return null;
- const wrap=document.createElement('article');
- wrap.className='card mfit193-merged-card';
- wrap.dataset.mfit193Group=title;
- const heading=document.createElement('h2');heading.textContent=title;
- const content=document.createElement('div');content.className='mfit193-merged-content';
- wrap.append(heading,content);
- const first=nodes.find(n=>n.parentNode===host)||nodes[0];
- if(first.parentNode)first.parentNode.insertBefore(wrap,first);
- else host.appendChild(wrap);
+ if(!nodes.length)return wrap;
+ if(!wrap){
+  wrap=document.createElement('article');
+  wrap.className='card mfit193-merged-card';
+  wrap.dataset.mfit193Group=title;
+  const heading=document.createElement('h2');heading.textContent=title;
+  const content=document.createElement('div');content.className='mfit193-merged-content';
+  wrap.append(heading,content);
+  const first=nodes.find(n=>n.parentNode===host)||nodes[0];
+  if(first.parentNode)first.parentNode.insertBefore(wrap,first);
+  else host.appendChild(wrap);
+ }
  for(const node of nodes){
   node.classList.remove('card');
   node.classList.add('mfit193-merged-section');
@@ -35,8 +41,7 @@ function mergeGroup({title,root,items,extra=[]}){
  return wrap;
 }
 function init(){
- if(document.documentElement.dataset.mfit193Merged==='1')return;
- document.documentElement.dataset.mfit193Merged='1';
+
 
  // Keep the existing achievement content, but place it with goals rather than coaching tips.
  const achievementHead=$('mfitSmartCoach')?.querySelector('.mfit-achievement-head');
@@ -146,5 +151,10 @@ function init(){
   });
  });
 }
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+let queued=false;
+function schedule(){if(queued)return;queued=true;setTimeout(()=>{queued=false;init()},0)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule,{once:true});else schedule();
+const observer=new MutationObserver(schedule);
+observer.observe(document.documentElement,{childList:true,subtree:true});
+window.addEventListener('load',schedule,{once:true});
 })();
