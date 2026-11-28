@@ -112,7 +112,7 @@
  };
  window.mfitDeleteQuickMeal=function(i){quickMeals.splice(i,1);write('mfit_quick_meals_v104',quickMeals);renderQuickMeals();};
  window.mfitSaveChallenges=function(){
-  challenge={workouts:Number($('mfitChallengeWorkouts').value)||3,tracking:Number($('mfitChallengeTracking').value)||5};localStorage.setItem('mfit_weekly_training_goal_v192',String(challenge.workouts));write('mfit_challenge_v104',challenge);write('mfit_v165_targets',Object.assign(read('mfit_v165_targets',{}),{workouts:challenge.workouts}));weekProgress();
+  challenge={workouts:Number($('mfitChallengeWorkouts').value)||3,tracking:Number($('mfitChallengeTracking').value)||5};localStorage.setItem('mfit_weekly_training_goal_v192',String(challenge.workouts));write('mfit_challenge_v104',challenge);localStorage.setItem('mfit_v165_targets',JSON.stringify(Object.assign(read('mfit_v165_targets',{}),{workouts:challenge.workouts})));weekProgress();
  };
  window.mfitSetThemeMode=function(mode){themeMode=['dark','light','system'].includes(mode)?mode:'dark';localStorage.setItem('mfit_theme_mode_v104',themeMode);applyThemeMode();};
  function applyThemeMode(){
