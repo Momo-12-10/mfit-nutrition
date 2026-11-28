@@ -8,3 +8,8 @@ alter table public.push_subscriptions
 
 create index if not exists push_subscriptions_updated_at_idx
   on public.push_subscriptions (updated_at);
+
+-- The Edge Function uses the server-side service role to manage subscriptions.
+-- Grant explicit table access; RLS remains enabled and service_role bypasses it.
+grant usage on schema public to service_role;
+grant select, insert, update, delete on table public.push_subscriptions to service_role;
