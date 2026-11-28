@@ -41,4 +41,8 @@ assert.match(css, /:focus-visible/);
 assert.match(css, /prefers-reduced-motion/);
 assert.match(workload, /Rate of Perceived Exertion/);
 assert.match(i18n, /RPE \(Rate of Perceived Exertion\)/);
+const design = read('mfit-v195.css');
+assert.match(design, /mfit-week-bar i[^}]*background:#aeb8c4/);
+assert.match(design, /mfit-ring-value[^}]*stroke:#aeb8c4/);
+assert.match(design, /mfit-dash-foodbar[^}]*background:#aeb8c4/);
 console.log('PASS: MFit v191 calendar, GPX records, equipment, 4-week challenge, opt-in report, timer voice, privacy, cache and accessibility hooks.');
