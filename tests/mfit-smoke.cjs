@@ -57,8 +57,8 @@ const server = http.createServer((req,res)=>{
  if(layout.buttons.length)throw new Error('Buttons outside viewport at 360px: '+JSON.stringify(layout.buttons.slice(0,8)));
  log('checking viewport and existing data');
  await page.waitForFunction(()=>['mfit181YesterdayCopy','mfit181Mobility','mfit181Gpx','mfit181Share'].every(id=>document.getElementById(id)?.classList.contains('mfit-card-collapsed')));
- const topOrder=await page.evaluate(()=>document.getElementById('mfitTodayPanel')?.nextElementSibling?.id);
- if(topOrder!=='mfitQuickActions')throw new Error('Pinned favourites are not directly below the Today overview: '+topOrder);
+ const quickGroup=page.locator('.mfit193-merged-card').filter({has:page.locator('#mfitTodayPanel')});
+ if(!(await quickGroup.count())||!(await quickGroup.locator('#mfitQuickActions').count()))throw new Error('Pinned favourites were not consolidated with the Today overview.');
  const todayStats=await page.evaluate(()=>({training:document.getElementById('mfitTodayTraining')?.textContent,meals:document.getElementById('mfitTodayMeals')?.textContent,water:document.getElementById('mfitTodayWater')?.textContent}));
  if(todayStats.training!=='1'||todayStats.meals!=='1'||todayStats.water!=='450 ml')throw new Error('Today dashboard values are incorrect: '+JSON.stringify(todayStats));
  const dataBefore=await page.evaluate(()=>({entries:JSON.parse(localStorage.getItem('mfit_entries')||'[]').length,water:localStorage.getItem('mfit_water')}));
