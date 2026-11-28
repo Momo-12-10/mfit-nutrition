@@ -20,8 +20,7 @@ for (const title of [
  'Daten, Datenschutz & Backup','Timer-Werkzeuge','Kalender & Trainingsplanung'
 ]) assert.ok(js.includes(title), 'Missing consolidated section: '+title);
 assert.match(js,/mfit193-merged-section/);
-assert.match(js,/mfit165Barcode.*remove/);
-assert.match(js,/mfit165ExerciseLibrary.*remove/);
+assert.doesNotMatch(js,/mfit165Barcode|mfit165ExerciseLibrary/);
 assert.match(js,/privacyCenter.*privacy-danger-zone.*remove/);
 assert.doesNotMatch(js,/localStorage\.(?:removeItem|clear)\(/,'Consolidation must not delete user storage');
 assert.match(advanced,/mfit_weekly_training_goal_v192/);
