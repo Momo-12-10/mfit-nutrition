@@ -65,6 +65,7 @@ const server = http.createServer((req,res)=>{
  log('five-area navigation and all subpages verified');
  const homeCardCount=await page.locator('#home > .mfit193-merged-card, #home > .card').count();
  if(homeCardCount>5)throw new Error('Today dashboard contains more than five cards: '+homeCardCount);
+ if(!(await page.locator('#dailyQuote').evaluate(el=>!!el.closest('.mfit193-merged-card'))))throw new Error('Daily mindset note is not inside the quick-access section');
  for(const id of ['sugarTotal','todayList','sumVitC','customWaterAmount','mfit165Search']){
   const el=page.locator('#'+id);if(await el.count()&&!(await el.evaluate(node=>!!node.closest('#mfit194NutritionDetails'))))throw new Error('Daily nutrition detail was not moved into the diary: '+id);
  }
