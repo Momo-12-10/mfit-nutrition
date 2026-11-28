@@ -84,7 +84,7 @@ function init(){
  if(foodForm&&recentScans){
   recentScans.classList.remove('card');recentScans.classList.add('mfit193-merged-section');
   const h=recentScans.querySelector(':scope > h2');if(h){const sub=document.createElement('h3');sub.textContent='Zuletzt gescannte Produkte';h.replaceWith(sub)}
-  foodForm.appendChild(recentScans);
+  if(recentScans.parentElement!==foodForm)foodForm.appendChild(recentScans);
  }
  $('mfit165Barcode')?.remove();
 
