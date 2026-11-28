@@ -1,4 +1,4 @@
-name: MFit v181 quality checks
+name: MFit v190 quality checks
 on:
   push:
     branches:
