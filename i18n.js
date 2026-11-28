@@ -55,6 +55,22 @@ Object.assign(dictionaries.ru,{
  "Push-Mitteilungen werden von diesem Browser nicht unterstützt.":"Этот браузер не поддерживает push-уведомления.",
  "Push-Mitteilungen werden zu den eingestellten Uhrzeiten übermittelt, auch wenn MFit geschlossen ist. Die Push-Erinnerungen sind zeitbasiert; die Prüfung deiner tatsächlich erfassten Wasser- und Mahlzeit-Einträge funktioniert weiterhin lokal, solange MFit geöffnet ist.":"Push-уведомления отправляются в заданное время, даже если MFit закрыт. Проверка фактически внесённых записей о воде и приёмах пищи по-прежнему выполняется локально, пока приложение открыто."
 });
+Object.assign(dictionaries.en,{
+ "Abgemeldet. Push-Mitteilungen wurden auf diesem Gerät ausgeschaltet. Deine lokalen Daten und die Kontozuordnung bleiben erhalten.":"Signed out. Push notifications have been turned off on this device. Your local data and account link remain saved.",
+ "Geräteberechtigung fehlt oder ist ungültig.":"The device authorization is missing or invalid.",
+ "Dieses Push-Abo gehört bereits zu einem anderen Gerät oder Browserprofil.":"This push subscription already belongs to another device or browser profile.",
+ "Dieses Push-Abo darf von diesem Gerät nicht entfernt werden.":"This device is not authorized to remove this push subscription.",
+ "Push-Abo wurde gleichzeitig geändert. Bitte erneut versuchen.":"The push subscription changed at the same time. Please try again.",
+ "Push-Abo oder lokale Daten konnten nicht sicher entfernt werden. Bitte prüfe die Verbindung und versuche es erneut. Es wurden keine lokalen Daten gelöscht.":"The push subscription or local data could not be safely removed. Check your connection and try again. No local data was deleted."
+});
+Object.assign(dictionaries.ru,{
+ "Abgemeldet. Push-Mitteilungen wurden auf diesem Gerät ausgeschaltet. Deine lokalen Daten und die Kontozuordnung bleiben erhalten.":"Вы вышли из аккаунта. Push-уведомления на этом устройстве отключены. Локальные данные и привязка аккаунта сохранены.",
+ "Geräteberechtigung fehlt oder ist ungültig.":"Разрешение устройства отсутствует или недействительно.",
+ "Dieses Push-Abo gehört bereits zu einem anderen Gerät oder Browserprofil.":"Эта push-подписка уже принадлежит другому устройству или профилю браузера.",
+ "Dieses Push-Abo darf von diesem Gerät nicht entfernt werden.":"Это устройство не имеет права удалять данную push-подписку.",
+ "Push-Abo wurde gleichzeitig geändert. Bitte erneut versuchen.":"Push-подписка была одновременно изменена. Повторите попытку.",
+ "Push-Abo oder lokale Daten konnten nicht sicher entfernt werden. Bitte prüfe die Verbindung und versuche es erneut. Es wurden keine lokalen Daten gelöscht.":"Не удалось безопасно удалить push-подписку или локальные данные. Проверьте соединение и повторите попытку. Локальные данные не удалены."
+});
 function tr(value,lang){if(lang==='de-AT'||!value)return value;let out=value;const dict=dictionaries[lang]||{};const word=c=>!!c&&/[A-Za-z0-9À-žА-яЁё_]/.test(c);for(const k of Object.keys(dict).sort((a,b)=>b.length-a.length)){let from=0,pos;while((pos=out.indexOf(k,from))!==-1){const left=word(k[0])&&word(out[pos-1]),right=word(k[k.length-1])&&word(out[pos+k.length]);if(!left&&!right){out=out.slice(0,pos)+dict[k]+out.slice(pos+k.length);from=pos+dict[k].length}else from=pos+k.length}}return out}
 function scan(root,lang){
  if(!root)return;
