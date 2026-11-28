@@ -182,6 +182,8 @@ const server = http.createServer((req,res)=>{
  const designGroup=page.locator('.mfit193-merged-card').filter({has:page.locator('#appAppearance')});if(await designGroup.locator('.mfit193-merged-toggle').getAttribute('aria-expanded')==='false')await designGroup.locator('.mfit193-merged-toggle').click();
  await page.locator('#appAppearance').scrollIntoViewIfNeeded();
  await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-settings-390.png')});
+ await page.evaluate(()=>{window.showTab('home');window.scrollTo(0,0)});
+ await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-c-navigation-390.png')});
  if(errors.length)throw new Error('Browser console/page errors: '+errors.join(' | '));
  console.log('PASS: 320/390/1280px responsive layouts, meal plan, fitness calendar, settings, goals, accordions, existing data preservation, yesterday preview/copy, GPX import, share PNG, backup restore, offline reload; no console/page errors.');
  await browser.close();server.close();
