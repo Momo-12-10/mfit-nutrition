@@ -44,7 +44,7 @@ const server = http.createServer((req,res)=>{
   const unlabeled=controls.filter(el=>!el.labels||!el.labels.length).map(el=>el.id||el.outerHTML.slice(0,90));
   const tiny=[...document.querySelectorAll('button')].filter(el=>el.getClientRects().length&&el.getBoundingClientRect().height<43.5).map(el=>el.textContent.trim().slice(0,25));
   const small=[...document.querySelectorAll('p,label,small,.muted,.settings-kicker,.pill')].filter(el=>el.getClientRects().length&&el.textContent.trim()&&parseFloat(getComputedStyle(el).fontSize)<11.9).map(el=>({text:el.textContent.trim().slice(0,24),size:getComputedStyle(el).fontSize}));
-  const emojiHeadings=[...document.querySelectorAll('h2,h3')].filter(el=>!el.querySelector('.mfit195-heading-icon')&&/^\\s*[\\p{Extended_Pictographic}\\u24C2-\\u3299]/u.test(el.textContent));
+  const emojiHeadings=[...document.querySelectorAll('h2,h3')].filter(el=>!el.querySelector('.mfit195-heading-icon')&&/^\s*[\p{Extended_Pictographic}\u24C2-\u3299]/u.test(el.textContent));
   return {unlabeled,tiny:tiny.slice(0,12),small:small.slice(0,12),emojiHeadings:emojiHeadings.map(el=>el.textContent.trim()),accent:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(),headerHeight:document.querySelector('.mfit-app-header')?.getBoundingClientRect().height,svgNav:[...document.querySelectorAll('.mfit194-nav button')].every(el=>!!el.querySelector('svg'))};
  });
  if(v195.unlabeled.length)throw new Error('Form fields without associated labels: '+v195.unlabeled.join(', '));
@@ -55,7 +55,7 @@ const server = http.createServer((req,res)=>{
  if(v195.headerHeight>76)throw new Error('Header is not compact: '+v195.headerHeight);
  if(!v195.svgNav)throw new Error('Navigation contains a non-SVG icon');
  const linkedCss=await page.locator('link[rel="stylesheet"]').evaluateAll(els=>els.map(el=>el.getAttribute('href')));
- if(linkedCss.length!==2||linkedCss.some(x=>/mfit-(monochrome|v165|v181|v191|v192|v193|v194)\\.css/.test(x)))throw new Error('Legacy stylesheets are still loaded: '+linkedCss.join(', '));
+ if(linkedCss.length!==2||linkedCss.some(x=>/mfit-(monochrome|v165|v181|v191|v192|v193|v194)\.css/.test(x)))throw new Error('Legacy stylesheets are still loaded: '+linkedCss.join(', '));
  log('v195 monochrome design, consolidated CSS, SVG headings, labels and accessible target sizes verified');
  const mainNav=page.locator('.mfit194-nav button');
  if(await mainNav.count()!==5)throw new Error('Part C must expose exactly five main navigation items');
