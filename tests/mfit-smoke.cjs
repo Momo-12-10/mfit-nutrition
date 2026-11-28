@@ -56,7 +56,7 @@ const server = http.createServer((req,res)=>{
  if(layout.scrollWidth>layout.width+1)throw new Error('Horizontal page overflow at 360px: '+JSON.stringify(layout));
  if(layout.buttons.length)throw new Error('Buttons outside viewport at 360px: '+JSON.stringify(layout.buttons.slice(0,8)));
  log('checking viewport and existing data');
- await page.waitForFunction(()=>['mfit181YesterdayCopy','mfit181Mobility','mfit181Gpx','mfit181Share'].every(id=>document.getElementById(id)?.classList.contains('mfit-card-collapsed')));
+ await page.waitForFunction(()=>{const quick=document.querySelector('[data-mfit193-group="Dein Tag & Schnellzugriff"] .mfit193-merged-content'),timers=document.querySelector('[data-mfit193-group="Timer-Werkzeuge"] .mfit193-merged-content');return !!quick?.hidden&&!!timers?.hidden&&['mfit181Gpx','mfit181Share'].every(id=>document.getElementById(id)?.classList.contains('mfit-card-collapsed'))});
  const quickGroup=page.locator('.mfit193-merged-card').filter({has:page.locator('#mfitTodayPanel')});
  if(!(await quickGroup.count())||!(await quickGroup.locator('#mfitQuickActions').count())){const debug=await page.evaluate(()=>({groups:[...document.querySelectorAll('.mfit193-merged-card')].map(x=>x.dataset.mfit193Group),todayParent:document.getElementById('mfitTodayPanel')?.parentElement?.outerHTML.slice(0,600),quickParent:document.getElementById('mfitQuickActions')?.parentElement?.outerHTML.slice(0,600)}));throw new Error('Pinned favourites were not consolidated with the Today overview: '+JSON.stringify(debug));}
  const mergedAudit=await page.evaluate(()=>({groups:[...document.querySelectorAll('.mfit193-merged-card')].map(x=>x.dataset.mfit193Group),nestedCards:document.querySelectorAll('.mfit193-merged-card .card').length,barcodeDuplicate:!!document.getElementById('mfit165Barcode'),exerciseDuplicate:!!document.getElementById('mfit165ExerciseLibrary'),deleteButtons:document.querySelectorAll('#settings .privacy-danger-zone button.danger').length}));
@@ -70,7 +70,7 @@ const server = http.createServer((req,res)=>{
  const dataBefore=await page.evaluate(()=>({entries:JSON.parse(localStorage.getItem('mfit_entries')||'[]').length,water:localStorage.getItem('mfit_water')}));
  if(dataBefore.entries!==2||dataBefore.water!=='450')throw new Error('Existing sample user data changed during startup: '+JSON.stringify(dataBefore));
  const yesterdayCard=page.locator('#mfit181YesterdayCopy');
- await page.locator('.mfit193-merged-card').filter({has:yesterdayCard}).locator('.mfit-card-collapse-toggle').click();
+ await page.locator('.mfit193-merged-card').filter({has:yesterdayCard}).locator('.mfit193-merged-toggle').click();
  await page.locator('#mfit181PreviewYesterday').click();
  if(!(await page.locator('#mfit181YesterdayPreview').innerText()).includes('Test Banane'))throw new Error('Yesterday preview did not show previous-day entry');
  page.once('dialog',d=>d.accept());
@@ -93,7 +93,7 @@ const server = http.createServer((req,res)=>{
  if(!download.suggestedFilename().endsWith('.png'))throw new Error('Share card did not produce PNG download');
  await page.evaluate(()=>window.showTab('profile'));
  const backupCard=page.locator('#mfit165Backup');
- await page.locator('.mfit193-merged-card').filter({has:backupCard}).locator('.mfit-card-collapse-toggle').click();
+ await page.locator('.mfit193-merged-card').filter({has:backupCard}).locator('.mfit193-merged-toggle').click();
  const [backup]=await Promise.all([page.waitForEvent('download'),page.evaluate(()=>window.mfit165ExportBackup())]);
  const backupPath=await backup.path();
  if(!backupPath)throw new Error('Backup export did not create a file');
@@ -135,8 +135,9 @@ const server = http.createServer((req,res)=>{
  await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-shop-390.png')});
  await page.evaluate(()=>window.showTab('fitness'));
  const calendar=page.locator('#mfit191Calendar');
- if(await calendar.count()){const toggle=page.locator('.mfit193-merged-card').filter({has:calendar}).locator('.mfit-card-collapse-toggle');if(await toggle.count()&&await toggle.getAttribute('aria-expanded')==='false')await toggle.click();await calendar.scrollIntoViewIfNeeded();await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-fitness-390.png')});}
+ if(await calendar.count()){const toggle=page.locator('.mfit193-merged-card').filter({has:calendar}).locator('.mfit193-merged-toggle');if(await toggle.count()&&await toggle.getAttribute('aria-expanded')==='false')await toggle.click();await calendar.scrollIntoViewIfNeeded();await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-fitness-390.png')});}
  await page.evaluate(()=>window.showTab('settings'));
+ const designGroup=page.locator('.mfit193-merged-card').filter({has:page.locator('#appAppearance')});if(await designGroup.locator('.mfit193-merged-toggle').getAttribute('aria-expanded')==='false')await designGroup.locator('.mfit193-merged-toggle').click();
  await page.locator('#appAppearance').scrollIntoViewIfNeeded();
  await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-settings-390.png')});
  if(errors.length)throw new Error('Browser console/page errors: '+errors.join(' | '));
