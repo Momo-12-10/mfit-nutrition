@@ -123,7 +123,12 @@ Deno.serve(async (req) => {
 
     return reply({ error: "Unbekannte Aktion." }, 400);
   } catch (error) {
-    console.error("push-notifications error:", error);
-    return reply({ error: error instanceof Error ? error.message : "Interner Fehler." }, 500);
+    const detail = error instanceof Error
+      ? error.message
+      : error && typeof error === "object" && "message" in error
+        ? String((error as { message: unknown }).message)
+        : String(error);
+    console.error("push-notifications error:", detail);
+    return reply({ error: "Interner Fehler", detail }, 500);
   }
 });
