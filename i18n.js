@@ -191,6 +191,23 @@ Object.assign(dictionaries.ru,{
  "Kalender & Trainingsplanung":"Календарь и план тренировок"
 });
 
+Object.assign(dictionaries.en,{
+ "Schlafziel":"Sleep goal",
+ "Ein persönlicher Richtwert für deine Schlafdauer. Er ergänzt deinen Erholungs-Check-in.":"A personal sleep-duration target to complement your recovery check-in.",
+ "Schlafziel pro Nacht (Stunden)":"Sleep goal per night (hours)",
+ "Schlafziel speichern":"Save sleep goal",
+ "Ø Schlaf der letzten Check-ins":"Average sleep across recent check-ins",
+ "Noch keine Schlafdaten":"No sleep data yet"
+});
+Object.assign(dictionaries.ru,{
+ "Schlafziel":"Цель по сну",
+ "Ein persönlicher Richtwert für deine Schlafdauer. Er ergänzt deinen Erholungs-Check-in.":"Личная цель по продолжительности сна для дополнения отметок восстановления.",
+ "Schlafziel pro Nacht (Stunden)":"Цель сна за ночь (часы)",
+ "Schlafziel speichern":"Сохранить цель сна",
+ "Ø Schlaf der letzten Check-ins":"Средняя продолжительность сна по последним отметкам",
+ "Noch keine Schlafdaten":"Данных о сне пока нет"
+});
+
 function tr(value,lang){if(lang==='de-AT'||!value)return value;let out=value;const dict=dictionaries[lang]||{};const word=c=>!!c&&/[A-Za-z0-9À-žА-яЁё_]/.test(c);for(const k of Object.keys(dict).sort((a,b)=>b.length-a.length)){let from=0,pos;while((pos=out.indexOf(k,from))!==-1){const left=word(k[0])&&word(out[pos-1]),right=word(k[k.length-1])&&word(out[pos+k.length]);if(!left&&!right){out=out.slice(0,pos)+dict[k]+out.slice(pos+k.length);from=pos+dict[k].length}else from=pos+k.length}}return out}
 function scan(root,lang){
  if(!root)return;
