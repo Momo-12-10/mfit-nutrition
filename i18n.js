@@ -159,6 +159,38 @@ Object.assign(dictionaries.ru,{
  "kein Kalorienziel":"нет цели по калориям","kein Proteinziel":"нет цели по белку"
 });
 
+
+Object.assign(dictionaries.en,{
+ "Dein Tag & Schnellzugriff":"Your day & quick access",
+ "Kalorien & Makros heute":"Calories & macros today",
+ "Wochen- & Monatsauswertung":"Weekly & monthly report",
+ "Performance-Coach & Ernährungstipps":"Performance coach & nutrition tips",
+ "Lebensmittel & Mahlzeiten-Favoriten":"Food & meal favourites",
+ "Trainingsauswertung":"Training analysis",
+ "Erholung & Check-in":"Recovery & check-in",
+ "Körper & Gewicht":"Body & weight",
+ "Ziele, Level & Meilensteine":"Goals, levels & milestones",
+ "Darstellung & App-Design":"Appearance & app design",
+ "Daten, Datenschutz & Backup":"Data, privacy & backup",
+ "Timer-Werkzeuge":"Timer tools",
+ "Kalender & Trainingsplanung":"Calendar & training plan"
+});
+Object.assign(dictionaries.ru,{
+ "Dein Tag & Schnellzugriff":"Ваш день и быстрый доступ",
+ "Kalorien & Makros heute":"Калории и макронутриенты за сегодня",
+ "Wochen- & Monatsauswertung":"Недельный и месячный отчёт",
+ "Performance-Coach & Ernährungstipps":"Тренер и советы по питанию",
+ "Lebensmittel & Mahlzeiten-Favoriten":"Избранные продукты и блюда",
+ "Trainingsauswertung":"Анализ тренировок",
+ "Erholung & Check-in":"Восстановление и отметки",
+ "Körper & Gewicht":"Тело и вес",
+ "Ziele, Level & Meilensteine":"Цели, уровни и достижения",
+ "Darstellung & App-Design":"Внешний вид приложения",
+ "Daten, Datenschutz & Backup":"Данные, конфиденциальность и резервные копии",
+ "Timer-Werkzeuge":"Таймеры",
+ "Kalender & Trainingsplanung":"Календарь и план тренировок"
+});
+
 function tr(value,lang){if(lang==='de-AT'||!value)return value;let out=value;const dict=dictionaries[lang]||{};const word=c=>!!c&&/[A-Za-z0-9À-žА-яЁё_]/.test(c);for(const k of Object.keys(dict).sort((a,b)=>b.length-a.length)){let from=0,pos;while((pos=out.indexOf(k,from))!==-1){const left=word(k[0])&&word(out[pos-1]),right=word(k[k.length-1])&&word(out[pos+k.length]);if(!left&&!right){out=out.slice(0,pos)+dict[k]+out.slice(pos+k.length);from=pos+dict[k].length}else from=pos+k.length}}return out}
 function scan(root,lang){
  if(!root)return;
