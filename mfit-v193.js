@@ -28,7 +28,7 @@ function mergeGroup({title,root,items,extra=[]}){
   if(el&&el!==host&&!nodes.includes(el)&&!nodes.some(n=>n.contains(el))&&!nodes.some(n=>el.contains(n)))nodes.push(el);
  }
  for(const el of extra){if(!el)continue;const currentGroup=el.closest?.('.mfit193-merged-card');if(currentGroup?.dataset.mfit193Group===title)continue;if(currentGroup){previousGroups.add(currentGroup);if(!el.classList.contains('mfit193-merged-section')&&!el.classList.contains('card'))continue;}if(!nodes.includes(el)&&!nodes.some(n=>n.contains(el))&&!nodes.some(n=>el.contains(n)))nodes.push(el);}
- if(!nodes.length)return wrap;
+ if(!nodes.length){window.__mfit193Debug=window.__mfit193Debug||{};window.__mfit193Debug[title]={root,found:[],existing:!!wrap};return wrap;}
  if(!wrap){
   wrap=document.createElement('article');
   wrap.className='card mfit193-merged-card';
@@ -56,6 +56,7 @@ function mergeGroup({title,root,items,extra=[]}){
   content.appendChild(node);
  }
  previousGroups.forEach(group=>{const body=group.querySelector(':scope > .mfit193-merged-content');if(body&&!body.children.length)group.remove()});
+ window.__mfit193Debug=window.__mfit193Debug||{};window.__mfit193Debug[title]={root,found:nodes.map(n=>n.id||n.className),existing:!!wrap};
  return wrap;
 }
 function init(){
