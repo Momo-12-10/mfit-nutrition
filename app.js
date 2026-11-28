@@ -65,7 +65,7 @@ async function enableReminder(){
   const permission=await Notification.requestPermission();
   if(permission!=='granted'){if(status)status.textContent='Mitteilungen nicht erlaubt. Bitte prüfe die Geräte-Einstellungen.';return;}
   if(status)status.textContent='Push wird eingerichtet …';
-  const registrationRequest=navigator.serviceWorker.register('./sw.js?v=192',{updateViaCache:'none'});
+  const registrationRequest=navigator.serviceWorker.register('./sw.js?v=193',{updateViaCache:'none'});
   await registrationRequest;
   const registration=await Promise.race([
    navigator.serviceWorker.ready,
@@ -124,7 +124,7 @@ document.querySelectorAll('.theme-swatch').forEach(b=>b.addEventListener('click'
 applyThemeColor(storage.get('mfit_theme_color')||defaultThemeColor,false);
 $('diet').addEventListener('change',renderRecipes);$('focus').addEventListener('change',renderRecipes);$('unit').addEventListener('change',recalculateNutrition);
 $('shoppingItems').innerHTML=['Skyr','Eier','Haferflocken','Reis','Linsen','Tofu','Hähnchenbrust','Brokkoli','Beeren','Bananen'].map(x=>`<label><input type="checkbox" value="${x}" style="width:auto;margin-right:8px">${x}</label>`).join('');
-renderPresets();render();renderSteps();renderWeightHistory();loadProfile();startSmartReminders();if($('workoutDate'))$('workoutDate').value=localDate();if(!storage.get('mfit_setup_done')&&!storage.get('mfit_profile'))$('setupOverlay').style.display='block';if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=192',{updateViaCache:'none'}).then(reg=>{reg.update();if(localStorage.getItem('mfit_push_enabled')==='1')reg.pushManager.getSubscription().then(sub=>sub?syncMfitPushSettings(sub):null).catch(error=>console.warn('MFit Push-Abo konnte nicht aktualisiert werden:',error));}).catch(error=>console.warn('MFit Service Worker:',error)));
+renderPresets();render();renderSteps();renderWeightHistory();loadProfile();startSmartReminders();if($('workoutDate'))$('workoutDate').value=localDate();if(!storage.get('mfit_setup_done')&&!storage.get('mfit_profile'))$('setupOverlay').style.display='block';if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=193',{updateViaCache:'none'}).then(reg=>{reg.update();if(localStorage.getItem('mfit_push_enabled')==='1')reg.pushManager.getSubscription().then(sub=>sub?syncMfitPushSettings(sub):null).catch(error=>console.warn('MFit Push-Abo konnte nicht aktualisiert werden:',error));}).catch(error=>console.warn('MFit Service Worker:',error)));
 
 /* v34 — Wochenplanung, Einkauf, Trainingsgenerator */
 const shopCatalogData=[
