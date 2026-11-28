@@ -65,6 +65,16 @@ function normalizeCardActions(root){
   buttons.forEach(btn=>{if(btn!==primary&&!btn.classList.contains('secondary'))btn.classList.add('mfit195-secondary-action');});
  });
 }
+function fitNavLabels(){
+ document.querySelectorAll('.mfit194-nav button').forEach(button=>{
+  const label=button.querySelector('span');if(!label)return;
+  label.style.transform='none';
+  const available=Math.max(1,button.clientWidth-4),needed=label.scrollWidth;
+  const scale=Math.min(1,available/Math.max(1,needed));
+  if(scale<1)label.style.transform='scaleX('+Math.max(.78,scale).toFixed(3)+')';
+  label.style.transformOrigin='center';
+ });
+}
 function scan(root){
  if(root.nodeType!==1&&root!==document)return;
  const controls=[];
@@ -78,9 +88,10 @@ function scan(root){
  headings.forEach(addHeadingIcon);
 }
 function start(){
- scan(document);
- const observer=new MutationObserver(records=>records.forEach(record=>record.addedNodes?.forEach(node=>{if(node.nodeType===1)scan(node)})));
- observer.observe(document.body,{childList:true,subtree:true});
+ scan(document);fitNavLabels();
+ const observer=new MutationObserver(records=>records.forEach(record=>{if(record.type==='characterData'&&record.target.parentElement?.closest('.mfit194-nav'))fitNavLabels();record.addedNodes?.forEach(node=>{if(node.nodeType===1)scan(node)})}));
+ observer.observe(document.body,{childList:true,subtree:true,characterData:true});
+ window.addEventListener('resize',fitNavLabels);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
