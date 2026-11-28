@@ -209,3 +209,7 @@ body .mfit-category-icon svg{width:20px!important;height:20px!important;fill:non
 body .mfit-category-arrow{flex:0 0 auto!important;color:#b9c2ce!important}
 
 body .mfit194-nav button svg{display:block!important;visibility:visible!important;opacity:1!important;width:21px!important;height:21px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+
+body .mfit194-subnav[hidden]{display:none!important}
+body .mfit194-nav button{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;padding:5px 2px!important;text-align:center!important}
+body .mfit194-nav button svg{flex:0 0 21px!important}
