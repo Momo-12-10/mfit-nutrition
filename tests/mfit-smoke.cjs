@@ -43,7 +43,9 @@ const server = http.createServer((req,res)=>{
  await page.waitForSelector('#mfit181Gpx',{state:'attached'});
  await page.waitForSelector('#mfit181Share',{state:'attached'});
  log('new cards mounted');
- await page.waitForSelector('#mfit165MealSuggestions');
+ await page.waitForSelector('#mfit165MealSuggestions',{state:'attached'});
+ const suggestionsGroup=page.locator('.mfit193-merged-card').filter({has:page.locator('#mfit165MealSuggestions')});if(await suggestionsGroup.locator('.mfit193-merged-toggle').getAttribute('aria-expanded')==='false')await suggestionsGroup.locator('.mfit193-merged-toggle').click();
+ await page.waitForSelector('#mfit165MealSuggestions',{state:'visible'});
  const goalSuggestion=await page.locator('#mfit165MealSuggestions').innerText();
  if(!goalSuggestion.includes('2640 kcal')||!goalSuggestion.includes('123 g Protein')||goalSuggestion.includes('kein Kalorienziel'))throw new Error('Meal suggestions did not apply the 2800 kcal / 150 g targets to the seeded 160 kcal / 27 g entry: '+goalSuggestion);
  const emptyAccordions=await page.evaluate(()=>[...document.querySelectorAll('#settings details.mfit-compact-accordion')].filter(d=>{const c=d.querySelector('.mfit-accordion-content');return !c||(!c.textContent.trim()&&!c.querySelector('input,select,textarea,button,[role="button"],canvas,svg'))}).map(d=>d.querySelector('summary')?.innerText||'empty'));
