@@ -61,10 +61,6 @@ function mergeGroup({title,root,items,extra=[]}){
 function init(){
 
 
- // The newer achievement center is the single milestone list; remove the older duplicate.
- $('mfitSmartCoach')?.querySelector('.mfit-achievement-head')?.remove();
- $('mfitAchievementList')?.remove();
-
  // 1. One home quick-access area: today's overview, pinned actions and older shortcuts.
  mergeGroup({title:'Dein Tag & Schnellzugriff',root:'home',items:['mfitTodayPanel','mfitQuickActions','mfit181YesterdayCopy']});
 
