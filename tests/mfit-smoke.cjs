@@ -47,7 +47,8 @@ const server = http.createServer((req,res)=>{
   const emojiHeadings=[...document.querySelectorAll('h2,h3')].filter(el=>!el.querySelector('.mfit195-heading-icon')&&/^\s*[\p{Extended_Pictographic}\u24C2-\u3299]/u.test(el.textContent));
   const multiPrimary=[...document.querySelectorAll('.card,.mfit193-merged-card')].filter(card=>[...card.querySelectorAll('button')].filter(btn=>btn.closest('.card,.mfit193-merged-card')===card&&!btn.matches('.mfit-card-collapse-toggle,.mfit193-merged-toggle,.theme-swatch,.mfit-collapse-menu-toggle,[data-action-role="toggle"],[data-action-role="icon"]')&&!btn.classList.contains('danger')&&!btn.classList.contains('secondary')&&!btn.classList.contains('mfit195-secondary-action')).length>1).map(card=>card.id||card.querySelector('h2,h3')?.textContent||'unnamed');
 
-  return {unlabeled,tiny:tiny.slice(0,12),small:small.slice(0,12),emojiHeadings:emojiHeadings.map(el=>el.textContent.trim()),multiPrimary,accent:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(),headerHeight:document.querySelector('.mfit-app-header')?.getBoundingClientRect().height,svgNav:[...document.querySelectorAll('.mfit194-nav button')].every(el=>!!el.querySelector('svg'))};
+  return {unlabeled,tiny:tiny.slice(0,12),small:small.slice(0,12),emojiHeadings:emojiHeadings.map(el=>el.textContent.trim()),multiPrimary,accent:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(),headerHeight:document.querySelector('.mfit-app-header')?.getBoundingClientRect().height,svgNav:[...document.querySelectorAll('.mfit194-nav button')].every(el=>!!el.querySelector('svg')),
+  navStacked:[...document.querySelectorAll('.mfit194-nav button')].every(el=>getComputedStyle(el).flexDirection==='column'),subnavHidden:document.querySelector('.mfit194-subnav')?.hidden&&getComputedStyle(document.querySelector('.mfit194-subnav')).display==='none'};
  });
  if(v195.unlabeled.length)throw new Error('Form fields without associated labels: '+v195.unlabeled.join(', '));
  if(v195.tiny.length)throw new Error('Buttons below 44px touch height: '+v195.tiny.join(', '));
@@ -58,6 +59,8 @@ const server = http.createServer((req,res)=>{
  if(accentChannels.length!==3||Math.max(...accentChannels)-Math.min(...accentChannels)>35)throw new Error('Accent color is not monochrome: '+v195.accent);
  if(v195.headerHeight>76)throw new Error('Header is not compact: '+v195.headerHeight);
  if(!v195.svgNav)throw new Error('Navigation contains a non-SVG icon');
+ if(!v195.navStacked)throw new Error('Navigation icons are not stacked above their labels');
+ if(!v195.subnavHidden)throw new Error('Empty Today subnavigation is still visible');
  const linkedCss=await page.locator('link[rel="stylesheet"]').evaluateAll(els=>els.map(el=>el.getAttribute('href')));
  if(linkedCss.length!==2||linkedCss.some(x=>/mfit-(monochrome|v165|v181|v191|v192|v193|v194)\.css/.test(x)))throw new Error('Legacy stylesheets are still loaded: '+linkedCss.join(', '));
  log('v195 monochrome design, consolidated CSS, SVG headings, labels and accessible target sizes verified');
