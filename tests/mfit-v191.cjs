@@ -7,6 +7,8 @@ const html = read('index.html');
 const sw = read('sw.js');
 const privacy = read('privacy.html');
 const css = read('styles.css');
+const workload = read('mfit-workload.js');
+const i18n = read('i18n.js');
 
 for (const id of ['mfit191Calendar','mfit191RunBests','mfit191Equipment','mfit191Challenge','mfit191CoachReport','mfit191Accessibility']) {
   assert.ok(app.includes(id), 'Missing v191 feature: ' + id);
@@ -37,4 +39,6 @@ assert.match(sw, /mfit-v195\.css/);
 assert.match(privacy, /Gesundheitsdaten sind darin standardmäßig ausgeschlossen/);
 assert.match(css, /:focus-visible/);
 assert.match(css, /prefers-reduced-motion/);
+assert.match(workload, /Rate of Perceived Exertion/);
+assert.match(i18n, /RPE \(Rate of Perceived Exertion\)/);
 console.log('PASS: MFit v191 calendar, GPX records, equipment, 4-week challenge, opt-in report, timer voice, privacy, cache and accessibility hooks.');
