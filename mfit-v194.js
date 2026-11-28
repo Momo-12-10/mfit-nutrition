@@ -55,7 +55,7 @@ function navigate(main,subId){
  routing=true;legacyShowTab(base);routing=false;setActive(main);
  if(item?.target)requestAnimationFrame(()=>document.getElementById(item.target)?.scrollIntoView({behavior:'smooth',block:'start'}));
 }
-nav.addEventListener('click',e=>{const b=e.target.closest('button[data-main]');if(!b)return;const main=b.dataset.main;const first=(subpages[main]||[])[0];navigate(main,first?.id);});
+nav.addEventListener('click',e=>{const b=e.target.closest('button[data-main]');if(!b)return;const main=b.dataset.main;const first=(subpages[main]||[]).find(x=>x.id===activeSub[main])||(subpages[main]||[])[0];navigate(main,first?.id);});
 const oldNav=document.querySelector('nav.mfit-nav');
 if(oldNav){oldNav.replaceWith(nav);}else document.body.appendChild(nav);
 const header=document.querySelector('.mfit-app-header,header.brand-header');
