@@ -12,18 +12,22 @@ function unwrapCollapse(card){
 }
 function mergeGroup({title,root,items,extra=[]}){
  const host=rootOf(root);if(!host)return null;
- const nodes=[];
+ const nodes=[],previousGroups=new Set();
  const existing=document.querySelectorAll('.mfit193-merged-card');
  let wrap=[...existing].find(x=>x.dataset.mfit193Group===title)||null;
  for(const item of items){
-  let el=typeof item==='string'?$(item):document.querySelector(item.selector);
-  if(item&&typeof item==='object'&&item.node)el=item.node;
-  if(el?.closest?.('.mfit193-merged-card'))continue;
-  el=cardOf(el);
-  if(el?.closest?.('.mfit193-merged-card'))continue;
+  const raw=typeof item==='string'?$(item):document.querySelector(item.selector);
+  let el=raw;
+  const currentGroup=raw?.closest?.('.mfit193-merged-card');
+  if(currentGroup?.dataset.mfit193Group===title)continue;
+  if(currentGroup){
+   if(raw.classList?.contains('card')||raw.classList?.contains('mfit193-merged-section')){el=raw;previousGroups.add(currentGroup);}
+   else continue;
+  }else el=cardOf(raw);
+  if(el?.closest?.('.mfit193-merged-card')?.dataset.mfit193Group===title)continue;
   if(el&&el!==host&&!nodes.includes(el)&&!nodes.some(n=>n.contains(el))&&!nodes.some(n=>el.contains(n)))nodes.push(el);
  }
- for(const el of extra)if(el&&!nodes.includes(el)&&!nodes.some(n=>n.contains(el))&&!nodes.some(n=>el.contains(n)))nodes.push(el);
+ for(const el of extra){if(!el)continue;const currentGroup=el.closest?.('.mfit193-merged-card');if(currentGroup?.dataset.mfit193Group===title)continue;if(currentGroup){previousGroups.add(currentGroup);if(!el.classList.contains('mfit193-merged-section')&&!el.classList.contains('card'))continue;}if(!nodes.includes(el)&&!nodes.some(n=>n.contains(el))&&!nodes.some(n=>el.contains(n)))nodes.push(el);}
  if(!nodes.length)return wrap;
  if(!wrap){
   wrap=document.createElement('article');
@@ -50,6 +54,7 @@ function mergeGroup({title,root,items,extra=[]}){
   node.querySelectorAll(':scope > h2').forEach(h=>{const sub=document.createElement('h3');sub.className=h.className;sub.textContent=h.textContent;h.replaceWith(sub)});
   content.appendChild(node);
  }
+ previousGroups.forEach(group=>{const body=group.querySelector(':scope > .mfit193-merged-content');if(body&&!body.children.length)group.remove()});
  return wrap;
 }
 function init(){
