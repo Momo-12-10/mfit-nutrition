@@ -23,6 +23,7 @@ const server = http.createServer((req,res)=>{
  page.setDefaultTimeout(12000);
  await page.route('https://cdn.jsdelivr.net/**',route=>route.fulfill({status:200,contentType:'application/javascript',body:'window.supabase=window.supabase||{createClient:function(){return {auth:{}}}};'}));
  page.on('pageerror',e=>errors.push('pageerror: '+e.message));
+ page.on('requestfailed',r=>errors.push('requestfailed: '+r.url()+' '+(r.failure()?.errorText||'')));
  page.on('console',m=>{if(m.type()==='error')errors.push('console: '+m.text())});
  await page.addInitScript(()=>{
   if(localStorage.getItem('mfit_smoke_seeded')==='1')return;
