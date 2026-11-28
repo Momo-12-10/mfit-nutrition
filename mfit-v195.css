@@ -198,3 +198,12 @@ body #settings button.mfit195-primary-action{background:#3b444f!important;color:
 @media(max-width:360px){.brand-copy h1{font-size:17px}.brand-copy h1 small{font-size:9px}}
 
 body #settings button.mfit195-secondary-action,body #settings button.secondary{background:#1b2027!important;color:#e5e9ee!important;border-color:#3a424c!important}
+
+/* Settings category navigation: clear two-line hierarchy with matching SVGs. */
+body .mfit-settings-category{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:12px!important;min-height:72px!important;padding:12px 14px!important;text-align:left!important}
+body .mfit-category-copy{display:flex!important;flex:1 1 auto!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:4px!important;min-width:0!important;white-space:normal!important}
+body .mfit-category-copy b{display:block!important;font-size:14px!important;line-height:1.3!important;white-space:normal!important}
+body .mfit-category-copy small{display:block!important;font-size:12px!important;line-height:1.35!important;color:#aab2bd!important;white-space:normal!important}
+body .mfit-category-icon{flex:0 0 40px!important;width:40px!important;height:40px!important;display:grid!important;place-items:center!important;border-radius:12px!important;background:#252b33!important;color:#c5cdd7!important}
+body .mfit-category-icon svg{width:20px!important;height:20px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.7!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+body .mfit-category-arrow{flex:0 0 auto!important;color:#b9c2ce!important}
