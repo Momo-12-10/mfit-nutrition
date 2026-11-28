@@ -45,8 +45,7 @@ const server = http.createServer((req,res)=>{
  log('new cards mounted');
  await page.waitForSelector('#mfit165MealSuggestions');
  const goalSuggestion=await page.locator('#mfit165MealSuggestions').innerText();
- if(!goalSuggestion.includes('2.800')&&!goalSuggestion.includes('2800'))throw new Error('Meal suggestions did not read the 2800 kcal goal: '+goalSuggestion);
- if(!goalSuggestion.includes('150'))throw new Error('Meal suggestions did not read the 150 g protein goal: '+goalSuggestion);
+ if(!goalSuggestion.includes('2640 kcal')||!goalSuggestion.includes('123 g Protein')||goalSuggestion.includes('kein Kalorienziel'))throw new Error('Meal suggestions did not apply the 2800 kcal / 150 g targets to the seeded 160 kcal / 27 g entry: '+goalSuggestion);
  const emptyAccordions=await page.evaluate(()=>[...document.querySelectorAll('#settings details.mfit-compact-accordion')].filter(d=>{const c=d.querySelector('.mfit-accordion-content');return !c||(!c.textContent.trim()&&!c.querySelector('input,select,textarea,button,[role="button"],canvas,svg'))}).map(d=>d.querySelector('summary')?.innerText||'empty'));
  if(emptyAccordions.length)throw new Error('Empty settings accordions remain: '+emptyAccordions.join(' | '));
  const sharedGoals=await page.evaluate(()=>({profile:document.getElementById('mfitChallengeWorkouts')?.value,fitness:document.getElementById('mfit165WorkoutGoal')?.value}));
