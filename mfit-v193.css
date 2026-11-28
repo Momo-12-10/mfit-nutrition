@@ -1,5 +1,9 @@
 .mfit193-merged-card{padding:16px!important;display:flex;flex-direction:column;gap:12px}
-.mfit193-merged-card>h2{margin:0 0 2px;font-size:19px;letter-spacing:-.02em}
+.mfit193-merged-toggle{width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 0;border:0;background:transparent;color:inherit;text-align:left;font-size:19px;font-weight:800;letter-spacing:-.02em}
+.mfit193-merged-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.mfit193-chevron{display:inline-flex;transition:transform .18s ease;font-size:22px}
+.mfit193-merged-toggle[aria-expanded="true"] .mfit193-chevron{transform:rotate(180deg)}
+.mfit193-merged-content[hidden]{display:none!important}
 .mfit193-merged-content{display:flex;flex-direction:column;gap:0;min-width:0}
 .mfit193-merged-section{display:block!important;min-width:0;max-width:100%;margin:0!important;padding:14px 0!important;border:0!important;border-top:1px solid var(--line)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
 .mfit193-merged-section:first-child{border-top:0!important;padding-top:2px!important}
