@@ -3,7 +3,7 @@
 .mfit194-nav button{min-width:0;min-height:54px;border:0;border-radius:12px;background:transparent;color:var(--muted,#aeb5bf);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:5px 2px;font:inherit;font-size:11px;font-weight:600;line-height:1.15}
 .mfit194-nav button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .mfit194-nav button.active{background:var(--panel2,#252a32);color:var(--text,#f3f4f6)}
-.mfit194-subnav{display:flex;gap:7px;overflow-x:auto;padding:10px 14px;margin:0 0 10px;scrollbar-width:none;border-bottom:1px solid var(--line,#30343b)}
+.mfit194-subnav{position:sticky;top:0;z-index:999;background:var(--bg,#0d0f12);display:flex;gap:7px;overflow-x:auto;padding:10px 14px;margin:0 0 10px;scrollbar-width:none;border-bottom:1px solid var(--line,#30343b)}
 .mfit194-subnav[hidden]{display:none}
 .mfit194-subnav button{flex:0 0 auto;min-height:40px;padding:8px 14px;border:1px solid var(--line,#30343b);border-radius:999px;background:transparent;color:var(--muted,#aeb5bf);font:inherit;font-size:13px;font-weight:600;white-space:nowrap}
 .mfit194-subnav button.active{background:var(--panel2,#252a32);color:var(--text,#f3f4f6);border-color:var(--muted,#aeb5bf)}
