@@ -60,12 +60,9 @@ function mergeGroup({title,root,items,extra=[]}){
 function init(){
 
 
- // Keep the existing achievement content, but place it with goals rather than coaching tips.
- const achievementHead=$('mfitSmartCoach')?.querySelector('.mfit-achievement-head');
- const achievementNode=$('mfitAchievementList');
- const achievementList=achievementNode?.closest('.mfit193-merged-card')?null:achievementNode;
- if(achievementHead)achievementHead.remove();
- if(achievementList)achievementList.remove();
+ // The newer achievement center is the single milestone list; remove the older duplicate.
+ $('mfitSmartCoach')?.querySelector('.mfit-achievement-head')?.remove();
+ $('mfitAchievementList')?.remove();
 
  // 1. One home quick-access area: today's overview, pinned actions and older shortcuts.
  mergeGroup({title:'Dein Tag & Schnellzugriff',root:'home',items:['mfitTodayPanel','mfitQuickActions','mfit181YesterdayCopy']});
@@ -124,7 +121,7 @@ function init(){
 
  // 9. Sleep, subjective recovery and check-in history are one recovery area; storage remains separate and untouched.
  mergeGroup({title:'Erholung & Check-in',root:'fitness',items:[
-  'mfitProRecovery','mfitRecoveryPro','mfit165Sleep','mfitRecoveryTrend',
+  'mfitProRecovery','mfitRecoveryPro','mfit165Sleep','mfit165Goals','mfitRecoveryTrend',
   {selector:'#recoverySummary'}
  ]});
 
@@ -135,8 +132,8 @@ function init(){
 
  // 11. Weekly goals, XP/levels, achievements and the optional four-week challenge share one goals area.
  mergeGroup({title:'Ziele, Level & Meilensteine',root:'profile',items:[
-  'mfitChallenges','mfit165Goals','mfit191Challenge','mfitAchievementCenter'
- ],extra:[achievementHead,achievementList]});
+  'mfitChallenges','mfit191Challenge','mfitAchievementCenter'
+ ]});
 
  // 12. All appearance controls are grouped under the existing settings tab.
  mergeGroup({title:'Darstellung & App-Design',root:'settings',items:['appAppearance']});
