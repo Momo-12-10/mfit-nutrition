@@ -56,6 +56,8 @@ function mergeGroup({title,root,items,extra=[]}){
   content.appendChild(node);
  }
  previousGroups.forEach(group=>{const body=group.querySelector(':scope > .mfit193-merged-content');if(body&&!body.children.length)group.remove()});
+ // Consolidated sections must not remain inside legacy details/accordion wrappers.
+ if(wrap.parentElement!==host)host.appendChild(wrap);
  return wrap;
 }
 function init(){
