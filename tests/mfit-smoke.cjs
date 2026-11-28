@@ -86,7 +86,7 @@ const server = http.createServer((req,res)=>{
  log('checking yesterday copy');
  const gpxCard=page.locator('#mfit181Gpx');
  const trainingGroup=page.locator('.mfit193-merged-card').filter({has:gpxCard});
- const visibility=await trainingGroup.locator('.mfit193-merged-toggle').evaluate(el=>({rect:el.getBoundingClientRect().toJSON(),style:getComputedStyle(el).cssText,display:getComputedStyle(el).display,visibility:getComputedStyle(el).visibility,ancestors:(()=>{const a=[];for(let n=el;n&&a.length<8;n=n.parentElement)a.push({tag:n.tagName,id:n.id,cls:n.className,display:getComputedStyle(n).display,visibility:getComputedStyle(n).visibility,hidden:n.hidden});return a})()}));console.log('[training-group-visibility]',JSON.stringify(visibility));
+ if(await trainingGroup.evaluate(el=>el.parentElement?.id!=='fitness'))throw new Error('Training group is still nested inside a legacy accordion');
  if(await trainingGroup.locator('.mfit193-merged-toggle').getAttribute('aria-expanded')==='false')await trainingGroup.locator('.mfit193-merged-toggle').click();
  const gpx='<?xml version="1.0"?><gpx version="1.1" creator="MFit" xmlns="http://www.topografix.com/GPX/1/1"><trk><name>Test route</name><trkseg><trkpt lat="48.200000" lon="16.300000"><time>2026-01-01T10:00:00Z</time></trkpt><trkpt lat="48.209000" lon="16.300000"><time>2026-01-01T10:06:00Z</time></trkpt></trkseg></trk></gpx>';
  await page.locator('#mfit181GpxFile').setInputFiles({name:'test.gpx',mimeType:'application/gpx+xml',buffer:Buffer.from(gpx)});
