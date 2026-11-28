@@ -203,6 +203,15 @@ const server = http.createServer((req,res)=>{
   const check=await page.evaluate(()=>({width:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,offscreen:[...document.querySelectorAll('button')].filter(b=>b.getClientRects().length).map(b=>{const r=b.getBoundingClientRect();return {text:b.textContent.trim().slice(0,24),left:r.left,right:r.right}}).filter(x=>x.left < -1 || x.right > document.documentElement.clientWidth+1)}));
   if(check.scrollWidth>check.width+1)throw new Error('Horizontal overflow at '+width+'px: '+JSON.stringify(check));
   if(check.offscreen.length)throw new Error('Off-screen button at '+width+'px: '+JSON.stringify(check.offscreen.slice(0,5)));
+  if(width===320){
+   const compact=await page.evaluate(()=>{
+    const brand=document.querySelector('.brand-lockup')?.getBoundingClientRect(),actions=document.querySelector('.mfit-header-actions')?.getBoundingClientRect();
+    const nav=[...document.querySelectorAll('.mfit194-nav button')].map(b=>({label:b.innerText.trim(),button:b.getBoundingClientRect().width,labelWidth:b.querySelector('span')?.getBoundingClientRect().width}));
+    return {brandOverlap:!!brand&&!!actions&&brand.right>actions.left+1,nav};
+   });
+   if(compact.brandOverlap)throw new Error('Header brand overlaps its action buttons at 320px');
+   if(compact.nav.some(x=>x.labelWidth>x.button+1))throw new Error('Bottom navigation label overflows its 320px button: '+JSON.stringify(compact.nav));
+  }
   await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-d-'+width+'.png'),fullPage:true});
   log('responsive screenshot saved: '+width+'px');
  }
