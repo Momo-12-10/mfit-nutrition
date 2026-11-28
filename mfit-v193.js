@@ -27,6 +27,7 @@ function mergeGroup({title,root,items,extra=[]}){
  for(const node of nodes){
   node.classList.remove('card');
   node.classList.add('mfit193-merged-section');
+  node.querySelectorAll('.card').forEach(child=>{child.classList.remove('card');child.classList.add('mfit193-merged-section')});
   node.removeAttribute('style');
   node.querySelectorAll(':scope > h2').forEach(h=>{const sub=document.createElement('h3');sub.className=h.className;sub.textContent=h.textContent;h.replaceWith(sub)});
   content.appendChild(node);
