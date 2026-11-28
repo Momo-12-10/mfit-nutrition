@@ -62,7 +62,7 @@ const server = http.createServer((req,res)=>{
  const mergedAudit=await page.evaluate(()=>({groups:[...document.querySelectorAll('.mfit193-merged-card')].map(x=>x.dataset.mfit193Group),nestedCards:document.querySelectorAll('.mfit193-merged-card .card').length,barcodeDuplicate:!!document.getElementById('mfit165Barcode'),exerciseDuplicate:!!document.getElementById('mfit165ExerciseLibrary'),deleteButtons:document.querySelectorAll('#settings .privacy-danger-zone button.danger').length}));
  if(mergedAudit.groups.length<10)throw new Error('Too few unified sections were mounted: '+JSON.stringify(mergedAudit.groups));
  if(mergedAudit.nestedCards)throw new Error('Nested cards remain inside consolidated sections: '+mergedAudit.nestedCards);
- if(mergedAudit.barcodeDuplicate||mergedAudit.exerciseDuplicate)throw new Error('Duplicate barcode or exercise library card remains.');
+ if(mergedAudit.barcodeDuplicate||mergedAudit.exerciseDuplicate)throw new Error('Duplicate barcode or exercise library card remains: '+JSON.stringify(mergedAudit));
  if(mergedAudit.deleteButtons>0)throw new Error('Duplicate local data deletion button remains in privacy panel.');
 
  const todayStats=await page.evaluate(()=>({training:document.getElementById('mfitTodayTraining')?.textContent,meals:document.getElementById('mfitTodayMeals')?.textContent,water:document.getElementById('mfitTodayWater')?.textContent}));
