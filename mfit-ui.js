@@ -3,10 +3,10 @@
 'use strict';
 const $=id=>document.getElementById(id);
 const groups=[
- {id:'personal',icon:'◐',title:'Darstellung & Bedienung',desc:'Design, Sprache und App-Verhalten',items:['appAppearance','mfitAppPreferences','mfitLanguageSettings']},
- {id:'reminders',icon:'🔔',title:'Erinnerungen',desc:'Trink- und Mahlzeiten-Erinnerungen',items:['appReminders']},
- {id:'privacy',icon:'🔒',title:'Datenschutz & Daten',desc:'Privatsphäre, Backup und Speicher',items:['privacyCenter','dataBackup','mfitDataTools']},
- {id:'about',icon:'ⓘ',title:'Über MFit',desc:'Installation, Status und Version',items:['mfitAppStatus','mfitAboutSettings','mfitReleaseReadiness']}
+ {id:'personal',icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="7" cy="18" r="2"/></svg>',title:'Darstellung & Bedienung',desc:'Design, Sprache und App-Verhalten',items:['appAppearance','mfitAppPreferences','mfitLanguageSettings']},
+ {id:'reminders',icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>',title:'Erinnerungen',desc:'Trink- und Mahlzeiten-Erinnerungen',items:['appReminders']},
+ {id:'privacy',icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>',title:'Datenschutz & Daten',desc:'Privatsphäre, Backup und Speicher',items:['privacyCenter','dataBackup','mfitDataTools']},
+ {id:'about',icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7h.01"/></svg>',title:'Über MFit',desc:'Installation, Status und Version',items:['mfitAppStatus','mfitAboutSettings','mfitReleaseReadiness']}
 ];
 let active='home';
 function makeButton(g){
