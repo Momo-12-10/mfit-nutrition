@@ -39,6 +39,24 @@ const server = http.createServer((req,res)=>{
  log('opening app');
  await page.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded',timeout:20000});
  log('app DOM ready');
+ const v195=await page.evaluate(()=>{
+  const controls=[...document.querySelectorAll('input:not([type=hidden]),select,textarea')];
+  const unlabeled=controls.filter(el=>!el.labels||!el.labels.length).map(el=>el.id||el.outerHTML.slice(0,90));
+  const tiny=[...document.querySelectorAll('button')].filter(el=>el.getClientRects().length&&el.getBoundingClientRect().height<43.5).map(el=>el.textContent.trim().slice(0,25));
+  const small=[...document.querySelectorAll('p,label,small,.muted,.settings-kicker,.pill')].filter(el=>el.getClientRects().length&&el.textContent.trim()&&parseFloat(getComputedStyle(el).fontSize)<11.9).map(el=>({text:el.textContent.trim().slice(0,24),size:getComputedStyle(el).fontSize}));
+  const emojiHeadings=[...document.querySelectorAll('h2,h3')].filter(el=>!el.querySelector('.mfit195-heading-icon')&&/^\\s*[\\p{Extended_Pictographic}\\u24C2-\\u3299]/u.test(el.textContent));
+  return {unlabeled,tiny:tiny.slice(0,12),small:small.slice(0,12),emojiHeadings:emojiHeadings.map(el=>el.textContent.trim()),accent:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(),headerHeight:document.querySelector('.mfit-app-header')?.getBoundingClientRect().height,svgNav:[...document.querySelectorAll('.mfit194-nav button')].every(el=>!!el.querySelector('svg'))};
+ });
+ if(v195.unlabeled.length)throw new Error('Form fields without associated labels: '+v195.unlabeled.join(', '));
+ if(v195.tiny.length)throw new Error('Buttons below 44px touch height: '+v195.tiny.join(', '));
+ if(v195.small.length)throw new Error('Text below 12px: '+JSON.stringify(v195.small));
+ if(v195.emojiHeadings.length)throw new Error('Emoji remain in section headings: '+v195.emojiHeadings.join(' | '));
+ if(v195.accent.toLowerCase()!=='#b9c2ce')throw new Error('Monochrome accent token not applied: '+v195.accent);
+ if(v195.headerHeight>76)throw new Error('Header is not compact: '+v195.headerHeight);
+ if(!v195.svgNav)throw new Error('Navigation contains a non-SVG icon');
+ const linkedCss=await page.locator('link[rel="stylesheet"]').evaluateAll(els=>els.map(el=>el.getAttribute('href')));
+ if(linkedCss.length!==2||linkedCss.some(x=>/mfit-(monochrome|v165|v181|v191|v192|v193|v194)\\.css/.test(x)))throw new Error('Legacy stylesheets are still loaded: '+linkedCss.join(', '));
+ log('v195 monochrome design, consolidated CSS, SVG headings, labels and accessible target sizes verified');
  const mainNav=page.locator('.mfit194-nav button');
  if(await mainNav.count()!==5)throw new Error('Part C must expose exactly five main navigation items');
  const mainLabels=await mainNav.allTextContents();
@@ -171,22 +189,22 @@ const server = http.createServer((req,res)=>{
   const check=await page.evaluate(()=>({width:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,offscreen:[...document.querySelectorAll('button')].filter(b=>b.getClientRects().length).map(b=>{const r=b.getBoundingClientRect();return {text:b.textContent.trim().slice(0,24),left:r.left,right:r.right}}).filter(x=>x.left < -1 || x.right > document.documentElement.clientWidth+1)}));
   if(check.scrollWidth>check.width+1)throw new Error('Horizontal overflow at '+width+'px: '+JSON.stringify(check));
   if(check.offscreen.length)throw new Error('Off-screen button at '+width+'px: '+JSON.stringify(check.offscreen.slice(0,5)));
-  await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-'+width+'.png'),fullPage:true});
+  await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-d-'+width+'.png'),fullPage:true});
   log('responsive screenshot saved: '+width+'px');
  }
  await page.setViewportSize({width:390,height:900});
  await page.evaluate(()=>window.showTab('shop'));
  await page.locator('#mealBudgetPeriod').scrollIntoViewIfNeeded();
  await page.locator('.meal-preferences summary').click();
- await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-shop-390.png')});
+ await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-d-shop-390.png')});
  await page.evaluate(()=>window.showTab('fitness'));
  const calendar=page.locator('#mfit191Calendar');
- if(await calendar.count()){const toggle=page.locator('.mfit193-merged-card').filter({has:calendar}).locator('.mfit193-merged-toggle');if(await toggle.count()&&await toggle.getAttribute('aria-expanded')==='false')await toggle.click();await calendar.scrollIntoViewIfNeeded();await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-fitness-390.png')});}
+ if(await calendar.count()){const toggle=page.locator('.mfit193-merged-card').filter({has:calendar}).locator('.mfit193-merged-toggle');if(await toggle.count()&&await toggle.getAttribute('aria-expanded')==='false')await toggle.click();await calendar.scrollIntoViewIfNeeded();await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-d-fitness-390.png')});}
  await page.evaluate(()=>window.showTab('settings'));
  await page.locator('#settings').waitFor({state:'visible'});
  const designGroup=page.locator('.mfit193-merged-card').filter({has:page.locator('#appAppearance')});if(await designGroup.locator('.mfit193-merged-toggle').getAttribute('aria-expanded')==='false')await designGroup.locator('.mfit193-merged-toggle').click();
  await page.locator('#appAppearance').scrollIntoViewIfNeeded();
- await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-a-settings-390.png')});
+ await page.screenshot({path:path.resolve(__dirname,'..','artifacts','part-d-settings-390.png')});
 
  if(errors.length)throw new Error('Browser console/page errors: '+errors.join(' | '));
  console.log('PASS: 320/390/1280px responsive layouts, meal plan, fitness calendar, settings, goals, accordions, existing data preservation, yesterday preview/copy, GPX import, share PNG, backup restore, offline reload; no console/page errors.');
