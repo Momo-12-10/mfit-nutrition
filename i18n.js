@@ -107,7 +107,7 @@ Object.assign(dictionaries.ru,{
 });
 
 Object.assign(dictionaries.en,{
- "DEIN PERSÖNLICHER PERFORMANCE-BEREICH":"YOUR PERSONAL PERFORMANCE SPACE",
+ "DEIN PERFORMANCE-BEREICH":"YOUR PERSONAL PERFORMANCE SPACE",
  "ERNÄHRUNG · TRAINING · FORTSCHRITT":"NUTRITION · TRAINING · PROGRESS",
  "DAILY MINDSET":"DAILY MINDSET","MFIT PERFORMANCE OVERVIEW":"MFIT PERFORMANCE OVERVIEW",
  "DEIN RÜCKBLICK":"YOUR WEEKLY RECAP","DEIN TRAININGSFOKUS":"YOUR TRAINING FOCUS",
@@ -133,7 +133,7 @@ Object.assign(dictionaries.en,{
  "kein Kalorienziel":"no calorie target","kein Proteinziel":"no protein target"
 });
 Object.assign(dictionaries.ru,{
- "DEIN PERSÖNLICHER PERFORMANCE-BEREICH":"ВАШЕ ПРОСТРАНСТВО ДЛЯ РЕЗУЛЬТАТОВ",
+ "DEIN PERFORMANCE-BEREICH":"ВАШЕ ПРОСТРАНСТВО ДЛЯ РЕЗУЛЬТАТОВ",
  "ERNÄHRUNG · TRAINING · FORTSCHRITT":"ПИТАНИЕ · ТРЕНИРОВКИ · ПРОГРЕСС",
  "DAILY MINDSET":"НАСТРОЙ НА ДЕНЬ","MFIT PERFORMANCE OVERVIEW":"ОБЗОР MFIT PERFORMANCE",
  "DEIN RÜCKBLICK":"ИТОГИ НЕДЕЛИ","DEIN TRAININGSFOKUS":"ВАШ ТРЕНИРОВОЧНЫЙ ФОКУС",
