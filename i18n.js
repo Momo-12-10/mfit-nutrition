@@ -208,6 +208,13 @@ Object.assign(dictionaries.ru,{
  "Noch keine Schlafdaten":"Данных о сне пока нет"
 });
 
+Object.assign(dictionaries.en,{
+ "RPE (Rate of Perceived Exertion) beschreibt, wie anstrengend sich das Training für dich anfühlt: 1 = sehr leicht, 10 = maximal.":"RPE (Rate of Perceived Exertion) describes how hard the session feels to you: 1 = very easy, 10 = maximal effort."
+});
+Object.assign(dictionaries.ru,{
+ "RPE (Rate of Perceived Exertion) beschreibt, wie anstrengend sich das Training für dich anfühlt: 1 = sehr leicht, 10 = maximal.":"RPE (Rate of Perceived Exertion) показывает, насколько тяжёлой кажется тренировка: 1 — очень легко, 10 — максимальное усилие."
+});
+
 function tr(value,lang){if(lang==='de-AT'||!value)return value;let out=value;const dict=dictionaries[lang]||{};const word=c=>!!c&&/[A-Za-z0-9À-žА-яЁё_]/.test(c);for(const k of Object.keys(dict).sort((a,b)=>b.length-a.length)){let from=0,pos;while((pos=out.indexOf(k,from))!==-1){const left=word(k[0])&&word(out[pos-1]),right=word(k[k.length-1])&&word(out[pos+k.length]);if(!left&&!right){out=out.slice(0,pos)+dict[k]+out.slice(pos+k.length);from=pos+dict[k].length}else from=pos+k.length}}return out}
 function scan(root,lang){
  if(!root)return;
