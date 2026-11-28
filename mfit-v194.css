@@ -1,0 +1,11 @@
+/* MFit v194 — five-area mobile navigation */
+.mfit194-nav{position:fixed;z-index:1000;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:7px max(8px,env(safe-area-inset-left)) calc(7px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-right));background:rgba(12,15,20,.97);border-top:1px solid var(--line,#30343b);backdrop-filter:blur(16px)}
+.mfit194-nav button{min-width:0;min-height:54px;border:0;border-radius:12px;background:transparent;color:var(--muted,#aeb5bf);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:5px 2px;font:inherit;font-size:11px;font-weight:600;line-height:1.15}
+.mfit194-nav button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.mfit194-nav button.active{background:var(--panel2,#252a32);color:var(--text,#f3f4f6)}
+.mfit194-subnav{display:flex;gap:7px;overflow-x:auto;padding:10px 14px;margin:0 0 10px;scrollbar-width:none;border-bottom:1px solid var(--line,#30343b)}
+.mfit194-subnav[hidden]{display:none}
+.mfit194-subnav button{flex:0 0 auto;min-height:40px;padding:8px 14px;border:1px solid var(--line,#30343b);border-radius:999px;background:transparent;color:var(--muted,#aeb5bf);font:inherit;font-size:13px;font-weight:600;white-space:nowrap}
+.mfit194-subnav button.active{background:var(--panel2,#252a32);color:var(--text,#f3f4f6);border-color:var(--muted,#aeb5bf)}
+body{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
+@media(min-width:700px){.mfit194-nav{left:50%;right:auto;transform:translateX(-50%);width:min(720px,calc(100% - 32px));border:1px solid var(--line,#30343b);border-radius:18px 18px 0 0}.mfit194-subnav{max-width:1100px;margin:0 auto 14px}}
