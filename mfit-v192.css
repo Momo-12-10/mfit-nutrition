@@ -3,11 +3,9 @@
 .mfit-muscle-row>div{height:auto;min-height:0;overflow:visible;background:transparent;border-radius:0}
 .mfit-muscle-row>div:nth-child(2){height:7px;min-height:7px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden}
 .mfit-muscle-row>div:nth-child(2) i{height:100%}
-.mfit-achievement-list{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
 .mfit-achievement{min-width:0;overflow-wrap:normal;word-break:normal;hyphens:none}
 .mfit-achievement b,.mfit-achievement small{overflow-wrap:normal;word-break:normal;hyphens:none;white-space:normal;font-size:12px;line-height:1.35}
 .mfit-achievement small{font-size:11px}
-.mfit-achievement-list>.mfit-achievement:last-child:nth-child(odd){grid-column:1/-1}
 #home>.grid.three{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 #home>.grid.three>.card:last-child:nth-child(odd){grid-column:1/-1}
 .meal-budget-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:end;gap:12px}
@@ -33,4 +31,3 @@
 .mfit191-dots i.phase,.mfit191-calendar-legend i.phase{background:#b8a7e8}
 .mfit191-calendar-legend{align-items:center}
 .mfit191-calendar-legend span{display:inline-flex;align-items:center;gap:5px}
-@media(min-width:700px){.mfit-achievement-list{grid-template-columns:repeat(3,minmax(0,1fr))}.mfit-achievement-list>.mfit-achievement:last-child:nth-child(odd){grid-column:auto}}
